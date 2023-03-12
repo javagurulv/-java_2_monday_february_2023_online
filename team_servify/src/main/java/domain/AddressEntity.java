@@ -1,4 +1,6 @@
-public class Address {
+package domain;
+
+public class AddressEntity {
 
     private String country;
     private String city;
