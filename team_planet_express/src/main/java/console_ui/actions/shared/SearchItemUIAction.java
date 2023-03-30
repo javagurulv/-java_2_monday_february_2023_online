@@ -13,7 +13,7 @@ public class SearchItemUIAction extends UIAction {
     private static final int ACCESS_NUMBER = UserRole.getAccessNumber(UserRole.ALLUSERS);
 
     private static final String PROMPT_TOPIC_ITEM = "item name for search: ";
-    private static final String PROMPT_TOPIC_PRICE = "item price for search: ";
+    private static final String PROMPT_TOPIC_PRICE = "item maximum price: ";
 
 
     private static final String MESSAGE_SEARCH_SUCCESS = "Founded items: ";

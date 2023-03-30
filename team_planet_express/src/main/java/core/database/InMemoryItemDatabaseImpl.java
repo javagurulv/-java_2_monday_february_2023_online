@@ -76,7 +76,7 @@ public class InMemoryItemDatabaseImpl implements ItemDatabase {
     public List<Item> SearchByNameAndPrice(String itemName, BigDecimal price) {
         return shopItems.stream().filter(
                 item -> item.getName().contains(itemName.subSequence(0, itemName.length())) &&
-                        item.getPrice().equals(price)
+                        item.getPrice().compareTo(price) <= 0
         ).collect(Collectors.toList());
 
     }
