@@ -26,9 +26,9 @@ public class SearchItemService {
             return new SearchItemResponse(null, errors);
         }
         List<Item> items;
-        if (!(request.getItemName() == null) && isPresent(request.getPrice())) {
+        if (!(request.getItemName() == null) && !isPresent(request.getPrice())) {
             items = database.accessItemDatabase().SearchByName(request.getItemName());
-        } else if (!(request.getItemName() == null) && !isPresent(request.getPrice())) {
+        } else if (!(request.getItemName() == null) && isPresent(request.getPrice())) {
             BigDecimal price = new BigDecimal(request.getPrice()).setScale(2, RoundingMode.HALF_UP);
             items = database.accessItemDatabase().SearchByNameAndPrice(request.getItemName(), price);
         } else {
