@@ -26,14 +26,21 @@ public class SearchItemService {
             return new SearchItemResponse(null, errors);
         }
         List<Item> items;
-        if (!(request.getItemName() == null) && !isPresent(request.getPrice())) {
-            items = database.accessItemDatabase().SearchByName(request.getItemName());
+        //Those are all wrong
+        //That's what tests are for..
+        //It just dies with a NumberFormatException when there is no price
+        //Why no request.getItemName() != null ? current one looks weird and unnecessary convoluted
+        //it also allows for blank name
+        if (request.getItemName() != null && !isPresent(request.getPrice())) {
+            items = database.accessItemDatabase().searchByName(request.getItemName());
         } else if (!(request.getItemName() == null) && isPresent(request.getPrice())) {
             BigDecimal price = new BigDecimal(request.getPrice()).setScale(2, RoundingMode.HALF_UP);
-            items = database.accessItemDatabase().SearchByNameAndPrice(request.getItemName(), price);
+            items = database.accessItemDatabase().searchByNameAndPrice(request.getItemName(), price);
         } else {
             items = database.accessItemDatabase().getAllItems();
         }
+        //why null?
+        //we do not pass null in any other service...
         return new SearchItemResponse(items, null);
     }
 
