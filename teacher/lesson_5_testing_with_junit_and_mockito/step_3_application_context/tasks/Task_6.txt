@@ -11,5 +11,5 @@
 	private static UIAction exitUIAction = new ExitUIAction();
 
 В самом начале main() метода создавайте инстанцию класса
-ApplicationContext и в дальнейшем для получения инстанций
+Shop.ApplicationContext и в дальнейшем для получения инстанций
 ui action классов пользуйтесь методом applicationContext.getBean().

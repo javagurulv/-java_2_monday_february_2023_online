@@ -1,7 +1,7 @@
 Создайте в пакете dependency_injection класс DIComponentCreator.
 В классе DIComponentCreator создайте следующий метод:
 
-    public void create(ApplicationContext applicationContext,
+    public void create(Shop.ApplicationContext applicationContext,
     				   List<Class> diComponents)
 
 Цель этого метода создать инстанции всех классов переданных

@@ -3,7 +3,7 @@
 
 public class BookListApplication {
 
-    private static ApplicationContext applicationContext =
+    private static Shop.ApplicationContext applicationContext =
        new AnnotationConfigApplicationContext(BookListConfiguration.class);
 
 	public static void main(String[] args) {

@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 class DIDependencyResolver {
 
-	public void resolve(ApplicationContext applicationContext,
+	public void resolve(Shop.ApplicationContext applicationContext,
 						List<Class> diComponents) {
 		diComponents.forEach(diComponent -> {
 			Object diInstance = applicationContext.getBean(diComponent);
@@ -19,7 +19,7 @@ class DIDependencyResolver {
 		});
 	}
 
-	private void tryToSetDependency(ApplicationContext applicationContext, Object diInstance, Field field) {
+	private void tryToSetDependency(Shop.ApplicationContext applicationContext, Object diInstance, Field field) {
 		Class fieldType = field.getType();
 		Object fieldInstance = applicationContext.getBean(fieldType);
 		if (fieldInstance == null) {

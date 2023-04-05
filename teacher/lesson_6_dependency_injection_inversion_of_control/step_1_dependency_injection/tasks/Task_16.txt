@@ -1,7 +1,7 @@
 Создайте в пакете dependency_injection класс DIDependencyResolver.
 В классе DIDependencyResolver создайте следующий метод:
 
-    public void resolve(ApplicationContext applicationContext,
+    public void resolve(Shop.ApplicationContext applicationContext,
     					List<Class> diComponents)
 
 Цель этого метода разрешить все зависимости между

@@ -1,5 +1,7 @@
 package core.services.fake.fake_item_generator;
 
+import Shop.core.services.fake.fake_item_generator.ItemGenerator;
+import Shop.core.services.fake.fake_item_generator.RandomItemGeneratorImpl;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

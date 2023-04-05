@@ -1,11 +1,12 @@
 package core.services.cart;
 
-import core.database.CartItemDatabase;
-import core.database.Database;
-import core.database.ItemDatabase;
-import core.domain.cart_item.CartItem;
-import core.domain.item.Item;
-import core.services.exception.ServiceMissingDataException;
+import Shop.core.database.CartItemDatabase;
+import Shop.core.database.Database;
+import Shop.core.database.ItemDatabase;
+import Shop.core.domain.cart_item.CartItem;
+import Shop.core.domain.item.Item;
+import Shop.core.services.cart.CartService;
+import Shop.core.services.exception.ServiceMissingDataException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

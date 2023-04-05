@@ -4,7 +4,7 @@
 
 Типичный acceptance тест может выглядеть следующим образом:
 
-private ApplicationContext appContext = new ApplicationContext();
+private Shop.ApplicationContext appContext = new Shop.ApplicationContext();
 
 @Test
 public void shouldReturnCorrectBookList() {

@@ -1,15 +1,16 @@
 package core.services.actions.customer;
 
-import core.database.CartDatabase;
-import core.database.CartItemDatabase;
-import core.database.Database;
-import core.database.ItemDatabase;
-import core.domain.cart.Cart;
-import core.domain.cart_item.CartItem;
-import core.domain.item.Item;
-import core.requests.customer.AddItemToCartRequest;
-import core.services.validators.actions.customer.AddItemToCartValidator;
-import core.support.MutableLong;
+import Shop.core.database.CartDatabase;
+import Shop.core.database.CartItemDatabase;
+import Shop.core.database.Database;
+import Shop.core.database.ItemDatabase;
+import Shop.core.domain.cart.Cart;
+import Shop.core.domain.cart_item.CartItem;
+import Shop.core.domain.item.Item;
+import Shop.core.requests.customer.AddItemToCartRequest;
+import Shop.core.services.actions.customer.AddItemToCartService;
+import Shop.core.services.validators.actions.customer.AddItemToCartValidator;
+import Shop.core.support.MutableLong;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

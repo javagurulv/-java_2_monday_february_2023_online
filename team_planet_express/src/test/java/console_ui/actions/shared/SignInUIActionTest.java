@@ -1,12 +1,13 @@
 package console_ui.actions.shared;
 
-import console_ui.UserCommunication;
-import core.domain.user.User;
-import core.requests.shared.SignInRequest;
-import core.responses.CoreError;
-import core.responses.shared.SignInResponse;
-import core.services.actions.shared.SignInService;
-import core.support.MutableLong;
+import Shop.console_ui.UserCommunication;
+import Shop.console_ui.actions.shared.SignInUIAction;
+import Shop.core.domain.user.User;
+import Shop.core.requests.shared.SignInRequest;
+import Shop.core.responses.CoreError;
+import Shop.core.responses.shared.SignInResponse;
+import Shop.core.services.actions.shared.SignInService;
+import Shop.core.support.MutableLong;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

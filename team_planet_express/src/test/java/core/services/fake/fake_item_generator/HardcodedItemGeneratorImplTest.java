@@ -1,6 +1,8 @@
 package core.services.fake.fake_item_generator;
 
-import core.domain.item.Item;
+import Shop.core.domain.item.Item;
+import Shop.core.services.fake.fake_item_generator.HardcodedItemGeneratorImpl;
+import Shop.core.services.fake.fake_item_generator.ItemGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

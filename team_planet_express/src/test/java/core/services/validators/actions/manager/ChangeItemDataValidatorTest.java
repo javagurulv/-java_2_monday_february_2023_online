@@ -1,13 +1,14 @@
 package core.services.validators.actions.manager;
 
-import core.database.Database;
-import core.database.ItemDatabase;
-import core.domain.item.Item;
-import core.requests.manager.ChangeItemDataRequest;
-import core.responses.CoreError;
-import core.services.exception.ServiceMissingDataException;
-import core.services.validators.universal.user_input.InputStringValidator;
-import core.services.validators.universal.user_input.InputStringValidatorRecord;
+import Shop.core.database.Database;
+import Shop.core.database.ItemDatabase;
+import Shop.core.domain.item.Item;
+import Shop.core.requests.manager.ChangeItemDataRequest;
+import Shop.core.responses.CoreError;
+import Shop.core.services.exception.ServiceMissingDataException;
+import Shop.core.services.validators.actions.manager.ChangeItemDataValidator;
+import Shop.core.services.validators.universal.user_input.InputStringValidator;
+import Shop.core.services.validators.universal.user_input.InputStringValidatorRecord;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

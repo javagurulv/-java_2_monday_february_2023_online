@@ -1,12 +1,12 @@
 Если в вашем проекте есть много классов с acceptance тестами
 и в каждом из них вы создаёте свою инстанцию
 
-private ApplicationContext appContext = new ApplicationContext();
+private Shop.ApplicationContext appContext = new Shop.ApplicationContext();
 
 то пришло время провести рефакторинг кода!
 
 Цель рефакторинга - избавиться от дублирования кода, кода
-который создаёт инстанцию класса ApplicationContext в каждом
+который создаёт инстанцию класса Shop.ApplicationContext в каждом
 тестовом классе.
 
 Как это можно сделать?

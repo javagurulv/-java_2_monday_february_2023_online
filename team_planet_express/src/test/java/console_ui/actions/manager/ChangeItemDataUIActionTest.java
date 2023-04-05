@@ -1,10 +1,11 @@
 package console_ui.actions.manager;
 
-import console_ui.UserCommunication;
-import core.requests.manager.ChangeItemDataRequest;
-import core.responses.CoreError;
-import core.responses.manager.ChangeItemDataResponse;
-import core.services.actions.manager.ChangeItemDataService;
+import Shop.console_ui.UserCommunication;
+import Shop.console_ui.actions.manager.ChangeItemDataUIAction;
+import Shop.core.requests.manager.ChangeItemDataRequest;
+import Shop.core.responses.CoreError;
+import Shop.core.responses.manager.ChangeItemDataResponse;
+import Shop.core.services.actions.manager.ChangeItemDataService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

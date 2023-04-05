@@ -1,11 +1,13 @@
 package core.services.user;
 
-import core.database.CartDatabase;
-import core.database.Database;
-import core.database.UserDatabase;
-import core.domain.cart.Cart;
-import core.domain.user.User;
-import core.domain.user.UserRole;
+import Shop.core.database.CartDatabase;
+import Shop.core.database.Database;
+import Shop.core.database.UserDatabase;
+import Shop.core.domain.cart.Cart;
+import Shop.core.domain.user.User;
+import Shop.core.domain.user.UserRole;
+import Shop.core.services.user.UserRecord;
+import Shop.core.services.user.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -1,5 +1,6 @@
 package console_ui.actions;
 
+import Shop.console_ui.actions.UIAction;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

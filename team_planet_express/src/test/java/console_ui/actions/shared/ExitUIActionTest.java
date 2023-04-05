@@ -1,7 +1,8 @@
 package console_ui.actions.shared;
 
-import console_ui.UserCommunication;
-import core.services.actions.shared.ExitService;
+import Shop.console_ui.UserCommunication;
+import Shop.console_ui.actions.shared.ExitUIAction;
+import Shop.core.services.actions.shared.ExitService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

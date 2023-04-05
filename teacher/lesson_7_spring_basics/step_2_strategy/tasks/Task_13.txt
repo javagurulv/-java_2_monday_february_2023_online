@@ -1,11 +1,11 @@
 Static поля в классе это зло. Поэтому перенесите создание
-ApplicationContext внутрь main() метода. Тем самым мы
+Shop.ApplicationContext внутрь main() метода. Тем самым мы
 избавимся от статического поля на уровне класса.
 
 public class BookListApplication {
 
 	public static void main(String[] args) {
-    	ApplicationContext applicationContext =
+    	Shop.ApplicationContext applicationContext =
            new AnnotationConfigApplicationContext(BookListConfiguration.class);
 		ProgramMenu programMenu = applicationContext.getBean(ProgramMenu.class);
 		while (true) {

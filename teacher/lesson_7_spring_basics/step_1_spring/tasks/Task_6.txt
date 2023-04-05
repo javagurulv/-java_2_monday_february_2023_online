@@ -2,13 +2,13 @@
 
 замените код:
 
-	private ApplicationContext appContext =
+	private Shop.ApplicationContext appContext =
 			new DIApplicationContextBuilder().build("lv.javaguru.java2.library");
 
 
 на код:
 
-	private ApplicationContext appContext;
+	private Shop.ApplicationContext appContext;
 
 	@Before
 	public void setup() {

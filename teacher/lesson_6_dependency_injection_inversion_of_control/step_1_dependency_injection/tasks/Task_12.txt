@@ -1,4 +1,4 @@
-В класс ApplicationContext добавьте метод:
+В класс Shop.ApplicationContext добавьте метод:
 
 	public void addBean(Class beanClass, Object beanInstance) {
 		beans.put(beanClass, beanInstance);

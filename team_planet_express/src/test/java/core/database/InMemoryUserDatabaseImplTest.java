@@ -1,6 +1,7 @@
 package core.database;
 
-import core.domain.user.User;
+import Shop.core.database.InMemoryUserDatabaseImpl;
+import Shop.core.domain.user.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

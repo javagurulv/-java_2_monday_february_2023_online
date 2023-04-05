@@ -1,6 +1,8 @@
 package core.services.validators.universal.user_input;
 
-import core.responses.CoreError;
+import Shop.core.responses.CoreError;
+import Shop.core.services.validators.universal.user_input.InputStringValidator;
+import Shop.core.services.validators.universal.user_input.InputStringValidatorRecord;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

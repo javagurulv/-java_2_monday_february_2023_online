@@ -1,14 +1,15 @@
 package core.services.actions.guest;
 
-import core.domain.user.User;
-import core.domain.user.UserRole;
-import core.requests.guest.SignUpRequest;
-import core.responses.CoreError;
-import core.responses.guest.SignUpResponse;
-import core.services.user.UserRecord;
-import core.services.user.UserService;
-import core.services.validators.actions.guest.SignUpValidator;
-import core.support.MutableLong;
+import Shop.core.domain.user.User;
+import Shop.core.domain.user.UserRole;
+import Shop.core.requests.guest.SignUpRequest;
+import Shop.core.responses.CoreError;
+import Shop.core.responses.guest.SignUpResponse;
+import Shop.core.services.actions.guest.SignUpService;
+import Shop.core.services.user.UserRecord;
+import Shop.core.services.user.UserService;
+import Shop.core.services.validators.actions.guest.SignUpValidator;
+import Shop.core.support.MutableLong;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

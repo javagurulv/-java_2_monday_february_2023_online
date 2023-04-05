@@ -1,13 +1,14 @@
 package core.services.actions.shared;
 
-import core.domain.user.User;
-import core.requests.shared.SignOutRequest;
-import core.responses.CoreError;
-import core.responses.shared.SignOutResponse;
-import core.services.user.UserRecord;
-import core.services.user.UserService;
-import core.services.validators.actions.shared.SignOutValidator;
-import core.support.MutableLong;
+import Shop.core.domain.user.User;
+import Shop.core.requests.shared.SignOutRequest;
+import Shop.core.responses.CoreError;
+import Shop.core.responses.shared.SignOutResponse;
+import Shop.core.services.actions.shared.SignOutService;
+import Shop.core.services.user.UserRecord;
+import Shop.core.services.user.UserService;
+import Shop.core.services.validators.actions.shared.SignOutValidator;
+import Shop.core.support.MutableLong;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

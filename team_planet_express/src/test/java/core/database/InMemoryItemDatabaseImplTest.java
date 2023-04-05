@@ -1,6 +1,7 @@
 package core.database;
 
-import core.domain.item.Item;
+import Shop.core.database.InMemoryItemDatabaseImpl;
+import Shop.core.domain.item.Item;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

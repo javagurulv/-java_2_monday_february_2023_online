@@ -1,13 +1,13 @@
-В классе ApplicationContext удалите весь код из конструктора.
+В классе Shop.ApplicationContext удалите весь код из конструктора.
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ApplicationContext {
+public class Shop.ApplicationContext {
 
 	private Map<Class, Object> beans = new HashMap<>();
 
-	public ApplicationContext() { }
+	public Shop.ApplicationContext() { }
 
 	public void addBean(Class beanClass, Object beanInstance) {
 		beans.put(beanClass, beanInstance);

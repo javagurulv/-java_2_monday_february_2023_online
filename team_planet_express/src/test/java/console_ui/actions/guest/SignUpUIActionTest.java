@@ -1,12 +1,13 @@
 package console_ui.actions.guest;
 
-import console_ui.UserCommunication;
-import core.domain.user.User;
-import core.requests.guest.SignUpRequest;
-import core.responses.CoreError;
-import core.responses.guest.SignUpResponse;
-import core.services.actions.guest.SignUpService;
-import core.support.MutableLong;
+import Shop.console_ui.UserCommunication;
+import Shop.console_ui.actions.guest.SignUpUIAction;
+import Shop.core.domain.user.User;
+import Shop.core.requests.guest.SignUpRequest;
+import Shop.core.responses.CoreError;
+import Shop.core.responses.guest.SignUpResponse;
+import Shop.core.services.actions.guest.SignUpService;
+import Shop.core.support.MutableLong;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

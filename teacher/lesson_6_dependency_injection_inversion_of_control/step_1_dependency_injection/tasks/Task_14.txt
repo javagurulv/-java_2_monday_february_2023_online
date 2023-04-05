@@ -9,7 +9,7 @@ import java.util.Optional;
 
 class DIComponentCreator {
 
-	public void create(ApplicationContext applicationContext,
+	public void create(Shop.ApplicationContext applicationContext,
 					   List<Class> diComponents) {
 		diComponents.forEach(diComponent -> {
 			Optional<Constructor> defaultConstructorOpt = getDefaultConstructor(diComponent);

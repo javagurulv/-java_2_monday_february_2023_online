@@ -4,7 +4,7 @@
 
 public class BookListApplication {
 
-	private static ApplicationContext applicationContext =
+	private static Shop.ApplicationContext applicationContext =
 			new DIApplicationContextBuilder().build("lv.javaguru.java2.library");
 
 Если ваше приложение находится в другом пакете, то укажите именно его.

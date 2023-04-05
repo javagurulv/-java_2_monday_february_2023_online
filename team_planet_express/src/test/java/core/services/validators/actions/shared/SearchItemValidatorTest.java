@@ -1,10 +1,11 @@
 package core.services.validators.actions.shared;
 
-import core.requests.shared.SearchItemRequest;
-import core.services.exception.InternalSystemCollapseException;
-import core.services.validators.universal.user_input.InputStringValidator;
-import core.services.validators.universal.user_input.InputStringValidatorRecord;
-import core.support.paging.PagingRule;
+import Shop.core.requests.shared.SearchItemRequest;
+import Shop.core.services.exception.InternalSystemCollapseException;
+import Shop.core.services.validators.actions.shared.SearchItemValidator;
+import Shop.core.services.validators.universal.user_input.InputStringValidator;
+import Shop.core.services.validators.universal.user_input.InputStringValidatorRecord;
+import Shop.core.support.paging.PagingRule;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

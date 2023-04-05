@@ -1,14 +1,15 @@
 package core.services.actions.shared;
 
-import core.database.Database;
-import core.database.UserDatabase;
-import core.domain.user.User;
-import core.requests.shared.SignInRequest;
-import core.responses.CoreError;
-import core.responses.shared.SignInResponse;
-import core.services.exception.ServiceMissingDataException;
-import core.services.validators.actions.shared.SignInValidator;
-import core.support.MutableLong;
+import Shop.core.database.Database;
+import Shop.core.database.UserDatabase;
+import Shop.core.domain.user.User;
+import Shop.core.requests.shared.SignInRequest;
+import Shop.core.responses.CoreError;
+import Shop.core.responses.shared.SignInResponse;
+import Shop.core.services.actions.shared.SignInService;
+import Shop.core.services.exception.ServiceMissingDataException;
+import Shop.core.services.validators.actions.shared.SignInValidator;
+import Shop.core.support.MutableLong;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

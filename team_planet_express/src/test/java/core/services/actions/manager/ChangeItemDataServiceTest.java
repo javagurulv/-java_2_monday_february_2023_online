@@ -1,11 +1,12 @@
 package core.services.actions.manager;
 
-import core.database.Database;
-import core.database.ItemDatabase;
-import core.requests.manager.ChangeItemDataRequest;
-import core.responses.CoreError;
-import core.responses.manager.ChangeItemDataResponse;
-import core.services.validators.actions.manager.ChangeItemDataValidator;
+import Shop.core.database.Database;
+import Shop.core.database.ItemDatabase;
+import Shop.core.requests.manager.ChangeItemDataRequest;
+import Shop.core.responses.CoreError;
+import Shop.core.responses.manager.ChangeItemDataResponse;
+import Shop.core.services.actions.manager.ChangeItemDataService;
+import Shop.core.services.validators.actions.manager.ChangeItemDataValidator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

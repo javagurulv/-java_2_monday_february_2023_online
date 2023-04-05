@@ -1,6 +1,7 @@
 package core.database;
 
-import core.domain.cart_item.CartItem;
+import Shop.core.database.InMemoryCartItemDatabaseImpl;
+import Shop.core.domain.cart_item.CartItem;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

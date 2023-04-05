@@ -1,9 +1,10 @@
 package core.services.validators.cart;
 
-import core.database.CartDatabase;
-import core.database.Database;
-import core.domain.cart.Cart;
-import core.responses.CoreError;
+import Shop.core.database.CartDatabase;
+import Shop.core.database.Database;
+import Shop.core.domain.cart.Cart;
+import Shop.core.responses.CoreError;
+import Shop.core.services.validators.cart.CartValidator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -1,6 +1,7 @@
 package core.services.fake;
 
-import core.domain.user.User;
+import Shop.core.domain.user.User;
+import Shop.core.services.fake.FakeCartGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

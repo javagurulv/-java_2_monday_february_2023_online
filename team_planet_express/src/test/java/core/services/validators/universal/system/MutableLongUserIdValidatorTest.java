@@ -1,7 +1,8 @@
 package core.services.validators.universal.system;
 
-import core.services.exception.ServiceMissingDataException;
-import core.support.MutableLong;
+import Shop.core.services.exception.ServiceMissingDataException;
+import Shop.core.services.validators.universal.system.MutableLongUserIdValidator;
+import Shop.core.support.MutableLong;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

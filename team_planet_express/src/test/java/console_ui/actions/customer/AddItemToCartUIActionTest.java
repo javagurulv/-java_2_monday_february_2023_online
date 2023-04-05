@@ -1,10 +1,11 @@
 package console_ui.actions.customer;
 
-import console_ui.UserCommunication;
-import core.requests.customer.AddItemToCartRequest;
-import core.responses.CoreError;
-import core.responses.customer.AddItemToCartResponse;
-import core.services.actions.customer.AddItemToCartService;
+import Shop.console_ui.UserCommunication;
+import Shop.console_ui.actions.customer.AddItemToCartUIAction;
+import Shop.core.requests.customer.AddItemToCartRequest;
+import Shop.core.responses.CoreError;
+import Shop.core.responses.customer.AddItemToCartResponse;
+import Shop.core.services.actions.customer.AddItemToCartService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
