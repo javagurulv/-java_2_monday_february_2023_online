@@ -34,4 +34,17 @@ public class ValidationService {
         }
     }
 
+    void validatePassword(String password){
+
+        if (password == null) {
+            throw new EmailValidationException("Password is Null");
+        }
+        if (password.length() > 50) {
+            throw new EmailValidationException("Password is too Long");
+        }
+        if (password.length() < 8) {
+            throw new EmailValidationException("Password is too Small");
+        }
+    }
+
 }
