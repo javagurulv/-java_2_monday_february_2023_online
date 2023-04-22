@@ -1,10 +1,10 @@
 package shop.acceptance.custom.tester;
 
-import shop.dependency_injection.ApplicationContext;
 import shop.core.domain.item.Item;
 import shop.core.requests.customer.ListCartItemsRequest;
 import shop.core.responses.customer.ListCartItemsResponse;
 import shop.core.services.actions.customer.ListCartItemsService;
+import shop.dependency_injection.ApplicationContext;
 
 import java.util.Optional;
 
@@ -29,8 +29,8 @@ public class ListCartItemsTester extends Tester {
         Optional<Item> itemOptional = getDatabase().accessItemDatabase().getAllItems().stream()
                 .filter(item -> item.getName().equals(itemName)).findFirst();
         assertTrue(itemOptional.isPresent());
-        assertTrue(listCartItemsResponse.getCartItems().stream()
-                .anyMatch(item -> item.getItemId().equals(itemOptional.get().getId()) && item.getOrderedQuantity().equals(quantity)));
+        assertTrue(listCartItemsResponse.getCartItemsForList().stream()
+                .anyMatch(item -> item.getItemName().equals(itemName) && item.getOrderedQuantity().equals(quantity)));
         return this;
     }
 

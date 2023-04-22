@@ -41,8 +41,8 @@ public class AcceptanceTest {
     protected AcceptanceTest() {
     }
 
-    protected SearchItemResponse executeSearchItem(String itemName, String price, List<OrderingRule> orderingRules, PagingRule pagingRule) {
-        SearchItemRequest request = new SearchItemRequest(itemName, price, orderingRules, pagingRule);
+    protected SearchItemResponse executeSearchItem(CurrentUserId currentUserId, String itemName, String price, List<OrderingRule> orderingRules, PagingRule pagingRule) {
+        SearchItemRequest request = new SearchItemRequest(currentUserId, itemName, price, orderingRules, pagingRule);
         return getSearchItemService().execute(request);
     }
 

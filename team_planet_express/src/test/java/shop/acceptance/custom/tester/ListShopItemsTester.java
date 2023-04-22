@@ -1,9 +1,10 @@
 package shop.acceptance.custom.tester;
 
-import shop.dependency_injection.ApplicationContext;
 import shop.core.requests.customer.ListShopItemsRequest;
 import shop.core.responses.customer.ListShopItemsResponse;
 import shop.core.services.actions.customer.ListShopItemsService;
+import shop.core.support.CurrentUserId;
+import shop.dependency_injection.ApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -17,7 +18,7 @@ public class ListShopItemsTester extends Tester {
 
     public ListShopItemsTester showListShopItems() {
         ListShopItemsService listShopItemsService = applicationContext.getBean(ListShopItemsService.class);
-        ListShopItemsRequest listShopItemsRequest = new ListShopItemsRequest();
+        ListShopItemsRequest listShopItemsRequest = new ListShopItemsRequest(applicationContext.getBean(CurrentUserId.class));
         listShopItemsResponse = listShopItemsService.execute(listShopItemsRequest);
         return this;
     }

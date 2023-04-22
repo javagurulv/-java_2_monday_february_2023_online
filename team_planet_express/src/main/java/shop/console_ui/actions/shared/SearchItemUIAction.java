@@ -2,12 +2,14 @@ package shop.console_ui.actions.shared;
 
 import shop.console_ui.UserCommunication;
 import shop.console_ui.actions.UIAction;
+import shop.console_ui.item_list.ItemStringProvider;
 import shop.console_ui.item_list.OrderingUIElement;
 import shop.console_ui.item_list.PagingUIElement;
 import shop.core.domain.user.UserRole;
 import shop.core.requests.shared.SearchItemRequest;
 import shop.core.responses.shared.SearchItemResponse;
 import shop.core.services.actions.shared.SearchItemService;
+import shop.core.support.CurrentUserId;
 import shop.core.support.ordering.OrderingRule;
 import shop.core.support.paging.PagingRule;
 import shop.dependency_injection.DIComponent;
@@ -29,9 +31,13 @@ public class SearchItemUIAction extends UIAction {
     @DIDependency
     private SearchItemService searchItemService;
     @DIDependency
+    private CurrentUserId currentUserId;
+    @DIDependency
     private OrderingUIElement orderingUIElement;
     @DIDependency
     private PagingUIElement pagingUIElement;
+    @DIDependency
+    private ItemStringProvider itemStringProvider;
     @DIDependency
     private UserCommunication userCommunication;
 
@@ -45,7 +51,7 @@ public class SearchItemUIAction extends UIAction {
         String price = userCommunication.requestInput(PROMPT_TOPIC_PRICE);
         List<OrderingRule> orderingRules = orderingUIElement.getOrderingRules();
         PagingRule pagingRule = pagingUIElement.getPagingRule();
-        SearchItemRequest request = new SearchItemRequest(itemName, price, orderingRules, pagingRule);
+        SearchItemRequest request = new SearchItemRequest(currentUserId, itemName, price, orderingRules, pagingRule);
         showResults(request);
     }
 
@@ -59,7 +65,8 @@ public class SearchItemUIAction extends UIAction {
                 userCommunication.informUser(MESSAGE_NO_MATCH);
             } else {
                 userCommunication.informUser(MESSAGE_SEARCH_RESULTS);
-                response.getItems().forEach(item -> userCommunication.informUser(item.toString()));
+                response.getItems()
+                        .forEach(item -> userCommunication.informUser(itemStringProvider.get(item, response.getUserRole())));
                 continuePaging = pagingUIElement.continuePagingThrough(request.getPagingRule(), response.getTotalFoundItemCount());
             }
         } while (continuePaging);

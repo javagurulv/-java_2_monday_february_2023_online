@@ -1,6 +1,7 @@
 package shop.core.responses.shared;
 
 import shop.core.domain.item.Item;
+import shop.core.domain.user.UserRole;
 import shop.core.responses.CoreError;
 import shop.core.responses.CoreResponse;
 
@@ -10,10 +11,12 @@ public class SearchItemResponse extends CoreResponse {
 
     private List<Item> items;
     private Integer totalFoundItemCount;
+    private UserRole userRole;
 
-    public SearchItemResponse(List<Item> items, Integer totalFoundItemCount) {
+    public SearchItemResponse(List<Item> items, Integer totalFoundItemCount, UserRole userRole) {
         this.items = items;
         this.totalFoundItemCount = totalFoundItemCount;
+        this.userRole = userRole;
     }
 
     public SearchItemResponse(List<CoreError> errors) {
@@ -26,6 +29,10 @@ public class SearchItemResponse extends CoreResponse {
 
     public Integer getTotalFoundItemCount() {
         return totalFoundItemCount;
+    }
+
+    public UserRole getUserRole() {
+        return userRole;
     }
 
 }

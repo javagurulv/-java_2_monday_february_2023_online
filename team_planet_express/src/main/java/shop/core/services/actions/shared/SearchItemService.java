@@ -8,6 +8,7 @@ import shop.core.responses.shared.SearchItemResponse;
 import shop.core.services.item_list.OrderingService;
 import shop.core.services.item_list.PagingService;
 import shop.core.services.validators.actions.shared.SearchItemValidator;
+import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.dependency_injection.DIComponent;
 import shop.dependency_injection.DIDependency;
 
@@ -26,6 +27,8 @@ public class SearchItemService {
     private OrderingService orderingService;
     @DIDependency
     private PagingService pagingService;
+    @DIDependency
+    private DatabaseAccessValidator databaseAccessValidator;
 
     public SearchItemResponse execute(SearchItemRequest request) {
         List<CoreError> errors = validator.validate(request);
@@ -37,7 +40,8 @@ public class SearchItemService {
             Integer totalFoundItemCount = items.size();
             items = orderingService.getOrderedItems(items, request.getOrderingRules());
             items = pagingService.getPage(items, request.getPagingRule());
-            response = new SearchItemResponse(items, totalFoundItemCount);
+            response = new SearchItemResponse(items, totalFoundItemCount,
+                    databaseAccessValidator.getUserById(request.getUserId().getValue()).getUserRole());
         }
         return response;
     }

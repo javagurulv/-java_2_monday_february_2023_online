@@ -18,12 +18,4 @@ public class Item {
         this.availableQuantity = availableQuantity;
     }
 
-    @Override
-    public String toString() {
-        return "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", availableQuantity=" + availableQuantity;
-    }
-
 }

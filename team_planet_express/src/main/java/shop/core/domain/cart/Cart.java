@@ -18,12 +18,4 @@ public class Cart {
         this.lastActionDate = LocalDate.now();
     }
 
-    @Override
-    public String toString() {
-        return "id=" + id +
-                ", user_id=" + userId +
-                ", cartStatus=" + cartStatus +
-                ", lastActionDate=" + lastActionDate;
-    }
-
 }

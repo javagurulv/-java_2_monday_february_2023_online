@@ -6,6 +6,7 @@ import shop.core.domain.user.UserRole;
 import shop.core.requests.customer.ListCartItemsRequest;
 import shop.core.responses.customer.ListCartItemsResponse;
 import shop.core.services.actions.customer.ListCartItemsService;
+import shop.core.support.CartItemForList;
 import shop.core.support.CurrentUserId;
 import shop.dependency_injection.DIComponent;
 import shop.dependency_injection.DIDependency;
@@ -46,13 +47,20 @@ public class ListCartItemsUIAction extends UIAction {
     }
 
     private void printCartItems(ListCartItemsResponse response) {
-        if (response.getCartItems().isEmpty()) {
+        if (response.getCartItemsForList().isEmpty()) {
             userCommunication.informUser(MESSAGE_CART_IS_EMPTY);
         } else {
-            response.getCartItems().forEach(item -> userCommunication.informUser(item.toString()));
+            response.getCartItemsForList()
+                    .forEach(cartItemForList -> userCommunication.informUser(getCartItemString(cartItemForList)));
             BigDecimal cartTotal = response.getCartTotal();
             userCommunication.informUser(MESSAGE_CART_TOTAL + cartTotal);
         }
+    }
+
+    private String getCartItemString(CartItemForList cartItemForList) {
+        return cartItemForList.getItemName() +
+                ", price: " + cartItemForList.getPrice() +
+                ", ordered quantity: " + cartItemForList.getOrderedQuantity();
     }
 
 }

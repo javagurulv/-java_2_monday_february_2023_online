@@ -26,30 +26,31 @@ class UIActionsListTest {
     }
 
     @Test
-    void shouldReturn8ActionsForNoId() {
+    void shouldReturn9ActionsForNoId() {
+        currentUserId.setValue(null);
         assertEquals(9, uiActionsList.getUIActionsListForUserRole().size());
     }
 
     @Test
-    void shouldReturn8ActionsForGuest() {
+    void shouldReturn9ActionsForGuest() {
         currentUserId.setValue(1L);
         assertEquals(9, uiActionsList.getUIActionsListForUserRole().size());
     }
 
     @Test
-    void shouldReturn7ActionsForCustomer() {
+    void shouldReturn8ActionsForCustomer() {
         currentUserId.setValue(2L);
         assertEquals(8, uiActionsList.getUIActionsListForUserRole().size());
     }
 
     @Test
-    void shouldReturn4ActionsForManager() {
+    void shouldReturn6ActionsForManager() {
         currentUserId.setValue(3L);
-        assertEquals(5, uiActionsList.getUIActionsListForUserRole().size());
+        assertEquals(6, uiActionsList.getUIActionsListForUserRole().size());
     }
 
     @Test
-    void shouldReturn3ActionsForAdmin() {
+    void shouldReturn4ActionsForAdmin() {
         currentUserId.setValue(4L);
         assertEquals(4, uiActionsList.getUIActionsListForUserRole().size());
     }
