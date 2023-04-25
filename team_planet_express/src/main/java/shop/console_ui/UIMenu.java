@@ -1,13 +1,13 @@
 package shop.console_ui;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.console_ui.actions.UIAction;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
 import java.util.List;
 
-@DIComponent
+@Component
 public class UIMenu {
 
     private static final String LOGIN_MESSAGE = "\r\nHello, ";
@@ -16,11 +16,11 @@ public class UIMenu {
     private static final String PROMPT_TOPIC_ACTION = "an action number: ";
     private static final String ERROR_INVALID_ACTION_NUMBER = "Error: Please enter one of the menu numbers.";
 
-    @DIDependency
+    @Autowired
     private UIActionsList uiActionsList;
-    @DIDependency
+    @Autowired
     private DatabaseAccessValidator databaseAccessValidator;
-    @DIDependency
+    @Autowired
     private UserCommunication userCommunication;
 
     public void startUI() {

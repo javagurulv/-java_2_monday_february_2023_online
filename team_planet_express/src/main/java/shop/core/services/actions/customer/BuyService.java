@@ -1,5 +1,7 @@
 package shop.core.services.actions.customer;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.core.database.Database;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart.CartStatus;
@@ -8,20 +10,18 @@ import shop.core.responses.CoreError;
 import shop.core.responses.customer.BuyResponse;
 import shop.core.services.validators.actions.customer.BuyValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@DIComponent
+@Component
 public class BuyService {
 
-    @DIDependency
+    @Autowired
     private Database database;
-    @DIDependency
+    @Autowired
     private BuyValidator validator;
-    @DIDependency
+    @Autowired
     private DatabaseAccessValidator databaseAccessValidator;
 
 

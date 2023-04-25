@@ -1,7 +1,7 @@
-package shop.acceptance.guest;
+package shop.acceptance_tests.guest;
 
 import org.junit.jupiter.api.Test;
-import shop.acceptance.AcceptanceTest;
+import shop.acceptance_tests.AcceptanceTest;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
 import shop.core.domain.item.Item;

@@ -1,10 +1,10 @@
-package shop.acceptance.custom.tester;
+package shop.acceptance_tests.custom.tester;
 
+import org.springframework.context.ApplicationContext;
 import shop.core.requests.customer.ListShopItemsRequest;
 import shop.core.responses.customer.ListShopItemsResponse;
 import shop.core.services.actions.customer.ListShopItemsService;
 import shop.core.support.CurrentUserId;
-import shop.dependency_injection.ApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -33,4 +33,5 @@ public class ListShopItemsTester extends Tester {
         super.checkItemInShop(itemName, quantity);
         return this;
     }
+
 }

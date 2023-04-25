@@ -1,6 +1,6 @@
-package shop.acceptance.custom.tester;
+package shop.acceptance_tests.custom.tester;
 
-import shop.dependency_injection.ApplicationContext;
+import org.springframework.context.ApplicationContext;
 import shop.core.requests.customer.AddItemToCartRequest;
 import shop.core.services.actions.customer.AddItemToCartService;
 import shop.core.support.CurrentUserId;
@@ -32,4 +32,5 @@ public class AddItemToCartTester extends Tester {
         super.checkItemInShop(itemName, leftInShopQuantity);
         return this;
     }
+
 }

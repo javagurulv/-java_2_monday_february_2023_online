@@ -1,5 +1,7 @@
 package shop.console_ui.actions.shared;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.console_ui.UserCommunication;
 import shop.console_ui.actions.UIAction;
 import shop.core.domain.user.UserRole;
@@ -7,10 +9,8 @@ import shop.core.requests.shared.SignInRequest;
 import shop.core.responses.shared.SignInResponse;
 import shop.core.services.actions.shared.SignInService;
 import shop.core.support.CurrentUserId;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
-@DIComponent
+@Component
 public class SignInUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Sign in";
@@ -21,11 +21,11 @@ public class SignInUIAction extends UIAction {
     private static final String MESSAGE_LOGIN = "Welcome back, ";
     private static final String MESSAGE_EXCLAMATION = "!";
 
-    @DIDependency
+    @Autowired
     private SignInService signInService;
-    @DIDependency
+    @Autowired
     private CurrentUserId currentUserId;
-    @DIDependency
+    @Autowired
     private UserCommunication userCommunication;
 
     public SignInUIAction() {

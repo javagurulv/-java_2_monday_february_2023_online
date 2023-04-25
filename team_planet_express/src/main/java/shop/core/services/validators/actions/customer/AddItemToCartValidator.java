@@ -1,5 +1,7 @@
 package shop.core.services.validators.actions.customer;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.core.database.Database;
 import shop.core.requests.customer.AddItemToCartRequest;
 import shop.core.responses.CoreError;
@@ -8,14 +10,12 @@ import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@DIComponent
+@Component
 public class AddItemToCartValidator {
 
     private static final String FIELD_NAME = "name";
@@ -25,15 +25,15 @@ public class AddItemToCartValidator {
     private static final String ERROR_NO_SUCH_ITEM = "Error: No such item in the shop.";
     private static final String ERROR_NOT_ENOUGH_QUANTITY = "Error: Available quantity lower than ordered amount.";
 
-    @DIDependency
+    @Autowired
     private Database database;
-    @DIDependency
+    @Autowired
     private CurrentUserIdValidator userIdValidator;
-    @DIDependency
+    @Autowired
     private CartValidator cartValidator;
-    @DIDependency
+    @Autowired
     private InputStringValidator inputStringValidator;
-    @DIDependency
+    @Autowired
     private DatabaseAccessValidator databaseAccessValidator;
 
 

@@ -1,18 +1,18 @@
 package shop.core.services.validators.universal.system;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.core.database.Database;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
 import shop.core.domain.item.Item;
 import shop.core.domain.user.User;
 import shop.core.services.exception.ServiceMissingDataException;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
-@DIComponent
+@Component
 public class DatabaseAccessValidator {
 
-    @DIDependency
+    @Autowired
     private Database database;
 
     public User getUserById(Long userId) {

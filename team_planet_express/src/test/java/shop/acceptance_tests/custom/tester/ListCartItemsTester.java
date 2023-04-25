@@ -1,10 +1,10 @@
-package shop.acceptance.custom.tester;
+package shop.acceptance_tests.custom.tester;
 
+import org.springframework.context.ApplicationContext;
 import shop.core.domain.item.Item;
 import shop.core.requests.customer.ListCartItemsRequest;
 import shop.core.responses.customer.ListCartItemsResponse;
 import shop.core.services.actions.customer.ListCartItemsService;
-import shop.dependency_injection.ApplicationContext;
 
 import java.util.Optional;
 
@@ -39,4 +39,5 @@ public class ListCartItemsTester extends Tester {
         super.checkItemInCart(itemName, quantity);
         return this;
     }
+
 }

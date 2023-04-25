@@ -1,10 +1,10 @@
 package shop.console_ui.item_list;
 
+import org.springframework.stereotype.Component;
 import shop.core.domain.item.Item;
 import shop.core.domain.user.UserRole;
-import shop.dependency_injection.DIComponent;
 
-@DIComponent
+@Component
 public class ItemStringProvider {
 
     public String get(Item item, UserRole userRole) {

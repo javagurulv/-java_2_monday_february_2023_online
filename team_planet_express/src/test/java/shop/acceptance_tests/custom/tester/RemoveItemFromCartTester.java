@@ -1,11 +1,12 @@
-package shop.acceptance.custom.tester;
+package shop.acceptance_tests.custom.tester;
 
-import shop.dependency_injection.ApplicationContext;
+import org.springframework.context.ApplicationContext;
 import shop.core.requests.customer.RemoveItemFromCartRequest;
 import shop.core.services.actions.customer.RemoveItemFromCartService;
 import shop.core.support.CurrentUserId;
 
 public class RemoveItemFromCartTester extends Tester {
+
     private String itemName;
 
     public RemoveItemFromCartTester(ApplicationContext applicationContext) {
@@ -29,4 +30,5 @@ public class RemoveItemFromCartTester extends Tester {
         super.checkItemInShop(itemName, quantity);
         return this;
     }
+
 }

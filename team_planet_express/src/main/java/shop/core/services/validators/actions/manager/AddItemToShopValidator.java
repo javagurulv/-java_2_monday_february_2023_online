@@ -1,18 +1,18 @@
 package shop.core.services.validators.actions.manager;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.core.database.Database;
 import shop.core.requests.manager.AddItemToShopRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@DIComponent
+@Component
 public class AddItemToShopValidator {
 
     private static final String FIELD_NAME = "name";
@@ -23,9 +23,9 @@ public class AddItemToShopValidator {
     private static final String VALUE_NAME_QUANTITY = "Quantity";
     private static final String ERROR_ITEM_EXISTS = "Error: Item with this name already exists.";
 
-    @DIDependency
+    @Autowired
     private Database database;
-    @DIDependency
+    @Autowired
     private InputStringValidator inputStringValidator;
 
     public List<CoreError> validate(AddItemToShopRequest request) {

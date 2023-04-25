@@ -1,23 +1,23 @@
 package shop.core.services.actions.manager;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.core.database.Database;
 import shop.core.requests.manager.ChangeItemDataRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.manager.ChangeItemDataResponse;
 import shop.core.services.validators.actions.manager.ChangeItemDataValidator;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-@DIComponent
+@Component
 public class ChangeItemDataService {
 
-    @DIDependency
+    @Autowired
     private Database database;
-    @DIDependency
+    @Autowired
     private ChangeItemDataValidator validator;
 
     public ChangeItemDataResponse execute(ChangeItemDataRequest request) {

@@ -1,6 +1,6 @@
-package shop.acceptance.custom.tester;
+package shop.acceptance_tests.custom.tester;
 
-import shop.dependency_injection.ApplicationContext;
+import org.springframework.context.ApplicationContext;
 import shop.core.database.Database;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart.CartStatus;
@@ -11,6 +11,7 @@ import shop.core.support.CurrentUserId;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BuyTester extends Tester {
+
     private Cart cart;
 
     public BuyTester(ApplicationContext applicationContext) {
@@ -20,7 +21,7 @@ public class BuyTester extends Tester {
     public BuyTester buy() {
         Database database = applicationContext.getBean(Database.class);
         CurrentUserId currentUserId = applicationContext.getBean(CurrentUserId.class);
-        cart = database.accessCartDatabase().findOpenCartForUserId(currentUserId.getValue()).get();
+        cart = database.accessCartDatabase().findOpenCartForUserId(currentUserId.getValue()).orElseThrow();
         BuyService buyService = applicationContext.getBean(BuyService.class);
         BuyRequest buyRequest = new BuyRequest(applicationContext.getBean(CurrentUserId.class));
         buyService.execute(buyRequest);
@@ -31,4 +32,5 @@ public class BuyTester extends Tester {
         assertEquals(cart.getCartStatus(), CartStatus.CLOSED);
         return this;
     }
+
 }

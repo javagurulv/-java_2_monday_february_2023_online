@@ -1,23 +1,23 @@
 package shop.core.services.validators.item_list;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.core.responses.CoreError;
 import shop.core.services.exception.InternalSystemCollapseException;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 import shop.core.support.paging.PagingRule;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@DIComponent
+@Component
 public class PagingRuleValidator {
 
     private static final String FIELD_PAGE_SIZE = "page_size";
     private static final String VALUE_NAME_PAGE_SIZE = "Page size";
 
-    @DIDependency
+    @Autowired
     private InputStringValidator inputStringValidator;
 
     public List<CoreError> validate(PagingRule pagingRule) {

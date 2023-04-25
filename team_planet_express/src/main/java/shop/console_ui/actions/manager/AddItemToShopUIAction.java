@@ -1,15 +1,15 @@
 package shop.console_ui.actions.manager;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.console_ui.UserCommunication;
 import shop.console_ui.actions.UIAction;
 import shop.core.domain.user.UserRole;
 import shop.core.requests.manager.AddItemToShopRequest;
 import shop.core.responses.manager.AddItemToShopResponse;
 import shop.core.services.actions.manager.AddItemToShopService;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
-@DIComponent
+@Component
 public class AddItemToShopUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Add item to the shop";
@@ -20,9 +20,9 @@ public class AddItemToShopUIAction extends UIAction {
     private static final String PROMPT_TOPIC_QUANTITY = "available quantity: ";
     private static final String MESSAGE_ITEM_ADDED = "New item added to the shop.";
 
-    @DIDependency
+    @Autowired
     private AddItemToShopService addItemToShopService;
-    @DIDependency
+    @Autowired
     private UserCommunication userCommunication;
 
     public AddItemToShopUIAction() {

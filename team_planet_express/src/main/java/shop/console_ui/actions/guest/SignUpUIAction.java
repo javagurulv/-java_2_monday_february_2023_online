@@ -1,5 +1,7 @@
 package shop.console_ui.actions.guest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.console_ui.UserCommunication;
 import shop.console_ui.actions.UIAction;
 import shop.core.domain.user.UserRole;
@@ -7,10 +9,8 @@ import shop.core.requests.guest.SignUpRequest;
 import shop.core.responses.guest.SignUpResponse;
 import shop.core.services.actions.guest.SignUpService;
 import shop.core.support.CurrentUserId;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
-@DIComponent
+@Component
 public class SignUpUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Sign up";
@@ -22,11 +22,11 @@ public class SignUpUIAction extends UIAction {
     private static final String MESSAGE_USER_CREATED = "Welcome to the Planet Express crew, ";
     private static final String MESSAGE_EXCLAMATION = "!";
 
-    @DIDependency
+    @Autowired
     private SignUpService signUpService;
-    @DIDependency
+    @Autowired
     private CurrentUserId currentUserId;
-    @DIDependency
+    @Autowired
     private UserCommunication userCommunication;
 
     public SignUpUIAction() {

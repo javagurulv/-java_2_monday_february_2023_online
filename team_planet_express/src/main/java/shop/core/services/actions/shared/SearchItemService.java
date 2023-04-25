@@ -1,5 +1,7 @@
 package shop.core.services.actions.shared;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.core.database.Database;
 import shop.core.domain.item.Item;
 import shop.core.requests.shared.SearchItemRequest;
@@ -9,25 +11,23 @@ import shop.core.services.item_list.OrderingService;
 import shop.core.services.item_list.PagingService;
 import shop.core.services.validators.actions.shared.SearchItemValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-@DIComponent
+@Component
 public class SearchItemService {
 
-    @DIDependency
+    @Autowired
     private Database database;
-    @DIDependency
+    @Autowired
     private SearchItemValidator validator;
-    @DIDependency
+    @Autowired
     private OrderingService orderingService;
-    @DIDependency
+    @Autowired
     private PagingService pagingService;
-    @DIDependency
+    @Autowired
     private DatabaseAccessValidator databaseAccessValidator;
 
     public SearchItemResponse execute(SearchItemRequest request) {

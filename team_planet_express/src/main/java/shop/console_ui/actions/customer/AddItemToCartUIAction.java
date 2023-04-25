@@ -1,5 +1,7 @@
 package shop.console_ui.actions.customer;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.console_ui.UserCommunication;
 import shop.console_ui.actions.UIAction;
 import shop.core.domain.user.UserRole;
@@ -7,10 +9,8 @@ import shop.core.requests.customer.AddItemToCartRequest;
 import shop.core.responses.customer.AddItemToCartResponse;
 import shop.core.services.actions.customer.AddItemToCartService;
 import shop.core.support.CurrentUserId;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
-@DIComponent
+@Component
 public class AddItemToCartUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Add item to the cart";
@@ -20,11 +20,11 @@ public class AddItemToCartUIAction extends UIAction {
     private static final String PROMPT_TOPIC_QUANTITY = "quantity to be ordered: ";
     private static final String MESSAGE_ITEM_ADDED = "Item added to your cart.";
 
-    @DIDependency
+    @Autowired
     private AddItemToCartService addItemToCartService;
-    @DIDependency
+    @Autowired
     private CurrentUserId currentUserId;
-    @DIDependency
+    @Autowired
     private UserCommunication userCommunication;
 
     public AddItemToCartUIAction() {

@@ -1,8 +1,8 @@
 package shop.core.database;
 
-import shop.dependency_injection.DIComponent;
+import org.springframework.stereotype.Component;
 
-@DIComponent
+@Component
 public class Database {
 
     private final UserDatabase userDatabase;

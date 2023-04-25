@@ -1,10 +1,10 @@
 package shop.core.support;
 
 import lombok.Data;
-import shop.dependency_injection.DIComponent;
+import org.springframework.stereotype.Component;
 
 @Data
-@DIComponent
+@Component
 public class CurrentUserId {
 
     private Long value;

@@ -1,5 +1,7 @@
 package shop.core.services.actions.guest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
 import shop.core.requests.guest.SignUpRequest;
@@ -8,17 +10,15 @@ import shop.core.responses.guest.SignUpResponse;
 import shop.core.services.user.UserCreationData;
 import shop.core.services.user.UserService;
 import shop.core.services.validators.actions.guest.SignUpValidator;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
 import java.util.List;
 
-@DIComponent
+@Component
 public class SignUpService {
 
-    @DIDependency
+    @Autowired
     private SignUpValidator validator;
-    @DIDependency
+    @Autowired
     private UserService userService;
 
     public SignUpResponse execute(SignUpRequest request) {

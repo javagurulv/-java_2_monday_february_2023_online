@@ -1,5 +1,7 @@
 package shop.console_ui.actions.customer;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.console_ui.UserCommunication;
 import shop.console_ui.actions.UIAction;
 import shop.core.domain.user.UserRole;
@@ -8,12 +10,10 @@ import shop.core.responses.customer.ListCartItemsResponse;
 import shop.core.services.actions.customer.ListCartItemsService;
 import shop.core.support.CartItemForList;
 import shop.core.support.CurrentUserId;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
 import java.math.BigDecimal;
 
-@DIComponent
+@Component
 public class ListCartItemsUIAction extends UIAction {
 
     private static final String ACTION_NAME = "List cart items";
@@ -23,11 +23,11 @@ public class ListCartItemsUIAction extends UIAction {
     private static final String MESSAGE_CART_IS_EMPTY = "Your cart is empty.";
     private static final String MESSAGE_CART_TOTAL = "Your cart total is: ";
 
-    @DIDependency
+    @Autowired
     private ListCartItemsService listCartItemsService;
-    @DIDependency
+    @Autowired
     private CurrentUserId currentUserId;
-    @DIDependency
+    @Autowired
     private UserCommunication userCommunication;
 
     public ListCartItemsUIAction() {

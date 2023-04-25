@@ -1,7 +1,7 @@
-package shop.acceptance.customer;
+package shop.acceptance_tests.customer;
 
 import org.junit.jupiter.api.Test;
-import shop.acceptance.AcceptanceTest;
+import shop.acceptance_tests.AcceptanceTest;
 import shop.core.domain.item.Item;
 import shop.core.responses.shared.SearchItemResponse;
 import shop.core.support.ordering.OrderBy;

@@ -1,5 +1,7 @@
 package shop.core.services.actions.customer;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.core.database.Database;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
@@ -9,20 +11,18 @@ import shop.core.responses.CoreError;
 import shop.core.responses.customer.AddItemToCartResponse;
 import shop.core.services.validators.actions.customer.AddItemToCartValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
 import java.util.List;
 import java.util.Optional;
 
-@DIComponent
+@Component
 public class AddItemToCartService {
 
-    @DIDependency
+    @Autowired
     private Database database;
-    @DIDependency
+    @Autowired
     private AddItemToCartValidator validator;
-    @DIDependency
+    @Autowired
     private DatabaseAccessValidator databaseAccessValidator;
 
     public AddItemToCartResponse execute(AddItemToCartRequest request) {
