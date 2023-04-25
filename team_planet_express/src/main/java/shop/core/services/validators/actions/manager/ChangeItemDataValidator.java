@@ -1,5 +1,7 @@
 package shop.core.services.validators.actions.manager;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.core.database.Database;
 import shop.core.domain.item.Item;
 import shop.core.requests.manager.ChangeItemDataRequest;
@@ -7,8 +9,6 @@ import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@DIComponent
+@Component
 public class ChangeItemDataValidator {
 
     private static final String FIELD_ID = "id";
@@ -29,11 +29,11 @@ public class ChangeItemDataValidator {
     private static final String ERROR_ID_NOT_EXISTS = "Error: Item with this id does not exist.";
     private static final String ERROR_ITEM_EXISTS = "Error: Exactly the same item already exists.";
 
-    @DIDependency
+    @Autowired
     private Database database;
-    @DIDependency
+    @Autowired
     private InputStringValidator inputStringValidator;
-    @DIDependency
+    @Autowired
     private DatabaseAccessValidator databaseAccessValidator;
 
     public List<CoreError> validate(ChangeItemDataRequest request) {

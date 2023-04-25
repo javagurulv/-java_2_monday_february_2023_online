@@ -1,13 +1,13 @@
 package shop.core.services.actions.admin;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.core.database.Database;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
-@DIComponent
+@Component
 public class ChangeUserDataService {
 
-    @DIDependency
+    @Autowired
     private Database database;
 
     public void execute() {

@@ -1,5 +1,7 @@
 package shop.console_ui.actions.shared;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.console_ui.UserCommunication;
 import shop.console_ui.actions.UIAction;
 import shop.console_ui.item_list.ItemStringProvider;
@@ -12,12 +14,10 @@ import shop.core.services.actions.shared.SearchItemService;
 import shop.core.support.CurrentUserId;
 import shop.core.support.ordering.OrderingRule;
 import shop.core.support.paging.PagingRule;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
 import java.util.List;
 
-@DIComponent
+@Component
 public class SearchItemUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Search item in the shop";
@@ -28,17 +28,17 @@ public class SearchItemUIAction extends UIAction {
     private static final String MESSAGE_NO_MATCH = "No items matched search parameters.";
     private static final String MESSAGE_SEARCH_RESULTS = "Search results:";
 
-    @DIDependency
+    @Autowired
     private SearchItemService searchItemService;
-    @DIDependency
+    @Autowired
     private CurrentUserId currentUserId;
-    @DIDependency
+    @Autowired
     private OrderingUIElement orderingUIElement;
-    @DIDependency
+    @Autowired
     private PagingUIElement pagingUIElement;
-    @DIDependency
+    @Autowired
     private ItemStringProvider itemStringProvider;
-    @DIDependency
+    @Autowired
     private UserCommunication userCommunication;
 
     public SearchItemUIAction() {

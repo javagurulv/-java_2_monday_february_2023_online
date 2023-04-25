@@ -1,5 +1,8 @@
 package shop.console_ui;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 import shop.console_ui.actions.UIAction;
 import shop.console_ui.actions.admin.ChangeUserDataUIAction;
 import shop.console_ui.actions.customer.*;
@@ -14,24 +17,20 @@ import shop.core.database.Database;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
 import shop.core.support.CurrentUserId;
-import shop.dependency_injection.ApplicationContext;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIConstructor;
-import shop.dependency_injection.DIDependency;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@DIComponent
+@Component
 public class UIActionsList {
 
-    @DIDependency
+    @Autowired
     private ApplicationContext applicationContext;
     private List<UIAction> uiActionsList;
 
-    @DIConstructor
+    @Autowired //TODO dafq is happening there ? warning warning
     public void initUIActionsList() {
         this.uiActionsList = createUIActionsList(applicationContext);
     }

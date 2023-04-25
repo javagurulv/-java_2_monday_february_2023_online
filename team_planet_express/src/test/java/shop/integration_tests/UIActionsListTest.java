@@ -1,18 +1,15 @@
-package shop.acceptance.console_ui;
+package shop.integration_tests;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
-import shop.acceptance.ApplicationContextSetup;
+import org.springframework.context.ApplicationContext;
+import shop.acceptance_tests.ApplicationContextSetup;
 import shop.console_ui.UIActionsList;
 import shop.core.support.CurrentUserId;
-import shop.dependency_injection.ApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 //TODO put this out of its misery, because it is some sort of an abominable integration test now
-@ExtendWith(MockitoExtension.class)
 class UIActionsListTest {
 
     static private UIActionsList uiActionsList;

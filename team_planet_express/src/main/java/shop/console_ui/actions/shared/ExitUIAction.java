@@ -1,13 +1,13 @@
 package shop.console_ui.actions.shared;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.console_ui.UserCommunication;
 import shop.console_ui.actions.UIAction;
 import shop.core.domain.user.UserRole;
 import shop.core.services.actions.shared.ExitService;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
-@DIComponent
+@Component
 public class ExitUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Exit";
@@ -15,9 +15,9 @@ public class ExitUIAction extends UIAction {
 
     private static final String MESSAGE_EXIT = "Thank you for shopping at Planet Express.";
 
-    @DIDependency
+    @Autowired
     private ExitService exitService;
-    @DIDependency
+    @Autowired
     private UserCommunication userCommunication;
 
     public ExitUIAction() {

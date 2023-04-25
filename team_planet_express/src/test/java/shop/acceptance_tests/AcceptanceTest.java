@@ -1,5 +1,6 @@
-package shop.acceptance;
+package shop.acceptance_tests;
 
+import org.springframework.context.ApplicationContext;
 import shop.core.database.Database;
 import shop.core.domain.item.Item;
 import shop.core.domain.user.User;
@@ -28,7 +29,6 @@ import shop.core.services.actions.shared.SignOutService;
 import shop.core.support.CurrentUserId;
 import shop.core.support.ordering.OrderingRule;
 import shop.core.support.paging.PagingRule;
-import shop.dependency_injection.ApplicationContext;
 
 import java.math.BigDecimal;
 import java.util.List;

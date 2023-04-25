@@ -1,5 +1,8 @@
 package shop;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import shop.config.ShopConfiguration;
 import shop.console_ui.UIMenu;
 import shop.core.database.Database;
 import shop.core.domain.user.User;
@@ -8,16 +11,15 @@ import shop.core.services.fake.FakeDatabaseInitializer;
 import shop.core.services.user.UserCreationData;
 import shop.core.services.user.UserService;
 import shop.core.support.CurrentUserId;
-import shop.dependency_injection.ApplicationContext;
-import shop.dependency_injection.DIApplicationContextBuilder;
 
 public class ShopApplication {
 
     private static final String BLANK = "";
 
-    public static void main(String[] args) {
+    private static final ApplicationContext applicationContext =
+            new AnnotationConfigApplicationContext(ShopConfiguration.class);
 
-        ApplicationContext applicationContext = new DIApplicationContextBuilder().build("shop");
+    public static void main(String[] args) {
 
         new FakeDatabaseInitializer(applicationContext.getBean(Database.class)).initialize();
 

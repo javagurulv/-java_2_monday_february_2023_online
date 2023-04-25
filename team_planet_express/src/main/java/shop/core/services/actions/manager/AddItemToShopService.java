@@ -1,24 +1,24 @@
 package shop.core.services.actions.manager;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.core.database.Database;
 import shop.core.domain.item.Item;
 import shop.core.requests.manager.AddItemToShopRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.manager.AddItemToShopResponse;
 import shop.core.services.validators.actions.manager.AddItemToShopValidator;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-@DIComponent
+@Component
 public class AddItemToShopService {
 
-    @DIDependency
+    @Autowired
     private Database database;
-    @DIDependency
+    @Autowired
     private AddItemToShopValidator validator;
 
 

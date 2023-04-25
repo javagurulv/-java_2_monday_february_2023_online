@@ -1,8 +1,8 @@
-package shop.acceptance.custom;
+package shop.acceptance_tests.custom;
 
-import shop.dependency_injection.ApplicationContext;
-import shop.acceptance.ApplicationContextSetup;
-import shop.acceptance.custom.tester.*;
+import org.springframework.context.ApplicationContext;
+import shop.acceptance_tests.ApplicationContextSetup;
+import shop.acceptance_tests.custom.tester.*;
 
 public abstract class CustomAcceptanceTest {
     private final ApplicationContextSetup applicationContextSetup = new ApplicationContextSetup();

@@ -1,4 +1,4 @@
-package shop.acceptance.custom;
+package shop.acceptance_tests.custom;
 
 import org.junit.jupiter.api.Test;
 

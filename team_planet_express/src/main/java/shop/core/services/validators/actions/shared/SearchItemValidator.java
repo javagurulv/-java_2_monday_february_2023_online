@@ -1,5 +1,7 @@
 package shop.core.services.validators.actions.shared;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.core.requests.shared.SearchItemRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.item_list.OrderingRuleValidator;
@@ -7,25 +9,23 @@ import shop.core.services.validators.item_list.PagingRuleValidator;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@DIComponent
+@Component
 public class SearchItemValidator {
 
     private static final String FIELD_PRICE = "price";
     private static final String VALUE_NAME_PRICE = "Price";
 
-    @DIDependency
+    @Autowired
     private CurrentUserIdValidator userIdValidator;
-    @DIDependency
+    @Autowired
     private InputStringValidator inputStringValidator;
-    @DIDependency
+    @Autowired
     private OrderingRuleValidator orderingRuleValidator;
-    @DIDependency
+    @Autowired
     private PagingRuleValidator pagingRuleValidator;
 
 

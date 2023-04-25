@@ -1,5 +1,7 @@
 package shop.core.services.validators.actions.customer;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.core.database.Database;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.item.Item;
@@ -10,14 +12,12 @@ import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@DIComponent
+@Component
 public class RemoveItemFromCartValidator {
 
     private static final String FIELD_NAME = "name";
@@ -25,15 +25,15 @@ public class RemoveItemFromCartValidator {
     private static final String ERROR_NO_SUCH_ITEM_IN_CART = "Error: No such item in your cart.";
     private static final String ERROR_NO_SUCH_ITEM_IN_SHOP = "Error: No such item in the shop.";
 
-    @DIDependency
+    @Autowired
     private Database database;
-    @DIDependency
+    @Autowired
     private CurrentUserIdValidator userIdValidator;
-    @DIDependency
+    @Autowired
     private CartValidator cartValidator;
-    @DIDependency
+    @Autowired
     private InputStringValidator inputStringValidator;
-    @DIDependency
+    @Autowired
     private DatabaseAccessValidator databaseAccessValidator;
 
     public List<CoreError> validate(RemoveItemFromCartRequest request) {

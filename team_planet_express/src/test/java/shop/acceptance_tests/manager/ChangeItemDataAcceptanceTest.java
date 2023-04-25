@@ -1,7 +1,7 @@
-package shop.acceptance.manager;
+package shop.acceptance_tests.manager;
 
 import org.junit.jupiter.api.Test;
-import shop.acceptance.AcceptanceTest;
+import shop.acceptance_tests.AcceptanceTest;
 import shop.core.domain.item.Item;
 import shop.core.responses.CoreError;
 import shop.core.responses.manager.ChangeItemDataResponse;

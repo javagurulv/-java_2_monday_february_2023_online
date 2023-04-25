@@ -1,8 +1,8 @@
 package shop.core.services.actions.shared;
 
-import shop.dependency_injection.DIComponent;
+import org.springframework.stereotype.Component;
 
-@DIComponent
+@Component
 public class ExitService {
 
     public void execute() {

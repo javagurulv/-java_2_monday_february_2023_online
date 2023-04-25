@@ -1,5 +1,8 @@
-package shop.acceptance;
+package shop.acceptance_tests;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import shop.config.ShopConfiguration;
 import shop.core.database.Database;
 import shop.core.domain.item.Item;
 import shop.core.domain.user.User;
@@ -9,8 +12,6 @@ import shop.core.services.fake.fake_item_generator.HardcodedItemGeneratorImpl;
 import shop.core.services.user.UserCreationData;
 import shop.core.services.user.UserService;
 import shop.core.support.CurrentUserId;
-import shop.dependency_injection.ApplicationContext;
-import shop.dependency_injection.DIApplicationContextBuilder;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class ApplicationContextSetup {
     private static final String BLANK = "";
 
     public ApplicationContext setupApplicationContext() {
-        ApplicationContext applicationContext = new DIApplicationContextBuilder().build("shop");
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(ShopConfiguration.class);
         createFakeItems(applicationContext);
         createFakeUsers(applicationContext);
         setupDefaultUser(applicationContext);

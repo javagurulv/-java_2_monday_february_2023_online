@@ -1,13 +1,13 @@
 package shop.core.services.item_list;
 
+import org.springframework.stereotype.Component;
 import shop.core.domain.item.Item;
 import shop.core.support.paging.PagingRule;
-import shop.dependency_injection.DIComponent;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@DIComponent
+@Component
 public class PagingService {
 
     public List<Item> getPage(List<Item> items, PagingRule pagingRule) {
