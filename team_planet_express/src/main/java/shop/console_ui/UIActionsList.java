@@ -26,12 +26,12 @@ import java.util.stream.Collectors;
 @Component
 public class UIActionsList {
 
-    @Autowired
-    private ApplicationContext applicationContext;
-    private List<UIAction> uiActionsList;
+    private final ApplicationContext applicationContext;
+    private final List<UIAction> uiActionsList;
 
-    @Autowired //TODO dafq is happening there ? warning warning
-    public void initUIActionsList() {
+    @Autowired
+    public UIActionsList(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
         this.uiActionsList = createUIActionsList(applicationContext);
     }
 

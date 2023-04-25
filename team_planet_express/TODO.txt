@@ -6,4 +6,3 @@ usercommunication to abstract uiaction
 sorting & paging to list items and cart
 check role permissions in actions
 duplicate in shop & acceptance setup
-yeet reflection from build.gradle after spring
