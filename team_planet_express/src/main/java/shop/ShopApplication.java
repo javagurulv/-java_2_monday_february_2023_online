@@ -16,11 +16,9 @@ public class ShopApplication {
 
     private static final String BLANK = "";
 
-    private static final ApplicationContext applicationContext =
-            new AnnotationConfigApplicationContext(ShopConfiguration.class);
-
     public static void main(String[] args) {
 
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(ShopConfiguration.class);
         new FakeDatabaseInitializer(applicationContext.getBean(Database.class)).initialize();
 
         UserService userService = applicationContext.getBean(UserService.class);
