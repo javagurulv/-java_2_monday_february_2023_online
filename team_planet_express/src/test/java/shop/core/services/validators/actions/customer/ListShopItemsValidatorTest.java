@@ -15,11 +15,15 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class ListShopItemsValidatorTest {
 
-    @Mock private CurrentUserIdValidator mockCurrentUserIdValidator;
-    @Mock private ListShopItemsRequest mockRequest;
-    @Mock private CurrentUserId mockUserId;
+    @Mock
+    private CurrentUserIdValidator mockCurrentUserIdValidator;
+    @Mock
+    private ListShopItemsRequest mockRequest;
+    @Mock
+    private CurrentUserId mockUserId;
 
-    @InjectMocks private ListShopItemsValidator validator;
+    @InjectMocks
+    private ListShopItemsValidator validator;
 
     @Test
     void shouldValidateUserIdIsPresent() {

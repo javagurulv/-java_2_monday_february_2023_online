@@ -25,14 +25,21 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class SignInServiceTest {
 
-    @Mock private SignInValidator mockValidator;
-    @Mock private DatabaseAccessValidator mockDatabaseAccessValidator;
-    @Mock private SignInRequest mockRequest;
-    @Mock private CoreError mockCoreError;
-    @Mock private User mockUser;
-    @Mock private CurrentUserId mockCurrentUserId;
+    @Mock
+    private SignInValidator mockValidator;
+    @Mock
+    private DatabaseAccessValidator mockDatabaseAccessValidator;
+    @Mock
+    private SignInRequest mockRequest;
+    @Mock
+    private CoreError mockCoreError;
+    @Mock
+    private User mockUser;
+    @Mock
+    private CurrentUserId mockCurrentUserId;
 
-    @InjectMocks private SignInService service;
+    @InjectMocks
+    private SignInService service;
 
     @Test
     void shouldReturnErrorsIfPresent() {

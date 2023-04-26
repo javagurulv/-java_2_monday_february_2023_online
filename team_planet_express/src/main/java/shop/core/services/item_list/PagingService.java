@@ -14,7 +14,7 @@ public class PagingService {
     private boolean pagingEnabled;
 
     public List<Item> getPage(List<Item> items, PagingRule pagingRule) {
-        if(pagingEnabled) {
+        if (pagingEnabled) {
             if (pagingRule != null) {
                 long pageSize = Long.parseLong(pagingRule.getPageSize());
                 long itemCountToSkip = (pagingRule.getPageNumber() - 1) * pageSize;

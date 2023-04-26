@@ -20,12 +20,17 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class AddItemToCartUIActionTest {
 
-    @Mock private AddItemToCartService mockAddItemToCartService;
-    @Mock private UserCommunication mockUserCommunication;
-    @Mock private AddItemToCartResponse mockAddItemToCartResponse;
-    @Mock private CoreError mockCoreError;
+    @Mock
+    private AddItemToCartService mockAddItemToCartService;
+    @Mock
+    private UserCommunication mockUserCommunication;
+    @Mock
+    private AddItemToCartResponse mockAddItemToCartResponse;
+    @Mock
+    private CoreError mockCoreError;
 
-    @InjectMocks private AddItemToCartUIAction action;
+    @InjectMocks
+    private AddItemToCartUIAction action;
 
     @BeforeEach
     void setupMockResponse() {

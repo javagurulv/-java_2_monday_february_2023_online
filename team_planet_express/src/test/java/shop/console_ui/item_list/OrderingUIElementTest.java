@@ -20,9 +20,11 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class OrderingUIElementTest {
 
-    @Mock private UserCommunication mockUserCommunication;
+    @Mock
+    private UserCommunication mockUserCommunication;
 
-    @InjectMocks private OrderingUIElement orderingUIElement;
+    @InjectMocks
+    private OrderingUIElement orderingUIElement;
 
     @Test
     void shouldReturnEmptyOrderingRulesList() {

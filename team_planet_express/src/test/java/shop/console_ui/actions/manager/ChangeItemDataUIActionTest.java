@@ -22,12 +22,17 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class ChangeItemDataUIActionTest {
 
-    @Mock private ChangeItemDataService mockChangeItemDataService;
-    @Mock private UserCommunication mockUserCommunication;
-    @Mock private ChangeItemDataResponse mockChangeItemDataResponse;
-    @Mock private CoreError mockCoreError;
+    @Mock
+    private ChangeItemDataService mockChangeItemDataService;
+    @Mock
+    private UserCommunication mockUserCommunication;
+    @Mock
+    private ChangeItemDataResponse mockChangeItemDataResponse;
+    @Mock
+    private CoreError mockCoreError;
 
-    @InjectMocks private ChangeItemDataUIAction action;
+    @InjectMocks
+    private ChangeItemDataUIAction action;
 
     @BeforeEach
     void setupMockResponse() {

@@ -18,7 +18,7 @@ public class OrderingService {
     private boolean orderingEnabled;
 
     public List<Item> getOrderedItems(List<Item> items, List<OrderingRule> orderingRules) {
-        if(orderingEnabled) {
+        if (orderingEnabled) {
             if (orderingRules != null && orderingRules.size() > 0) {
                 items = orderByPrice(items, orderingRules);
                 items = orderByName(items, orderingRules);

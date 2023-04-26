@@ -25,13 +25,19 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
-    @Mock private Database mockDatabase;
-    @Mock private UserDatabase mockUserDatabase;
-    @Mock private CartDatabase mockCartDatabase;
-    @Mock private User mockUser;
-    @Mock private Cart mockCart;
+    @Mock
+    private Database mockDatabase;
+    @Mock
+    private UserDatabase mockUserDatabase;
+    @Mock
+    private CartDatabase mockCartDatabase;
+    @Mock
+    private User mockUser;
+    @Mock
+    private Cart mockCart;
 
-    @InjectMocks private UserService service;
+    @InjectMocks
+    private UserService service;
 
     @Test
     void shouldSaveUserAndCart() {

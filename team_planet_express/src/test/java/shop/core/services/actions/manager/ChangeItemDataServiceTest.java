@@ -23,13 +23,19 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class ChangeItemDataServiceTest {
 
-    @Mock private Database mockDatabase;
-    @Mock private ChangeItemDataValidator mockValidator;
-    @Mock private ChangeItemDataRequest mockRequest;
-    @Mock private CoreError mockCoreError;
-    @Mock private ItemDatabase mockItemDatabase;
+    @Mock
+    private Database mockDatabase;
+    @Mock
+    private ChangeItemDataValidator mockValidator;
+    @Mock
+    private ChangeItemDataRequest mockRequest;
+    @Mock
+    private CoreError mockCoreError;
+    @Mock
+    private ItemDatabase mockItemDatabase;
 
-    @InjectMocks private ChangeItemDataService service;
+    @InjectMocks
+    private ChangeItemDataService service;
 
     @Test
     void shouldReturnErrorsIfPresent() {

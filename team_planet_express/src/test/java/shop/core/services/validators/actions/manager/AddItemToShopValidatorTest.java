@@ -24,14 +24,21 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class AddItemToShopValidatorTest {
 
-    @Mock private Database mockDatabase;
-    @Mock private InputStringValidator mockInputStringValidator;
-    @Mock private AddItemToShopRequest mockRequest;
-    @Mock private ItemDatabase mockItemDatabase;
-    @Mock private Item mockItem;
-    @Mock private CoreError mockCoreError;
+    @Mock
+    private Database mockDatabase;
+    @Mock
+    private InputStringValidator mockInputStringValidator;
+    @Mock
+    private AddItemToShopRequest mockRequest;
+    @Mock
+    private ItemDatabase mockItemDatabase;
+    @Mock
+    private Item mockItem;
+    @Mock
+    private CoreError mockCoreError;
 
-    @InjectMocks private AddItemToShopValidator validator;
+    @InjectMocks
+    private AddItemToShopValidator validator;
 
     @Test
     void shouldValidateNameIsPresent() {

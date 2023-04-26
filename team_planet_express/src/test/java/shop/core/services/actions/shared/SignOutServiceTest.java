@@ -25,14 +25,21 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class SignOutServiceTest {
 
-    @Mock private SignOutValidator mockValidator;
-    @Mock private UserService mockUserService;
-    @Mock private SignOutRequest mockRequest;
-    @Mock private CoreError mockCoreError;
-    @Mock private User mockUser;
-    @Mock private CurrentUserId mockCurrentUserId;
+    @Mock
+    private SignOutValidator mockValidator;
+    @Mock
+    private UserService mockUserService;
+    @Mock
+    private SignOutRequest mockRequest;
+    @Mock
+    private CoreError mockCoreError;
+    @Mock
+    private User mockUser;
+    @Mock
+    private CurrentUserId mockCurrentUserId;
 
-    @InjectMocks private SignOutService service;
+    @InjectMocks
+    private SignOutService service;
 
     @Test
     void shouldReturnErrorsIfPresent() {

@@ -26,13 +26,19 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class AddItemToShopServiceTest {
 
-    @Mock private Database mockDatabase;
-    @Mock private AddItemToShopValidator mockValidator;
-    @Mock private AddItemToShopRequest mockRequest;
-    @Mock private CoreError mockCoreError;
-    @Mock private ItemDatabase mockItemDatabase;
+    @Mock
+    private Database mockDatabase;
+    @Mock
+    private AddItemToShopValidator mockValidator;
+    @Mock
+    private AddItemToShopRequest mockRequest;
+    @Mock
+    private CoreError mockCoreError;
+    @Mock
+    private ItemDatabase mockItemDatabase;
 
-    @InjectMocks private AddItemToShopService service;
+    @InjectMocks
+    private AddItemToShopService service;
 
     @Test
     void shouldReturnErrorsIfPresent() {

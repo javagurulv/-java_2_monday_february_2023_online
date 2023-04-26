@@ -26,14 +26,21 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class SignUpServiceTest {
 
-    @Mock private SignUpValidator mockValidator;
-    @Mock private UserService mockUserService;
-    @Mock private SignUpRequest mockRequest;
-    @Mock private CoreError mockCoreError;
-    @Mock private User mockUser;
-    @Mock private CurrentUserId mockCurrentUserId;
+    @Mock
+    private SignUpValidator mockValidator;
+    @Mock
+    private UserService mockUserService;
+    @Mock
+    private SignUpRequest mockRequest;
+    @Mock
+    private CoreError mockCoreError;
+    @Mock
+    private User mockUser;
+    @Mock
+    private CurrentUserId mockCurrentUserId;
 
-    @InjectMocks private SignUpService service;
+    @InjectMocks
+    private SignUpService service;
 
     @Test
     void shouldReturnErrorsIfPresent() {

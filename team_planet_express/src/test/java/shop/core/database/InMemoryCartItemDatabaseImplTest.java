@@ -15,9 +15,11 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class InMemoryCartItemDatabaseImplTest {
 
-    @Mock private CartItem mockCartItem;
+    @Mock
+    private CartItem mockCartItem;
 
-    @InjectMocks private InMemoryCartItemDatabaseImpl database;
+    @InjectMocks
+    private InMemoryCartItemDatabaseImpl database;
 
     @Test
     void shouldIncreaseInSizeAfterSave() {

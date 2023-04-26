@@ -24,16 +24,25 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class SearchItemValidatorTest {
 
-    @Mock private CurrentUserIdValidator mockCurrentUserIdValidator;
-    @Mock private InputStringValidator mockInputStringValidator;
-    @Mock private OrderingRuleValidator mockOrderingRuleValidator;
-    @Mock private PagingRuleValidator mockPagingRuleValidator;
-    @Mock private SearchItemRequest mockRequest;
-    @Mock private CurrentUserId mockUserId;
-    @Mock private PagingRule mockPagingRule;
-    @Mock private CoreError mockCoreError;
+    @Mock
+    private CurrentUserIdValidator mockCurrentUserIdValidator;
+    @Mock
+    private InputStringValidator mockInputStringValidator;
+    @Mock
+    private OrderingRuleValidator mockOrderingRuleValidator;
+    @Mock
+    private PagingRuleValidator mockPagingRuleValidator;
+    @Mock
+    private SearchItemRequest mockRequest;
+    @Mock
+    private CurrentUserId mockUserId;
+    @Mock
+    private PagingRule mockPagingRule;
+    @Mock
+    private CoreError mockCoreError;
 
-    @InjectMocks private SearchItemValidator validator;
+    @InjectMocks
+    private SearchItemValidator validator;
 
     @Test
     void shouldValidateUserIdIsPresent() {

@@ -24,14 +24,21 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class SignUpUIActionTest {
 
-    @Mock private SignUpService mockSignUpService;
-    @Mock private CurrentUserId mockCurrentUserId;
-    @Mock private UserCommunication mockUserCommunication;
-    @Mock private SignUpResponse mockSignUpResponse;
-    @Mock private User mockUser;
-    @Mock private CoreError mockCoreError;
+    @Mock
+    private SignUpService mockSignUpService;
+    @Mock
+    private CurrentUserId mockCurrentUserId;
+    @Mock
+    private UserCommunication mockUserCommunication;
+    @Mock
+    private SignUpResponse mockSignUpResponse;
+    @Mock
+    private User mockUser;
+    @Mock
+    private CoreError mockCoreError;
 
-    @InjectMocks private SignUpUIAction action;
+    @InjectMocks
+    private SignUpUIAction action;
 
     @BeforeEach
     void setupMockResponse() {

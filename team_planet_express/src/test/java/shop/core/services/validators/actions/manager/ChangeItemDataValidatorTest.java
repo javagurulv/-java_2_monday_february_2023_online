@@ -26,15 +26,23 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class ChangeItemDataValidatorTest {
 
-    @Mock private Database mockDatabase;
-    @Mock private InputStringValidator mockInputStringValidator;
-    @Mock private DatabaseAccessValidator mockDatabaseAccessValidator;
-    @Mock private ChangeItemDataRequest mockRequest;
-    @Mock private ItemDatabase mockItemDatabase;
-    @Mock private Item mockItem;
-    @Mock private CoreError mockCoreError;
+    @Mock
+    private Database mockDatabase;
+    @Mock
+    private InputStringValidator mockInputStringValidator;
+    @Mock
+    private DatabaseAccessValidator mockDatabaseAccessValidator;
+    @Mock
+    private ChangeItemDataRequest mockRequest;
+    @Mock
+    private ItemDatabase mockItemDatabase;
+    @Mock
+    private Item mockItem;
+    @Mock
+    private CoreError mockCoreError;
 
-    @InjectMocks private ChangeItemDataValidator validator;
+    @InjectMocks
+    private ChangeItemDataValidator validator;
 
     @Test
     void shouldValidateId() {

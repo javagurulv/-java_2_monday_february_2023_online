@@ -16,9 +16,11 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class InputStringValidatorIsGreaterThenZeroTest {
 
-    @Mock private InputStringValidatorData mockInputStringValidatorData;
+    @Mock
+    private InputStringValidatorData mockInputStringValidatorData;
 
-    @InjectMocks private InputStringValidator validator;
+    @InjectMocks
+    private InputStringValidator validator;
 
     @Test
     void shouldReturnErrorForLetters() {
