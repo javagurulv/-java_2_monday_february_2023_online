@@ -1,6 +1,7 @@
 package shop.console_ui.actions.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import shop.console_ui.UserCommunication;
 import shop.console_ui.actions.UIAction;
@@ -12,6 +13,7 @@ import shop.core.services.actions.customer.ListShopItemsService;
 import shop.core.support.CurrentUserId;
 
 @Component
+@Order(value = 0)
 public class ListShopItemsUIAction extends UIAction {
 
     private static final String ACTION_NAME = "List items";

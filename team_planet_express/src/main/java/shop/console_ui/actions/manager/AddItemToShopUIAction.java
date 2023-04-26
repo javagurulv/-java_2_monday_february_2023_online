@@ -1,6 +1,7 @@
 package shop.console_ui.actions.manager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import shop.console_ui.UserCommunication;
 import shop.console_ui.actions.UIAction;
@@ -10,6 +11,7 @@ import shop.core.responses.manager.AddItemToShopResponse;
 import shop.core.services.actions.manager.AddItemToShopService;
 
 @Component
+@Order(value = 7)
 public class AddItemToShopUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Add item to the shop";
