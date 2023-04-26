@@ -3,6 +3,7 @@ package shop.core.services.item_list;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.util.ReflectionTestUtils;
 import shop.core.domain.item.Item;
 import shop.core.support.ordering.OrderBy;
 import shop.core.support.ordering.OrderDirection;
@@ -38,6 +39,7 @@ class OrderingServiceTest {
 
     @BeforeEach
     void setupItemList() {
+        ReflectionTestUtils.setField(service, "orderingEnabled", true);
         items = new ArrayList<>();
         items.add(item1);
         items.add(item2);
