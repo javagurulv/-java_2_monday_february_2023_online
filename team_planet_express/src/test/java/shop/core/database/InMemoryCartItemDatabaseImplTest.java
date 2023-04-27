@@ -51,7 +51,7 @@ class InMemoryCartItemDatabaseImplTest {
         assertEquals(0, database.getCartItems().size());
     }
 
-    //testforfaildelete
+    //testForFailDelete
 
     @Test
     void shouldChangeOrderedQuantity() {

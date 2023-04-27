@@ -41,7 +41,7 @@ class InputStringValidatorIsNotNegativeTest {
     }
 
     @Test
-    void shouldReturnErrorForBorkedNumber() {
+    void shouldReturnErrorForBrokenNumber() {
         when(mockInputStringValidatorData.getValue()).thenReturn("0-23.0040");
         when(mockInputStringValidatorData.getField()).thenReturn("field");
         when(mockInputStringValidatorData.getValueName()).thenReturn("Field");

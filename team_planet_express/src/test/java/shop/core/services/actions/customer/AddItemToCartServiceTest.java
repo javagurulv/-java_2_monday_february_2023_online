@@ -31,17 +31,17 @@ class AddItemToCartServiceTest {
     @Mock
     private DatabaseAccessValidator mockDatabaseAccessValidator;
     @Mock
-    private AddItemToCartRequest mockRequest = mock(AddItemToCartRequest.class);
+    private final AddItemToCartRequest mockRequest = mock(AddItemToCartRequest.class);
     @Mock
-    private CurrentUserId mockUserId = mock(CurrentUserId.class);
+    private final CurrentUserId mockUserId = mock(CurrentUserId.class);
     @Mock
-    private ItemDatabase mockItemDatabase = mock(ItemDatabase.class);
+    private final ItemDatabase mockItemDatabase = mock(ItemDatabase.class);
     @Mock
-    private CartItemDatabase mockCartItemDatabase = mock(CartItemDatabase.class);
+    private final CartItemDatabase mockCartItemDatabase = mock(CartItemDatabase.class);
     @Mock
-    private Item mockItem = mock(Item.class);
+    private final Item mockItem = mock(Item.class);
     @Mock
-    private Cart mockCart = mock(Cart.class);
+    private final Cart mockCart = mock(Cart.class);
 
     @InjectMocks
     private AddItemToCartService service;
