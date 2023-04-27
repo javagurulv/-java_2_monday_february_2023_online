@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class PagingService {
-    @Value("${search.paging.enabled}")
+    @Value("${paging.enabled}")
     private boolean pagingEnabled;
 
     public List<Item> getPage(List<Item> items, PagingRule pagingRule) {

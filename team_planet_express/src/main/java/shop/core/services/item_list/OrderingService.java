@@ -14,7 +14,7 @@ import java.util.Optional;
 @Component
 public class OrderingService {
 
-    @Value("${search.ordering.enabled}")
+    @Value("${ordering.enabled}")
     private boolean orderingEnabled;
 
     public List<Item> getOrderedItems(List<Item> items, List<OrderingRule> orderingRules) {
