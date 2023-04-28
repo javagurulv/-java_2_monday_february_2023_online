@@ -1,7 +1,6 @@
 package shop.console_ui.actions.shared;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import shop.console_ui.UserCommunication;
 import shop.console_ui.actions.UIAction;
@@ -19,7 +18,6 @@ import shop.core.support.paging.PagingRule;
 import java.util.List;
 
 @Component
-@Order(value = 5)
 public class SearchItemUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Search item in the shop";

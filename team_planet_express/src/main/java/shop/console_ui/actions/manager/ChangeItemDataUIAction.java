@@ -1,7 +1,6 @@
 package shop.console_ui.actions.manager;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import shop.console_ui.UserCommunication;
 import shop.console_ui.actions.UIAction;
@@ -11,7 +10,6 @@ import shop.core.responses.manager.ChangeItemDataResponse;
 import shop.core.services.actions.manager.ChangeItemDataService;
 
 @Component
-@Order(value = 8)
 public class ChangeItemDataUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Change existing item data";

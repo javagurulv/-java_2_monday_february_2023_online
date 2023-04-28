@@ -1,7 +1,6 @@
 package shop.console_ui.actions.guest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import shop.console_ui.UserCommunication;
 import shop.console_ui.actions.UIAction;
@@ -12,7 +11,6 @@ import shop.core.services.actions.guest.SignUpService;
 import shop.core.support.CurrentUserId;
 
 @Component
-@Order(value = 6)
 public class SignUpUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Sign up";
