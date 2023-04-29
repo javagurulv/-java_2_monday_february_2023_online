@@ -15,6 +15,7 @@ import shop.core.support.Placeholder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class AddItemToCartValidator {
@@ -43,7 +44,7 @@ public class AddItemToCartValidator {
             validateQuantity(request.getOrderedQuantity(), errors);
         }
         if (errors.isEmpty()) {
-            validateOrderedQuantityNotGreaterThanAvailable(request, errors);
+            validateOrderedQuantityNotGreaterThanAvailable(request).ifPresent(errors::add);
         }
         return errors;
     }
@@ -58,7 +59,7 @@ public class AddItemToCartValidator {
         inputStringValidatorData.setPresentChecker(true);
         errors.addAll(inputStringValidator.validate(inputStringValidatorData));
 
-        validateItemNameExistsInShop(itemName, errors);
+        validateItemNameExistsInShop(itemName).ifPresent(errors::add);
     }
 
     private void validateQuantity(String orderedQuantity, List<CoreError> errors) {
@@ -76,19 +77,21 @@ public class AddItemToCartValidator {
         errors.addAll(inputStringValidator.validate(inputStringValidatorData));
     }
 
-    private void validateOrderedQuantityNotGreaterThanAvailable(AddItemToCartRequest request, List<CoreError> errors) {
-        if (Integer.parseInt(request.getOrderedQuantity()) >
-                databaseAccessValidator.getItemByName(request.getItemName()).getAvailableQuantity()) {
-            errors.add(errorCodeUtil.errorBuild("ERROR_CODE_2"));
-        }
+    private Optional<CoreError> validateOrderedQuantityNotGreaterThanAvailable(AddItemToCartRequest request) {
+        return (Integer.parseInt(request.getOrderedQuantity()) >
+                databaseAccessValidator.getItemByName(request.getItemName()).getAvailableQuantity())
+                ? Optional.of(errorCodeUtil.errorBuild("ERROR_CODE_2"))
+                : Optional.empty();
     }
 
-    private void validateItemNameExistsInShop(String itemName, List<CoreError> errors) {
-        if (itemName == null || database.accessItemDatabase().findByName(itemName).isEmpty()) {
-            List<Placeholder> placeholders = new ArrayList<>();
-            placeholders.add(new Placeholder("NOT_CONTAIN_REQUESTED_DATA", "the shop"));
-            errors.add(errorCodeUtil.errorBuild("ERROR_CODE_1", placeholders));
-        }
+    private Optional<CoreError> validateItemNameExistsInShop(String itemName) {
+        return (itemName == null ||
+                database.accessItemDatabase().findByName(itemName).isEmpty())
+                ? Optional.of(errorCodeUtil.errorBuild(
+                "ERROR_CODE_1",
+                List.of(new Placeholder("NOT_CONTAIN_REQUESTED_DATA", "the shop")))
+        )
+                : Optional.empty();
     }
 
 }
