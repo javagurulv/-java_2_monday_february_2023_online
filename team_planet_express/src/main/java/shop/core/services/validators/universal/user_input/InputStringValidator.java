@@ -1,7 +1,9 @@
 package shop.core.services.validators.universal.user_input;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import shop.core.responses.CoreError;
+import shop.core.support.ErrorCodeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,13 +12,8 @@ import java.util.Optional;
 @Component
 public class InputStringValidator {
 
-    //TODO was there a way to combine strings with params during runtime?
-    private static final String ERROR = "Error: ";
-    private static final String ERROR_MISSING = " is required.";
-    private static final String ERROR_NOT_NUMBER = " should be a number.";
-    private static final String ERROR_NEGATIVE = " should not be negative.";
-    private static final String ERROR_ZERO_OR_LESS = " should be greater than zero.";
-    private static final String ERROR_DECIMAL = " should not be decimal.";
+    @Autowired
+    private ErrorCodeUtil errorCodeUtil;
 
     private static final String REGEX_NUMBER = "-?[0-9]+(.[0-9]+)?";
     private static final String REGEX_NOT_NEGATIVE = "[0-9]+(.[0-9]+)?";
@@ -25,70 +22,51 @@ public class InputStringValidator {
 
     public Optional<CoreError> validateIsPresent(InputStringValidatorData inputStringValidatorData) {
         return (inputStringValidatorData.getValue() == null || inputStringValidatorData.getValue().isBlank())
-                ? Optional.of(new CoreError(inputStringValidatorData.getField(), ERROR + inputStringValidatorData.getValueName() + ERROR_MISSING))
+                ? Optional.of(errorCodeUtil.errorBuild("ERROR_CODE_4", inputStringValidatorData.getPlaceholders()))
                 : Optional.empty();
     }
 
     public Optional<CoreError> validateIsNumber(InputStringValidatorData inputStringValidatorData) {
         return (exists(inputStringValidatorData.getValue()) &&
                 !inputStringValidatorData.getValue().matches(REGEX_NUMBER))
-                ? Optional.of(new CoreError(inputStringValidatorData.getField(), ERROR + inputStringValidatorData.getValueName() + ERROR_NOT_NUMBER))
+                ? Optional.of(errorCodeUtil.errorBuild("ERROR_CODE_5", inputStringValidatorData.getPlaceholders()))
                 : Optional.empty();
     }
 
     public Optional<CoreError> validateIsNotNegative(InputStringValidatorData inputStringValidatorData) {
         return (exists(inputStringValidatorData.getValue()) &&
                 !inputStringValidatorData.getValue().matches(REGEX_NOT_NEGATIVE))
-                ? Optional.of(new CoreError(inputStringValidatorData.getField(), ERROR + inputStringValidatorData.getValueName() + ERROR_NEGATIVE))
+                ? Optional.of(errorCodeUtil.errorBuild("ERROR_CODE_6", inputStringValidatorData.getPlaceholders()))
                 : Optional.empty();
     }
 
     public Optional<CoreError> validateIsGreaterThanZero(InputStringValidatorData inputStringValidatorData) {
         return (exists(inputStringValidatorData.getValue()) &&
                 !inputStringValidatorData.getValue().matches(REGEX_GREATER_ZERO))
-                ? Optional.of(new CoreError(inputStringValidatorData.getField(), ERROR + inputStringValidatorData.getValueName() + ERROR_ZERO_OR_LESS))
+                ? Optional.of(errorCodeUtil.errorBuild("ERROR_CODE_7", inputStringValidatorData.getPlaceholders()))
                 : Optional.empty();
     }
 
     public Optional<CoreError> validateIsNotDecimal(InputStringValidatorData inputStringValidatorData) {
         return (exists(inputStringValidatorData.getValue()) &&
                 !inputStringValidatorData.getValue().matches(REGEX_NOT_DECIMAL))
-                ? Optional.of(new CoreError(inputStringValidatorData.getField(), ERROR + inputStringValidatorData.getValueName() + ERROR_DECIMAL))
+                ? Optional.of(errorCodeUtil.errorBuild("ERROR_CODE_8", inputStringValidatorData.getPlaceholders()))
                 : Optional.empty();
     }
 
-    public List<CoreError> validateIsNumberNotNegative(InputStringValidatorData inputStringValidatorData) {
+    public List<CoreError> validate(InputStringValidatorData inputStringValidatorData) {
         List<CoreError> errors = new ArrayList<>();
-        Optional<CoreError> error = validateIsNumber(inputStringValidatorData);
-        if (error.isPresent()) {
-            errors.add(error.get());
-        } else {
-            validateIsNotNegative(inputStringValidatorData).ifPresent(errors::add);
-        }
-        return errors;
-    }
 
-    public List<CoreError> validateIsNumberNotNegativeNotDecimal(InputStringValidatorData inputStringValidatorData) {
-        List<CoreError> errors = new ArrayList<>();
-        Optional<CoreError> error = validateIsNumber(inputStringValidatorData);
-        if (error.isPresent()) {
-            errors.add(error.get());
-        } else {
-            validateIsNotNegative(inputStringValidatorData).ifPresent(errors::add);
-            validateIsNotDecimal(inputStringValidatorData).ifPresent(errors::add);
-        }
-        return errors;
-    }
-
-    public List<CoreError> validateIsNumberGreaterThanZeroNotDecimal(InputStringValidatorData inputStringValidatorData) {
-        List<CoreError> errors = new ArrayList<>();
-        Optional<CoreError> error = validateIsNumber(inputStringValidatorData);
-        if (error.isPresent()) {
-            errors.add(error.get());
-        } else {
+        if (inputStringValidatorData.isPresentChecker())
+            validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
+        if (errors.isEmpty() && inputStringValidatorData.isNumberChecker())
+            validateIsNumber(inputStringValidatorData).ifPresent(errors::add);
+        if (errors.isEmpty() && inputStringValidatorData.isGreaterZeroChecker())
             validateIsGreaterThanZero(inputStringValidatorData).ifPresent(errors::add);
+        if (errors.isEmpty() && inputStringValidatorData.isNotDecimalChecker())
             validateIsNotDecimal(inputStringValidatorData).ifPresent(errors::add);
-        }
+        if (errors.isEmpty() && inputStringValidatorData.isNotNegativeChecker())
+            validateIsNotNegative(inputStringValidatorData).ifPresent(errors::add);
         return errors;
     }
 
