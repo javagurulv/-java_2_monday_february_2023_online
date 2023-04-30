@@ -44,21 +44,21 @@ public class UIActionsList {
     }
 
     private List<UIAction> sortUIActionsList(List<UIAction> uiActionsList) {
-        List<UIAction> sortUIActions = new ArrayList<>();
-        uiActionsList.stream().filter(uiAction -> uiAction instanceof ListShopItemsUIAction).forEach(sortUIActions::add);
-        uiActionsList.stream().filter(uiAction -> uiAction instanceof SearchItemUIAction).forEach(sortUIActions::add);
-        uiActionsList.stream().filter(uiAction -> uiAction instanceof AddItemToCartUIAction).forEach(sortUIActions::add);
-        uiActionsList.stream().filter(uiAction -> uiAction instanceof RemoveItemFromCartUIAction).forEach(sortUIActions::add);
-        uiActionsList.stream().filter(uiAction -> uiAction instanceof ListCartItemsUIAction).forEach(sortUIActions::add);
-        uiActionsList.stream().filter(uiAction -> uiAction instanceof BuyUIAction).forEach(sortUIActions::add);
-        uiActionsList.stream().filter(uiAction -> uiAction instanceof AddItemToShopUIAction).forEach(sortUIActions::add);
-        uiActionsList.stream().filter(uiAction -> uiAction instanceof ChangeItemDataUIAction).forEach(sortUIActions::add);
-        uiActionsList.stream().filter(uiAction -> uiAction instanceof ChangeUserDataUIAction).forEach(sortUIActions::add);
-        uiActionsList.stream().filter(uiAction -> uiAction instanceof SignInUIAction).forEach(sortUIActions::add);
-        uiActionsList.stream().filter(uiAction -> uiAction instanceof SignUpUIAction).forEach(sortUIActions::add);
-        uiActionsList.stream().filter(uiAction -> uiAction instanceof SignOutUIAction).forEach(sortUIActions::add);
-        uiActionsList.stream().filter(uiAction -> uiAction instanceof ExitUIAction).forEach(sortUIActions::add);
-        return sortUIActions;
+        List<UIAction> sortedUIActions = new ArrayList<>();
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof ListShopItemsUIAction).findFirst().get());
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof SearchItemUIAction).findFirst().get());
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof AddItemToCartUIAction).findFirst().get());
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof RemoveItemFromCartUIAction).findFirst().get());
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof ListCartItemsUIAction).findFirst().get());
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof BuyUIAction).findFirst().get());
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof AddItemToShopUIAction).findFirst().get());
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof ChangeItemDataUIAction).findFirst().get());
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof ChangeUserDataUIAction).findFirst().get());
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof SignInUIAction).findFirst().get());
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof SignUpUIAction).findFirst().get());
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof SignOutUIAction).findFirst().get());
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof ExitUIAction).findFirst().get());
+        return sortedUIActions;
     }
 
 }
