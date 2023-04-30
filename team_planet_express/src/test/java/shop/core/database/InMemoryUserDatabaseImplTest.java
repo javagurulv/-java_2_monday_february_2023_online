@@ -14,9 +14,11 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class InMemoryUserDatabaseImplTest {
 
-    @Mock private User mockUser;
+    @Mock
+    private User mockUser;
 
-    @InjectMocks private InMemoryUserDatabaseImpl database;
+    @InjectMocks
+    private InMemoryUserDatabaseImpl database;
 
     @Test
     void shouldIncreaseInSizeAfterSave() {

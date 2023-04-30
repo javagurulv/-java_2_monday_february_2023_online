@@ -1,5 +1,7 @@
 package shop.core.services.actions.shared;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
 import shop.core.requests.shared.SignOutRequest;
@@ -8,19 +10,17 @@ import shop.core.responses.shared.SignOutResponse;
 import shop.core.services.user.UserCreationData;
 import shop.core.services.user.UserService;
 import shop.core.services.validators.actions.shared.SignOutValidator;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
 import java.util.List;
 
-@DIComponent
+@Component
 public class SignOutService {
 
     public static final String BLANK = "";
 
-    @DIDependency
+    @Autowired
     private SignOutValidator validator;
-    @DIDependency
+    @Autowired
     private UserService userService;
 
     public SignOutResponse execute(SignOutRequest request) {

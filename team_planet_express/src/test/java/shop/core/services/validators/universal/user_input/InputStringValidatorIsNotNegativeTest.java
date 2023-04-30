@@ -16,9 +16,11 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class InputStringValidatorIsNotNegativeTest {
 
-    @Mock private InputStringValidatorData mockInputStringValidatorData;
+    @Mock
+    private InputStringValidatorData mockInputStringValidatorData;
 
-    @InjectMocks private InputStringValidator validator;
+    @InjectMocks
+    private InputStringValidator validator;
 
     @Test
     void shouldReturnErrorForLetters() {
@@ -39,7 +41,7 @@ class InputStringValidatorIsNotNegativeTest {
     }
 
     @Test
-    void shouldReturnErrorForBorkedNumber() {
+    void shouldReturnErrorForBrokenNumber() {
         when(mockInputStringValidatorData.getValue()).thenReturn("0-23.0040");
         when(mockInputStringValidatorData.getField()).thenReturn("field");
         when(mockInputStringValidatorData.getValueName()).thenReturn("Field");

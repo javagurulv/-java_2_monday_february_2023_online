@@ -1,16 +1,16 @@
 package shop.core.services.validators.item_list;
 
+import org.springframework.stereotype.Component;
 import shop.core.responses.CoreError;
 import shop.core.services.exception.InternalSystemCollapseException;
 import shop.core.support.ordering.OrderBy;
 import shop.core.support.ordering.OrderDirection;
 import shop.core.support.ordering.OrderingRule;
-import shop.dependency_injection.DIComponent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@DIComponent
+@Component
 public class OrderingRuleValidator {
 
     public List<CoreError> validate(OrderingRule orderingRule) {

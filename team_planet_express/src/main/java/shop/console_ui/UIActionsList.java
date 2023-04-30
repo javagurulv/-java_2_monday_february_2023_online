@@ -1,5 +1,7 @@
 package shop.console_ui;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.console_ui.actions.UIAction;
 import shop.console_ui.actions.admin.ChangeUserDataUIAction;
 import shop.console_ui.actions.customer.*;
@@ -14,39 +16,26 @@ import shop.core.database.Database;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
 import shop.core.support.CurrentUserId;
-import shop.dependency_injection.ApplicationContext;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIConstructor;
-import shop.dependency_injection.DIDependency;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@DIComponent
+@Component
 public class UIActionsList {
+    private final List<UIAction> uiActionsList;
+    @Autowired
+    Database database;
+    @Autowired
+    CurrentUserId currentUserId;
 
-    @DIDependency
-    private ApplicationContext applicationContext;
-    private List<UIAction> uiActionsList;
-
-    @DIConstructor
-    public void initUIActionsList() {
-        this.uiActionsList = createUIActionsList(applicationContext);
-    }
-
-    public ApplicationContext getApplicationContext() {
-        return applicationContext;
-    }
-
-    public CurrentUserId getCurrentUserId() {
-        return applicationContext.getBean(CurrentUserId.class);
+    @Autowired
+    public UIActionsList(List<UIAction> uiActionsList) {
+        this.uiActionsList = sortUIActionsList(uiActionsList);
     }
 
     public List<UIAction> getUIActionsListForUserRole() {
-        Database database = applicationContext.getBean(Database.class);
-        CurrentUserId currentUserId = applicationContext.getBean(CurrentUserId.class);
         Optional<User> currentUser = database.accessUserDatabase().findById(currentUserId.getValue());
         UserRole filterRole = currentUser.isEmpty() ? UserRole.GUEST : currentUser.get().getUserRole();
         return uiActionsList.stream()
@@ -54,22 +43,22 @@ public class UIActionsList {
                 .collect(Collectors.toList());
     }
 
-    private List<UIAction> createUIActionsList(ApplicationContext applicationContext) {
-        List<UIAction> uiActions = new ArrayList<>();
-        uiActions.add(applicationContext.getBean(ListShopItemsUIAction.class));
-        uiActions.add(applicationContext.getBean(SearchItemUIAction.class));
-        uiActions.add(applicationContext.getBean(AddItemToCartUIAction.class));
-        uiActions.add(applicationContext.getBean(RemoveItemFromCartUIAction.class));
-        uiActions.add(applicationContext.getBean(ListCartItemsUIAction.class));
-        uiActions.add(applicationContext.getBean(BuyUIAction.class));
-        uiActions.add(applicationContext.getBean(AddItemToShopUIAction.class));
-        uiActions.add(applicationContext.getBean(ChangeItemDataUIAction.class));
-        uiActions.add(applicationContext.getBean(ChangeUserDataUIAction.class));
-        uiActions.add(applicationContext.getBean(SignInUIAction.class));
-        uiActions.add(applicationContext.getBean(SignUpUIAction.class));
-        uiActions.add(applicationContext.getBean(SignOutUIAction.class));
-        uiActions.add(applicationContext.getBean(ExitUIAction.class));
-        return uiActions;
+    private List<UIAction> sortUIActionsList(List<UIAction> uiActionsList) {
+        List<UIAction> sortedUIActions = new ArrayList<>();
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof ListShopItemsUIAction).findFirst().get());
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof SearchItemUIAction).findFirst().get());
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof AddItemToCartUIAction).findFirst().get());
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof RemoveItemFromCartUIAction).findFirst().get());
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof ListCartItemsUIAction).findFirst().get());
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof BuyUIAction).findFirst().get());
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof AddItemToShopUIAction).findFirst().get());
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof ChangeItemDataUIAction).findFirst().get());
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof ChangeUserDataUIAction).findFirst().get());
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof SignInUIAction).findFirst().get());
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof SignUpUIAction).findFirst().get());
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof SignOutUIAction).findFirst().get());
+        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof ExitUIAction).findFirst().get());
+        return sortedUIActions;
     }
 
 }

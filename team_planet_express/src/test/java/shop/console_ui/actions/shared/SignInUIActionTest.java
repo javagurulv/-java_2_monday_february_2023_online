@@ -17,20 +17,26 @@ import shop.matchers.SignInRequestMatcher;
 
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class SignInUIActionTest {
 
-    @Mock private SignInService mockSignInService;
-    @Mock private CurrentUserId mockCurrentUserId;
-    @Mock private UserCommunication mockUserCommunication;
-    @Mock private SignInResponse mockSignInResponse;
-    @Mock private User mockUser;
-    @Mock private CoreError mockCoreError;
+    @Mock
+    private SignInService mockSignInService;
+    @Mock
+    private CurrentUserId mockCurrentUserId;
+    @Mock
+    private UserCommunication mockUserCommunication;
+    @Mock
+    private SignInResponse mockSignInResponse;
+    @Mock
+    private User mockUser;
+    @Mock
+    private CoreError mockCoreError;
 
-    @InjectMocks private SignInUIAction action;
+    @InjectMocks
+    private SignInUIAction action;
 
     @BeforeEach
     void setupMockResponse() {

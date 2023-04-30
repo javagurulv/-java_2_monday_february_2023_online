@@ -1,11 +1,11 @@
 package shop.console_ui;
 
 
-import shop.dependency_injection.DIComponent;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
-@DIComponent
+@Component
 public class UserCommunication {
 
     private static final String PROMPT = "Please enter ";

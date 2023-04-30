@@ -18,11 +18,15 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class CartValidatorTest {
 
-    @Mock private Database mockDatabase;
-    @Mock private CartDatabase mockCartDatabase;
-    @Mock private Cart mockCart;
+    @Mock
+    private Database mockDatabase;
+    @Mock
+    private CartDatabase mockCartDatabase;
+    @Mock
+    private Cart mockCart;
 
-    @InjectMocks private CartValidator validator;
+    @InjectMocks
+    private CartValidator validator;
 
     @Test
     void shouldReturnNoError() {

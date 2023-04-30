@@ -16,12 +16,4 @@ public class CartItem {
         this.orderedQuantity = orderedQuantity;
     }
 
-    @Override
-    public String toString() {
-        return "id=" + id +
-                ", cartId=" + cartId +
-                ", itemId=" + itemId +
-                ", orderedQuantity=" + orderedQuantity;
-    }
-
 }

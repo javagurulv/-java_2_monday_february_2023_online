@@ -1,18 +1,18 @@
 package shop.core.services.validators.actions.shared;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.core.requests.shared.SignOutRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@DIComponent
+@Component
 public class SignOutValidator {
 
-    @DIDependency
+    @Autowired
     private CurrentUserIdValidator userIdValidator;
 
     public List<CoreError> validate(SignOutRequest request) {

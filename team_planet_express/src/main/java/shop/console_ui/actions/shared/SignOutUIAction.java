@@ -1,5 +1,7 @@
 package shop.console_ui.actions.shared;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.console_ui.UserCommunication;
 import shop.console_ui.actions.UIAction;
 import shop.core.domain.user.UserRole;
@@ -7,10 +9,8 @@ import shop.core.requests.shared.SignOutRequest;
 import shop.core.responses.shared.SignOutResponse;
 import shop.core.services.actions.shared.SignOutService;
 import shop.core.support.CurrentUserId;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
-@DIComponent
+@Component
 public class SignOutUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Sign out";
@@ -18,11 +18,11 @@ public class SignOutUIAction extends UIAction {
 
     private static final String MESSAGE_SIGNED_OUT = "Signed out.";
 
-    @DIDependency
+    @Autowired
     private SignOutService signOutService;
-    @DIDependency
+    @Autowired
     private CurrentUserId currentUserId;
-    @DIDependency
+    @Autowired
     private UserCommunication userCommunication;
 
     public SignOutUIAction() {

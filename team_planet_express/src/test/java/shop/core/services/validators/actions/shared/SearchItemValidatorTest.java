@@ -9,7 +9,9 @@ import shop.core.requests.shared.SearchItemRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.item_list.OrderingRuleValidator;
 import shop.core.services.validators.item_list.PagingRuleValidator;
+import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
+import shop.core.support.CurrentUserId;
 import shop.core.support.paging.PagingRule;
 
 import java.util.Collections;
@@ -22,14 +24,32 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class SearchItemValidatorTest {
 
-    @Mock private InputStringValidator mockInputStringValidator;
-    @Mock private OrderingRuleValidator mockOrderingRuleValidator;
-    @Mock private PagingRuleValidator mockPagingRuleValidator;
-    @Mock private SearchItemRequest mockRequest;
-    @Mock private PagingRule mockPagingRule;
-    @Mock private CoreError mockCoreError;
+    @Mock
+    private CurrentUserIdValidator mockCurrentUserIdValidator;
+    @Mock
+    private InputStringValidator mockInputStringValidator;
+    @Mock
+    private OrderingRuleValidator mockOrderingRuleValidator;
+    @Mock
+    private PagingRuleValidator mockPagingRuleValidator;
+    @Mock
+    private SearchItemRequest mockRequest;
+    @Mock
+    private CurrentUserId mockUserId;
+    @Mock
+    private PagingRule mockPagingRule;
+    @Mock
+    private CoreError mockCoreError;
 
-    @InjectMocks private SearchItemValidator validator;
+    @InjectMocks
+    private SearchItemValidator validator;
+
+    @Test
+    void shouldValidateUserIdIsPresent() {
+        when(mockRequest.getUserId()).thenReturn(mockUserId);
+        validator.validate(mockRequest);
+        verify(mockCurrentUserIdValidator).validateCurrentUserIdIsPresent(mockUserId);
+    }
 
     @Test
     void shouldValidatePagingRuleIfPresent() {

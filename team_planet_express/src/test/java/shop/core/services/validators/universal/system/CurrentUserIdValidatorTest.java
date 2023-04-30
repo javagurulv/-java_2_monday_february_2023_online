@@ -14,9 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ExtendWith(MockitoExtension.class)
 class CurrentUserIdValidatorTest {
 
-    @Mock private CurrentUserId mockUserId;
+    @Mock
+    private CurrentUserId mockUserId;
 
-    @InjectMocks private CurrentUserIdValidator validator;
+    @InjectMocks
+    private CurrentUserIdValidator validator;
 
     @Test
     void shouldThrowMissingDataException() {

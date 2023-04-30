@@ -21,17 +21,27 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class DatabaseAccessValidatorTest {
 
-    @Mock private Database mockDatabase;
-    @Mock private UserDatabase mockUserDatabase;
-    @Mock private ItemDatabase mockItemDatabase;
-    @Mock private CartDatabase mockCartDatabase;
-    @Mock private CartItemDatabase mockCartItemDatabase;
-    @Mock private User mockUser;
-    @Mock private Item mockItem;
-    @Mock private Cart mockCart;
-    @Mock private CartItem mockCartItem;
+    @Mock
+    private Database mockDatabase;
+    @Mock
+    private UserDatabase mockUserDatabase;
+    @Mock
+    private ItemDatabase mockItemDatabase;
+    @Mock
+    private CartDatabase mockCartDatabase;
+    @Mock
+    private CartItemDatabase mockCartItemDatabase;
+    @Mock
+    private User mockUser;
+    @Mock
+    private Item mockItem;
+    @Mock
+    private Cart mockCart;
+    @Mock
+    private CartItem mockCartItem;
 
-    @InjectMocks private DatabaseAccessValidator databaseAccessValidator;
+    @InjectMocks
+    private DatabaseAccessValidator databaseAccessValidator;
 
     @Test
     void shouldReturnUserById() {

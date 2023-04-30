@@ -15,10 +15,13 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class PagingUIElementContinuePagingTest {
 
-    @Mock private UserCommunication mockUserCommunication;
-    @Mock private PagingRule mockPagingRule;
+    @Mock
+    private UserCommunication mockUserCommunication;
+    @Mock
+    private PagingRule mockPagingRule;
 
-    @InjectMocks private PagingUIElement pagingUIElement;
+    @InjectMocks
+    private PagingUIElement pagingUIElement;
 
     @Test
     void shouldReturnFalseForNoPagingRule() {

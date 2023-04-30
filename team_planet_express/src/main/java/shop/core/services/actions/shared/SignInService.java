@@ -1,22 +1,22 @@
 package shop.core.services.actions.shared;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.core.domain.user.User;
 import shop.core.requests.shared.SignInRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.shared.SignInResponse;
 import shop.core.services.validators.actions.shared.SignInValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
 import java.util.List;
 
-@DIComponent
+@Component
 public class SignInService {
 
-    @DIDependency
+    @Autowired
     private SignInValidator validator;
-    @DIDependency
+    @Autowired
     private DatabaseAccessValidator databaseAccessValidator;
 
     public SignInResponse execute(SignInRequest request) {

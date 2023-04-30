@@ -1,18 +1,18 @@
 package shop.core.services.user;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.core.database.Database;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
 import java.util.Optional;
 
-@DIComponent
+@Component
 public class UserService {
 
-    @DIDependency
+    @Autowired
     private Database database;
 
     public User createUser(UserCreationData userCreationData) {

@@ -7,10 +7,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.console_ui.UserCommunication;
+import shop.console_ui.item_list.ItemStringProvider;
 import shop.core.domain.item.Item;
 import shop.core.requests.customer.ListShopItemsRequest;
 import shop.core.responses.customer.ListShopItemsResponse;
 import shop.core.services.actions.customer.ListShopItemsService;
+import shop.core.support.CurrentUserId;
 
 import java.util.List;
 
@@ -19,12 +21,21 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class ListShopItemsUIActionTest {
 
-    @Mock private ListShopItemsService mockListShopItemsService;
-    @Mock private UserCommunication mockUserCommunication;
-    @Mock private ListShopItemsResponse mockListShopItemsResponse;
-    @Mock private Item mockItem;
+    @Mock
+    private ListShopItemsService mockListShopItemsService;
+    @Mock
+    private CurrentUserId mockCurrentUserId;
+    @Mock
+    private ItemStringProvider mockItemStringProvider;
+    @Mock
+    private UserCommunication mockUserCommunication;
+    @Mock
+    private ListShopItemsResponse mockListShopItemsResponse;
+    @Mock
+    private Item mockItem;
 
-    @InjectMocks private ListShopItemsUIAction action;
+    @InjectMocks
+    private ListShopItemsUIAction action;
 
     @BeforeEach
     void setupMockResponse() {
@@ -48,7 +59,7 @@ class ListShopItemsUIActionTest {
     void shouldListHeaderAndTwoItems() {
         when(mockListShopItemsResponse.getShopItems()).thenReturn(List.of(mockItem, mockItem));
         action.execute();
-        verify(mockUserCommunication, times(3)).informUser(anyString());
+        verify(mockUserCommunication, times(3)).informUser(any());
     }
 
 }

@@ -11,8 +11,6 @@ import shop.core.requests.customer.ListCartItemsRequest;
 import shop.core.responses.customer.ListCartItemsResponse;
 import shop.core.services.actions.customer.ListCartItemsService;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)

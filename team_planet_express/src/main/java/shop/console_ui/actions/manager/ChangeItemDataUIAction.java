@@ -1,15 +1,15 @@
 package shop.console_ui.actions.manager;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.console_ui.UserCommunication;
 import shop.console_ui.actions.UIAction;
 import shop.core.domain.user.UserRole;
 import shop.core.requests.manager.ChangeItemDataRequest;
 import shop.core.responses.manager.ChangeItemDataResponse;
 import shop.core.services.actions.manager.ChangeItemDataService;
-import shop.dependency_injection.DIComponent;
-import shop.dependency_injection.DIDependency;
 
-@DIComponent
+@Component
 public class ChangeItemDataUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Change existing item data";
@@ -22,9 +22,9 @@ public class ChangeItemDataUIAction extends UIAction {
     private static final String MESSAGE_INPUT_RULES = "Leave any field blank to keep current value.";
     private static final String MESSAGE_ITEM_CHANGED = "Item data changed.";
 
-    @DIDependency
+    @Autowired
     private ChangeItemDataService changeItemDataService;
-    @DIDependency
+    @Autowired
     private UserCommunication userCommunication;
 
     public ChangeItemDataUIAction() {
