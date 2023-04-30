@@ -6,18 +6,26 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.responses.CoreError;
+import shop.core.support.error_code_processing.ErrorProcessor;
+import shop.core.support.error_code_processing.TextReplacementData;
+import shop.matchers.TextReplacementDataMatcher;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class InputStringValidatorIsPresentTest {
 
     @Mock
+    private ErrorProcessor mockErrorProcessor;
+    @Mock
     private InputStringValidatorData mockInputStringValidatorData;
+    @Mock
+    private CoreError mockCoreError;
 
     @InjectMocks
     private InputStringValidator validator;
@@ -27,8 +35,9 @@ class InputStringValidatorIsPresentTest {
         when(mockInputStringValidatorData.getValue()).thenReturn(null);
         when(mockInputStringValidatorData.getField()).thenReturn("field");
         when(mockInputStringValidatorData.getValueName()).thenReturn("Field");
-        Optional<CoreError> error = validator.validateIsPresent(mockInputStringValidatorData);
-        assertCorrectErrorIsPresent(error);
+        when(mockErrorProcessor.getCoreErrorWithTextReplacement(anyString(), anyString(), any(TextReplacementData.class))).thenReturn(mockCoreError);
+        validator.validateIsPresent(mockInputStringValidatorData);
+        verifyCorrectGetCoreErrorCall();
     }
 
     @Test
@@ -36,8 +45,9 @@ class InputStringValidatorIsPresentTest {
         when(mockInputStringValidatorData.getValue()).thenReturn("");
         when(mockInputStringValidatorData.getField()).thenReturn("field");
         when(mockInputStringValidatorData.getValueName()).thenReturn("Field");
-        Optional<CoreError> error = validator.validateIsPresent(mockInputStringValidatorData);
-        assertCorrectErrorIsPresent(error);
+        when(mockErrorProcessor.getCoreErrorWithTextReplacement(anyString(), anyString(), any(TextReplacementData.class))).thenReturn(mockCoreError);
+        validator.validateIsPresent(mockInputStringValidatorData);
+        verifyCorrectGetCoreErrorCall();
     }
 
     @Test
@@ -45,8 +55,9 @@ class InputStringValidatorIsPresentTest {
         when(mockInputStringValidatorData.getValue()).thenReturn(" ");
         when(mockInputStringValidatorData.getField()).thenReturn("field");
         when(mockInputStringValidatorData.getValueName()).thenReturn("Field");
-        Optional<CoreError> error = validator.validateIsPresent(mockInputStringValidatorData);
-        assertCorrectErrorIsPresent(error);
+        when(mockErrorProcessor.getCoreErrorWithTextReplacement(anyString(), anyString(), any(TextReplacementData.class))).thenReturn(mockCoreError);
+        validator.validateIsPresent(mockInputStringValidatorData);
+        verifyCorrectGetCoreErrorCall();
     }
 
     @Test
@@ -56,11 +67,10 @@ class InputStringValidatorIsPresentTest {
         assertTrue(error.isEmpty());
     }
 
-    private void assertCorrectErrorIsPresent(Optional<CoreError> error) {
-        assertTrue(error.isPresent());
-        assertEquals("field", error.get().getField());
-        assertTrue(error.get().getMessage().contains("Field"));
-        assertTrue(error.get().getMessage().toLowerCase().contains("required"));
+    private void verifyCorrectGetCoreErrorCall() {
+        verify(mockErrorProcessor).getCoreErrorWithTextReplacement(eq("field"),
+                eq("VDT-ISV-VIM"),
+                argThat(new TextReplacementDataMatcher("value", "Field")));
     }
 
 }

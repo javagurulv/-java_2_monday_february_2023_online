@@ -9,10 +9,13 @@ import shop.core.database.CartDatabase;
 import shop.core.database.Database;
 import shop.core.domain.cart.Cart;
 import shop.core.responses.CoreError;
+import shop.core.support.error_code_processing.ErrorProcessor;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -21,9 +24,13 @@ class CartValidatorTest {
     @Mock
     private Database mockDatabase;
     @Mock
+    private ErrorProcessor mockErrorProcessor;
+    @Mock
     private CartDatabase mockCartDatabase;
     @Mock
     private Cart mockCart;
+    @Mock
+    private CoreError mockCoreError;
 
     @InjectMocks
     private CartValidator validator;
@@ -40,8 +47,9 @@ class CartValidatorTest {
     void shouldReturnError() {
         when(mockDatabase.accessCartDatabase()).thenReturn(mockCartDatabase);
         when(mockCartDatabase.findOpenCartForUserId(1L)).thenReturn(Optional.empty());
-        Optional<CoreError> error = validator.validateOpenCartExistsForUserId(1L);
-        assertTrue(error.isPresent());
+        when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
+        validator.validateOpenCartExistsForUserId(1L);
+        verify(mockErrorProcessor).getCoreError("button", "VDT-CTV-NOC");
     }
 
 }
