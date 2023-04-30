@@ -38,7 +38,7 @@ class InputStringValidatorCompoundTest {
         when(mockErrorProcessor.getCoreErrorWithTextReplacement(anyString(), anyString(), any(TextReplacementData.class))).thenReturn(mockCoreError);
         List<CoreError> errors = validator.validateIsNumberNotNegative(mockInputStringValidatorData);
         assertEquals(1, errors.size());
-        verifyCorrectGetCoreErrorCall("VDT-ISV-VNN");
+        verifyCorrectGetCoreErrorCall("VDT-IST-VNN");
     }
 
     @Test
@@ -49,7 +49,7 @@ class InputStringValidatorCompoundTest {
         when(mockErrorProcessor.getCoreErrorWithTextReplacement(anyString(), anyString(), any(TextReplacementData.class))).thenReturn(mockCoreError);
         List<CoreError> errors = validator.validateIsNumberNotNegative(mockInputStringValidatorData);
         assertEquals(1, errors.size());
-        verifyCorrectGetCoreErrorCall("VDT-ISV-VIN");
+        verifyCorrectGetCoreErrorCall("VDT-IST-VIN");
     }
 
     @Test
@@ -60,7 +60,7 @@ class InputStringValidatorCompoundTest {
         when(mockErrorProcessor.getCoreErrorWithTextReplacement(anyString(), anyString(), any(TextReplacementData.class))).thenReturn(mockCoreError);
         List<CoreError> errors = validator.validateIsNumberNotNegativeNotDecimal(mockInputStringValidatorData);
         assertEquals(1, errors.size());
-        verifyCorrectGetCoreErrorCall("VDT-ISV-VNN");
+        verifyCorrectGetCoreErrorCall("VDT-IST-VNN");
     }
 
     @Test
@@ -71,7 +71,7 @@ class InputStringValidatorCompoundTest {
         when(mockErrorProcessor.getCoreErrorWithTextReplacement(anyString(), anyString(), any(TextReplacementData.class))).thenReturn(mockCoreError);
         List<CoreError> errors = validator.validateIsNumberNotNegativeNotDecimal(mockInputStringValidatorData);
         assertEquals(1, errors.size());
-        verifyCorrectGetCoreErrorCall("VDT-ISV-VIN");
+        verifyCorrectGetCoreErrorCall("VDT-IST-VIN");
     }
 
     @Test
@@ -82,7 +82,7 @@ class InputStringValidatorCompoundTest {
         when(mockErrorProcessor.getCoreErrorWithTextReplacement(anyString(), anyString(), any(TextReplacementData.class))).thenReturn(mockCoreError);
         List<CoreError> errors = validator.validateIsNumberNotNegativeNotDecimal(mockInputStringValidatorData);
         assertEquals(1, errors.size());
-        verifyCorrectGetCoreErrorCall("VDT-ISV-VID");
+        verifyCorrectGetCoreErrorCall("VDT-IST-VID");
     }
 
     @Test
@@ -93,8 +93,8 @@ class InputStringValidatorCompoundTest {
         when(mockErrorProcessor.getCoreErrorWithTextReplacement(anyString(), anyString(), any(TextReplacementData.class))).thenReturn(mockCoreError);
         List<CoreError> errors = validator.validateIsNumberNotNegativeNotDecimal(mockInputStringValidatorData);
         assertEquals(2, errors.size());
-        verifyCorrectGetCoreErrorCall("VDT-ISV-VIN");
-        verifyCorrectGetCoreErrorCall("VDT-ISV-VID");
+        verifyCorrectGetCoreErrorCall("VDT-IST-VIN");
+        verifyCorrectGetCoreErrorCall("VDT-IST-VID");
     }
 
     @Test
@@ -105,7 +105,7 @@ class InputStringValidatorCompoundTest {
         when(mockErrorProcessor.getCoreErrorWithTextReplacement(anyString(), anyString(), any(TextReplacementData.class))).thenReturn(mockCoreError);
         List<CoreError> errors = validator.validateIsNumberGreaterThanZeroNotDecimal(mockInputStringValidatorData);
         assertEquals(1, errors.size());
-        verifyCorrectGetCoreErrorCall("VDT-ISV-VNN");
+        verifyCorrectGetCoreErrorCall("VDT-IST-VNN");
     }
 
     @Test
@@ -116,7 +116,7 @@ class InputStringValidatorCompoundTest {
         when(mockErrorProcessor.getCoreErrorWithTextReplacement(anyString(), anyString(), any(TextReplacementData.class))).thenReturn(mockCoreError);
         List<CoreError> errors = validator.validateIsNumberGreaterThanZeroNotDecimal(mockInputStringValidatorData);
         assertEquals(1, errors.size());
-        verifyCorrectGetCoreErrorCall("VDT-ISV-VZL");
+        verifyCorrectGetCoreErrorCall("VDT-IST-VZL");
     }
 
     @Test
@@ -127,7 +127,7 @@ class InputStringValidatorCompoundTest {
         when(mockErrorProcessor.getCoreErrorWithTextReplacement(anyString(), anyString(), any(TextReplacementData.class))).thenReturn(mockCoreError);
         List<CoreError> errors = validator.validateIsNumberGreaterThanZeroNotDecimal(mockInputStringValidatorData);
         assertEquals(1, errors.size());
-        verifyCorrectGetCoreErrorCall("VDT-ISV-VZL");
+        verifyCorrectGetCoreErrorCall("VDT-IST-VZL");
     }
 
     @Test
@@ -138,7 +138,7 @@ class InputStringValidatorCompoundTest {
         when(mockErrorProcessor.getCoreErrorWithTextReplacement(anyString(), anyString(), any(TextReplacementData.class))).thenReturn(mockCoreError);
         List<CoreError> errors = validator.validateIsNumberGreaterThanZeroNotDecimal(mockInputStringValidatorData);
         assertEquals(1, errors.size());
-        verifyCorrectGetCoreErrorCall("VDT-ISV-VID");
+        verifyCorrectGetCoreErrorCall("VDT-IST-VID");
     }
 
     @Test
@@ -149,8 +149,8 @@ class InputStringValidatorCompoundTest {
         when(mockErrorProcessor.getCoreErrorWithTextReplacement(anyString(), anyString(), any(TextReplacementData.class))).thenReturn(mockCoreError);
         List<CoreError> errors = validator.validateIsNumberGreaterThanZeroNotDecimal(mockInputStringValidatorData);
         assertEquals(2, errors.size());
-        verifyCorrectGetCoreErrorCall("VDT-ISV-VZL");
-        verifyCorrectGetCoreErrorCall("VDT-ISV-VID");
+        verifyCorrectGetCoreErrorCall("VDT-IST-VZL");
+        verifyCorrectGetCoreErrorCall("VDT-IST-VID");
     }
 
     private void verifyCorrectGetCoreErrorCall(String errorCode) {

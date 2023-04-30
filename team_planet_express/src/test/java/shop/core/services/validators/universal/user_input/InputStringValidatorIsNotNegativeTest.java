@@ -154,7 +154,7 @@ class InputStringValidatorIsNotNegativeTest {
 
     private void verifyCorrectGetCoreErrorCall() {
         verify(mockErrorProcessor).getCoreErrorWithTextReplacement(eq("field"),
-                eq("VDT-ISV-VIN"),
+                eq("VDT-IST-VIN"),
                 argThat(new TextReplacementDataMatcher("value", "Field")));
     }
 

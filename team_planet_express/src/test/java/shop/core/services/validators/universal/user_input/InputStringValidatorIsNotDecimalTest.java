@@ -154,7 +154,7 @@ class InputStringValidatorIsNotDecimalTest {
 
     private void verifyCorrectGetCoreErrorCall() {
         verify(mockErrorProcessor).getCoreErrorWithTextReplacement(eq("field"),
-                eq("VDT-ISV-VID"),
+                eq("VDT-IST-VID"),
                 argThat(new TextReplacementDataMatcher("value", "Field")));
     }
 

@@ -22,8 +22,8 @@ public class SignInValidator {
     private static final String FIELD_PASSWORD = "password";
     private static final String VALUE_NAME_LOGIN = "Login name";
     private static final String VALUE_NAME_PASSWORD = "Password";
-    private static final String ERROR_LOGIN_NOT_EXISTS = "VDT-SIV-LNE";
-    private static final String ERROR_PASSWORD_INCORRECT = "VDT-SIV-PII";
+    private static final String ERROR_LOGIN_NOT_EXISTS = "VDT-SIN-LNE";
+    private static final String ERROR_PASSWORD_INCORRECT = "VDT-SIN-PII";
 
     @Autowired
     private Database database;

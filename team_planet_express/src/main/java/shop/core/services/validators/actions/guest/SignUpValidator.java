@@ -8,6 +8,7 @@ import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
+import shop.core.support.error_code_processing.ErrorProcessor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +23,8 @@ public class SignUpValidator {
     private static final String VALUE_NAME_NAME = "Name";
     private static final String VALUE_NAME_LOGIN_NAME = "Login name";
     private static final String VALUE_NAME_PASSWORD = "Password";
-    private static final String ERROR_LOGIN_EXISTS = "Error: User with this login name already exists.";
-    private static final String ERROR_PASSWORD_SHORT = "Error: Password must be at least 3 characters long.";
+    private static final String ERROR_LOGIN_EXISTS = "VDT-SUP-LAE";
+    private static final String ERROR_PASSWORD_SHORT = "VDT-SUP-PTS";
 
     @Autowired
     private Database database;
@@ -31,6 +32,8 @@ public class SignUpValidator {
     private CurrentUserIdValidator userIdValidator;
     @Autowired
     private InputStringValidator inputStringValidator;
+    @Autowired
+    private ErrorProcessor errorProcessor;
 
     public List<CoreError> validate(SignUpRequest request) {
         userIdValidator.validateCurrentUserIdIsPresent(request.getUserId());
@@ -64,13 +67,13 @@ public class SignUpValidator {
     private Optional<CoreError> validateLoginNameDoesNotAlreadyExist(String loginName) {
         return (loginName != null && !loginName.isBlank() &&
                 database.accessUserDatabase().findByLoginName(loginName).isPresent())
-                ? Optional.of(new CoreError(FIELD_LOGIN_NAME, ERROR_LOGIN_EXISTS))
+                ? Optional.of(errorProcessor.getCoreError(FIELD_LOGIN_NAME, ERROR_LOGIN_EXISTS))
                 : Optional.empty();
     }
 
     private Optional<CoreError> validatePasswordLength(String password) {
         return (password != null && !password.isBlank() && password.length() < 3)
-                ? Optional.of(new CoreError(FIELD_PASSWORD, ERROR_PASSWORD_SHORT))
+                ? Optional.of(errorProcessor.getCoreError(FIELD_PASSWORD, ERROR_PASSWORD_SHORT))
                 : Optional.empty();
     }
 

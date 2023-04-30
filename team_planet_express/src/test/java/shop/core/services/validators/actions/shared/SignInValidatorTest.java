@@ -84,7 +84,7 @@ class SignInValidatorTest {
         when(mockUserDatabase.findByLoginName("login name")).thenReturn(Optional.empty());
         when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
         validator.validate(mockRequest);
-        verify(mockErrorProcessor).getCoreError("login", "VDT-SIV-LNE");
+        verify(mockErrorProcessor).getCoreError("login", "VDT-SIN-LNE");
     }
 
     @Test
@@ -110,7 +110,7 @@ class SignInValidatorTest {
         when(mockUser.getPassword()).thenReturn("password");
         when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
         validator.validate(mockRequest);
-        verify(mockErrorProcessor).getCoreError("password", "VDT-SIV-PII");
+        verify(mockErrorProcessor).getCoreError("password", "VDT-SIN-PII");
     }
 
     @Test

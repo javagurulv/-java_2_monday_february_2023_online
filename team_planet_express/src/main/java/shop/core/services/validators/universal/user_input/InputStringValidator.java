@@ -13,11 +13,11 @@ import java.util.Optional;
 @Component
 public class InputStringValidator {
 
-    private static final String ERROR_MISSING = "VDT-ISV-VIM";
-    private static final String ERROR_NOT_NUMBER = "VDT-ISV-VNN";
-    private static final String ERROR_NEGATIVE = "VDT-ISV-VIN";
-    private static final String ERROR_ZERO_OR_LESS = "VDT-ISV-VZL";
-    private static final String ERROR_DECIMAL = "VDT-ISV-VID";
+    private static final String ERROR_MISSING = "VDT-IST-VIM";
+    private static final String ERROR_NOT_NUMBER = "VDT-IST-VNN";
+    private static final String ERROR_NEGATIVE = "VDT-IST-VIN";
+    private static final String ERROR_ZERO_OR_LESS = "VDT-IST-VZL";
+    private static final String ERROR_DECIMAL = "VDT-IST-VID";
     private static final String TEXT_TO_REMOVE = "value";
 
     private static final String REGEX_NUMBER = "-?[0-9]+(.[0-9]+)?";

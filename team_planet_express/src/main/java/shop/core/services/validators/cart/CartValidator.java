@@ -12,7 +12,7 @@ import java.util.Optional;
 public class CartValidator {
 
     private static final String FIELD_BUTTON = "button";
-    private static final String ERROR_NO_OPEN_CART = "VDT-CTV-NOC";
+    private static final String ERROR_NO_OPEN_CART = "VDT-CRT-NOC";
 
     @Autowired
     private Database database;

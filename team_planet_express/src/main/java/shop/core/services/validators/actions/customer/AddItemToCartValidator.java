@@ -10,6 +10,7 @@ import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
+import shop.core.support.error_code_processing.ErrorProcessor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +23,8 @@ public class AddItemToCartValidator {
     private static final String FIELD_QUANTITY = "quantity";
     private static final String VALUE_NAME_ITEM = "Item name";
     private static final String VALUE_NAME_QUANTITY = "Quantity";
-    private static final String ERROR_NO_SUCH_ITEM = "Error: No such item in the shop.";
-    private static final String ERROR_NOT_ENOUGH_QUANTITY = "Error: Available quantity lower than ordered amount.";
+    private static final String ERROR_NO_SUCH_ITEM = "VDT-AIC-NSI";
+    private static final String ERROR_NOT_ENOUGH_QUANTITY = "VDT-AIC-NEQ";
 
     @Autowired
     private Database database;
@@ -35,7 +36,8 @@ public class AddItemToCartValidator {
     private InputStringValidator inputStringValidator;
     @Autowired
     private DatabaseAccessValidator databaseAccessValidator;
-
+    @Autowired
+    private ErrorProcessor errorProcessor;
 
     public List<CoreError> validate(AddItemToCartRequest request) {
         userIdValidator.validateCurrentUserIdIsPresent(request.getUserId());
@@ -68,14 +70,14 @@ public class AddItemToCartValidator {
     private Optional<CoreError> validateOrderedQuantityNotGreaterThanAvailable(AddItemToCartRequest request) {
         return (Integer.parseInt(request.getOrderedQuantity()) >
                 databaseAccessValidator.getItemByName(request.getItemName()).getAvailableQuantity())
-                ? Optional.of(new CoreError(FIELD_QUANTITY, ERROR_NOT_ENOUGH_QUANTITY))
+                ? Optional.of(errorProcessor.getCoreError(FIELD_QUANTITY, ERROR_NOT_ENOUGH_QUANTITY))
                 : Optional.empty();
     }
 
     private Optional<CoreError> validateItemNameExistsInShop(String itemName) {
         return (itemName == null ||
                 database.accessItemDatabase().findByName(itemName).isEmpty())
-                ? Optional.of(new CoreError(FIELD_NAME, ERROR_NO_SUCH_ITEM))
+                ? Optional.of(errorProcessor.getCoreError(FIELD_NAME, ERROR_NO_SUCH_ITEM))
                 : Optional.empty();
     }
 

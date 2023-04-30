@@ -160,7 +160,7 @@ class InputStringValidatorIsGreaterThenZeroTest {
 
     private void verifyCorrectGetCoreErrorCall() {
         verify(mockErrorProcessor).getCoreErrorWithTextReplacement(eq("field"),
-                eq("VDT-ISV-VZL"),
+                eq("VDT-IST-VZL"),
                 argThat(new TextReplacementDataMatcher("value", "Field")));
     }
 

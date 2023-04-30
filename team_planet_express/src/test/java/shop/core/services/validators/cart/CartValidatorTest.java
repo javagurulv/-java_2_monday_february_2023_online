@@ -49,7 +49,7 @@ class CartValidatorTest {
         when(mockCartDatabase.findOpenCartForUserId(1L)).thenReturn(Optional.empty());
         when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
         validator.validateOpenCartExistsForUserId(1L);
-        verify(mockErrorProcessor).getCoreError("button", "VDT-CTV-NOC");
+        verify(mockErrorProcessor).getCoreError("button", "VDT-CRT-NOC");
     }
 
 }

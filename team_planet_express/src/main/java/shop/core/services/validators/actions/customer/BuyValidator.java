@@ -9,6 +9,7 @@ import shop.core.responses.CoreError;
 import shop.core.services.validators.cart.CartValidator;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.support.error_code_processing.ErrorProcessor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.Optional;
 public class BuyValidator {
 
     private static final String FIELD_NAME = "name";
-    private static final String ERROR_CART_EMPTY = "Error: Your cart is empty.";
+    private static final String ERROR_CART_EMPTY = "VDT-BUY-CIE";
 
     @Autowired
     private Database database;
@@ -28,7 +29,8 @@ public class BuyValidator {
     private CartValidator cartValidator;
     @Autowired
     private DatabaseAccessValidator databaseAccessValidator;
-
+    @Autowired
+    private ErrorProcessor errorProcessor;
 
     public List<CoreError> validate(BuyRequest request) {
         userIdValidator.validateCurrentUserIdIsPresent(request.getUserId());
@@ -43,7 +45,7 @@ public class BuyValidator {
     private Optional<CoreError> validateCartIsNotEmpty(Long userId) {
         Cart cart = databaseAccessValidator.getOpenCartByUserId(userId);
         return (database.accessCartItemDatabase().getAllCartItemsForCartId(cart.getId()).size() == 0)
-                ? Optional.of(new CoreError(FIELD_NAME, ERROR_CART_EMPTY))
+                ? Optional.of(errorProcessor.getCoreError(FIELD_NAME, ERROR_CART_EMPTY))
                 : Optional.empty();
     }
 

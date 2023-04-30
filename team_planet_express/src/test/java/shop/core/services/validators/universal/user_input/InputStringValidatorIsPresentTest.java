@@ -69,7 +69,7 @@ class InputStringValidatorIsPresentTest {
 
     private void verifyCorrectGetCoreErrorCall() {
         verify(mockErrorProcessor).getCoreErrorWithTextReplacement(eq("field"),
-                eq("VDT-ISV-VIM"),
+                eq("VDT-IST-VIM"),
                 argThat(new TextReplacementDataMatcher("value", "Field")));
     }
 

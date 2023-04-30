@@ -142,7 +142,7 @@ class InputStringValidatorIsNumberTest {
 
     private void verifyCorrectGetCoreErrorCall() {
         verify(mockErrorProcessor).getCoreErrorWithTextReplacement(eq("field"),
-                eq("VDT-ISV-VNN"),
+                eq("VDT-IST-VNN"),
                 argThat(new TextReplacementDataMatcher("value", "Field")));
     }
 
