@@ -19,10 +19,13 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class PagingRuleValidatorTest {
 
-    @Mock private InputStringValidator mockInputStringValidator;
-    @Mock private PagingRule mockPagingRule;
+    @Mock
+    private InputStringValidator mockInputStringValidator;
+    @Mock
+    private PagingRule mockPagingRule;
 
-    @InjectMocks private PagingRuleValidator validator;
+    @InjectMocks
+    private PagingRuleValidator validator;
 
     @Test
     void shouldThrowInternalSystemCollapseExceptionForMissingPageNumber() {

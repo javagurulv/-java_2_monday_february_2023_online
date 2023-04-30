@@ -14,10 +14,13 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 class ExitUIActionTest {
 
-    @Mock private ExitService mockExitService;
-    @Mock private UserCommunication mockUserCommunication;
+    @Mock
+    private ExitService mockExitService;
+    @Mock
+    private UserCommunication mockUserCommunication;
 
-    @InjectMocks private ExitUIAction action;
+    @InjectMocks
+    private ExitUIAction action;
 
     @Test
     void shouldPrintExitMessage() {

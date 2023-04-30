@@ -1,5 +1,6 @@
 package shop.core.services.item_list;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import shop.core.domain.item.Item;
 import shop.core.support.ordering.OrderBy;
@@ -13,10 +14,15 @@ import java.util.Optional;
 @Component
 public class OrderingService {
 
+    @Value("${ordering.enabled}")
+    private boolean orderingEnabled;
+
     public List<Item> getOrderedItems(List<Item> items, List<OrderingRule> orderingRules) {
-        if (orderingRules != null && orderingRules.size() > 0) {
-            items = orderByPrice(items, orderingRules);
-            items = orderByName(items, orderingRules);
+        if (orderingEnabled) {
+            if (orderingRules != null && orderingRules.size() > 0) {
+                items = orderByPrice(items, orderingRules);
+                items = orderByName(items, orderingRules);
+            }
         }
         return items;
     }

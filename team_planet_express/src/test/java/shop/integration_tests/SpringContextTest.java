@@ -15,7 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ContextConfiguration(classes = {ShopConfiguration.class})
 public class SpringContextTest {
 
-    @Autowired private ApplicationContext appContext;
+    @Autowired
+    private ApplicationContext appContext;
 
     @Test
     public void start() {

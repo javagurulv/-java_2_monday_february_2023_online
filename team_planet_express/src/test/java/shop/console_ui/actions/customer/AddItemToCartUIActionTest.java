@@ -14,18 +14,22 @@ import shop.core.services.actions.customer.AddItemToCartService;
 
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class AddItemToCartUIActionTest {
 
-    @Mock private AddItemToCartService mockAddItemToCartService;
-    @Mock private UserCommunication mockUserCommunication;
-    @Mock private AddItemToCartResponse mockAddItemToCartResponse;
-    @Mock private CoreError mockCoreError;
+    @Mock
+    private AddItemToCartService mockAddItemToCartService;
+    @Mock
+    private UserCommunication mockUserCommunication;
+    @Mock
+    private AddItemToCartResponse mockAddItemToCartResponse;
+    @Mock
+    private CoreError mockCoreError;
 
-    @InjectMocks private AddItemToCartUIAction action;
+    @InjectMocks
+    private AddItemToCartUIAction action;
 
     @BeforeEach
     void setupMockResponse() {

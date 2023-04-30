@@ -21,13 +21,19 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class CartServiceTest {
 
-    @Mock private Database mockDatabase;
-    @Mock private DatabaseAccessValidator mockDatabaseAccessValidator;
-    @Mock private CartItemDatabase mockCartItemDatabase;
-    @Mock private CartItem mockCartItem;
-    @Mock private Item mockItem;
+    @Mock
+    private Database mockDatabase;
+    @Mock
+    private DatabaseAccessValidator mockDatabaseAccessValidator;
+    @Mock
+    private CartItemDatabase mockCartItemDatabase;
+    @Mock
+    private CartItem mockCartItem;
+    @Mock
+    private Item mockItem;
 
-    @InjectMocks private CartService service;
+    @InjectMocks
+    private CartService service;
 
     @Test
     void shouldReturnSum() {

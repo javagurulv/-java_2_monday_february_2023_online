@@ -21,14 +21,21 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class ListShopItemsUIActionTest {
 
-    @Mock private ListShopItemsService mockListShopItemsService;
-    @Mock private CurrentUserId mockCurrentUserId;
-    @Mock private ItemStringProvider mockItemStringProvider;
-    @Mock private UserCommunication mockUserCommunication;
-    @Mock private ListShopItemsResponse mockListShopItemsResponse;
-    @Mock private Item mockItem;
+    @Mock
+    private ListShopItemsService mockListShopItemsService;
+    @Mock
+    private CurrentUserId mockCurrentUserId;
+    @Mock
+    private ItemStringProvider mockItemStringProvider;
+    @Mock
+    private UserCommunication mockUserCommunication;
+    @Mock
+    private ListShopItemsResponse mockListShopItemsResponse;
+    @Mock
+    private Item mockItem;
 
-    @InjectMocks private ListShopItemsUIAction action;
+    @InjectMocks
+    private ListShopItemsUIAction action;
 
     @BeforeEach
     void setupMockResponse() {

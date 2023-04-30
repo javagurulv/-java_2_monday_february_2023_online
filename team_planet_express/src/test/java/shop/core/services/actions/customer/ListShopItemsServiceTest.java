@@ -19,14 +19,21 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class ListShopItemsServiceTest {
 
-    @Mock private Database mockDatabase;
-    @Mock private DatabaseAccessValidator mockDatabaseAccessValidator;
-    @Mock private ItemDatabase mockItemDatabase;
-    @Mock private ListShopItemsRequest mockRequest;
-    @Mock private User mockUser;
-    @Mock private CurrentUserId mockCurrentUserId;
+    @Mock
+    private Database mockDatabase;
+    @Mock
+    private DatabaseAccessValidator mockDatabaseAccessValidator;
+    @Mock
+    private ItemDatabase mockItemDatabase;
+    @Mock
+    private ListShopItemsRequest mockRequest;
+    @Mock
+    private User mockUser;
+    @Mock
+    private CurrentUserId mockCurrentUserId;
 
-    @InjectMocks private ListShopItemsService service;
+    @InjectMocks
+    private ListShopItemsService service;
 
     @Test
     void shouldGetItemsFromDatabase() {

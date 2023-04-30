@@ -24,17 +24,27 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class AddItemToCartServiceTest {
 
-    @Mock private Database mockDatabase;
-    @Mock private AddItemToCartValidator mockValidator;
-    @Mock private DatabaseAccessValidator mockDatabaseAccessValidator;
-    @Mock private AddItemToCartRequest mockRequest = mock(AddItemToCartRequest.class);
-    @Mock private CurrentUserId mockUserId = mock(CurrentUserId.class);
-    @Mock private ItemDatabase mockItemDatabase = mock(ItemDatabase.class);
-    @Mock private CartItemDatabase mockCartItemDatabase = mock(CartItemDatabase.class);
-    @Mock private Item mockItem = mock(Item.class);
-    @Mock private Cart mockCart = mock(Cart.class);
+    @Mock
+    private Database mockDatabase;
+    @Mock
+    private AddItemToCartValidator mockValidator;
+    @Mock
+    private DatabaseAccessValidator mockDatabaseAccessValidator;
+    @Mock
+    private final AddItemToCartRequest mockRequest = mock(AddItemToCartRequest.class);
+    @Mock
+    private final CurrentUserId mockUserId = mock(CurrentUserId.class);
+    @Mock
+    private final ItemDatabase mockItemDatabase = mock(ItemDatabase.class);
+    @Mock
+    private final CartItemDatabase mockCartItemDatabase = mock(CartItemDatabase.class);
+    @Mock
+    private final Item mockItem = mock(Item.class);
+    @Mock
+    private final Cart mockCart = mock(Cart.class);
 
-    @InjectMocks private AddItemToCartService service;
+    @InjectMocks
+    private AddItemToCartService service;
 
     @Test
     void shouldAddNewItemToCart() {

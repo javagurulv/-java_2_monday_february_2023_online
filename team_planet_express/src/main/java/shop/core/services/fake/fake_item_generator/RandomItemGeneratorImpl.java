@@ -27,7 +27,8 @@ public class RandomItemGeneratorImpl implements ItemGenerator {
 
     private Item createFakeItem() {
         String name = getRandomName();
-        BigDecimal price = new BigDecimal(random.nextDouble(10, 100)).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal price = BigDecimal.valueOf(random.nextDouble(10, 100))
+                .setScale(2, RoundingMode.HALF_UP);
         Integer availableQuantity = random.nextInt(10) + 1;
         return new Item(name, price, availableQuantity);
     }

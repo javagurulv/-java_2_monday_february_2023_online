@@ -19,7 +19,7 @@ public abstract class Tester {
         this.applicationContext = applicationContext;
     }
 
-    protected Tester checkItemInCart(String itemName, Integer quantity){
+    protected Tester checkItemInCart(String itemName, Integer quantity) {
         Optional<Cart> cart = getDatabase().accessCartDatabase().findOpenCartForUserId(getCurrentUserId().getValue());
         assertTrue(cart.isPresent());
         Optional<CartItem> cartItem = getDatabase().accessCartItemDatabase().findByCartIdAndItemId(

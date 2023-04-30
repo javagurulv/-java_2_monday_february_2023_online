@@ -27,17 +27,27 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class SignInValidatorTest {
 
-    @Mock private Database mockDatabase;
-    @Mock private CurrentUserIdValidator mockCurrentUserIdValidator;
-    @Mock private InputStringValidator mockInputStringValidator;
-    @Mock private DatabaseAccessValidator mockDatabaseAccessValidator;
-    @Mock private SignInRequest mockRequest;
-    @Mock private CurrentUserId mockUserId;
-    @Mock private UserDatabase mockUserDatabase;
-    @Mock private User mockUser;
-    @Mock private CoreError mockCoreError;
+    @Mock
+    private Database mockDatabase;
+    @Mock
+    private CurrentUserIdValidator mockCurrentUserIdValidator;
+    @Mock
+    private InputStringValidator mockInputStringValidator;
+    @Mock
+    private DatabaseAccessValidator mockDatabaseAccessValidator;
+    @Mock
+    private SignInRequest mockRequest;
+    @Mock
+    private CurrentUserId mockUserId;
+    @Mock
+    private UserDatabase mockUserDatabase;
+    @Mock
+    private User mockUser;
+    @Mock
+    private CoreError mockCoreError;
 
-    @InjectMocks private SignInValidator validator;
+    @InjectMocks
+    private SignInValidator validator;
 
     @Test
     void shouldValidateUserIdIsPresent() {
