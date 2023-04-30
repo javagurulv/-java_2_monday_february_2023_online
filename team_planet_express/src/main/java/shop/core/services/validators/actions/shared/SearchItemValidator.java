@@ -9,15 +9,13 @@ import shop.core.services.validators.item_list.PagingRuleValidator;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
+import shop.core.support.Placeholder;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class SearchItemValidator {
-
-    private static final String FIELD_PRICE = "price";
-    private static final String VALUE_NAME_PRICE = "Price";
 
     @Autowired
     private CurrentUserIdValidator userIdValidator;
@@ -39,9 +37,15 @@ public class SearchItemValidator {
     }
 
     private void validatePrice(String price, List<CoreError> errors) {
+        List<Placeholder> placeholders = new ArrayList<>();
+        placeholders.add(new Placeholder("VALUE", "Price"));
+
         InputStringValidatorData inputStringValidatorData =
-                new InputStringValidatorData(price, FIELD_PRICE, VALUE_NAME_PRICE);
-        errors.addAll(inputStringValidator.validateIsNumberNotNegative(inputStringValidatorData));
+                new InputStringValidatorData(price, placeholders);
+        inputStringValidatorData.setNumberChecker(true);
+        inputStringValidatorData.setNotNegativeChecker(true);
+
+        errors.addAll(inputStringValidator.validate(inputStringValidatorData));
     }
 
     private void validateOrderingIfPresent(SearchItemRequest request, List<CoreError> errors) {

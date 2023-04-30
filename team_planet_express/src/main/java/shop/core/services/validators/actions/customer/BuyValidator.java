@@ -9,6 +9,7 @@ import shop.core.responses.CoreError;
 import shop.core.services.validators.cart.CartValidator;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.support.ErrorCodeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +17,8 @@ import java.util.Optional;
 
 @Component
 public class BuyValidator {
-
-    private static final String FIELD_NAME = "name";
-    private static final String ERROR_CART_EMPTY = "Error: Your cart is empty.";
-
+    @Autowired
+    private ErrorCodeUtil errorCodeUtil;
     @Autowired
     private Database database;
     @Autowired
@@ -43,7 +42,7 @@ public class BuyValidator {
     private Optional<CoreError> validateCartIsNotEmpty(Long userId) {
         Cart cart = databaseAccessValidator.getOpenCartByUserId(userId);
         return (database.accessCartItemDatabase().getAllCartItemsForCartId(cart.getId()).size() == 0)
-                ? Optional.of(new CoreError(FIELD_NAME, ERROR_CART_EMPTY))
+                ? Optional.of(errorCodeUtil.errorBuild("ERROR_CODE_3"))
                 : Optional.empty();
     }
 

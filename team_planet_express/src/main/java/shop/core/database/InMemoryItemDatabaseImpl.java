@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
 @Data
 public class InMemoryItemDatabaseImpl implements ItemDatabase {
 
-    private Long nextId = 1L;
     private final List<Item> shopItems = new ArrayList<>();
+    private Long nextId = 1L;
 
     @Override
     public Item save(Item item) {

@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 @Data
 public class InMemoryCartItemDatabaseImpl implements CartItemDatabase {
 
-    private Long nextId = 1L;
     private final List<CartItem> cartItems = new ArrayList<>();
+    private Long nextId = 1L;
 
     @Override
     public CartItem save(CartItem cartItem) {

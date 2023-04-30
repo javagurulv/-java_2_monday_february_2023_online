@@ -6,6 +6,7 @@ import shop.core.responses.CoreError;
 import shop.core.services.exception.InternalSystemCollapseException;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
+import shop.core.support.Placeholder;
 import shop.core.support.paging.PagingRule;
 
 import java.util.ArrayList;
@@ -13,9 +14,6 @@ import java.util.List;
 
 @Component
 public class PagingRuleValidator {
-
-    private static final String FIELD_PAGE_SIZE = "page_size";
-    private static final String VALUE_NAME_PAGE_SIZE = "Page size";
 
     @Autowired
     private InputStringValidator inputStringValidator;
@@ -34,10 +32,17 @@ public class PagingRuleValidator {
     }
 
     private void validatePageSize(String pageSize, List<CoreError> errors) {
+        List<Placeholder> placeholders = new ArrayList<>();
+        placeholders.add(new Placeholder("VALUE", "Page size"));
+
         InputStringValidatorData inputStringValidatorData =
-                new InputStringValidatorData(pageSize, FIELD_PAGE_SIZE, VALUE_NAME_PAGE_SIZE);
-        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
-        errors.addAll(inputStringValidator.validateIsNumberGreaterThanZeroNotDecimal(inputStringValidatorData));
+                new InputStringValidatorData(pageSize, placeholders);
+        inputStringValidatorData.setPresentChecker(true);
+        inputStringValidatorData.setNumberChecker(true);
+        inputStringValidatorData.setGreaterZeroChecker(true);
+        inputStringValidatorData.setNotDecimalChecker(true);
+
+        errors.addAll(inputStringValidator.validate(inputStringValidatorData));
     }
 
 }

@@ -9,6 +9,8 @@ import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
+import shop.core.support.ErrorCodeUtil;
+import shop.core.support.Placeholder;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -19,16 +21,8 @@ import java.util.Optional;
 @Component
 public class ChangeItemDataValidator {
 
-    private static final String FIELD_ID = "id";
-    private static final String FIELD_PRICE = "price";
-    private static final String FIELD_QUANTITY = "quantity";
-    private static final String FIELD_BUTTON = "button";
-    private static final String VALUE_NAME_ID = "Item id";
-    private static final String VALUE_NAME_PRICE = "Price";
-    private static final String VALUE_NAME_QUANTITY = "Quantity";
-    private static final String ERROR_ID_NOT_EXISTS = "Error: Item with this id does not exist.";
-    private static final String ERROR_ITEM_EXISTS = "Error: Exactly the same item already exists.";
-
+    @Autowired
+    private ErrorCodeUtil errorCodeUtil;
     @Autowired
     private Database database;
     @Autowired
@@ -48,25 +42,45 @@ public class ChangeItemDataValidator {
     }
 
     private void validateId(String id, List<CoreError> errors) {
+        List<Placeholder> placeholders = new ArrayList<>();
+        placeholders.add(new Placeholder("VALUE", "Item id"));
+
         InputStringValidatorData inputStringValidatorData =
-                new InputStringValidatorData(id, FIELD_ID, VALUE_NAME_ID);
-        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
-        errors.addAll(inputStringValidator.validateIsNumberNotNegativeNotDecimal(inputStringValidatorData));
+                new InputStringValidatorData(id, placeholders);
+        inputStringValidatorData.setPresentChecker(true);
+        inputStringValidatorData.setNumberChecker(true);
+        inputStringValidatorData.setNotNegativeChecker(true);
+        inputStringValidatorData.setNotDecimalChecker(true);
+
+        errors.addAll(inputStringValidator.validate(inputStringValidatorData));
         if (errors.isEmpty()) {
             validateIdExistsInShop(id).ifPresent(errors::add);
         }
     }
 
     private void validatePrice(String price, List<CoreError> errors) {
+        List<Placeholder> placeholders = new ArrayList<>();
+        placeholders.add(new Placeholder("VALUE", "Price"));
+
         InputStringValidatorData inputStringValidatorData =
-                new InputStringValidatorData(price, FIELD_PRICE, VALUE_NAME_PRICE);
-        errors.addAll(inputStringValidator.validateIsNumberNotNegative(inputStringValidatorData));
+                new InputStringValidatorData(price, placeholders);
+        inputStringValidatorData.setNumberChecker(true);
+        inputStringValidatorData.setNotNegativeChecker(true);
+
+        errors.addAll(inputStringValidator.validate(inputStringValidatorData));
     }
 
     private void validateQuantity(String availableQuantity, List<CoreError> errors) {
+        List<Placeholder> placeholders = new ArrayList<>();
+        placeholders.add(new Placeholder("VALUE", "Quantity"));
+
         InputStringValidatorData inputStringValidatorData =
-                new InputStringValidatorData(availableQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY);
-        errors.addAll(inputStringValidator.validateIsNumberNotNegativeNotDecimal(inputStringValidatorData));
+                new InputStringValidatorData(availableQuantity, placeholders);
+        inputStringValidatorData.setNumberChecker(true);
+        inputStringValidatorData.setNotNegativeChecker(true);
+        inputStringValidatorData.setNotDecimalChecker(true);
+
+        errors.addAll(inputStringValidator.validate(inputStringValidatorData));
     }
 
     private Optional<CoreError> validateDuplicate(ChangeItemDataRequest request) {
@@ -76,14 +90,14 @@ public class ChangeItemDataValidator {
         return (database.accessItemDatabase().getAllItems().stream()
                 .filter(item -> !originalItem.getId().equals(item.getId()))
                 .anyMatch(item -> newItemName.equals(item.getName()) && newPrice.compareTo(item.getPrice()) == 0))
-                ? Optional.of(new CoreError(FIELD_BUTTON, ERROR_ITEM_EXISTS))
+                ? Optional.of(errorCodeUtil.errorBuild("ERROR_CODE_13"))
                 : Optional.empty();
     }
 
     private Optional<CoreError> validateIdExistsInShop(String id) {
         return (id != null && !id.isBlank() &&
                 database.accessItemDatabase().findById(Long.parseLong(id)).isEmpty())
-                ? Optional.of(new CoreError(FIELD_ID, ERROR_ID_NOT_EXISTS))
+                ? Optional.of(errorCodeUtil.errorBuild("ERROR_CODE_12"))
                 : Optional.empty();
     }
 

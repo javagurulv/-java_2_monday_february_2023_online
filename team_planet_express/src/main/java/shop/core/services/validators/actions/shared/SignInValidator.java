@@ -9,6 +9,8 @@ import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
+import shop.core.support.ErrorCodeUtil;
+import shop.core.support.Placeholder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +19,8 @@ import java.util.Optional;
 @Component
 public class SignInValidator {
 
-    private static final String FIELD_LOGIN_NAME = "login";
-    private static final String FIELD_PASSWORD = "password";
-    private static final String VALUE_NAME_LOGIN = "Login name";
-    private static final String VALUE_NAME_PASSWORD = "Password";
-    private static final String ERROR_LOGIN_NOT_EXISTS = "Error: User with this login does not exist.";
-    private static final String ERROR_PASSWORD_INCORRECT = "Error: Password is incorrect.";
-
+    @Autowired
+    private ErrorCodeUtil errorCodeUtil;
     @Autowired
     private Database database;
     @Autowired
@@ -45,29 +42,39 @@ public class SignInValidator {
     }
 
     private void validateLoginName(String loginName, List<CoreError> errors) {
+        List<Placeholder> placeholders = new ArrayList<>();
+        placeholders.add(new Placeholder("VALUE", "Login name"));
+
         InputStringValidatorData inputStringValidatorData =
-                new InputStringValidatorData(loginName, FIELD_LOGIN_NAME, VALUE_NAME_LOGIN);
-        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
+                new InputStringValidatorData(loginName, placeholders);
+        inputStringValidatorData.setPresentChecker(true);
+
+        errors.addAll(inputStringValidator.validate(inputStringValidatorData));
         validateLoginNameExists(loginName).ifPresent(errors::add);
     }
 
     private void validatePassword(String password, List<CoreError> errors) {
+        List<Placeholder> placeholders = new ArrayList<>();
+        placeholders.add(new Placeholder("VALUE", "Password"));
+
         InputStringValidatorData inputStringValidatorData =
-                new InputStringValidatorData(password, FIELD_PASSWORD, VALUE_NAME_PASSWORD);
-        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
+                new InputStringValidatorData(password, placeholders);
+        inputStringValidatorData.setPresentChecker(true);
+
+        errors.addAll(inputStringValidator.validate(inputStringValidatorData));
     }
 
     private Optional<CoreError> validatePasswordMatches(SignInRequest request) {
         return (!request.getPassword().equals(
                 databaseAccessValidator.getUserByLoginName(request.getLoginName()).getPassword()))
-                ? Optional.of(new CoreError(FIELD_PASSWORD, ERROR_PASSWORD_INCORRECT))
+                ? Optional.of(errorCodeUtil.errorBuild("ERROR_CODE_15"))
                 : Optional.empty();
     }
 
     private Optional<CoreError> validateLoginNameExists(String loginName) {
         return (loginName != null && !loginName.isBlank() &&
                 database.accessUserDatabase().findByLoginName(loginName).isEmpty())
-                ? Optional.of(new CoreError(FIELD_LOGIN_NAME, ERROR_LOGIN_NOT_EXISTS))
+                ? Optional.of(errorCodeUtil.errorBuild("ERROR_CODE_14"))
                 : Optional.empty();
     }
 

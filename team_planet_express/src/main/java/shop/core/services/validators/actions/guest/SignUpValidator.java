@@ -8,6 +8,8 @@ import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
+import shop.core.support.ErrorCodeUtil;
+import shop.core.support.Placeholder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,16 +17,8 @@ import java.util.Optional;
 
 @Component
 public class SignUpValidator {
-
-    private static final String FIELD_NAME = "name";
-    private static final String FIELD_LOGIN_NAME = "login";
-    private static final String FIELD_PASSWORD = "password";
-    private static final String VALUE_NAME_NAME = "Name";
-    private static final String VALUE_NAME_LOGIN_NAME = "Login name";
-    private static final String VALUE_NAME_PASSWORD = "Password";
-    private static final String ERROR_LOGIN_EXISTS = "Error: User with this login name already exists.";
-    private static final String ERROR_PASSWORD_SHORT = "Error: Password must be at least 3 characters long.";
-
+    @Autowired
+    private ErrorCodeUtil errorCodeUtil;
     @Autowired
     private Database database;
     @Autowired
@@ -42,21 +36,30 @@ public class SignUpValidator {
     }
 
     private void validateName(String name, List<CoreError> errors) {
+        List<Placeholder> placeholders = new ArrayList<>();
+        placeholders.add(new Placeholder("VALUE", "Name"));
+
         InputStringValidatorData inputStringValidatorData =
-                new InputStringValidatorData(name, FIELD_NAME, VALUE_NAME_NAME);
+                new InputStringValidatorData(name, placeholders);
         inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
     }
 
     private void validateLoginName(String loginName, List<CoreError> errors) {
+        List<Placeholder> placeholders = new ArrayList<>();
+        placeholders.add(new Placeholder("VALUE", "Login name"));
+
         InputStringValidatorData inputStringValidatorData =
-                new InputStringValidatorData(loginName, FIELD_LOGIN_NAME, VALUE_NAME_LOGIN_NAME);
+                new InputStringValidatorData(loginName, placeholders);
         inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
         validateLoginNameDoesNotAlreadyExist(loginName).ifPresent(errors::add);
     }
 
     private void validatePassword(String password, List<CoreError> errors) {
+        List<Placeholder> placeholders = new ArrayList<>();
+        placeholders.add(new Placeholder("VALUE", "Password"));
+
         InputStringValidatorData inputStringValidatorData =
-                new InputStringValidatorData(password, FIELD_PASSWORD, VALUE_NAME_PASSWORD);
+                new InputStringValidatorData(password, placeholders);
         inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
         validatePasswordLength(password).ifPresent(errors::add);
     }
@@ -64,13 +67,13 @@ public class SignUpValidator {
     private Optional<CoreError> validateLoginNameDoesNotAlreadyExist(String loginName) {
         return (loginName != null && !loginName.isBlank() &&
                 database.accessUserDatabase().findByLoginName(loginName).isPresent())
-                ? Optional.of(new CoreError(FIELD_LOGIN_NAME, ERROR_LOGIN_EXISTS))
+                ? Optional.of(errorCodeUtil.errorBuild("ERROR_CODE_9"))
                 : Optional.empty();
     }
 
     private Optional<CoreError> validatePasswordLength(String password) {
         return (password != null && !password.isBlank() && password.length() < 3)
-                ? Optional.of(new CoreError(FIELD_PASSWORD, ERROR_PASSWORD_SHORT))
+                ? Optional.of(errorCodeUtil.errorBuild("ERROR_CODE_10"))
                 : Optional.empty();
     }
 

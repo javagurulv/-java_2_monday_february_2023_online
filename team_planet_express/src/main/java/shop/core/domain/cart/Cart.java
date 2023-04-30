@@ -7,8 +7,8 @@ import java.time.LocalDate;
 @Data
 public class Cart {
 
-    private Long id;
     private final Long userId;
+    private Long id;
     private CartStatus cartStatus;
     private LocalDate lastActionDate;
 

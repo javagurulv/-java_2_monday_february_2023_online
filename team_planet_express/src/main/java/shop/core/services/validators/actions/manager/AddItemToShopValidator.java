@@ -7,6 +7,8 @@ import shop.core.requests.manager.AddItemToShopRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
+import shop.core.support.ErrorCodeUtil;
+import shop.core.support.Placeholder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +17,8 @@ import java.util.Optional;
 @Component
 public class AddItemToShopValidator {
 
-    private static final String FIELD_NAME = "name";
-    private static final String FIELD_PRICE = "price";
-    private static final String FIELD_QUANTITY = "quantity";
-    private static final String VALUE_NAME_ITEM = "Item name";
-    private static final String VALUE_NAME_PRICE = "Price";
-    private static final String VALUE_NAME_QUANTITY = "Quantity";
-    private static final String ERROR_ITEM_EXISTS = "Error: Item with this name already exists.";
-
+    @Autowired
+    private ErrorCodeUtil errorCodeUtil;
     @Autowired
     private Database database;
     @Autowired
@@ -37,30 +33,48 @@ public class AddItemToShopValidator {
     }
 
     private void validateItemName(String itemName, List<CoreError> errors) {
+        List<Placeholder> placeholders = new ArrayList<>();
+        placeholders.add(new Placeholder("VALUE", "Item name"));
+
         InputStringValidatorData inputStringValidatorData =
-                new InputStringValidatorData(itemName, FIELD_NAME, VALUE_NAME_ITEM);
-        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
+                new InputStringValidatorData(itemName, placeholders);
+        inputStringValidatorData.setPresentChecker(true);
+
+        errors.addAll(inputStringValidator.validate(inputStringValidatorData));
         validateItemNameDoesNotAlreadyExist(itemName).ifPresent(errors::add);
     }
 
     private void validatePrice(String price, List<CoreError> errors) {
+        List<Placeholder> placeholders = new ArrayList<>();
+        placeholders.add(new Placeholder("VALUE", "Price"));
+
         InputStringValidatorData inputStringValidatorData =
-                new InputStringValidatorData(price, FIELD_PRICE, VALUE_NAME_PRICE);
-        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
-        errors.addAll(inputStringValidator.validateIsNumberNotNegative(inputStringValidatorData));
+                new InputStringValidatorData(price, placeholders);
+        inputStringValidatorData.setPresentChecker(true);
+        inputStringValidatorData.setNumberChecker(true);
+        inputStringValidatorData.setNotNegativeChecker(true);
+
+        errors.addAll(inputStringValidator.validate(inputStringValidatorData));
     }
 
     private void validateQuantity(String availableQuantity, List<CoreError> errors) {
+        List<Placeholder> placeholders = new ArrayList<>();
+        placeholders.add(new Placeholder("VALUE", "Quantity"));
+
         InputStringValidatorData inputStringValidatorData =
-                new InputStringValidatorData(availableQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY);
-        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
-        errors.addAll(inputStringValidator.validateIsNumberNotNegativeNotDecimal(inputStringValidatorData));
+                new InputStringValidatorData(availableQuantity, placeholders);
+        inputStringValidatorData.setPresentChecker(true);
+        inputStringValidatorData.setNumberChecker(true);
+        inputStringValidatorData.setNotNegativeChecker(true);
+        inputStringValidatorData.setNotDecimalChecker(true);
+
+        errors.addAll(inputStringValidator.validate(inputStringValidatorData));
     }
 
     private Optional<CoreError> validateItemNameDoesNotAlreadyExist(String itemName) {
         return (itemName != null && !itemName.isBlank() &&
                 database.accessItemDatabase().findByName(itemName).isPresent())
-                ? Optional.of(new CoreError(FIELD_NAME, ERROR_ITEM_EXISTS))
+                ? Optional.of(errorCodeUtil.errorBuild("ERROR_CODE_11"))
                 : Optional.empty();
     }
 

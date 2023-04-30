@@ -10,8 +10,8 @@ import java.util.Optional;
 @Data
 public class InMemoryUserDatabaseImpl implements UserDatabase {
 
-    private Long nextId = 1L;
     private final List<User> users = new ArrayList<>();
+    private Long nextId = 1L;
 
     @Override
     public User save(User user) {

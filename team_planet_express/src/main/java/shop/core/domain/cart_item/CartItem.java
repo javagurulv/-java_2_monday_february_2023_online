@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class CartItem {
 
-    private Long id;
     private final Long cartId;
     private final Long itemId;
+    private Long id;
     private Integer orderedQuantity;
 
     public CartItem(Long cartId, Long itemId, Integer orderedQuantity) {

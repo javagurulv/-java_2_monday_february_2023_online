@@ -2,8 +2,8 @@ package shop.core.support.paging;
 
 public class PagingRule {
 
-    private Integer pageNumber;
     private final String pageSize;
+    private Integer pageNumber;
 
     public PagingRule(Integer pageNumber, String pageSize) {
         this.pageNumber = pageNumber;

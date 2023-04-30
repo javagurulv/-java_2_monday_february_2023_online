@@ -12,8 +12,8 @@ import java.util.Optional;
 @Data
 public class InMemoryCartDatabaseImpl implements CartDatabase {
 
-    private Long nextId = 1L;
     private final List<Cart> carts = new ArrayList<>();
+    private Long nextId = 1L;
 
     @Override
     public Cart save(Cart cart) {
