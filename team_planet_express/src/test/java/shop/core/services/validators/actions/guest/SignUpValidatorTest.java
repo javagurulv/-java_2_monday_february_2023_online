@@ -14,12 +14,12 @@ import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 import shop.core.support.CurrentUserId;
+import shop.core.support.error_code_processing.ErrorProcessor;
 import shop.matchers.InputStringValidatorDataMatcher;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
@@ -32,6 +32,8 @@ class SignUpValidatorTest {
     private CurrentUserIdValidator mockCurrentUserIdValidator;
     @Mock
     private InputStringValidator mockInputStringValidator;
+    @Mock
+    private ErrorProcessor mockErrorProcessor;
     @Mock
     private SignUpRequest mockRequest;
     @Mock
@@ -75,12 +77,9 @@ class SignUpValidatorTest {
         when(mockRequest.getLoginName()).thenReturn("login");
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
         when(mockUserDatabase.findByLoginName("login")).thenReturn(Optional.of(mockUser));
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("login"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("exists"))
-                .findFirst();
-        assertFalse(error.isEmpty());
+        when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
+        validator.validate(mockRequest);
+        verify(mockErrorProcessor).getCoreError("login", "VDT-SUP-LAE");
     }
 
     @Test
@@ -94,12 +93,9 @@ class SignUpValidatorTest {
     @Test
     void shouldReturnErrorForShortPassword() {
         when(mockRequest.getPassword()).thenReturn("pa");
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("password"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("at least"))
-                .findFirst();
-        assertFalse(error.isEmpty());
+        when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
+        validator.validate(mockRequest);
+        verify(mockErrorProcessor).getCoreError("password", "VDT-SUP-PTS");
     }
 
     @Test

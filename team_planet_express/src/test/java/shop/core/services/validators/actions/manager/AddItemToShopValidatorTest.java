@@ -12,12 +12,12 @@ import shop.core.requests.manager.AddItemToShopRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
+import shop.core.support.error_code_processing.ErrorProcessor;
 import shop.matchers.InputStringValidatorDataMatcher;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
@@ -28,6 +28,8 @@ class AddItemToShopValidatorTest {
     private Database mockDatabase;
     @Mock
     private InputStringValidator mockInputStringValidator;
+    @Mock
+    private ErrorProcessor mockErrorProcessor;
     @Mock
     private AddItemToShopRequest mockRequest;
     @Mock
@@ -54,12 +56,9 @@ class AddItemToShopValidatorTest {
         when(mockRequest.getItemName()).thenReturn("name");
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         when(mockItemDatabase.findByName("name")).thenReturn(Optional.of(mockItem));
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("name"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("exists"))
-                .findFirst();
-        assertFalse(error.isEmpty());
+        when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
+        validator.validate(mockRequest);
+        verify(mockErrorProcessor).getCoreError("name", "VDT-AIS-IAE");
     }
 
     @Test

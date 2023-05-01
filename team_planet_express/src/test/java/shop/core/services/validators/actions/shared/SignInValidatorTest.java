@@ -15,12 +15,12 @@ import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 import shop.core.support.CurrentUserId;
+import shop.core.support.error_code_processing.ErrorProcessor;
 import shop.matchers.InputStringValidatorDataMatcher;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
@@ -35,6 +35,8 @@ class SignInValidatorTest {
     private InputStringValidator mockInputStringValidator;
     @Mock
     private DatabaseAccessValidator mockDatabaseAccessValidator;
+    @Mock
+    private ErrorProcessor mockErrorProcessor;
     @Mock
     private SignInRequest mockRequest;
     @Mock
@@ -56,6 +58,7 @@ class SignInValidatorTest {
         when(mockRequest.getPassword()).thenReturn("password");
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
         when(mockUserDatabase.findByLoginName("login name")).thenReturn(Optional.of(mockUser));
+        when(mockUser.getPassword()).thenReturn("password");
         when(mockDatabaseAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
         validator.validate(mockRequest);
         verify(mockCurrentUserIdValidator).validateCurrentUserIdIsPresent(mockUserId);
@@ -67,6 +70,7 @@ class SignInValidatorTest {
         when(mockRequest.getPassword()).thenReturn("password");
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
         when(mockUserDatabase.findByLoginName("login name")).thenReturn(Optional.of(mockUser));
+        when(mockUser.getPassword()).thenReturn("password");
         when(mockDatabaseAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
         validator.validate(mockRequest);
         verify(mockInputStringValidator)
@@ -78,12 +82,9 @@ class SignInValidatorTest {
         when(mockRequest.getLoginName()).thenReturn("login name");
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
         when(mockUserDatabase.findByLoginName("login name")).thenReturn(Optional.empty());
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("login"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("does not exist"))
-                .findFirst();
-        assertFalse(error.isEmpty());
+        when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
+        validator.validate(mockRequest);
+        verify(mockErrorProcessor).getCoreError("login", "VDT-SIN-LNE");
     }
 
     @Test
@@ -92,6 +93,7 @@ class SignInValidatorTest {
         when(mockRequest.getPassword()).thenReturn("password");
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
         when(mockUserDatabase.findByLoginName("login name")).thenReturn(Optional.of(mockUser));
+        when(mockUser.getPassword()).thenReturn("password");
         when(mockDatabaseAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
         validator.validate(mockRequest);
         verify(mockInputStringValidator)
@@ -106,12 +108,9 @@ class SignInValidatorTest {
         when(mockUserDatabase.findByLoginName("login name")).thenReturn(Optional.of(mockUser));
         when(mockDatabaseAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
         when(mockUser.getPassword()).thenReturn("password");
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("password"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("incorrect"))
-                .findFirst();
-        assertFalse(error.isEmpty());
+        when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
+        validator.validate(mockRequest);
+        verify(mockErrorProcessor).getCoreError("password", "VDT-SIN-PII");
     }
 
     @Test

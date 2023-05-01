@@ -13,13 +13,13 @@ import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
+import shop.core.support.error_code_processing.ErrorProcessor;
 import shop.matchers.InputStringValidatorDataMatcher;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
@@ -32,6 +32,8 @@ class ChangeItemDataValidatorTest {
     private InputStringValidator mockInputStringValidator;
     @Mock
     private DatabaseAccessValidator mockDatabaseAccessValidator;
+    @Mock
+    private ErrorProcessor mockErrorProcessor;
     @Mock
     private ChangeItemDataRequest mockRequest;
     @Mock
@@ -48,6 +50,8 @@ class ChangeItemDataValidatorTest {
     void shouldValidateId() {
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
+        when(mockItemDatabase.findById(1L)).thenReturn(Optional.of(mockItem));
+        when(mockDatabaseAccessValidator.getItemById(1L)).thenReturn(mockItem);
         validator.validate(mockRequest);
         InputStringValidatorDataMatcher matcher =
                 new InputStringValidatorDataMatcher("1", "id", "Item id");
@@ -60,12 +64,9 @@ class ChangeItemDataValidatorTest {
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         when(mockItemDatabase.findById(1L)).thenReturn(Optional.empty());
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("id"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("does not exist"))
-                .findFirst();
-        assertFalse(error.isEmpty());
+        when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
+        validator.validate(mockRequest);
+        verify(mockErrorProcessor).getCoreError("id", "VDT-CID-INE");
         verify(mockItemDatabase).findById(1L);
     }
 
@@ -74,6 +75,8 @@ class ChangeItemDataValidatorTest {
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockRequest.getNewPrice()).thenReturn("10.5");
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
+        when(mockItemDatabase.findById(1L)).thenReturn(Optional.of(mockItem));
+        when(mockDatabaseAccessValidator.getItemById(1L)).thenReturn(mockItem);
         validator.validate(mockRequest);
         InputStringValidatorDataMatcher matcher =
                 new InputStringValidatorDataMatcher("10.5", "price", "Price");
@@ -85,6 +88,8 @@ class ChangeItemDataValidatorTest {
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockRequest.getNewAvailableQuantity()).thenReturn("5");
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
+        when(mockItemDatabase.findById(1L)).thenReturn(Optional.of(mockItem));
+        when(mockDatabaseAccessValidator.getItemById(1L)).thenReturn(mockItem);
         validator.validate(mockRequest);
         InputStringValidatorDataMatcher matcher =
                 new InputStringValidatorDataMatcher("5", "quantity", "Quantity");
@@ -101,12 +106,9 @@ class ChangeItemDataValidatorTest {
         when(mockItemDatabase.findById(1L)).thenReturn(Optional.of(mockItem));
         when(mockDatabaseAccessValidator.getItemById(1L)).thenReturn(mockItem);
         when(mockItemDatabase.getAllItems()).thenReturn(List.of(new Item("name", new BigDecimal("10.10"), 10)));
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("button"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("exists"))
-                .findFirst();
-        assertFalse(error.isEmpty());
+        when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
+        validator.validate(mockRequest);
+        verify(mockErrorProcessor).getCoreError("button", "VDT-CID-EIE");
     }
 
     @Test
