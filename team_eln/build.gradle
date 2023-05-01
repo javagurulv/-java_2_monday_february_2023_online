@@ -12,6 +12,10 @@ dependencies {
 
     // reflections
     implementation('org.reflections:reflections:0.9.12')
+
+    // https://mvnrepository.com/artifact/org.springframework/spring-context
+    implementation group: 'org.springframework', name: 'spring-context', version: '6.0.8'
+
 }
 
 

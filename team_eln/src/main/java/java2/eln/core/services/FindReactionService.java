@@ -6,23 +6,23 @@ import java2.eln.core.requests.Ordering;
 import java2.eln.core.responses.FindReactionResponse;
 import java2.eln.core.responses.errorPattern.CoreError;
 import java2.eln.core.services.validators.FindReactionValidator;
-import java2.eln.dependency_injection.DIComponent;
-import java2.eln.dependency_injection.DIDependency;
 import java2.eln.domain.ReactionData;
 import java2.eln.domain.StructureData;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@DIComponent
+@Component
 public class FindReactionService {
 
-    @DIDependency
+    @Autowired
     DatabaseIM databaseIM;
 
-    @DIDependency
+    @Autowired
     FindReactionValidator findReactionValidator;
 
 //    public FindReactionService(DatabaseIM databaseIM, FindReactionValidator findReactionValidator) {

@@ -1,5 +1,6 @@
 package java2.eln;
 
+import java2.eln.config.ELNconfiguration;
 import java2.eln.console_ui.*;
 import java2.eln.core.database.DatabaseIM;
 import java2.eln.core.database.InMemoryDatabaseImplIM;
@@ -7,8 +8,10 @@ import java2.eln.core.services.*;
 import java2.eln.core.services.validators.AddReactionValidator;
 import java2.eln.core.services.validators.DelReactionValidator;
 import java2.eln.core.services.validators.FindReactionValidator;
-import java2.eln.dependency_injection.ApplicationContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import java2.eln.dependency_injection.DIApplicationContextBuilder;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.Scanner;
 
@@ -39,7 +42,7 @@ public class ELN_application {
 //    private static UIAction exitFormApplication = new ExitUIAction(exitUIService);
 
     private static ApplicationContext applicationContext =
-            new DIApplicationContextBuilder().build("java2.eln");
+            new AnnotationConfigApplicationContext(ELNconfiguration.class);
 
 
     public static void main(String[] args) {

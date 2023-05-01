@@ -1,11 +1,11 @@
 package java2.eln.core.database;
 
-import java2.eln.dependency_injection.DIComponent;
 import java2.eln.domain.ReactionData;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
-@DIComponent
+@Component
 public class InMemoryDatabaseImplIM implements DatabaseIM {
 
     public List<ReactionData> reactions = new ArrayList<>();
