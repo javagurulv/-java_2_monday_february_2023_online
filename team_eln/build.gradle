@@ -16,6 +16,10 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework/spring-context
     implementation group: 'org.springframework', name: 'spring-context', version: '6.0.8'
 
+    // https://mvnrepository.com/artifact/org.springframework/spring-test
+    testImplementation group: 'org.springframework', name: 'spring-test', version: '6.0.8'
+
+
 }
 
 
