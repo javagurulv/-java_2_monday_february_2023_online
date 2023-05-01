@@ -23,7 +23,7 @@ public class AddItemToCartValidator {
     private static final String FIELD_QUANTITY = "quantity";
     private static final String VALUE_NAME_ITEM = "Item name";
     private static final String VALUE_NAME_QUANTITY = "Quantity";
-    private static final String ERROR_NO_SUCH_ITEM = "VDT-AIC-NSI";
+    private static final String ERROR_NO_SUCH_ITEM = "VDT-AIC-NIS";
     private static final String ERROR_NOT_ENOUGH_QUANTITY = "VDT-AIC-NEQ";
 
     @Autowired

@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 public class ErrorProcessor {
 
     private static final String ERROR_CODES_FILE_NAME = "errorCodes";
-    private static final String GENERIC_ERROR_MESSAGE = "Something went wrong.";
+    private static final String GENERIC_ERROR_MESSAGE = "Error: Something went wrong.";
 
     private final ResourceBundle errorCodes;
 
@@ -20,18 +20,18 @@ public class ErrorProcessor {
 
     public CoreError getCoreError(String field, String errorCode) {
         try {
-            return new CoreError(field, errorCodes.getString(errorCode));
+            return new CoreError(field, errorCode, errorCodes.getString(errorCode));
         } catch (MissingResourceException exception) {
-            return new CoreError(field, GENERIC_ERROR_MESSAGE);
+            return new CoreError(field, errorCode, GENERIC_ERROR_MESSAGE);
         }
     }
 
     public CoreError getCoreErrorWithTextReplacement(String field, String errorCode, TextReplacementData textReplacement) {
         try {
             String message = getMessageWithTextReplacement(errorCode, textReplacement);
-            return new CoreError(field, message);
+            return new CoreError(field, errorCode, message);
         } catch (MissingResourceException exception) {
-            return new CoreError(field, GENERIC_ERROR_MESSAGE);
+            return new CoreError(field, errorCode, GENERIC_ERROR_MESSAGE);
         }
     }
 
