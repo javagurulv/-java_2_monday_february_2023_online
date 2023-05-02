@@ -1,5 +1,6 @@
 package shop.core.responses.customer;
 
+import lombok.Getter;
 import shop.core.responses.CoreError;
 import shop.core.responses.CoreResponse;
 import shop.core.support.CartItemForList;
@@ -7,6 +8,7 @@ import shop.core.support.CartItemForList;
 import java.math.BigDecimal;
 import java.util.List;
 
+@Getter
 public class ListCartItemsResponse extends CoreResponse {
 
     private List<CartItemForList> cartItemsForList;
@@ -20,14 +22,6 @@ public class ListCartItemsResponse extends CoreResponse {
 
     public ListCartItemsResponse(List<CoreError> errors) {
         super(errors);
-    }
-
-    public List<CartItemForList> getCartItemsForList() {
-        return cartItemsForList;
-    }
-
-    public BigDecimal getCartTotal() {
-        return cartTotal;
     }
 
 }

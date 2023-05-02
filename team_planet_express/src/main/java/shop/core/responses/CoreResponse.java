@@ -1,7 +1,10 @@
 package shop.core.responses;
 
+import lombok.Getter;
+
 import java.util.List;
 
+@Getter
 public abstract class CoreResponse {
 
     private List<CoreError> errors;
@@ -11,10 +14,6 @@ public abstract class CoreResponse {
 
     public CoreResponse(List<CoreError> errors) {
         this.errors = errors;
-    }
-
-    public List<CoreError> getErrors() {
-        return errors;
     }
 
     public boolean hasErrors() {
