@@ -9,6 +9,7 @@ import shop.core.database.CartDatabase;
 import shop.core.database.Database;
 import shop.core.domain.cart.Cart;
 import shop.core.responses.CoreError;
+import shop.core.support.ErrorCodeUtil;
 
 import java.util.Optional;
 
@@ -20,6 +21,8 @@ class CartValidatorTest {
 
     @Mock
     private Database mockDatabase;
+    @Mock
+    private ErrorCodeUtil errorCodeUtil;
     @Mock
     private CartDatabase mockCartDatabase;
     @Mock

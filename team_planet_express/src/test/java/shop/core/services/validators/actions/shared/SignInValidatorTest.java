@@ -15,6 +15,7 @@ import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 import shop.core.support.CurrentUserId;
+import shop.core.support.ErrorCodeUtil;
 import shop.matchers.InputStringValidatorDataMatcher;
 
 import java.util.List;
@@ -33,6 +34,8 @@ class SignInValidatorTest {
     private CurrentUserIdValidator mockCurrentUserIdValidator;
     @Mock
     private InputStringValidator mockInputStringValidator;
+    @Mock
+    private ErrorCodeUtil errorCodeUtil;
     @Mock
     private DatabaseAccessValidator mockDatabaseAccessValidator;
     @Mock
@@ -70,7 +73,7 @@ class SignInValidatorTest {
         when(mockDatabaseAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
         validator.validate(mockRequest);
         verify(mockInputStringValidator)
-                .validateIsPresent(argThat(new InputStringValidatorDataMatcher("login name", "login", "Login name")));
+                .validateIsPresent(argThat(new InputStringValidatorDataMatcher("login name")));
     }
 
     @Test
@@ -95,7 +98,7 @@ class SignInValidatorTest {
         when(mockDatabaseAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
         validator.validate(mockRequest);
         verify(mockInputStringValidator)
-                .validateIsPresent(argThat(new InputStringValidatorDataMatcher("password", "password", "Password")));
+                .validateIsPresent(argThat(new InputStringValidatorDataMatcher("password")));
     }
 
     @Test

@@ -12,6 +12,7 @@ import shop.core.requests.manager.AddItemToShopRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
+import shop.core.support.ErrorCodeUtil;
 import shop.matchers.InputStringValidatorDataMatcher;
 
 import java.util.List;
@@ -28,6 +29,8 @@ class AddItemToShopValidatorTest {
     private Database mockDatabase;
     @Mock
     private InputStringValidator mockInputStringValidator;
+    @Mock
+    private ErrorCodeUtil errorCodeUtil;
     @Mock
     private AddItemToShopRequest mockRequest;
     @Mock
@@ -46,7 +49,7 @@ class AddItemToShopValidatorTest {
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         validator.validate(mockRequest);
         verify(mockInputStringValidator)
-                .validateIsPresent(argThat(new InputStringValidatorDataMatcher("name", "name", "Item name")));
+                .validateIsPresent(argThat(new InputStringValidatorDataMatcher("name")));
     }
 
     @Test
@@ -67,9 +70,9 @@ class AddItemToShopValidatorTest {
         when(mockRequest.getPrice()).thenReturn("100.10");
         validator.validate(mockRequest);
         InputStringValidatorDataMatcher matcher =
-                new InputStringValidatorDataMatcher("100.10", "price", "Price");
+                new InputStringValidatorDataMatcher("100.10");
         verify(mockInputStringValidator).validateIsPresent(argThat(matcher));
-        verify(mockInputStringValidator).validateIsNumberNotNegative(argThat(matcher));
+        verify(mockInputStringValidator).validate(argThat(matcher));
     }
 
     @Test
@@ -77,9 +80,9 @@ class AddItemToShopValidatorTest {
         when(mockRequest.getAvailableQuantity()).thenReturn("10");
         validator.validate(mockRequest);
         InputStringValidatorDataMatcher matcher =
-                new InputStringValidatorDataMatcher("10", "quantity", "Quantity");
+                new InputStringValidatorDataMatcher("10");
         verify(mockInputStringValidator).validateIsPresent(argThat(matcher));
-        verify(mockInputStringValidator).validateIsNumberNotNegativeNotDecimal(argThat(matcher));
+        verify(mockInputStringValidator).validate(argThat(matcher));
     }
 
     @Test

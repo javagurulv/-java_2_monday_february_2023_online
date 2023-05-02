@@ -51,9 +51,8 @@ class PagingRuleValidatorTest {
         when(mockPagingRule.getPageSize()).thenReturn("10");
         validator.validate(mockPagingRule);
         InputStringValidatorDataMatcher matcher =
-                new InputStringValidatorDataMatcher("10", "page_size", "Page size");
-        verify(mockInputStringValidator).validateIsPresent(argThat(matcher));
-        verify(mockInputStringValidator).validateIsNumberGreaterThanZeroNotDecimal(argThat(matcher));
+                new InputStringValidatorDataMatcher("10");
+        verify(mockInputStringValidator).validate(argThat(matcher));
     }
 
 }
