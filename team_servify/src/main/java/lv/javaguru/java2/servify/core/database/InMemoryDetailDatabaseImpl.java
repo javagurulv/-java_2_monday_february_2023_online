@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class InMemoryDatabaseImpl implements Database {
+public class InMemoryDetailDatabaseImpl implements DetailDatabase {
 
     private Long nextId = 1L;
     private List<Detail> details = new ArrayList<>();

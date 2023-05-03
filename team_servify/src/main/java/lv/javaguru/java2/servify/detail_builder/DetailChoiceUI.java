@@ -4,7 +4,7 @@ import lv.javaguru.java2.servify.domain.Detail;
 
 import java.util.Scanner;
 
-public class DetailChoice {
+public class DetailChoiceUI {
 
     public static Detail newDetail() {
         DetailBuilderUI print = new DetailBuilderUI();

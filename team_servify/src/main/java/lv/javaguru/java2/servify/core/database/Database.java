@@ -1,18 +1,26 @@
 package lv.javaguru.java2.servify.core.database;
 
-import lv.javaguru.java2.servify.domain.Detail;
+public class Database {
+    private UsersDatabase usersDatabase;
+    private OrderDatabase orderDatabase;
+    private DetailDatabase detailDatabase;
 
-import java.math.BigDecimal;
-import java.util.List;
 
-public interface Database {
+    public Database() {
+        this.usersDatabase = new InMemoryUsersDatabaseImpl();
+        this.orderDatabase = new InMemoryOrderDatabaseImpl();
+        this.detailDatabase = new InMemoryDetailDatabaseImpl();
+    }
 
-    void save(Detail detail);
+    public UsersDatabase getUsersDatabase() {
+        return usersDatabase;
+    }
 
-    void deleteById(Long id);
+    public OrderDatabase getOrderDatabase() {
+        return orderDatabase;
+    }
 
-    List<Detail> getAllDetails();
-
-    BigDecimal getTotalPrice(List<Detail> listWithPrices);
-
+    public DetailDatabase getDetailDatabase() {
+        return detailDatabase;
+    }
 }

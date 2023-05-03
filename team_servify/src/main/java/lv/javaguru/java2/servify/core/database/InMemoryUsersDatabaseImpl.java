@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class UsersInMemoryDatabaseImpl implements UsersDatabase {
+public class InMemoryUsersDatabaseImpl implements UsersDatabase {
 
     private long nextId = 0L;
     private List<UserEntity> usersDB = new ArrayList<>();

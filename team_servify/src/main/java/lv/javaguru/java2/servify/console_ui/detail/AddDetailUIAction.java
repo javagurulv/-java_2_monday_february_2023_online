@@ -1,7 +1,7 @@
 package lv.javaguru.java2.servify.console_ui.detail;
 
 import lv.javaguru.java2.servify.console_ui.UIAction;
-import lv.javaguru.java2.servify.detail_builder.DetailChoice;
+import lv.javaguru.java2.servify.detail_builder.DetailChoiceUI;
 import lv.javaguru.java2.servify.core.services.detail.AddDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ public class AddDetailUIAction implements UIAction {
 
     @Override
     public void execute() {
-        addDetailService.execute(DetailChoice.newDetail());
+        addDetailService.execute(DetailChoiceUI.newDetail());
         System.out.println("Your detail was added to list.");
     }
 }
