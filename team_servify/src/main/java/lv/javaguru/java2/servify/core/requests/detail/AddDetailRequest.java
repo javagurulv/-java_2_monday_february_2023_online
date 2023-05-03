@@ -1,28 +1,21 @@
 package lv.javaguru.java2.servify.core.requests.detail;
 
+import lv.javaguru.java2.servify.domain.detail.Detail;
+import lv.javaguru.java2.servify.domain.detail.DetailSideEnum;
+import lv.javaguru.java2.servify.domain.detail.DetailTypeEnum;
+
+import java.math.BigDecimal;
+
 public class AddDetailRequest {
 
-    private String type;
+    private Long id;
 
-    private String location;
-
-    private String side;
-
-    public AddDetailRequest(String type, String location, String side) {
-        this.type = type;
-        this.location = location;
-        this.side = side;
+    public AddDetailRequest(Long id) {
+        this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public Long getId() {
+        return id;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public String getSide() {
-        return side;
-    }
 }

@@ -1,16 +1,13 @@
 package lv.javaguru.java2.servify.core.database;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class Database {
-    private UsersDatabase usersDatabase;
-    private OrderDatabase orderDatabase;
-    private DetailDatabase detailDatabase;
-
-
-    public Database() {
-        this.usersDatabase = new InMemoryUsersDatabaseImpl();
-        this.orderDatabase = new InMemoryOrderDatabaseImpl();
-        this.detailDatabase = new InMemoryDetailDatabaseImpl();
-    }
+    @Autowired private UsersDatabase usersDatabase;
+    @Autowired private OrderDatabase orderDatabase;
+    @Autowired private DetailDatabase detailDatabase;
 
     public UsersDatabase getUsersDatabase() {
         return usersDatabase;
