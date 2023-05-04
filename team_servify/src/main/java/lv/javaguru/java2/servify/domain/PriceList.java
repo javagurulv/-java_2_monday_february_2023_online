@@ -35,22 +35,6 @@ public class PriceList {
         ));
 
 
-//        detailPricesList.add(bonnet);
-//        detailPricesList.add(boot);
-//        detailPricesList.add(roof);
-//        detailPricesList.add(frontBumper);
-//        detailPricesList.add(rearBumper);
-//        detailPricesList.add(frontLeftDoor);
-//        detailPricesList.add(frontRightDoor);
-//        detailPricesList.add(rearLeftDoor);
-//        detailPricesList.add(rearRightDoor);
-//        detailPricesList.add(frontLeftWing);
-//        detailPricesList.add(frontRightWing);
-//        detailPricesList.add(rearLeftWing);
-//        detailPricesList.add(rearRightWing);
-//        detailPricesList.add(leftWingMirror);
-//        detailPricesList.add(rightWingMirror);
-
         Long nextId = 1L;
 
         for (Detail detail : detailPricesList) {
