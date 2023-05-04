@@ -31,7 +31,9 @@ public class AddDetailService {
             errors.add(new CoreError(FieldTitle.ID, "Not valid ID"));
             return new AddDetailResponse(errors);
         }
-        Detail newDetail = detailOptional.get();
+        Detail newDetail = new Detail(detailOptional.get().getType(),
+                                      detailOptional.get().getSide(),
+                                      detailOptional.get().getPrice());
         database.save(newDetail);
         return new AddDetailResponse(newDetail);
     }
