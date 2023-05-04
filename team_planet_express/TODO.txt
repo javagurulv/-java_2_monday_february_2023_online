@@ -3,3 +3,9 @@ time machine for date testing
 sorting & paging to list items and cart
 userRole madness from Q&A (many roles for an action)
 check role permissions in actions
+
+Q:
+what's with 1002 in id?
+what are those 3 set-s?
+DATETIME or DATE?
+NUMERIC for price?
