@@ -2,15 +2,17 @@ package lv.javaguru.java2.servify.core.database;
 
 import lv.javaguru.java2.servify.domain.Order;
 import lv.javaguru.java2.servify.domain.OrderStatus;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class InMemoryOrderDatabaseImpl implements OrderDatabase{
+@Component
+public class InMemoryOrderDatabaseImpl implements OrderDatabase {
     private Long orderId = 1L;
-    private List<Order> ordersList;
-
+    private final List<Order> ordersList = new ArrayList<>();
 
 
     @Override

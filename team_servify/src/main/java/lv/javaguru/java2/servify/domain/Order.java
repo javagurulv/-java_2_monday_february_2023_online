@@ -1,5 +1,7 @@
 package lv.javaguru.java2.servify.domain;
 
+import lv.javaguru.java2.servify.domain.detail.Detail;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
@@ -9,7 +11,7 @@ import java.util.Objects;
 
 public class Order {
     private Long orderId;
-    private Long userId; // so user id or client id? Only client makes requests. Manager just approves...
+    private final Long userId; // so user id or client id? Only client makes requests. Manager just approves...
     private List<Detail> detailList;
     private LocalDate orderDate;
     private OrderStatus orderStatus;
@@ -34,10 +36,6 @@ public class Order {
 
     public Long getUserId() {
         return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public List<Detail> getDetailList() {

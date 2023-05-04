@@ -1,7 +1,7 @@
 package lv.javaguru.java2.servify.core.services.detail;
 
 import lv.javaguru.java2.servify.core.database.DetailDatabase;
-import lv.javaguru.java2.servify.domain.Detail;
+import lv.javaguru.java2.servify.domain.detail.Detail;
 import lv.javaguru.java2.servify.domain.PriceList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

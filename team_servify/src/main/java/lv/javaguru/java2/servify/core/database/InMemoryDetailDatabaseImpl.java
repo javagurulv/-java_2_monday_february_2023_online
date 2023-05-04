@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servify.core.database;
 
-import lv.javaguru.java2.servify.domain.Detail;
+import lv.javaguru.java2.servify.domain.detail.Detail;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -11,7 +11,7 @@ import java.util.List;
 public class InMemoryDetailDatabaseImpl implements DetailDatabase {
 
     private Long nextId = 1L;
-    private List<Detail> details = new ArrayList<>();
+    private final List<Detail> details = new ArrayList<>();
 
     @Override
     public void save(Detail detail) {
@@ -25,7 +25,7 @@ public class InMemoryDetailDatabaseImpl implements DetailDatabase {
         details.stream()
                 .filter(detail -> detail.getId().equals(id))
                 .findFirst()
-                .ifPresent(detail -> details.remove(detail));
+                .ifPresent(details::remove);
     }
 
     @Override
