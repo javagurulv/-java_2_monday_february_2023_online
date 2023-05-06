@@ -16,9 +16,6 @@ class DetailListApplication {
         try {
             var context = new AnnotationConfigApplicationContext(ServifyConfiguration.class);
             var uiMenu = context.getBean(UIMenu.class);
-            //var userEntity = context.getBean(UserEntity.class);
-            //var order = context.getBean(Order.class);
-
             uiMenu.startUI();
         } catch (Exception e) {
             e.printStackTrace();
