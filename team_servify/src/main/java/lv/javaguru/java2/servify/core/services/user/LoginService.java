@@ -2,9 +2,9 @@ package lv.javaguru.java2.servify.core.services.user;
 
 import lv.javaguru.java2.servify.core.database.UsersDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class LoginService {
     @Autowired private UsersDatabase userDB;
 

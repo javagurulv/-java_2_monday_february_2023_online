@@ -6,11 +6,11 @@ import lv.javaguru.java2.servify.core.responses.CoreError;
 import lv.javaguru.java2.servify.core.responses.user.SetUserNotActiveResponse;
 import lv.javaguru.java2.servify.core.validators.SetUserNotActiveValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
 public class SetUserNotActiveService {
     @Autowired private UsersDatabase userDB;
     @Autowired private SetUserNotActiveValidator validator;

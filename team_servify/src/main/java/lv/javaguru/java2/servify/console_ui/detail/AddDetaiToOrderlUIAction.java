@@ -5,16 +5,17 @@ import lv.javaguru.java2.servify.core.requests.detail.AddDetailRequest;
 import lv.javaguru.java2.servify.core.responses.detail.AddDetailResponse;
 import lv.javaguru.java2.servify.core.services.detail.AddDetailService;
 import lv.javaguru.java2.servify.domain.PriceList;
+import lv.javaguru.java2.servify.domain.UserType;
 import lv.javaguru.java2.servify.domain.detail.Detail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
 @Component
-public class AddDetailUIAction implements UIAction {
+public class AddDetaiToOrderlUIAction implements UIAction {
 
     @Autowired
     private AddDetailService addDetailService;
@@ -41,5 +42,18 @@ public class AddDetailUIAction implements UIAction {
                 System.out.println(detailOptional.get() + " was added to list.");
             }
         }
+    }
+
+    @Override
+    public String getMenuItem() {
+        return "Add detail to Order list";
+    }
+
+    @Override
+    public List<UserType> getAccessUserByType() {
+        return new ArrayList<>(List.of(
+                UserType.CUSTOMER,
+                UserType.MANAGER
+        ));
     }
 }

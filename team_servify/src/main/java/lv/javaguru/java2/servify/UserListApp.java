@@ -3,7 +3,7 @@ package lv.javaguru.java2.servify;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import lv.javaguru.java2.servify.config.DetailListConfiguration;
+import lv.javaguru.java2.servify.config.ServifyConfiguration;
 import lv.javaguru.java2.servify.console_ui.*;
 import lv.javaguru.java2.servify.console_ui.user.AddUserUIAction;
 import lv.javaguru.java2.servify.console_ui.user.GetAllUsersUIAction;
@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class UserListApp {
 
     private static ApplicationContext applicationContext =
-            new AnnotationConfigApplicationContext(DetailListConfiguration.class);
+            new AnnotationConfigApplicationContext(ServifyConfiguration.class);
 
     public static void main(String[] args) {
 

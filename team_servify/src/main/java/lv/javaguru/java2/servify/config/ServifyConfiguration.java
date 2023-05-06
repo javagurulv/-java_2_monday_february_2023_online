@@ -7,6 +7,6 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @ComponentScan(basePackages = "lv.javaguru.java2.servify")
 @PropertySource(value = "classpath:application.properties")
-public class DetailListConfiguration {
+public class ServifyConfiguration {
 
 }

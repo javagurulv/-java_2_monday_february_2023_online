@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import lv.javaguru.java2.servify.config.DetailListConfiguration;
+import lv.javaguru.java2.servify.config.ServifyConfiguration;
 import lv.javaguru.java2.servify.console_ui.user.AddUserUIAction;
 import lv.javaguru.java2.servify.console_ui.ExitUIAction;
 import lv.javaguru.java2.servify.console_ui.user.GetAllUsersUIAction;
@@ -21,7 +21,7 @@ public class UserMenuTest {
 
     public void execute() {
 
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(DetailListConfiguration.class);
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(ServifyConfiguration.class);
 
         while (true) {
             printAdminMenu();

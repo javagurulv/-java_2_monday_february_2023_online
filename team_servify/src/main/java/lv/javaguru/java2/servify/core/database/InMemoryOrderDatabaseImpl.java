@@ -2,14 +2,13 @@ package lv.javaguru.java2.servify.core.database;
 
 import lv.javaguru.java2.servify.domain.Order;
 import lv.javaguru.java2.servify.domain.OrderStatus;
-import org.springframework.stereotype.Component;
-
+import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Repository
 public class InMemoryOrderDatabaseImpl implements OrderDatabase {
     private Long orderId = 1L;
     private final List<Order> ordersList = new ArrayList<>();
