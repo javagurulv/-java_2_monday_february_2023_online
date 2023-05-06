@@ -34,12 +34,16 @@ public class InMemoryDetailDatabaseImpl implements DetailDatabase {
 
     @Override
     public BigDecimal getTotalPrice(List<Detail> listWithPrices) {
-        BigDecimal totalPrice = new BigDecimal(0);
-        for (Detail detail : listWithPrices) {
-            if (details.contains(detail)) {
-                totalPrice = totalPrice.add(detail.getPrice());
-            }
+        BigDecimal totalPrice = BigDecimal.ZERO;
+
+        List<BigDecimal> bigDecimals = details.stream()
+                .map(Detail::getPrice)
+                .toList();
+
+        for (BigDecimal price : bigDecimals) {
+            totalPrice = totalPrice.add(price);
         }
+
         return totalPrice;
     }
 }
