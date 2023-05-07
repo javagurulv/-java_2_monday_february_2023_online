@@ -6,10 +6,11 @@ import java2.eln.core.requests.Ordering;
 import java2.eln.core.responses.FindReactionResponse;
 import java2.eln.core.responses.errorPattern.CoreError;
 import java2.eln.core.services.validators.FindReactionValidator;
-import java2.eln.domain.ReactionData;
-import java2.eln.domain.StructureData;
+import java2.eln.core.domain.ReactionData;
+import java2.eln.core.domain.StructureData;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
@@ -25,6 +26,12 @@ public class FindReactionService {
     @Autowired
     FindReactionValidator findReactionValidator;
 
+    @Value("${search.ordering.enabled}")
+    private boolean orderingEnabled;
+
+    @Value("${search.paging.enabled}")
+    private boolean pagingEnabled;
+
 //    public FindReactionService(DatabaseIM databaseIM, FindReactionValidator findReactionValidator) {
 //        this.databaseIM = databaseIM;
 //        this.findReactionValidator = findReactionValidator;
@@ -38,7 +45,9 @@ public class FindReactionService {
 
         List<ReactionData> searchingResults = getSearchingResults(findReactionRequest);
 
-        searchingResults = order(searchingResults, findReactionRequest.getOrdering());
+        if (orderingEnabled) {
+            searchingResults = order(searchingResults, findReactionRequest.getOrdering());
+        }
 
         return new FindReactionResponse(searchingResults);
     }

@@ -1,6 +1,6 @@
 package java2.eln.core.database;
 
-import java2.eln.domain.ReactionData;
+import java2.eln.core.domain.ReactionData;
 
 import java.util.*;
 

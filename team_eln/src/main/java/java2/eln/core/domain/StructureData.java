@@ -1,4 +1,4 @@
-package java2.eln.domain;
+package java2.eln.core.domain;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;

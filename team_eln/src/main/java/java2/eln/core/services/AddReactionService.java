@@ -5,7 +5,7 @@ import java2.eln.core.requests.AddReactionRequest;
 import java2.eln.core.responses.AddReactionResponse;
 import java2.eln.core.responses.errorPattern.CoreError;
 import java2.eln.core.services.validators.AddReactionValidator;
-import java2.eln.domain.ReactionData;
+import java2.eln.core.domain.ReactionData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
