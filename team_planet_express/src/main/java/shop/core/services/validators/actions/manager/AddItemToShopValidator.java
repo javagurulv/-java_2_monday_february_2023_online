@@ -7,6 +7,7 @@ import shop.core.requests.manager.AddItemToShopRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
+import shop.core.support.error_code_processing.ErrorProcessor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +22,14 @@ public class AddItemToShopValidator {
     private static final String VALUE_NAME_ITEM = "Item name";
     private static final String VALUE_NAME_PRICE = "Price";
     private static final String VALUE_NAME_QUANTITY = "Quantity";
-    private static final String ERROR_ITEM_EXISTS = "Error: Item with this name already exists.";
+    private static final String ERROR_ITEM_EXISTS = "VDT-AIS-IAE";
 
     @Autowired
     private Database database;
     @Autowired
     private InputStringValidator inputStringValidator;
+    @Autowired
+    private ErrorProcessor errorProcessor;
 
     public List<CoreError> validate(AddItemToShopRequest request) {
         List<CoreError> errors = new ArrayList<>();
@@ -60,7 +63,7 @@ public class AddItemToShopValidator {
     private Optional<CoreError> validateItemNameDoesNotAlreadyExist(String itemName) {
         return (itemName != null && !itemName.isBlank() &&
                 database.accessItemDatabase().findByName(itemName).isPresent())
-                ? Optional.of(new CoreError(FIELD_NAME, ERROR_ITEM_EXISTS))
+                ? Optional.of(errorProcessor.getCoreError(FIELD_NAME, ERROR_ITEM_EXISTS))
                 : Optional.empty();
     }
 

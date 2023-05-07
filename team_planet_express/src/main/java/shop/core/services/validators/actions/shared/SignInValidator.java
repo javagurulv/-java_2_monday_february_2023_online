@@ -9,6 +9,7 @@ import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
+import shop.core.support.error_code_processing.ErrorProcessor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +22,8 @@ public class SignInValidator {
     private static final String FIELD_PASSWORD = "password";
     private static final String VALUE_NAME_LOGIN = "Login name";
     private static final String VALUE_NAME_PASSWORD = "Password";
-    private static final String ERROR_LOGIN_NOT_EXISTS = "Error: User with this login does not exist.";
-    private static final String ERROR_PASSWORD_INCORRECT = "Error: Password is incorrect.";
+    private static final String ERROR_LOGIN_NOT_EXISTS = "VDT-SIN-LNE";
+    private static final String ERROR_PASSWORD_INCORRECT = "VDT-SIN-PII";
 
     @Autowired
     private Database database;
@@ -32,6 +33,8 @@ public class SignInValidator {
     private InputStringValidator inputStringValidator;
     @Autowired
     private DatabaseAccessValidator databaseAccessValidator;
+    @Autowired
+    private ErrorProcessor errorProcessor;
 
     public List<CoreError> validate(SignInRequest request) {
         userIdValidator.validateCurrentUserIdIsPresent(request.getUserId());
@@ -60,14 +63,14 @@ public class SignInValidator {
     private Optional<CoreError> validatePasswordMatches(SignInRequest request) {
         return (!request.getPassword().equals(
                 databaseAccessValidator.getUserByLoginName(request.getLoginName()).getPassword()))
-                ? Optional.of(new CoreError(FIELD_PASSWORD, ERROR_PASSWORD_INCORRECT))
+                ? Optional.of(errorProcessor.getCoreError(FIELD_PASSWORD, ERROR_PASSWORD_INCORRECT))
                 : Optional.empty();
     }
 
     private Optional<CoreError> validateLoginNameExists(String loginName) {
         return (loginName != null && !loginName.isBlank() &&
                 database.accessUserDatabase().findByLoginName(loginName).isEmpty())
-                ? Optional.of(new CoreError(FIELD_LOGIN_NAME, ERROR_LOGIN_NOT_EXISTS))
+                ? Optional.of(errorProcessor.getCoreError(FIELD_LOGIN_NAME, ERROR_LOGIN_NOT_EXISTS))
                 : Optional.empty();
     }
 

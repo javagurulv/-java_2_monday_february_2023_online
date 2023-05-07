@@ -6,18 +6,26 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.responses.CoreError;
+import shop.core.support.error_code_processing.ErrorProcessor;
+import shop.core.support.error_code_processing.TextReplacementData;
+import shop.matchers.TextReplacementDataMatcher;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class InputStringValidatorIsNotDecimalTest {
 
     @Mock
+    private ErrorProcessor mockErrorProcessor;
+    @Mock
     private InputStringValidatorData mockInputStringValidatorData;
+    @Mock
+    private CoreError mockCoreError;
 
     @InjectMocks
     private InputStringValidator validator;
@@ -27,8 +35,9 @@ class InputStringValidatorIsNotDecimalTest {
         when(mockInputStringValidatorData.getValue()).thenReturn("abc");
         when(mockInputStringValidatorData.getField()).thenReturn("field");
         when(mockInputStringValidatorData.getValueName()).thenReturn("Field");
-        Optional<CoreError> error = validator.validateIsNotDecimal(mockInputStringValidatorData);
-        assertCorrectErrorIsPresent(error);
+        when(mockErrorProcessor.getCoreErrorWithTextReplacement(anyString(), anyString(), any(TextReplacementData.class))).thenReturn(mockCoreError);
+        validator.validateIsNotDecimal(mockInputStringValidatorData);
+        verifyCorrectGetCoreErrorCall();
     }
 
     @Test
@@ -36,8 +45,9 @@ class InputStringValidatorIsNotDecimalTest {
         when(mockInputStringValidatorData.getValue()).thenReturn("#&fml");
         when(mockInputStringValidatorData.getField()).thenReturn("field");
         when(mockInputStringValidatorData.getValueName()).thenReturn("Field");
-        Optional<CoreError> error = validator.validateIsNotDecimal(mockInputStringValidatorData);
-        assertCorrectErrorIsPresent(error);
+        when(mockErrorProcessor.getCoreErrorWithTextReplacement(anyString(), anyString(), any(TextReplacementData.class))).thenReturn(mockCoreError);
+        validator.validateIsNotDecimal(mockInputStringValidatorData);
+        verifyCorrectGetCoreErrorCall();
     }
 
     @Test
@@ -45,8 +55,9 @@ class InputStringValidatorIsNotDecimalTest {
         when(mockInputStringValidatorData.getValue()).thenReturn("0-23.0040");
         when(mockInputStringValidatorData.getField()).thenReturn("field");
         when(mockInputStringValidatorData.getValueName()).thenReturn("Field");
-        Optional<CoreError> error = validator.validateIsNotDecimal(mockInputStringValidatorData);
-        assertCorrectErrorIsPresent(error);
+        when(mockErrorProcessor.getCoreErrorWithTextReplacement(anyString(), anyString(), any(TextReplacementData.class))).thenReturn(mockCoreError);
+        validator.validateIsNotDecimal(mockInputStringValidatorData);
+        verifyCorrectGetCoreErrorCall();
     }
 
     @Test
@@ -54,8 +65,9 @@ class InputStringValidatorIsNotDecimalTest {
         when(mockInputStringValidatorData.getValue()).thenReturn("132#re01-dd");
         when(mockInputStringValidatorData.getField()).thenReturn("field");
         when(mockInputStringValidatorData.getValueName()).thenReturn("Field");
-        Optional<CoreError> error = validator.validateIsNotDecimal(mockInputStringValidatorData);
-        assertCorrectErrorIsPresent(error);
+        when(mockErrorProcessor.getCoreErrorWithTextReplacement(anyString(), anyString(), any(TextReplacementData.class))).thenReturn(mockCoreError);
+        validator.validateIsNotDecimal(mockInputStringValidatorData);
+        verifyCorrectGetCoreErrorCall();
     }
 
     @Test
@@ -63,8 +75,9 @@ class InputStringValidatorIsNotDecimalTest {
         when(mockInputStringValidatorData.getValue()).thenReturn("10.21");
         when(mockInputStringValidatorData.getField()).thenReturn("field");
         when(mockInputStringValidatorData.getValueName()).thenReturn("Field");
-        Optional<CoreError> error = validator.validateIsNotDecimal(mockInputStringValidatorData);
-        assertCorrectErrorIsPresent(error);
+        when(mockErrorProcessor.getCoreErrorWithTextReplacement(anyString(), anyString(), any(TextReplacementData.class))).thenReturn(mockCoreError);
+        validator.validateIsNotDecimal(mockInputStringValidatorData);
+        verifyCorrectGetCoreErrorCall();
     }
 
     @Test
@@ -72,8 +85,9 @@ class InputStringValidatorIsNotDecimalTest {
         when(mockInputStringValidatorData.getValue()).thenReturn("010.21");
         when(mockInputStringValidatorData.getField()).thenReturn("field");
         when(mockInputStringValidatorData.getValueName()).thenReturn("Field");
-        Optional<CoreError> error = validator.validateIsNotDecimal(mockInputStringValidatorData);
-        assertCorrectErrorIsPresent(error);
+        when(mockErrorProcessor.getCoreErrorWithTextReplacement(anyString(), anyString(), any(TextReplacementData.class))).thenReturn(mockCoreError);
+        validator.validateIsNotDecimal(mockInputStringValidatorData);
+        verifyCorrectGetCoreErrorCall();
     }
 
     @Test
@@ -81,8 +95,9 @@ class InputStringValidatorIsNotDecimalTest {
         when(mockInputStringValidatorData.getValue()).thenReturn("-10.21");
         when(mockInputStringValidatorData.getField()).thenReturn("field");
         when(mockInputStringValidatorData.getValueName()).thenReturn("Field");
-        Optional<CoreError> error = validator.validateIsNotDecimal(mockInputStringValidatorData);
-        assertCorrectErrorIsPresent(error);
+        when(mockErrorProcessor.getCoreErrorWithTextReplacement(anyString(), anyString(), any(TextReplacementData.class))).thenReturn(mockCoreError);
+        validator.validateIsNotDecimal(mockInputStringValidatorData);
+        verifyCorrectGetCoreErrorCall();
     }
 
     @Test
@@ -90,8 +105,9 @@ class InputStringValidatorIsNotDecimalTest {
         when(mockInputStringValidatorData.getValue()).thenReturn("-010.21");
         when(mockInputStringValidatorData.getField()).thenReturn("field");
         when(mockInputStringValidatorData.getValueName()).thenReturn("Field");
-        Optional<CoreError> error = validator.validateIsNotDecimal(mockInputStringValidatorData);
-        assertCorrectErrorIsPresent(error);
+        when(mockErrorProcessor.getCoreErrorWithTextReplacement(anyString(), anyString(), any(TextReplacementData.class))).thenReturn(mockCoreError);
+        validator.validateIsNotDecimal(mockInputStringValidatorData);
+        verifyCorrectGetCoreErrorCall();
     }
 
     @Test
@@ -136,11 +152,10 @@ class InputStringValidatorIsNotDecimalTest {
         assertTrue(error.isEmpty());
     }
 
-    private void assertCorrectErrorIsPresent(Optional<CoreError> error) {
-        assertTrue(error.isPresent());
-        assertEquals("field", error.get().getField());
-        assertTrue(error.get().getMessage().contains("Field"));
-        assertTrue(error.get().getMessage().toLowerCase().contains("decimal"));
+    private void verifyCorrectGetCoreErrorCall() {
+        verify(mockErrorProcessor).getCoreErrorWithTextReplacement(eq("field"),
+                eq("VDT-IST-VID"),
+                argThat(new TextReplacementDataMatcher("value", "Field")));
     }
 
 }

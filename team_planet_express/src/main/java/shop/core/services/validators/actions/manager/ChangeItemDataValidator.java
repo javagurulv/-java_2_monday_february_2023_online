@@ -9,6 +9,7 @@ import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
+import shop.core.support.error_code_processing.ErrorProcessor;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -26,8 +27,8 @@ public class ChangeItemDataValidator {
     private static final String VALUE_NAME_ID = "Item id";
     private static final String VALUE_NAME_PRICE = "Price";
     private static final String VALUE_NAME_QUANTITY = "Quantity";
-    private static final String ERROR_ID_NOT_EXISTS = "Error: Item with this id does not exist.";
-    private static final String ERROR_ITEM_EXISTS = "Error: Exactly the same item already exists.";
+    private static final String ERROR_ID_NOT_EXISTS = "VDT-CID-INE";
+    private static final String ERROR_ITEM_EXISTS = "VDT-CID-EIE";
 
     @Autowired
     private Database database;
@@ -35,6 +36,8 @@ public class ChangeItemDataValidator {
     private InputStringValidator inputStringValidator;
     @Autowired
     private DatabaseAccessValidator databaseAccessValidator;
+    @Autowired
+    private ErrorProcessor errorProcessor;
 
     public List<CoreError> validate(ChangeItemDataRequest request) {
         List<CoreError> errors = new ArrayList<>();
@@ -76,14 +79,14 @@ public class ChangeItemDataValidator {
         return (database.accessItemDatabase().getAllItems().stream()
                 .filter(item -> !originalItem.getId().equals(item.getId()))
                 .anyMatch(item -> newItemName.equals(item.getName()) && newPrice.compareTo(item.getPrice()) == 0))
-                ? Optional.of(new CoreError(FIELD_BUTTON, ERROR_ITEM_EXISTS))
+                ? Optional.of(errorProcessor.getCoreError(FIELD_BUTTON, ERROR_ITEM_EXISTS))
                 : Optional.empty();
     }
 
     private Optional<CoreError> validateIdExistsInShop(String id) {
         return (id != null && !id.isBlank() &&
                 database.accessItemDatabase().findById(Long.parseLong(id)).isEmpty())
-                ? Optional.of(new CoreError(FIELD_ID, ERROR_ID_NOT_EXISTS))
+                ? Optional.of(errorProcessor.getCoreError(FIELD_ID, ERROR_ID_NOT_EXISTS))
                 : Optional.empty();
     }
 
