@@ -1,18 +1,23 @@
 package lv.javaguru.java2.servify.core.database;
 
-import lv.javaguru.java2.servify.domain.Detail;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-import java.util.List;
+@Component
+public class Database {
+    @Autowired private UsersDatabase usersDatabase;
+    @Autowired private OrderDatabase orderDatabase;
+    @Autowired private DetailDatabase detailDatabase;
 
-public interface Database {
+    public UsersDatabase getUsersDatabase() {
+        return usersDatabase;
+    }
 
-    void save(Detail detail);
+    public OrderDatabase getOrderDatabase() {
+        return orderDatabase;
+    }
 
-    void deleteById(Long id);
-
-    List<Detail> getAllDetails();
-
-    BigDecimal getTotalPrice(List<Detail> listWithPrices);
-
+    public DetailDatabase getDetailDatabase() {
+        return detailDatabase;
+    }
 }

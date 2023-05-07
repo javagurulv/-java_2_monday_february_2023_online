@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servify.core.database;
 
-import lv.javaguru.java2.servify.domain.Detail;
+import lv.javaguru.java2.servify.domain.detail.Detail;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class InMemoryDatabaseImpl implements Database {
+public class InMemoryDetailDatabaseImpl implements DetailDatabase {
 
     private Long nextId = 1L;
-    private List<Detail> details = new ArrayList<>();
+    private final List<Detail> details = new ArrayList<>();
 
     @Override
     public void save(Detail detail) {
@@ -25,7 +25,7 @@ public class InMemoryDatabaseImpl implements Database {
         details.stream()
                 .filter(detail -> detail.getId().equals(id))
                 .findFirst()
-                .ifPresent(detail -> details.remove(detail));
+                .ifPresent(details::remove);
     }
 
     @Override
@@ -35,12 +35,16 @@ public class InMemoryDatabaseImpl implements Database {
 
     @Override
     public BigDecimal getTotalPrice(List<Detail> listWithPrices) {
-        BigDecimal totalPrice = new BigDecimal(0);
-        for (Detail detail : listWithPrices) {
-            if (details.contains(detail)) {
-                totalPrice = totalPrice.add(detail.getPrice());
-            }
+        BigDecimal totalPrice = BigDecimal.ZERO;
+
+        List<BigDecimal> bigDecimals = details.stream()
+                .map(Detail::getPrice)
+                .toList();
+
+        for (BigDecimal price : bigDecimals) {
+            totalPrice = totalPrice.add(price);
         }
+
         return totalPrice;
     }
 }

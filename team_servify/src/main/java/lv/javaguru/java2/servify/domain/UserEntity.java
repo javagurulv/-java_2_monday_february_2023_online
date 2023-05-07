@@ -14,6 +14,7 @@ public class UserEntity {
     private boolean isInactive;
     private String password;
 
+
     public String getPassword() {
         return password;
     }

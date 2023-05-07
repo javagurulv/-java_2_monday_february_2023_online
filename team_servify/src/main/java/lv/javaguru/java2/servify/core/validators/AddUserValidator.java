@@ -1,4 +1,4 @@
-package lv.javaguru.java2.servify.core.services.user;
+package lv.javaguru.java2.servify.core.validators;
 
 import lv.javaguru.java2.servify.core.requests.user.AddUserRequest;
 import lv.javaguru.java2.servify.core.responses.CoreError;

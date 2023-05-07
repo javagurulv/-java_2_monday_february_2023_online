@@ -1,97 +1,52 @@
 package lv.javaguru.java2.servify.domain;
 
-import lv.javaguru.java2.servify.detail_builder.DetailBuilder;
-import lv.javaguru.java2.servify.domain.Detail;
+import lv.javaguru.java2.servify.domain.detail.Detail;
+import lv.javaguru.java2.servify.domain.detail.DetailSideEnum;
+import lv.javaguru.java2.servify.domain.detail.DetailTypeEnum;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+@Component
 public class PriceList {
 
-    private List<Detail> detailPricesList = new ArrayList<>();
+    private final List<Detail> detailPricesList;
 
     public PriceList() {
-        Detail bonnet = new DetailBuilder("Bonnet")
-                .setPrice(BigDecimal.valueOf(200))
-                .build();
-        detailPricesList.add(bonnet);
-        Detail boot = new DetailBuilder("Boot")
-                .setPrice(BigDecimal.valueOf(180))
-                .build();
-        detailPricesList.add(boot);
-        Detail roof = new DetailBuilder("Roof")
-                .setPrice(BigDecimal.valueOf(250))
-                .build();
-        detailPricesList.add(roof);
-        Detail frontBumper = new DetailBuilder("Bumper")
-                .setPrice(BigDecimal.valueOf(180))
-                .setLocation("Front")
-                .build();
-        detailPricesList.add(frontBumper);
-        Detail rearBumper = new DetailBuilder("Bumper")
-                .setPrice(BigDecimal.valueOf(150))
-                .setLocation("Rear")
-                .build();
-        detailPricesList.add(rearBumper);
-        Detail frontLeftDoor = new DetailBuilder("Door")
-                .setPrice(BigDecimal.valueOf(180))
-                .setLocation("Front")
-                .setSide("Left")
-                .build();
-        detailPricesList.add(frontLeftDoor);
-        Detail frontRightDoor = new DetailBuilder("Door")
-                .setPrice(BigDecimal.valueOf(180))
-                .setLocation("Front")
-                .setSide("Right")
-                .build();
-        detailPricesList.add(frontRightDoor);
-        Detail rearLeftDoor = new DetailBuilder("Door")
-                .setPrice(BigDecimal.valueOf(180))
-                .setLocation("Rear")
-                .setSide("Left")
-                .build();
-        detailPricesList.add(rearLeftDoor);
-        Detail rearRightDoor = new DetailBuilder("Door")
-                .setPrice(BigDecimal.valueOf(180))
-                .setLocation("Rear")
-                .setSide("Right")
-                .build();
-        detailPricesList.add(rearRightDoor);
-        Detail frontLeftWing = new DetailBuilder("Wing")
-                .setPrice(BigDecimal.valueOf(130))
-                .setLocation("Front")
-                .setSide("Left")
-                .build();
-        detailPricesList.add(frontLeftWing);
-        Detail frontRightWing = new DetailBuilder("Wing")
-                .setPrice(BigDecimal.valueOf(130))
-                .setLocation("Front")
-                .setSide("Right")
-                .build();
-        detailPricesList.add(frontRightWing);
-        Detail rearLeftWing = new DetailBuilder("Wing")
-                .setPrice(BigDecimal.valueOf(160))
-                .setLocation("Rear")
-                .setSide("Left")
-                .build();
-        detailPricesList.add(rearLeftWing);
-        Detail rearRightWing = new DetailBuilder("Wing")
-                .setPrice(BigDecimal.valueOf(160))
-                .setLocation("Rear")
-                .setSide("Right")
-                .build();
-        detailPricesList.add(rearRightWing);
-        Detail leftWingMirror = new DetailBuilder("Wing mirror")
-                .setPrice(BigDecimal.valueOf(60))
-                .setSide("Left")
-                .build();
-        detailPricesList.add(leftWingMirror);
-        Detail rightWingMirror = new DetailBuilder("Wing mirror")
-                .setPrice(BigDecimal.valueOf(60))
-                .setSide("Right")
-                .build();
-        detailPricesList.add(rightWingMirror);
+        detailPricesList = new ArrayList<>(List.of(
+                new Detail(DetailTypeEnum.BONNET, DetailSideEnum.NO_SIDE, BigDecimal.valueOf(200)),
+                new Detail(DetailTypeEnum.BOOT, DetailSideEnum.NO_SIDE, BigDecimal.valueOf(180)),
+                new Detail(DetailTypeEnum.ROOF, DetailSideEnum.NO_SIDE, BigDecimal.valueOf(250)),
+                new Detail(DetailTypeEnum.BUMPER, DetailSideEnum.FRONT, BigDecimal.valueOf(180)),
+                new Detail(DetailTypeEnum.BUMPER, DetailSideEnum.REAR, BigDecimal.valueOf(150)),
+                new Detail(DetailTypeEnum.DOOR, DetailSideEnum.FRONT_LEFT, BigDecimal.valueOf(180)),
+                new Detail(DetailTypeEnum.DOOR, DetailSideEnum.FRONT_RIGHT, BigDecimal.valueOf(180)),
+                new Detail(DetailTypeEnum.DOOR, DetailSideEnum.REAR_LEFT, BigDecimal.valueOf(180)),
+                new Detail(DetailTypeEnum.DOOR, DetailSideEnum.REAR_RIGHT, BigDecimal.valueOf(180)),
+                new Detail(DetailTypeEnum.WING, DetailSideEnum.FRONT_LEFT, BigDecimal.valueOf(130)),
+                new Detail(DetailTypeEnum.WING, DetailSideEnum.FRONT_RIGHT, BigDecimal.valueOf(130)),
+                new Detail(DetailTypeEnum.WING, DetailSideEnum.REAR_LEFT, BigDecimal.valueOf(160)),
+                new Detail(DetailTypeEnum.WING, DetailSideEnum.REAR_RIGHT, BigDecimal.valueOf(160)),
+                new Detail(DetailTypeEnum.MIRROR, DetailSideEnum.LEFT, BigDecimal.valueOf(60)),
+                new Detail(DetailTypeEnum.MIRROR, DetailSideEnum.RIGHT, BigDecimal.valueOf(60))
+        ));
+
+
+        Long nextId = 1L;
+
+        for (Detail detail : detailPricesList) {
+            detail.setId(nextId);
+            nextId++;
+        }
+    }
+
+    public Optional<Detail> findById(Long id) {
+        return detailPricesList.stream()
+                .filter(detail -> detail.getId().equals(id))
+                .findFirst();
     }
 
     public List<Detail> getDetailPricesList() {
