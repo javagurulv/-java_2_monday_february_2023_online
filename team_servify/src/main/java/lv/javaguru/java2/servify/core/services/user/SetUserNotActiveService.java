@@ -7,7 +7,6 @@ import lv.javaguru.java2.servify.core.responses.user.SetUserNotActiveResponse;
 import lv.javaguru.java2.servify.core.validators.SetUserNotActiveValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
