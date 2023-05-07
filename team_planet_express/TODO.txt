@@ -1,4 +1,5 @@
-yeet date change to db
+yeet date change to db (trigger?)
+db background clear closed carts
 time machine for date testing
 sorting & paging to list items and cart
 userRole madness from Q&A (many roles for an action)

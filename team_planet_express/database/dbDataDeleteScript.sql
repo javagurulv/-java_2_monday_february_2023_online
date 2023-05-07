@@ -1,0 +1,6 @@
+DELETE FROM item
+WHERE id = 8;
+
+DELETE FROM item;
+
+DROP SCHEMA shop;
