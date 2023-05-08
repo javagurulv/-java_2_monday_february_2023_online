@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.fightclub.core.service.ValidationServiceTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2023-04-17T11:07:28" hostname="KOZLOVI" time="0.009">
+  <properties/>
+  <testcase name="shouldPassEmailValidation" classname="com.fightclub.core.service.ValidationServiceTest" time="0.0"/>
+  <testcase name="emailMustContainEt" classname="com.fightclub.core.service.ValidationServiceTest" time="0.0"/>
+  <testcase name="nameShouldNotBeLongThen20" classname="com.fightclub.core.service.ValidationServiceTest" time="0.0"/>
+  <testcase name="shouldPassNameValidation" classname="com.fightclub.core.service.ValidationServiceTest" time="0.0"/>
+  <testcase name="emailShouldNotBeSmallThen9" classname="com.fightclub.core.service.ValidationServiceTest" time="0.001"/>
+  <testcase name="nameShouldNotBeNull" classname="com.fightclub.core.service.ValidationServiceTest" time="0.0"/>
+  <testcase name="emailMustNotBeNull" classname="com.fightclub.core.service.ValidationServiceTest" time="0.0"/>
+  <testcase name="nameShouldNotBeSmallThen2" classname="com.fightclub.core.service.ValidationServiceTest" time="0.002"/>
+  <testcase name="emailShouldNotBeLongThen50" classname="com.fightclub.core.service.ValidationServiceTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
