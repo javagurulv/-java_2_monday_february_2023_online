@@ -3,15 +3,14 @@ package lv.javaguru.java2.servify.core.services.user;
 import lv.javaguru.java2.servify.core.database.UsersDatabase;
 import lv.javaguru.java2.servify.core.responses.user.GetAllUsersResponse;
 import lv.javaguru.java2.servify.domain.UserEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class GetAllUsersService {
-    private UsersDatabase userDB;
-
-    public GetAllUsersService(UsersDatabase userDB) {
-        this.userDB = userDB;
-    }
+    @Autowired private UsersDatabase userDB;
 
     public GetAllUsersResponse execute() {
         List<UserEntity> users = userDB.getAllUsers();

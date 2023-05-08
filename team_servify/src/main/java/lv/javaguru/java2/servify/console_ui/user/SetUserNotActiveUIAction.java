@@ -4,15 +4,16 @@ import lv.javaguru.java2.servify.console_ui.UIAction;
 import lv.javaguru.java2.servify.core.requests.user.SetUserNotActiveRequest;
 import lv.javaguru.java2.servify.core.responses.user.SetUserNotActiveResponse;
 import lv.javaguru.java2.servify.core.services.user.SetUserNotActiveService;
+import lv.javaguru.java2.servify.dependency_injection.DIComponent;
+import lv.javaguru.java2.servify.dependency_injection.DIDependency;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 public class SetUserNotActiveUIAction implements UIAction {
-    private SetUserNotActiveService setUserNotActiveService;
-
-    public SetUserNotActiveUIAction(SetUserNotActiveService setUserNotActiveService) {
-        this.setUserNotActiveService = setUserNotActiveService;
-    }
+    @Autowired private SetUserNotActiveService setUserNotActiveService;
 
     @Override
     public void execute() {

@@ -1,7 +1,7 @@
 package demo;
 
-import java2.eln.domain.ReactionData;
-import java2.eln.domain.StructureData;
+import java2.eln.core.domain.ReactionData;
+import java2.eln.core.domain.StructureData;
 import java2.eln.core.services.CreateConditionDataFromFile;
 import java2.eln.core.services.CreateStructureFromFile;
 
@@ -11,12 +11,12 @@ public class DemoForStructureData {
         // Testing baseClasses.StructureData class
         StructureData demoStructure = new StructureData("CC(=O)O", "Acetic acid", 1);
         System.out.println(demoStructure.getName());
-        demoStructure.getBruttoFormula();
+        demoStructure.printBruttoFormula();
         demoStructure.printMW();
         System.out.println("");
         StructureData demoStructure2 = new StructureData("c1ncccc1[C@@H]2CCCN2C", "Nicotine", 1);
         System.out.println(demoStructure2.getName());
-        demoStructure2.getBruttoFormula();
+        demoStructure2.printBruttoFormula();
         demoStructure2.printMW();
         System.out.println("");
 

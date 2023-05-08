@@ -1,17 +1,22 @@
 package java2.eln.console_ui;
 
-import java2.eln.core.requests.DelReactionRequest;
-import java2.eln.core.responses.DelReactionResponse;
+import java2.eln.core.requests.DeleteReactionRequest;
+import java2.eln.core.responses.DeleteReactionResponse;
 import java2.eln.core.services.DelReactionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 public class DelReactionUIAction implements UIAction{
-    private DelReactionService delReactionService;
 
-    public DelReactionUIAction(DelReactionService delReactionService) {
-        this.delReactionService = delReactionService;
-    }
+    @Autowired
+    DelReactionService delReactionService;
+
+//    public DelReactionUIAction(DelReactionService delReactionService) {
+//        this.delReactionService = delReactionService;
+//    }
 
     @Override
     public void execute() {
@@ -19,15 +24,15 @@ public class DelReactionUIAction implements UIAction{
         System.out.println("Enter Reaction Code to delete: ");
         String  reactionCode = scanner.nextLine();
 
-        DelReactionRequest delReactionRequest = new DelReactionRequest(reactionCode);
-        DelReactionResponse delReactionResponse = delReactionService.execute(delReactionRequest);
+        DeleteReactionRequest deleteReactionRequest = new DeleteReactionRequest(reactionCode);
+        DeleteReactionResponse deleteReactionResponse = delReactionService.execute(deleteReactionRequest);
 
-        if (delReactionResponse.hasErrors()) {
-            delReactionResponse.getErrors().forEach(coreError ->
+        if (deleteReactionResponse.hasErrors()) {
+            deleteReactionResponse.getErrors().forEach(coreError ->
                     System.out.println("InputError: " + coreError.getField() + " " + coreError.getMessage())
             );
         } else {
-            System.out.printf("Reaction %s has been deleted -> %s", reactionCode, delReactionResponse.getDelResult());
+            System.out.printf("Reaction %s has been deleted -> %s", reactionCode, deleteReactionResponse.getDelResult());
         }
 
     }

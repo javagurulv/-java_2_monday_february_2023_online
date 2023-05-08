@@ -2,61 +2,110 @@ package java2.eln.core.services;
 
 import java2.eln.core.database.DatabaseIM;
 import java2.eln.core.requests.FindReactionRequest;
+import java2.eln.core.requests.Ordering;
 import java2.eln.core.responses.FindReactionResponse;
 import java2.eln.core.responses.errorPattern.CoreError;
-import java2.eln.core.services.validators.SearchReactionValidator;
-import java2.eln.domain.ReactionData;
-import java2.eln.domain.StructureData;
+import java2.eln.core.services.validators.FindReactionValidator;
+import java2.eln.core.domain.ReactionData;
+import java2.eln.core.domain.StructureData;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class FindReactionService {
-    private final DatabaseIM databaseIM;
-    private SearchReactionValidator searchReactionValidator;
 
-    public FindReactionService(DatabaseIM databaseIM, SearchReactionValidator searchReactionValidator) {
-        this.databaseIM = databaseIM;
-        this.searchReactionValidator = searchReactionValidator;
-    }
+    @Autowired
+    DatabaseIM databaseIM;
+
+    @Autowired
+    FindReactionValidator findReactionValidator;
+
+    @Value("${search.ordering.enabled}")
+    private boolean orderingEnabled;
+
+    @Value("${search.paging.enabled}")
+    private boolean pagingEnabled;
+
+//    public FindReactionService(DatabaseIM databaseIM, FindReactionValidator findReactionValidator) {
+//        this.databaseIM = databaseIM;
+//        this.findReactionValidator = findReactionValidator;
+//    }
 
     public FindReactionResponse execute (FindReactionRequest findReactionRequest) {
-        List<CoreError> errors = searchReactionValidator.validate(findReactionRequest);
+        List<CoreError> errors = findReactionValidator.validate(findReactionRequest);
         if (!errors.isEmpty()) {
             return new FindReactionResponse(errors, true);
         }
 
-        List<ReactionData> searchingResults = databaseIM.getAllReactions().stream()
-            .filter(reaction -> compareObjects(findReactionRequest, reaction))
-            .collect(Collectors.toList());
+        List<ReactionData> searchingResults = getSearchingResults(findReactionRequest);
+
+        if (orderingEnabled) {
+            searchingResults = order(searchingResults, findReactionRequest.getOrdering());
+        }
+
         return new FindReactionResponse(searchingResults);
     }
+
+    @NotNull
+    private List<ReactionData> getSearchingResults(FindReactionRequest findReactionRequest) {
+        return databaseIM.getAllReactions().stream()
+            .filter(reaction -> compareObjects(findReactionRequest, reaction))
+            .collect(Collectors.toList());
+    }
+
+    private List<ReactionData> order(List<ReactionData> reactions, Ordering ordering) {
+        if (ordering != null && ordering.getOrderBy() != null) {
+            Comparator<ReactionData> comparator;
+            if (ordering.getOrderBy().equals("code")) {
+                comparator = Comparator.comparing(ReactionData::getCode);
+            } else if (ordering.getOrderBy().equals("yield")) {
+                comparator = Comparator.comparing(ReactionData::getReactionYield);
+            } else {
+                comparator = Comparator.comparing(ReactionData::getName);
+            }
+            if (ordering.getOrderDirection().equals("DESCENDING")) {
+                comparator = comparator.reversed();
+            }
+            return reactions.stream().sorted(comparator).collect(Collectors.toList());
+        } else {
+            // Return the same list if the ordering parameter is null or orderBy is not specified
+            return reactions;
+        }
+    }
+
 
     private boolean compareObjects(FindReactionRequest findReactionRequest, ReactionData reaction) {
         boolean codeMatch = matchSearchCriteria(findReactionRequest.getCode(), reaction.getCode());
         boolean nameMatch = matchSearchCriteria(findReactionRequest.getName(), reaction.getName());
-       // boolean yieldMatch = matchSearchCriteria(reaction.getReactionYield(), findReactionRequest.getYield());
+        boolean yieldMatch = matchSearchCriteria(findReactionRequest.getYield(), reaction.getReactionYield());
         boolean startingMaterialMatch = matchSearchCriteria(findReactionRequest.getStartingMaterial(), reaction.getStartingMaterials());
         // return true only if all search criteria match
-        return codeMatch && nameMatch && startingMaterialMatch;
+        return codeMatch && nameMatch && yieldMatch && startingMaterialMatch;
     }
 
     private boolean matchSearchCriteria (Object searchCriteria, Object reactionProperty) {
         boolean verdict = false;
         if (searchCriteria == null) {
             verdict = true; // match all values if search criteria is null
-
-            } else if (searchCriteria instanceof String) {
+        } else if (searchCriteria instanceof String) {
                 String strSearchCriteria = ((String) searchCriteria).trim().toLowerCase();
                 String strProperty = ((String) reactionProperty).toLowerCase();
             verdict = strSearchCriteria.isEmpty() || strProperty.contains(strSearchCriteria.toLowerCase());
-
-            } else if (reactionProperty instanceof List) {
+            }
+        else if (reactionProperty instanceof List) {
             verdict = ((List<?>) reactionProperty).contains(searchCriteria) ||
                     searchCriteria.equals(new StructureData("C"));
-
             }
-            else {
+        else if (searchCriteria instanceof Double doubleSearchCriteria) {
+            verdict = doubleSearchCriteria == 0 || doubleSearchCriteria.equals((Double) reactionProperty);
+           }
+        else {
             verdict = searchCriteria.equals(reactionProperty);
         }
         return verdict;

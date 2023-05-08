@@ -3,18 +3,16 @@ package lv.javaguru.java2.servify.console_ui.detail;
 import lv.javaguru.java2.servify.console_ui.UIAction;
 import lv.javaguru.java2.servify.core.services.detail.GetAllDetailsService;
 import lv.javaguru.java2.servify.core.services.detail.RemoveDetailService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 public class RemoveDetailUIAction implements UIAction {
 
-    private RemoveDetailService removeDetailService;
-    private GetAllDetailsService getAllDetailsService;
-
-    public RemoveDetailUIAction(RemoveDetailService removeDetailService, GetAllDetailsService getAllDetailsService) {
-        this.removeDetailService = removeDetailService;
-        this.getAllDetailsService = getAllDetailsService;
-    }
+    @Autowired private RemoveDetailService removeDetailService;
+    @Autowired private GetAllDetailsService getAllDetailsService;
 
     @Override
     public void execute() {

@@ -1,36 +1,48 @@
 package lv.javaguru.java2.servify;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import lv.javaguru.java2.servify.config.DetailListConfiguration;
 import lv.javaguru.java2.servify.console_ui.user.AddUserUIAction;
 import lv.javaguru.java2.servify.console_ui.ExitUIAction;
 import lv.javaguru.java2.servify.console_ui.user.GetAllUsersUIAction;
 import lv.javaguru.java2.servify.console_ui.user.SetUserNotActiveUIAction;
 import lv.javaguru.java2.servify.core.database.UsersDatabase;
-import lv.javaguru.java2.servify.core.services.user.AddUserService;
-import lv.javaguru.java2.servify.core.services.user.AddUserValidator;
-import lv.javaguru.java2.servify.core.services.user.GetAllUsersService;
-import lv.javaguru.java2.servify.core.services.user.SetUserNotActiveService;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 public class UserMenuTest {
-    public void start(UsersDatabase userDB) {
-        AddUserValidator addUserValidator = new AddUserValidator();
-        AddUserService addUserService = new AddUserService(userDB, addUserValidator);
-        AddUserUIAction addUserUIAction = new AddUserUIAction(addUserService);
-        GetAllUsersService getAllUsersService = new GetAllUsersService(userDB);
-        GetAllUsersUIAction getAllUsersUIAction = new GetAllUsersUIAction(getAllUsersService);
-        SetUserNotActiveService setUserNotActiveService = new SetUserNotActiveService(userDB);
-        SetUserNotActiveUIAction setUserNotActiveUIAction = new SetUserNotActiveUIAction(setUserNotActiveService);
-        ExitUIAction exitUIAction = new ExitUIAction();
+
+    @Autowired private UsersDatabase usersDatabase;
+
+    public void execute() {
+
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(DetailListConfiguration.class);
 
         while (true) {
             printAdminMenu();
             int userChoice = getUserChoice();
             switch (userChoice) {
-                case 1 -> addUserUIAction.execute();
-                case 2 -> setUserNotActiveUIAction.execute();
-                case 3 -> getAllUsersUIAction.execute();
-                case 4 -> exitUIAction.execute();
+                case 1 -> {
+                    AddUserUIAction uiAction = applicationContext.getBean(AddUserUIAction.class);
+                    uiAction.execute();
+                }
+                case 2 -> {
+                    SetUserNotActiveUIAction uiAction = applicationContext.getBean(SetUserNotActiveUIAction.class);
+                    uiAction.execute();
+                }
+                case 3 -> {
+                    GetAllUsersUIAction uiAction = applicationContext.getBean(GetAllUsersUIAction.class);
+                    uiAction.execute();
+                }
+                case 4 -> {
+                    ExitUIAction uiAction = applicationContext.getBean(ExitUIAction.class);
+                    uiAction.execute();
+                }
             }
         }
     }

@@ -1,9 +1,9 @@
 package java2.eln.core.requests;
 
-import java2.eln.domain.StructureData;
+import java2.eln.core.domain.StructureData;
 
 public class FindReactionsByMainProductRequest {
-    private StructureData searchedSubstance;
+    private final StructureData searchedSubstance;
 
     public FindReactionsByMainProductRequest(StructureData searchedSubstance) {
         this.searchedSubstance = searchedSubstance;

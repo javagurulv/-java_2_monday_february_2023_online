@@ -5,18 +5,25 @@ import java2.eln.core.requests.AddReactionRequest;
 import java2.eln.core.responses.AddReactionResponse;
 import java2.eln.core.responses.errorPattern.CoreError;
 import java2.eln.core.services.validators.AddReactionValidator;
-import java2.eln.domain.ReactionData;
+import java2.eln.core.domain.ReactionData;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class AddReactionService {
-    private DatabaseIM databaseIM;
-    private AddReactionValidator validator;
 
-    public AddReactionService(DatabaseIM databaseIM, AddReactionValidator validator) {
-        this.databaseIM = databaseIM;
-        this.validator = validator;
-    }
+    @Autowired
+    DatabaseIM databaseIM;
+
+    @Autowired
+    AddReactionValidator validator;
+
+//    public AddReactionService(DatabaseIM databaseIM, AddReactionValidator validator) {
+//        this.databaseIM = databaseIM;
+//        this.validator = validator;
+//    }
 
      public AddReactionResponse execute(AddReactionRequest addReactionRequest) {
         List<CoreError> errors = validator.validate(addReactionRequest);

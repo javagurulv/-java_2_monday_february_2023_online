@@ -4,19 +4,18 @@ import lv.javaguru.java2.servify.core.database.UsersDatabase;
 import lv.javaguru.java2.servify.core.requests.user.AddUserRequest;
 import lv.javaguru.java2.servify.core.responses.user.AddUserResponse;
 import lv.javaguru.java2.servify.core.responses.CoreError;
+import lv.javaguru.java2.servify.core.validators.AddUserValidator;
 import lv.javaguru.java2.servify.domain.UserEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class AddUserService {
-    private UsersDatabase userDB;
-    private AddUserValidator validator;
 
-    public AddUserService(UsersDatabase userDB,
-                          AddUserValidator validator) {
-        this.userDB = userDB;
-        this.validator = validator;
-    }
+    @Autowired private UsersDatabase userDB;
+    @Autowired private AddUserValidator validator;
 
     public AddUserResponse execute(AddUserRequest request) {
         List<CoreError> errors = validator.validate(request);

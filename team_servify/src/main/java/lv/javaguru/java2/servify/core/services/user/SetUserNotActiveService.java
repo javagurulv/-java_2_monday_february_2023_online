@@ -4,25 +4,23 @@ import lv.javaguru.java2.servify.core.database.UsersDatabase;
 import lv.javaguru.java2.servify.core.requests.user.SetUserNotActiveRequest;
 import lv.javaguru.java2.servify.core.responses.CoreError;
 import lv.javaguru.java2.servify.core.responses.user.SetUserNotActiveResponse;
-import lv.javaguru.java2.servify.domain.FieldTitle;
+import lv.javaguru.java2.servify.core.validators.SetUserNotActiveValidator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class SetUserNotActiveService {
-    private UsersDatabase userDB;
-
-    public SetUserNotActiveService(UsersDatabase userDB) {
-        this.userDB = userDB;
-    }
+    @Autowired private UsersDatabase userDB;
+    @Autowired private SetUserNotActiveValidator validator;
 
     public SetUserNotActiveResponse execute(SetUserNotActiveRequest request) {
-        if (request.getUserIdToSetInactive() == null) {
-            CoreError error = new CoreError(FieldTitle.ID, "Must not be empty");
-            List<CoreError> errors = new ArrayList<>();
-            errors.add(error);
+        List<CoreError> errors = validator.validate(request);
+        if (!errors.isEmpty()) {
             return new SetUserNotActiveResponse(errors);
         }
+
         boolean isUserInactivated = userDB.deactivateUser(request.getUserIdToSetInactive());
         return new SetUserNotActiveResponse(isUserInactivated);
     }

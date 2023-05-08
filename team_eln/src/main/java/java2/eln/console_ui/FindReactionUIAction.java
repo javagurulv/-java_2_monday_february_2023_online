@@ -4,16 +4,21 @@ import java2.eln.core.requests.FindReactionRequest;
 import java2.eln.core.responses.FindReactionResponse;
 import java2.eln.core.services.FindReactionService;
 import java2.eln.core.services.GetStructureFromSMILE;
-import java2.eln.domain.StructureData;
+import java2.eln.core.domain.StructureData;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 public class FindReactionUIAction implements UIAction{
-    private FindReactionService findReactionService;
 
-    public FindReactionUIAction(FindReactionService findReactionService) {
-        this.findReactionService = findReactionService;
-    }
+    @Autowired
+    FindReactionService findReactionService;
+
+//    public FindReactionUIAction(FindReactionService findReactionService) {
+//        this.findReactionService = findReactionService;
+//    }
 
     @Override
     public void execute() {
@@ -30,14 +35,10 @@ public class FindReactionUIAction implements UIAction{
 
         System.out.println("Enter reaction Yield to search: ");
         String  yieldStr = scanner.nextLine();
-        Double yield = null;
-        try {
+        Double yield = 0d;
+        if (!yieldStr.isBlank()){
             yield = Double.parseDouble(yieldStr);
-        } catch (NumberFormatException e) {
-            yield = 0d;
-            System.out.println("Invalid input. Yield set to 0.");
         }
-
 
         GetStructureFromSMILE getStructureFromSMILE = new GetStructureFromSMILE(smile);
         StructureData searchedStructure = getStructureFromSMILE.execute();

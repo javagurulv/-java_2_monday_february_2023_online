@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servify.core.requests.order;
 
-import lv.javaguru.java2.servify.domain.Detail;
+import lv.javaguru.java2.servify.domain.detail.Detail;
 
 import java.time.Instant;
 import java.util.Date;
