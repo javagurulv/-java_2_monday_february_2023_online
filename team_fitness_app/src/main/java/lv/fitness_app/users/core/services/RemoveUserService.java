@@ -1,6 +1,6 @@
 package lv.fitness_app.users.core.services;
 
-import lv.fitness_app.users.core.database.Database;
+import lv.fitness_app.database.Database;
 import lv.fitness_app.users.core.responses.CoreError;
 import lv.fitness_app.users.core.responses.RemoveUserResponse;
 import lv.fitness_app.users.core.domain.User;

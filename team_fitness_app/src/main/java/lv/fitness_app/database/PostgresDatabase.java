@@ -1,6 +1,5 @@
-package lv.fitness_app.users.core.database;
+package lv.fitness_app.database;
 
-import lv.fitness_app.database.ConnectionManager;
 import lv.fitness_app.users.core.domain.User;
 import org.springframework.stereotype.Component;
 
