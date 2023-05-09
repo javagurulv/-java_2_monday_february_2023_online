@@ -2,12 +2,11 @@ package lv.javaguru.java2.servify.core.database;
 
 import lv.javaguru.java2.servify.domain.UserEntity;
 import lv.javaguru.java2.servify.domain.UserType;
-import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+
 public class InMemoryUsersDatabaseImpl implements UsersDatabase {
 
     private long nextId = 0L;

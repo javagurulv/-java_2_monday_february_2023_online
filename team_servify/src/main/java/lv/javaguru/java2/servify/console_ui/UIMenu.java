@@ -1,6 +1,7 @@
 package lv.javaguru.java2.servify.console_ui;
 
 import lv.javaguru.java2.servify.domain.UserEntity;
+import lv.javaguru.java2.servify.domain.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.List;
@@ -19,6 +20,7 @@ public class UIMenu {
 
     public void startUI() {
         showWelcomeMessage();
+        currentUser.setUserType(UserType.CUSTOMER);
         while (true) {
             try {
                 //printMenu(uiActions);
