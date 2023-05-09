@@ -2,17 +2,16 @@ package lv.fitness_app.users.core.requests;
 
 public class RemoveUserRequest {
 
-    private Long userId;
-
+    private String email;
     private String password;
 
-    public RemoveUserRequest(Long userId, String password) {
-        this.userId = userId;
+    public RemoveUserRequest(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getEmail() {
+        return email;
     }
 
     public String getPassword() {

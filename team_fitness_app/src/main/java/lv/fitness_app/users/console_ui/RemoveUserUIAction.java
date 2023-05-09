@@ -17,11 +17,11 @@ public class RemoveUserUIAction implements UIAction {
     @Override
     public void execute() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter user ID");
-        Long id = Long.parseLong(scanner.nextLine());
+        System.out.println("Enter your email: ");
+        String email = scanner.nextLine();
         System.out.println("Enter password: ");
         String password = scanner.nextLine();
-        RemoveUserRequest request = new RemoveUserRequest(id, password);
+        RemoveUserRequest request = new RemoveUserRequest(email, password);
         RemoveUserResponse response = removeUserService.execute(request);
 
         if (response.hasErrors()) {

@@ -12,6 +12,7 @@ import java.util.Optional;
 public class AddUserRequestValidator {
     public List<CoreError> validate(AddUserRequest request) {
         List<CoreError> errors = new ArrayList<>();
+        validateEmail(request).ifPresent(errors::add);
         validateUsername(request).ifPresent(errors::add);
         validatePassword(request).ifPresent(errors::add);
         return errors;
@@ -26,6 +27,11 @@ public class AddUserRequestValidator {
     private Optional<CoreError> validatePassword(AddUserRequest request) {
         return (request.getPassword() == null || request.getPassword().isBlank())
                 ? Optional.of(new CoreError("password", "Must not be empty!"))
+                : Optional.empty();
+    }
+    private Optional<CoreError> validateEmail(AddUserRequest request) {
+        return (request.getPassword() == null || request.getPassword().isBlank())
+                ? Optional.of(new CoreError("email", "Must not be empty!"))
                 : Optional.empty();
     }
 }

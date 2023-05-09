@@ -17,11 +17,11 @@ public class LoginUserUIAction implements UIAction {
     @Override
     public void execute() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter user ID");
-        Long id = Long.parseLong(scanner.nextLine());
+        System.out.println("Enter your email: ");
+        String email = scanner.nextLine();
         System.out.println("Enter password: ");
         String password = scanner.nextLine();
-        LoginUserRequest request = new LoginUserRequest(id, password);
+        LoginUserRequest request = new LoginUserRequest(email, password);
         LoginUserResponse response = loginUserService.execute(request);
 
         if (response.hasErrors()) {

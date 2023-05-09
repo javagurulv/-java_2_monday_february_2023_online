@@ -2,16 +2,16 @@ package lv.fitness_app.users.core.requests;
 
 public class LoginUserRequest {
 
-    private Long userIdToLogin;
+    private String email;
     private String password;
 
-    public LoginUserRequest(Long userIdToLogin, String password) {
-        this.userIdToLogin = userIdToLogin;
+    public LoginUserRequest(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
-    public Long getUserIdToLogin() {
-        return userIdToLogin;
+    public String getEmail() {
+        return email;
     }
 
     public String getPassword() {

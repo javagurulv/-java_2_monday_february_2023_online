@@ -13,5 +13,5 @@ public interface Database {
 
     List<User> getAllUsers();
 
-    Optional<User> findUserById(Long id);
+    Optional<User> findUserByEmail(String email);
 }

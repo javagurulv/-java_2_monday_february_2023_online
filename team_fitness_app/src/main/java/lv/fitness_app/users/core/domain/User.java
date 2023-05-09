@@ -1,31 +1,24 @@
 package lv.fitness_app.users.core.domain;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class User {
 
-    private Long id;
+    private String email;
     private final String username;
     private final String password;
 
-    LocalDate endOfSubscriptionDate;
+    Date endOfSubscriptionDate;
     Subscription subscription;
 
-    public User(String username, String password) {
+    public User(String email, String username, String password) {
+        this.email = email;
         this.username = username;
         this.password = password;
         this.subscription = subscription.TRAIL;
-        this.endOfSubscriptionDate = LocalDate.now().plusDays(30);
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        endOfSubscriptionDate =  Date.valueOf(LocalDate.now().plusDays(30));
     }
 
     public String getUsername() {
@@ -36,24 +29,39 @@ public class User {
         return password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public Date getEndOfSubscriptionDate() {
+        return endOfSubscriptionDate;
+    }
+
+    public Subscription getSubscription() {
+        return subscription;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password);
+        return Objects.equals(email, user.email) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(endOfSubscriptionDate, user.endOfSubscriptionDate) && subscription == user.subscription;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password);
+        return Objects.hash(email, username, password, endOfSubscriptionDate, subscription);
     }
 
     @Override
     public String toString() {
-        return "users.User{" +
-                "id=" + id +
+        return "User{" +
+                "email='" + email + '\'' +
                 ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", endOfSubscriptionDate=" + endOfSubscriptionDate +
+                ", subscription=" + subscription +
                 '}';
     }
 

@@ -6,6 +6,7 @@ import lv.fitness_app.users.core.responses.AddUserResponse;
 import lv.fitness_app.users.core.responses.CoreError;
 import lv.fitness_app.users.core.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,7 +14,9 @@ import java.util.List;
 @Component
 public class AddUserService {
 
-    @Autowired private Database database;
+    @Autowired
+    @Qualifier ("postgres")
+    private Database database;
     @Autowired private AddUserRequestValidator validator;
 
 
@@ -22,7 +25,7 @@ public class AddUserService {
         if (!errors.isEmpty()) {
             return new AddUserResponse(errors);
         } else {
-            User user = new User(request.getUsername(), request.getPassword());
+            User user = new User(request.getEmail(), request.getUsername(), request.getPassword());
             database.add(user);
             return new AddUserResponse(user);
         }

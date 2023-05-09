@@ -17,11 +17,13 @@ public class AddUserUIAction implements UIAction {
     @Override
     public void execute() {
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter your email: ");
+        String email = scanner.nextLine();
         System.out.println("Enter username: ");
         String username = scanner.nextLine();
         System.out.println("Enter password: ");
         String password = scanner.nextLine();
-        AddUserRequest request = new AddUserRequest(username, password);
+        AddUserRequest request = new AddUserRequest(email, username, password);
         AddUserResponse response = addUserService.execute(request);
 
         if (response.hasErrors()) {
@@ -29,7 +31,6 @@ public class AddUserUIAction implements UIAction {
                     System.out.println("Error: " + coreError.getField() + " " + coreError.getMessage())
             );
         } else {
-            System.out.println("New user id is: " + response.getNewUser().getId());
             System.out.println("You are successfully added!");
         }
     }
