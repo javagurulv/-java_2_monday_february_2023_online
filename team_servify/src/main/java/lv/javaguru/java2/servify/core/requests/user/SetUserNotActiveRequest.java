@@ -1,14 +1,11 @@
 package lv.javaguru.java2.servify.core.requests.user;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
+@Getter
 public class SetUserNotActiveRequest {
 
     private Long userIdToSetInactive;
-
-    public SetUserNotActiveRequest(Long userIdToSetInactive) {
-        this.userIdToSetInactive = userIdToSetInactive;
-    }
-
-    public Long getUserIdToSetInactive() {
-        return userIdToSetInactive;
-    }
 }

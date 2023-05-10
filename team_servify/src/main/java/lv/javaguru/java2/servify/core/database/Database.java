@@ -1,9 +1,9 @@
 package lv.javaguru.java2.servify.core.database;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
+@Repository
 public class Database {
     @Autowired private UsersDatabase usersDatabase;
     @Autowired private OrderDatabase orderDatabase;
