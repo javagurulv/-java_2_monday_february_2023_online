@@ -1,6 +1,7 @@
 package lv.fitness_app.database;
 
 import lv.fitness_app.users.core.domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.BatchUpdateException;
@@ -13,11 +14,14 @@ import java.util.Optional;
 
 @Component("postgres")
 class PostgresDatabase implements Database{
+
+    @Autowired
+    private ConnectionManager connectionManager;
     @Override
     public void add(User user) {
         String sql = "INSERT INTO user_db.user (email, user_name, password, subscription, subscription_ends) VALUES (?, ?, ?, ?, ?);";
         try (
-                Connection connection = new ConnectionManager().connect();
+                Connection connection = connectionManager.connect();
                 PreparedStatement statement = connection.prepareStatement(sql)
         ) {
             connection.setAutoCommit(false);

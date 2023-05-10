@@ -20,9 +20,6 @@ class ConnectionManager {
 
 
     public Connection connect() throws SQLException {
-//        String url = "jdbc:postgresql://localhost:5432/fitness_app";
-//        String username = "postgres";
-//        String password = "Mersedes1";
         return DriverManager.getConnection(url, username, password);
     }
 }
