@@ -1,6 +1,7 @@
-package shop.core.database;
+package shop.core.database.jdbc;
 
 import lombok.Data;
+import shop.core.database.CartItemDatabase;
 import shop.core.domain.cart_item.CartItem;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Data
-public class InMemoryCartItemDatabaseImpl implements CartItemDatabase {
+public class JdbcCartItemDatabaseImpl implements CartItemDatabase {
 
     private Long nextId = 1L;
     private final List<CartItem> cartItems = new ArrayList<>();

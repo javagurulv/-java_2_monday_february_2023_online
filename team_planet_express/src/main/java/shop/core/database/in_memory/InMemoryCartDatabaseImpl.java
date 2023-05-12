@@ -1,6 +1,7 @@
-package shop.core.database;
+package shop.core.database.in_memory;
 
 import lombok.Data;
+import shop.core.database.CartDatabase;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart.CartStatus;
 

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import shop.core.database.in_memory.InMemoryCartDatabaseImpl;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart.CartStatus;
 
