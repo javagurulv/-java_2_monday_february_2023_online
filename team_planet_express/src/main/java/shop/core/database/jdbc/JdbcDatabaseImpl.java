@@ -1,22 +1,20 @@
 package shop.core.database.jdbc;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import shop.core.database.*;
 
 @Component
 public class JdbcDatabaseImpl implements Database {
 
-    private final UserDatabase userDatabase;
-    private final ItemDatabase itemDatabase;
-    private final CartDatabase cartDatabase;
-    private final CartItemDatabase cartItemDatabase;
-
-    public JdbcDatabaseImpl() {
-        this.userDatabase = new JdbcUserDatabaseImpl();
-        this.itemDatabase = new JdbcItemDatabaseImpl();
-        this.cartDatabase = new JdbcCartDatabaseImpl();
-        this.cartItemDatabase = new JdbcCartItemDatabaseImpl();
-    }
+    @Autowired
+    private UserDatabase userDatabase;
+    @Autowired
+    private ItemDatabase itemDatabase;
+    @Autowired
+    private CartDatabase cartDatabase;
+    @Autowired
+    private CartItemDatabase cartItemDatabase;
 
     @Override
     public UserDatabase accessUserDatabase() {

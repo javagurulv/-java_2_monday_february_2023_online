@@ -1,15 +1,15 @@
 package shop.core.database.jdbc;
 
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 import shop.core.database.UserDatabase;
 import shop.core.domain.user.User;
 
 import java.util.List;
 import java.util.Optional;
 
-@Data
+@Component
 public class JdbcUserDatabaseImpl implements UserDatabase {
 
     @Autowired
@@ -18,7 +18,7 @@ public class JdbcUserDatabaseImpl implements UserDatabase {
     @Override
     public User save(User user) {
         String sql = "INSERT INTO user (name, login, password, role) VALUES (?, ?, ?, ?);";
-        Object[] args = new Object[]{user.getName(), user.getLogin(), user.getPassword(), user.getUserRole()};
+        Object[] args = new Object[]{user.getName(), user.getLogin(), user.getPassword(), user.getUserRole().toString()};
         jdbcTemplate.update(sql, args);
         //TODO get ID
         return user;
