@@ -35,10 +35,10 @@ public class JdbcCartItemDatabaseImpl implements CartItemDatabase {
 
     @Override
     public void deleteByID(Long idToRemove) {
-//        cartItems.stream()
-//                .filter(cartItem -> cartItem.getId().equals(idToRemove))
-//                .findFirst()
-//                .ifPresent(cartItems::remove);
+        //TODO what's with nonexistent id?
+        String sql = "DELETE FROM books WHERE id = ?";
+        Object[] args = new Object[]{idToRemove};
+        jdbcTemplate.update(sql, args);
     }
 
     @Override

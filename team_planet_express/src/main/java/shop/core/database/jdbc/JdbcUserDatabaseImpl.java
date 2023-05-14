@@ -24,26 +24,26 @@ public class JdbcUserDatabaseImpl implements UserDatabase {
         return user;
     }
 
+    //TODO what's with Optional?
     @Override
     public Optional<User> findById(Long itemId) {
-        return null;
-//        return users.stream()
-//                .filter(user -> user.getId().equals(itemId))
-//                .findFirst();
+        String sql = "SELECT * FROM user WHERE id = ?;";
+        Object[] args = new Object[]{itemId};
+        return jdbcTemplate.query(sql, new UserRowMapper(), args).stream().findFirst();
     }
 
+    //TODO make login as unique?
     @Override
     public Optional<User> findByLoginName(String login) {
-        return null;
-//        return users.stream()
-//                .filter(user -> user.getLogin().equals(login))
-//                .findFirst();
+        String sql = "SELECT * FROM user WHERE login = ?;";
+        Object[] args = new Object[]{login};
+        return jdbcTemplate.query(sql, new UserRowMapper(), args).stream().findFirst();
     }
 
     @Override
     public List<User> getAllUsers() {
-        return null;
-//        return users;
+        String sql = "SELECT * FROM user;";
+        return jdbcTemplate.query(sql, new UserRowMapper());
     }
 
 }

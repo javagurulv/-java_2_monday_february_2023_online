@@ -18,11 +18,11 @@ public class JdbcItemDatabaseImpl implements ItemDatabase {
 
     @Override
     public Item save(Item item) {
-//        item.setId(nextId);
-//        nextId++;
-//        shopItems.add(item);
-//        return item;
-        return null;
+        String sql = "INSERT INTO item (name, price, available_quantity) VALUES (?, ?, ?);";
+        Object[] args = new Object[]{item.getName(), item.getPrice(), item.getAvailableQuantity()};
+        jdbcTemplate.update(sql, args);
+        //TODO get ID
+        return item;
     }
 
     @Override

@@ -17,22 +17,23 @@ public class JdbcCartDatabaseImpl implements CartDatabase {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    //TODO yeet date operations to db
     @Override
     public Cart save(Cart cart) {
-//        cart.setId(nextId);
-//        nextId++;
-//        carts.add(cart);
-//        return cart;
-        return null;
+        String sql = "INSERT INTO cart (user_id, status, last_update) VALUES (?, ?, ?);";
+        //TODO UNBORK DATE !!!
+        Object[] args = new Object[]{cart.getUserId(), cart.getCartStatus().toString(), "2023-05-14 23:59:59"};
+        jdbcTemplate.update(sql, args);
+        //TODO get ID
+        return cart;
     }
 
+    //TODO Optional keklol?
     @Override
     public Optional<Cart> findOpenCartForUserId(Long userId) {
-//        return carts.stream()
-//                .filter(cart -> cart.getUserId().equals(userId))
-//                .filter(cart -> cart.getCartStatus().equals(CartStatus.OPEN))
-//                .findFirst();
-        return null;
+        String sql = "SELECT * FROM cart WHERE user_id = ? AND status = 'OPEN';";
+        Object[] args = new Object[]{userId};
+        return jdbcTemplate.query(sql, new CartRowMapper(), args).stream().findFirst();
     }
 
     @Override
