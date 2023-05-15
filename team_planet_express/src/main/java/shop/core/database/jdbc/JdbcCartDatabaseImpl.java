@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import shop.core.database.CartDatabase;
+import shop.core.database.jdbc.row_mapper.CartRowMapper;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart.CartStatus;
 
@@ -36,26 +37,26 @@ public class JdbcCartDatabaseImpl implements CartDatabase {
         return jdbcTemplate.query(sql, new CartRowMapper(), args).stream().findFirst();
     }
 
+    //TODO nonexistent ?
     @Override
     public void changeCartStatus(Long id, CartStatus newCartStatus) {
-//        carts.stream()
-//                .filter(cart -> cart.getId().equals(id))
-//                .findFirst()
-//                .ifPresent(cart -> cart.setCartStatus(newCartStatus));
+        String sql = "UPDATE cart SET status = '?' WHERE id = ?;";
+        Object[] args = new Object[]{newCartStatus.toString(), id};
+        jdbcTemplate.update(sql, args);
     }
 
+    //TODO yeet dates
     @Override
     public void changeLastActionDate(Long id, LocalDate newLastActionDate) {
-//        carts.stream()
-//                .filter(cart -> cart.getId().equals(id))
-//                .findFirst()
-//                .ifPresent(cart -> cart.setLastActionDate(LocalDate.now()));
+        String sql = "UPDATE cart SET last_update = '?' WHERE id = ?;";
+        Object[] args = new Object[]{"2023-05-15 17:00:59", id};
+        jdbcTemplate.update(sql, args);
     }
 
     @Override
     public List<Cart> getAllCarts() {
-//        return carts;
-        return null;
+        String sql = "SELECT * FROM cart;";
+        return jdbcTemplate.query(sql, new CartRowMapper());
     }
 
 }

@@ -1,4 +1,4 @@
-package shop.core.database.jdbc;
+package shop.core.database.jdbc.row_mapper;
 
 import org.springframework.jdbc.core.RowMapper;
 import shop.core.domain.user.User;

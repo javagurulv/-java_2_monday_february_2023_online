@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import shop.core.database.UserDatabase;
+import shop.core.database.jdbc.row_mapper.UserRowMapper;
 import shop.core.domain.user.User;
 
 import java.util.List;
