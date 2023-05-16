@@ -22,7 +22,7 @@ public class JdbcUserDatabaseImpl implements UserDatabase {
 
     @Override
     public User save(User user) {
-        String sql = "INSERT INTO user (name, login, password, role) VALUES (?, ?, ?, ?);";
+        String sql = "INSERT INTO `user` (name, login, password, role) VALUES (?, ?, ?, ?);";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -41,7 +41,7 @@ public class JdbcUserDatabaseImpl implements UserDatabase {
     //TODO what's with Optional?
     @Override
     public Optional<User> findById(Long itemId) {
-        String sql = "SELECT * FROM user WHERE id = ?;";
+        String sql = "SELECT * FROM `user` WHERE id = ?;";
         Object[] args = new Object[]{itemId};
         return jdbcTemplate.query(sql, new UserRowMapper(), args).stream().findFirst();
     }
@@ -49,14 +49,14 @@ public class JdbcUserDatabaseImpl implements UserDatabase {
     //TODO make login as unique?
     @Override
     public Optional<User> findByLoginName(String login) {
-        String sql = "SELECT * FROM user WHERE login = ?;";
+        String sql = "SELECT * FROM `user` WHERE login = ?;";
         Object[] args = new Object[]{login};
         return jdbcTemplate.query(sql, new UserRowMapper(), args).stream().findFirst();
     }
 
     @Override
     public List<User> getAllUsers() {
-        String sql = "SELECT * FROM user;";
+        String sql = "SELECT * FROM `user`;";
         return jdbcTemplate.query(sql, new UserRowMapper());
     }
 
