@@ -2,12 +2,16 @@ package shop.core.database.jdbc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import shop.core.database.ItemDatabase;
 import shop.core.database.jdbc.row_mapper.ItemRowMapper;
 import shop.core.domain.item.Item;
 
 import java.math.BigDecimal;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,9 +24,17 @@ public class JdbcItemDatabaseImpl implements ItemDatabase {
     @Override
     public Item save(Item item) {
         String sql = "INSERT INTO item (name, price, available_quantity) VALUES (?, ?, ?);";
-        Object[] args = new Object[]{item.getName(), item.getPrice(), item.getAvailableQuantity()};
-        jdbcTemplate.update(sql, args);
-        //TODO get ID
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, item.getName());
+            statement.setBigDecimal(2, item.getPrice());
+            statement.setInt(3, item.getAvailableQuantity());
+            return statement;
+        }, keyHolder);
+        if (keyHolder.getKey() != null) {
+            item.setId(keyHolder.getKey().longValue());
+        }
         return item;
     }
 
@@ -43,7 +55,7 @@ public class JdbcItemDatabaseImpl implements ItemDatabase {
     //TODO 死んだ
     @Override
     public void changeName(Long id, String newName) {
-        String sql = "UPDATE item SET name = '?' WHERE id = ?;";
+        String sql = "UPDATE item SET name = ? WHERE id = ?;";
         Object[] args = new Object[]{newName, id};
         jdbcTemplate.update(sql, args);
     }
@@ -70,16 +82,16 @@ public class JdbcItemDatabaseImpl implements ItemDatabase {
 
     @Override
     public List<Item> searchByName(String itemName) {
-        String sql = "SELECT * FROM item WHERE name LIKE %?%;";
-        Object[] args = new Object[]{itemName};
+        String sql = "SELECT * FROM item WHERE name LIKE ?;";
+        Object[] args = new Object[]{"%" + itemName + "%"};
         return jdbcTemplate.query(sql, new ItemRowMapper(), args);
     }
 
     //TODO Blank works ?
     @Override
     public List<Item> searchByNameAndPrice(String itemName, BigDecimal price) {
-        String sql = "SELECT * FROM item WHERE name LIKE %?% AND price <= ?;";
-        Object[] args = new Object[]{itemName, price};
+        String sql = "SELECT * FROM item WHERE name LIKE ? AND price <= ?;";
+        Object[] args = new Object[]{"%" + itemName + "%", price};
         return jdbcTemplate.query(sql, new ItemRowMapper(), args);
     }
 

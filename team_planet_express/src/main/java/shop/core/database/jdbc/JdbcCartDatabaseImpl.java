@@ -2,12 +2,16 @@ package shop.core.database.jdbc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import shop.core.database.CartDatabase;
 import shop.core.database.jdbc.row_mapper.CartRowMapper;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart.CartStatus;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -22,10 +26,18 @@ public class JdbcCartDatabaseImpl implements CartDatabase {
     @Override
     public Cart save(Cart cart) {
         String sql = "INSERT INTO cart (user_id, status, last_update) VALUES (?, ?, ?);";
-        //TODO UNBORK DATE !!!
-        Object[] args = new Object[]{cart.getUserId(), cart.getCartStatus().toString(), "2023-05-14 23:59:59"};
-        jdbcTemplate.update(sql, args);
-        //TODO get ID
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.setLong(1, cart.getUserId());
+            statement.setString(2, cart.getCartStatus().toString());
+            //TODO UNBORK DATE !!!
+            statement.setString(3, "2023-05-14 23:59:59");
+            return statement;
+        }, keyHolder);
+        if (keyHolder.getKey() != null) {
+            cart.setId(keyHolder.getKey().longValue());
+        }
         return cart;
     }
 
@@ -40,7 +52,7 @@ public class JdbcCartDatabaseImpl implements CartDatabase {
     //TODO nonexistent ?
     @Override
     public void changeCartStatus(Long id, CartStatus newCartStatus) {
-        String sql = "UPDATE cart SET status = '?' WHERE id = ?;";
+        String sql = "UPDATE cart SET status = ? WHERE id = ?;";
         Object[] args = new Object[]{newCartStatus.toString(), id};
         jdbcTemplate.update(sql, args);
     }
@@ -48,7 +60,7 @@ public class JdbcCartDatabaseImpl implements CartDatabase {
     //TODO yeet dates
     @Override
     public void changeLastActionDate(Long id, LocalDate newLastActionDate) {
-        String sql = "UPDATE cart SET last_update = '?' WHERE id = ?;";
+        String sql = "UPDATE cart SET last_update = ? WHERE id = ?;";
         Object[] args = new Object[]{"2023-05-15 17:00:59", id};
         jdbcTemplate.update(sql, args);
     }
