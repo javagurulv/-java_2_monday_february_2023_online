@@ -6,7 +6,6 @@ import shop.core.domain.cart.CartStatus;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 public class CartRowMapper implements RowMapper<Cart> {
 
@@ -14,8 +13,7 @@ public class CartRowMapper implements RowMapper<Cart> {
     public Cart mapRow(ResultSet rs, int rowNum) throws SQLException {
         Cart cart = new Cart(rs.getLong("user_id"));
         cart.setCartStatus(convertToCartStatusEnum(rs.getString("status")));
-        //TODO UNBORK DATE !!!
-        cart.setLastActionDate(LocalDate.now());
+        cart.setLastUpdate(rs.getTimestamp("last_update").toLocalDateTime());
         cart.setId(rs.getLong("id"));
         return cart;
     }

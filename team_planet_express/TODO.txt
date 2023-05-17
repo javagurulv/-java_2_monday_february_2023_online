@@ -1,4 +1,3 @@
-yeet date change to db (trigger?)
 db background clear closed carts
 sorting & paging to list items and cart
 userRole madness from Q&A (many roles for an action)

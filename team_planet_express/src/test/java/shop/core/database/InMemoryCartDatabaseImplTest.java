@@ -9,7 +9,7 @@ import shop.core.database.in_memory.InMemoryCartDatabaseImpl;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart.CartStatus;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -59,8 +59,9 @@ class InMemoryCartDatabaseImplTest {
     void shouldChangeLastActionDate() {
         when(mockCart.getId()).thenReturn(1L);
         database.getCarts().add(mockCart);
-        database.changeLastActionDate(1L, LocalDate.now());
-        verify(mockCart).setLastActionDate(LocalDate.now());
+        LocalDateTime localDateTime = LocalDateTime.now();
+        database.changeLastActionDate(1L, localDateTime);
+        verify(mockCart).setLastUpdate(localDateTime);
     }
 
     @Test

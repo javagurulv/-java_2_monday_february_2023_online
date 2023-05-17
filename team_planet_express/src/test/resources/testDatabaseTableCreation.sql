@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS cart (
   id BIGINT NOT NULL AUTO_INCREMENT,
   user_id BIGINT NOT NULL,
   status VARCHAR(8) NOT NULL,
-  last_update DATETIME NOT NULL,
+  last_update DATETIME,
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES `user`(id)
 );
@@ -38,3 +38,7 @@ CREATE TABLE IF NOT EXISTS cart_item (
   FOREIGN KEY (cart_id) REFERENCES cart(id),
   FOREIGN KEY (item_id) REFERENCES item(id)
 );
+
+CREATE TRIGGER cart_date_on_create AFTER INSERT ON cart
+FOR EACH ROW
+CALL "shop.acceptance_tests.CartDateOnCreateTrigger";

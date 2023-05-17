@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS cart (
   id BIGINT NOT NULL AUTO_INCREMENT,
   user_id BIGINT NOT NULL,
   status VARCHAR(8) NOT NULL,
-  last_update DATETIME NOT NULL,
+  last_update DATETIME,
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES user(id)
 )
@@ -49,8 +49,43 @@ CREATE TABLE IF NOT EXISTS cart_item (
 )
 ENGINE = InnoDB;
 
-CREATE INDEX role
-ON user (role);
+CREATE INDEX login
+ON user (login);
+
+CREATE INDEX name
+ON item (name);
+
+CREATE INDEX price
+ON item (price);
+
+CREATE INDEX status
+ON cart (status);
+
+CREATE TRIGGER cart_date_on_create BEFORE INSERT ON cart
+FOR EACH ROW
+SET NEW.last_update = NOW();
+
+CREATE TRIGGER cart_date_on_update BEFORE UPDATE ON cart
+FOR EACH ROW
+SET NEW.last_update = NOW();
+
+CREATE TRIGGER cart_item_cart_date_on_create BEFORE INSERT ON cart_item
+FOR EACH ROW
+UPDATE cart
+SET cart.last_update = NOW()
+WHERE cart.id = NEW.cart_id;
+
+CREATE TRIGGER cart_item_cart_date_on_update BEFORE UPDATE ON cart_item
+FOR EACH ROW
+UPDATE cart
+SET cart.last_update = NOW()
+WHERE cart.id = NEW.cart_id;
+
+CREATE TRIGGER cart_item_cart_date_on_delete BEFORE DELETE ON cart_item
+FOR EACH ROW
+UPDATE cart
+SET cart.last_update = NOW()
+WHERE cart.id = OLD.cart_id;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
