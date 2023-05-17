@@ -5,7 +5,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 CREATE SCHEMA IF NOT EXISTS `java2ELN` DEFAULT CHARACTER SET utf8 ;
 USE `java2ELN` ;
 
-CREATE TABLE ReactionData (
+CREATE TABLE IF NOT EXISTS ReactionData (
   id INT AUTO_INCREMENT PRIMARY KEY,
   code VARCHAR(255) NOT NULL,
   name VARCHAR(255) NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE ReactionData (
   reactionYield DOUBLE,
 );
 
-CREATE TABLE ReactionStartingMaterial (
+CREATE TABLE IF NOT EXISTS ReactionStartingMaterial (
   reaction_id INT,
   structure_id INT,
   FOREIGN KEY (reaction_id) REFERENCES ReactionData(id),
@@ -22,7 +22,7 @@ CREATE TABLE ReactionStartingMaterial (
   PRIMARY KEY (reaction_id, structure_id)
 );
 
-CREATE TABLE ConditionData (
+CREATE TABLE IF NOT EXISTS ConditionData (
   id INT AUTO_INCREMENT PRIMARY KEY,
   solvent_id INT,
   temperature INT,
@@ -32,7 +32,7 @@ CREATE TABLE ConditionData (
   FOREIGN KEY (solvent_id) REFERENCES StructureData (id)
 );
 
-CREATE TABLE StructureData (
+CREATE TABLE IF NOT EXISTS StructureData (
   id INT AUTO_INCREMENT PRIMARY KEY,
   smiles VARCHAR(255),
   casNumber VARCHAR(255),
