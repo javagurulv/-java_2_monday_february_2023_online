@@ -1,6 +1,7 @@
 package lv.javaguru.java2.servify.core.database;
 
 import lv.javaguru.java2.servify.domain.UserEntity;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +17,9 @@ public class DefaultServifyRepository implements UsersDatabase {
 
     @Override
     public void add(UserEntity user) {
-
+        jdbcTemplate.update(
+                "INSET INTO users"
+        );
     }
 
     @Override
@@ -26,6 +29,6 @@ public class DefaultServifyRepository implements UsersDatabase {
 
     @Override
     public List<UserEntity> getAllUsers() {
-        return null;
+        return jdbcTemplate.query("SELECT * FROM users", new BeanPropertyRowMapper(UserEntity.class));
     }
 }
