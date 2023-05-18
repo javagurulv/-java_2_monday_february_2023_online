@@ -39,6 +39,11 @@ public class SearchItemService {
             List<Item> items = search(request);
             //TODO this ain't total anymore
             Integer totalFoundItemCount = items.size();
+            //TODO this is also trash
+            if (request.getPagingRule() != null &&
+                    items.size() > Integer.parseInt(request.getPagingRule().getPageSize())) {
+                items.remove(items.size() - 1);
+            }
             response = new SearchItemResponse(items, totalFoundItemCount,
                     databaseAccessValidator.getUserById(request.getUserId().getValue()).getUserRole());
         }

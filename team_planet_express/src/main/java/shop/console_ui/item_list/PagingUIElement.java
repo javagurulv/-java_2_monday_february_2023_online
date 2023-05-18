@@ -25,7 +25,13 @@ public class PagingUIElement {
     }
 
     public boolean continuePagingThrough(PagingRule pagingRule, Integer totalFoundItemCount) {
-        return pagingRule != null && Integer.parseInt(pagingRule.getPageSize()) < totalFoundItemCount && userContinuesPaging(pagingRule, totalFoundItemCount);
+        if (pagingRule != null) {
+            String pageNavigationOptions = getPageNavigationOptions(pagingRule.getPageNumber(), Integer.parseInt(pagingRule.getPageSize()), totalFoundItemCount);
+            return (pageNavigationOptions.contains(PageNavigation.NEXT.getText()) || pageNavigationOptions.contains(PageNavigation.BACK.getText())) &&
+                    userContinuesPaging(pagingRule, totalFoundItemCount);
+        } else {
+            return false;
+        }
     }
 
     private boolean userContinuesPaging(PagingRule pagingRule, Integer totalFoundItemCount) {
@@ -52,7 +58,7 @@ public class PagingUIElement {
         if (pageNumber > 1) {
             promptOptions.append(PageNavigation.BACK.getText()).append(COMA);
         }
-        if (totalFoundItemCount > pageNumber * pageSize) {
+        if (totalFoundItemCount > pageSize) {
             promptOptions.append(PageNavigation.NEXT.getText()).append(COMA);
         }
         promptOptions.append(PageNavigation.EXIT.getText()).append(BLANK);

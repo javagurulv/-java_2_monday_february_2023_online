@@ -71,7 +71,7 @@ class PagingUIElementContinuePagingTest {
         when(mockPagingRule.getPageNumber()).thenReturn(2);
         when(mockPagingRule.getPageSize()).thenReturn("10");
         when(mockUserCommunication.requestInput(anyString())).thenReturn("next", "exit");
-        assertFalse(pagingUIElement.continuePagingThrough(mockPagingRule, 15));
+        assertFalse(pagingUIElement.continuePagingThrough(mockPagingRule, 5));
         verify(mockPagingRule, times(0)).changePageNumber(anyInt());
     }
 

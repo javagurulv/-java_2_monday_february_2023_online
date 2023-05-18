@@ -28,34 +28,35 @@ public class OrderingService {
     }
 
     //TODO this is trash
-    //TODO test this
     public String getSQLOrderBy(List<OrderingRule> orderingRules) {
         StringBuilder orderBy = new StringBuilder();
         if (orderingEnabled) {
-            String orderByPrice = "";
-            String orderByName = "";
-            Optional<OrderingRule> orderingRuleForPrice = getOrderingRule(orderingRules, OrderBy.PRICE);
-            if (orderingRuleForPrice.isPresent()) {
-                orderByPrice = orderingRuleForPrice.get().getOrderBy().toString().toLowerCase() +
-                        " " +
-                        orderingRuleForPrice.get().getOrderDirection().getText();
-            }
-            Optional<OrderingRule> orderingRuleForName = getOrderingRule(orderingRules, OrderBy.NAME);
-            if (orderingRuleForName.isPresent()) {
-                orderByName = orderingRuleForName.get().getOrderBy().toString().toLowerCase() +
-                        " " +
-                        orderingRuleForName.get().getOrderDirection().getText();
-            }
-            if (orderByPrice.length() > 0) {
-                orderBy.append("ORDER BY ").append(orderByPrice);
-            }
-            if (orderByName.length() > 0) {
-                if (orderBy.length() > 0) {
-                    orderBy.append(", ");
-                } else {
-                    orderBy.append("ORDER BY ");
+            if (orderingRules != null && orderingRules.size() > 0) {
+                String orderByPrice = "";
+                String orderByName = "";
+                Optional<OrderingRule> orderingRuleForPrice = getOrderingRule(orderingRules, OrderBy.PRICE);
+                if (orderingRuleForPrice.isPresent()) {
+                    orderByPrice = orderingRuleForPrice.get().getOrderBy().toString().toLowerCase() +
+                            " " +
+                            orderingRuleForPrice.get().getOrderDirection().getText();
                 }
-                orderBy.append(orderByName);
+                Optional<OrderingRule> orderingRuleForName = getOrderingRule(orderingRules, OrderBy.NAME);
+                if (orderingRuleForName.isPresent()) {
+                    orderByName = orderingRuleForName.get().getOrderBy().toString().toLowerCase() +
+                            " " +
+                            orderingRuleForName.get().getOrderDirection().getText();
+                }
+                if (orderByName.length() > 0) {
+                    orderBy.append("ORDER BY ").append(orderByName);
+                }
+                if (orderByPrice.length() > 0) {
+                    if (orderBy.length() > 0) {
+                        orderBy.append(", ");
+                    } else {
+                        orderBy.append("ORDER BY ");
+                    }
+                    orderBy.append(orderByPrice);
+                }
             }
         }
         return orderBy.toString();
