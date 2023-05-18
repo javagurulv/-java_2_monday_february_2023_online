@@ -37,9 +37,8 @@ public class SearchItemService {
             response = new SearchItemResponse(errors);
         } else {
             List<Item> items = search(request);
+            //TODO this ain't total anymore
             Integer totalFoundItemCount = items.size();
-            items = orderingService.getOrderedItems(items, request.getOrderingRules());
-            items = pagingService.getPage(items, request.getPagingRule());
             response = new SearchItemResponse(items, totalFoundItemCount,
                     databaseAccessValidator.getUserById(request.getUserId().getValue()).getUserRole());
         }
@@ -50,10 +49,17 @@ public class SearchItemService {
         List<Item> items;
         //TODO is blank actually ok in here ?
         if (request.getItemName() != null && !isPresent(request.getPrice())) {
-            items = database.accessItemDatabase().searchByName(request.getItemName().toLowerCase());
+            items = database.accessItemDatabase().searchByName(
+                    request.getItemName().toLowerCase(),
+                    orderingService.getSQLOrderBy(request.getOrderingRules()),
+                    pagingService.getSQLLimitOffset(request.getPagingRule()));
         } else if (request.getItemName() != null && isPresent(request.getPrice())) {
             BigDecimal price = new BigDecimal(request.getPrice()).setScale(2, RoundingMode.HALF_UP);
-            items = database.accessItemDatabase().searchByNameAndPrice(request.getItemName().toLowerCase(), price);
+            items = database.accessItemDatabase().searchByNameAndPrice(
+                    request.getItemName().toLowerCase(),
+                    price,
+                    orderingService.getSQLOrderBy(request.getOrderingRules()),
+                    pagingService.getSQLLimitOffset(request.getPagingRule()));
         } else {
             items = database.accessItemDatabase().getAllItems();
         }

@@ -1,6 +1,5 @@
 package shop.core.support.ordering;
 
-//TODO isn't it actually called sorting ?
 public class OrderingRule {
 
     private final OrderBy orderBy;

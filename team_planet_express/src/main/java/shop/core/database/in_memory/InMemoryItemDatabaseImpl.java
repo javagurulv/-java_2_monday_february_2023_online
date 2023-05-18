@@ -82,4 +82,21 @@ public class InMemoryItemDatabaseImpl implements ItemDatabase {
                 .collect(Collectors.toList());
     }
 
+    //TODO lolbad
+    @Override
+    public List<Item> searchByName(String itemName, String ordering, String paging) {
+        return shopItems.stream()
+                .filter(item -> item.getName().toLowerCase().contains(itemName.toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
+    //TODO shame
+    @Override
+    public List<Item> searchByNameAndPrice(String itemName, BigDecimal price, String ordering, String paging) {
+        return shopItems.stream()
+                .filter(item -> item.getName().toLowerCase().contains(itemName.toLowerCase()) &&
+                        item.getPrice().compareTo(price) <= 0)
+                .collect(Collectors.toList());
+    }
+
 }

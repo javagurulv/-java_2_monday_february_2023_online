@@ -38,7 +38,6 @@ public class JdbcUserDatabaseImpl implements UserDatabase {
         return user;
     }
 
-    //TODO what's with Optional?
     @Override
     public Optional<User> findById(Long itemId) {
         String sql = "SELECT * FROM `user` WHERE id = ?;";

@@ -52,7 +52,6 @@ public class JdbcItemDatabaseImpl implements ItemDatabase {
         return jdbcTemplate.query(sql, new ItemRowMapper(), args).stream().findFirst();
     }
 
-    //TODO 死んだ
     @Override
     public void changeName(Long id, String newName) {
         String sql = "UPDATE item SET name = ? WHERE id = ?;";
@@ -91,6 +90,20 @@ public class JdbcItemDatabaseImpl implements ItemDatabase {
     @Override
     public List<Item> searchByNameAndPrice(String itemName, BigDecimal price) {
         String sql = "SELECT * FROM item WHERE LOWER(name) LIKE ? AND price <= ?;";
+        Object[] args = new Object[]{"%" + itemName + "%", price};
+        return jdbcTemplate.query(sql, new ItemRowMapper(), args);
+    }
+
+    @Override
+    public List<Item> searchByName(String itemName, String ordering, String paging) {
+        String sql = "SELECT * FROM item WHERE LOWER(name) LIKE ? " + ordering + " " + paging + ";";
+        Object[] args = new Object[]{"%" + itemName + "%"};
+        return jdbcTemplate.query(sql, new ItemRowMapper(), args);
+    }
+
+    @Override
+    public List<Item> searchByNameAndPrice(String itemName, BigDecimal price, String ordering, String paging) {
+        String sql = "SELECT * FROM item WHERE LOWER(name) LIKE ? AND price <= ? " + ordering + " " + paging + ";";
         Object[] args = new Object[]{"%" + itemName + "%", price};
         return jdbcTemplate.query(sql, new ItemRowMapper(), args);
     }
