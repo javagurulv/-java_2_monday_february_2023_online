@@ -5,4 +5,4 @@
 
 # ER model
 
-<img src="https://github.com/javagurulv/-java_2_monday_february_2023_online/blob/main/team_eln/ELN2.png?raw=true">
+<img src="https://github.com/javagurulv/-java_2_monday_february_2023_online/blob/main/team_eln/ELN32.png?raw=true">
