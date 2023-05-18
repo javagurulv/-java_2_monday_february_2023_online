@@ -25,10 +25,10 @@ public class RemoveUserService {
         boolean isUserRemoved = false;
         if (!errors.isEmpty()) {
             return new RemoveUserResponse(errors);
-        } else if (database.findUserByEmail(request.getEmail()).isPresent()) {
-            User user = database.findUserByEmail(request.getEmail()).get();
+        } else if (database.findUserByEmail(request.getEmail())!= null) {
+            User user = database.findUserByEmail(request.getEmail());
             if (user.getEmail().equals(request.getEmail()) && user.getPassword().equals(request.getPassword())) {
-                database.deleteUser(user);
+                database.deleteUser(user.getEmail());
                 isUserRemoved = true;
             }
         }

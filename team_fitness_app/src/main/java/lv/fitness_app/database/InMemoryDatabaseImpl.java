@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Component("inMemory")
+//@Component("inMemory")
 public class InMemoryDatabaseImpl implements Database {
 
     private static Long nextId = 1L;
@@ -20,10 +20,10 @@ public class InMemoryDatabaseImpl implements Database {
     }
 
     @Override
-    public Optional<User> findUserByEmail(String email) {
+    public User findUserByEmail(String email) {
         return users.stream()
-                .filter(user -> user.getEmail().equals(email))
-                .findAny();
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class InMemoryDatabaseImpl implements Database {
     }
 
     @Override
-    public void deleteUser(User user) {
-        users.remove(user);
+    public void deleteUser(String email) {
+        users.remove(email);
     }
 }

@@ -9,9 +9,9 @@ public interface Database {
 
     void add(User user);
 
-    void deleteUser(User user);
+    void deleteUser(String email);
 
     List<User> getAllUsers();
 
-    Optional<User> findUserByEmail(String email);
+    User findUserByEmail(String email);
 }

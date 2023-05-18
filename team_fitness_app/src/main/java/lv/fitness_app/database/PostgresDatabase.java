@@ -45,7 +45,7 @@ class PostgresDatabase implements Database{
     }
 
     @Override
-    public void deleteUser(User user) {
+    public void deleteUser(String email) {
 
     }
 
@@ -55,8 +55,8 @@ class PostgresDatabase implements Database{
     }
 
     @Override
-    public Optional<User> findUserByEmail(String email) {
-        return Optional.empty();
+    public User findUserByEmail(String email) {
+        return null;
     }
 
     public static void printSQLException(SQLException ex) {

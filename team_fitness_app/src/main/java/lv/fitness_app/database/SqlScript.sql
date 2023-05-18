@@ -7,3 +7,13 @@ create table user_db.user(
     subscription varchar(25),
     subscription_ends date
 );
+
+create schema exercices_db;
+
+create table exercises_db.exercises(
+    id bigserial(255) primary key,
+    difficulty varchar(255),
+    equipment varchar(255),
+    muscle_group varchar(255),
+    type varchar(255),
+);

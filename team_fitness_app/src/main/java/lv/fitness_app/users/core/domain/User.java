@@ -7,11 +7,13 @@ import java.util.Objects;
 public class User {
 
     private String email;
-    private final String username;
-    private final String password;
+    private String username;
+    private String password;
 
     Date endOfSubscriptionDate;
     Subscription subscription;
+
+    public User() { }
 
     public User(String email, String username, String password) {
         this.email = email;
@@ -19,6 +21,24 @@ public class User {
         this.password = password;
         this.subscription = subscription.TRAIL;
         endOfSubscriptionDate =  Date.valueOf(LocalDate.now().plusDays(30));
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public void setUsername(String username) {
+        this.email = email;
+    }
+    public void setPassword(String password) {
+        this.email = email;
+    }
+
+    public void setEndOfSubscriptionDate(Date endOfSubscriptionDate) {
+        this.endOfSubscriptionDate = endOfSubscriptionDate;
+    }
+
+    public void setSubscription(Subscription subscription) {
+        this.subscription = subscription;
     }
 
     public String getUsername() {
