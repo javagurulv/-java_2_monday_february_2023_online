@@ -3,50 +3,72 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=1;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 CREATE SCHEMA IF NOT EXISTS `java2ELN` DEFAULT CHARACTER SET utf8 ;
-USE `java2ELN` ;
+USE `java2ELN`;
 
-CREATE TABLE IF NOT EXISTS ReactionData (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  code VARCHAR(255) NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  conditions_id INT,
-  mainProduct_id INT,
-  reactionYield DOUBLE,
+CREATE TABLE `ReactionData` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `code` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `conditions_id` int,
+  `mainProduct_id` int,
+  `reactionYield` double,
+  `user_id` int
 );
-
-CREATE TABLE IF NOT EXISTS ReactionStartingMaterial (
-  reaction_id INT,
-  structure_id INT,
-  FOREIGN KEY (reaction_id) REFERENCES ReactionData(id),
-  FOREIGN KEY (structure_id) REFERENCES StructureData(id),
-  PRIMARY KEY (reaction_id, structure_id)
-);
-
-CREATE TABLE IF NOT EXISTS ConditionData (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  solvent_id INT,
-  temperature INT,
-  environment VARCHAR(255),
-  pressure INT,
-  reactionTime TIME,
-  FOREIGN KEY (solvent_id) REFERENCES StructureData (id)
-);
-
-CREATE TABLE IF NOT EXISTS StructureData (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  smiles VARCHAR(255),
-  casNumber VARCHAR(255),
-  name VARCHAR(255),
-  internalCode VARCHAR(255),
-  mass DOUBLE
-);
-
-ALTER TABLE ReactionData
-ADD FOREIGN KEY (conditions_id) REFERENCES ConditionData(id),
-ADD FOREIGN KEY (mainProduct_id) REFERENCES StructureData(id);
-
 ENGINE = InnoDB
 AUTO_INCREMENT = 1002;
+
+CREATE TABLE `ReactionStartingMaterial` (
+  `reaction_id` int,
+  `structure_id` int,
+  PRIMARY KEY (`reaction_id`, `structure_id`)
+);
+ENGINE = InnoDB
+AUTO_INCREMENT = 1002;
+
+CREATE TABLE `ConditionData` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `structure_solvent_id` int,
+  `temperature` int,
+  `environment` varchar(255),
+  `pressure` int,
+  `reactionTime` time,
+  `reaction_id` int
+);
+ENGINE = InnoDB
+AUTO_INCREMENT = 1002;
+
+CREATE TABLE `StructureData` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `smiles` varchar(255),
+  `casNumber` varchar(255),
+  `name` varchar(255),
+  `internalCode` varchar(255),
+  `mass` double
+);
+ENGINE = InnoDB
+AUTO_INCREMENT = 1002;
+
+CREATE TABLE `user` (
+  `user_id` int PRIMARY KEY,
+  `first_name` varchar(255),
+  `last_name` varchar(255)
+);
+ENGINE = InnoDB
+AUTO_INCREMENT = 1002;
+
+ALTER TABLE `ConditionData` ADD FOREIGN KEY (`reaction_id`) REFERENCES `ReactionData` (`conditions_id`);
+
+ALTER TABLE `StructureData` ADD FOREIGN KEY (`id`) REFERENCES `ReactionData` (`mainProduct_id`);
+
+ALTER TABLE `ReactionData` ADD FOREIGN KEY (`id`) REFERENCES `ReactionStartingMaterial` (`reaction_id`);
+
+ALTER TABLE `StructureData` ADD FOREIGN KEY (`id`) REFERENCES `ReactionStartingMaterial` (`structure_id`);
+
+ALTER TABLE `StructureData` ADD FOREIGN KEY (`id`) REFERENCES `ConditionData` (`structure_solvent_id`);
+
+ALTER TABLE `user` ADD FOREIGN KEY (`user_id`) REFERENCES `ReactionData` (`user_id`);
+
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
