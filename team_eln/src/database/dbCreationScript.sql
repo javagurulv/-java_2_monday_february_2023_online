@@ -9,21 +9,16 @@ CREATE TABLE `ReactionData` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `code` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `conditions_id` int,
-  `mainProduct_id` int,
+  `structure_mainProduct_id` int,
   `reactionYield` double,
   `user_id` int
 );
-ENGINE = InnoDB
-AUTO_INCREMENT = 1002;
 
 CREATE TABLE `ReactionStartingMaterial` (
   `reaction_id` int,
   `structure_id` int,
   PRIMARY KEY (`reaction_id`, `structure_id`)
 );
-ENGINE = InnoDB
-AUTO_INCREMENT = 1002;
 
 CREATE TABLE `ConditionData` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
@@ -34,8 +29,6 @@ CREATE TABLE `ConditionData` (
   `reactionTime` time,
   `reaction_id` int
 );
-ENGINE = InnoDB
-AUTO_INCREMENT = 1002;
 
 CREATE TABLE `StructureData` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
@@ -45,20 +38,17 @@ CREATE TABLE `StructureData` (
   `internalCode` varchar(255),
   `mass` double
 );
-ENGINE = InnoDB
-AUTO_INCREMENT = 1002;
 
 CREATE TABLE `user` (
   `user_id` int PRIMARY KEY,
   `first_name` varchar(255),
-  `last_name` varchar(255)
+  `last_name` varchar(255),
+  `reaction_id` int
 );
-ENGINE = InnoDB
-AUTO_INCREMENT = 1002;
 
-ALTER TABLE `ConditionData` ADD FOREIGN KEY (`reaction_id`) REFERENCES `ReactionData` (`conditions_id`);
+ALTER TABLE `ConditionData` ADD FOREIGN KEY (`reaction_id`) REFERENCES `ReactionData` (`id`);
 
-ALTER TABLE `StructureData` ADD FOREIGN KEY (`id`) REFERENCES `ReactionData` (`mainProduct_id`);
+ALTER TABLE `StructureData` ADD FOREIGN KEY (`id`) REFERENCES `ReactionData` (`structure_mainProduct_id`);
 
 ALTER TABLE `ReactionData` ADD FOREIGN KEY (`id`) REFERENCES `ReactionStartingMaterial` (`reaction_id`);
 
@@ -67,7 +57,6 @@ ALTER TABLE `StructureData` ADD FOREIGN KEY (`id`) REFERENCES `ReactionStartingM
 ALTER TABLE `StructureData` ADD FOREIGN KEY (`id`) REFERENCES `ConditionData` (`structure_solvent_id`);
 
 ALTER TABLE `user` ADD FOREIGN KEY (`user_id`) REFERENCES `ReactionData` (`user_id`);
-
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
