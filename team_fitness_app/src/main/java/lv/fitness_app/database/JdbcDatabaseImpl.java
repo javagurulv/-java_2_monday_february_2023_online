@@ -16,7 +16,7 @@ public class JdbcDatabaseImpl implements Database {
     @Override
     public void add(User user) {
         jdbcTemplate.update(
-                "INSERT INTO user_db.user (email, username, password, subscription, subscription_ends) "
+                "INSERT INTO user_db.user (email, user_name, password, subscription, subscription_ends) "
                         + "VALUES (?, ?, ?, ?, ?)",
                 user.getEmail(), user.getUsername(), user.getPassword(), user.getSubscription().name(), user.getEndOfSubscriptionDate()
         );
