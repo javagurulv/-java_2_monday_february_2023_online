@@ -14,7 +14,6 @@ import java.util.List;
 public class GetAllUsersService {
 
     @Autowired
-    @Qualifier("inMemory")
     private Database database;
 
 

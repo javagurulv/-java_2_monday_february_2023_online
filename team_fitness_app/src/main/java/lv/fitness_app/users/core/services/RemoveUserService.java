@@ -15,7 +15,6 @@ import java.util.List;
 public class RemoveUserService {
 
     @Autowired
-    @Qualifier("inMemory")
     private Database database;
     @Autowired private RemoveUserRequestValidator validator;
 

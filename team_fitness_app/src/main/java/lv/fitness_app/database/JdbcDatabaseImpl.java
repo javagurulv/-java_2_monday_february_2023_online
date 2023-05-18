@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.sql.SQLException;
 import java.util.List;
 @Component
 public class JdbcDatabaseImpl implements Database {
@@ -16,8 +17,8 @@ public class JdbcDatabaseImpl implements Database {
     public void add(User user) {
         jdbcTemplate.update(
                 "INSERT INTO user_db.user (email, username, password, subscription, subscription_ends) "
-                        + "VALUES (?, ?, ?)",
-                user.getEmail(), user.getUsername(), user.getPassword(), user.getSubscription(), user.getEndOfSubscriptionDate()
+                        + "VALUES (?, ?, ?, ?, ?)",
+                user.getEmail(), user.getUsername(), user.getPassword(), user.getSubscription().name(), user.getEndOfSubscriptionDate()
         );
     }
 

@@ -15,7 +15,6 @@ import java.util.List;
 public class LoginUserService {
 
     @Autowired
-    @Qualifier("inMemory")
     private Database database;
     @Autowired private LoginUserRequestValidator validator;
 

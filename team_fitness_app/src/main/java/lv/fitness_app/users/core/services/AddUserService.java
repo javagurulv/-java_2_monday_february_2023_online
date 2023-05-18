@@ -15,7 +15,6 @@ import java.util.List;
 public class AddUserService {
 
     @Autowired
-    @Qualifier ("postgres")
     private Database database;
     @Autowired private AddUserRequestValidator validator;
 

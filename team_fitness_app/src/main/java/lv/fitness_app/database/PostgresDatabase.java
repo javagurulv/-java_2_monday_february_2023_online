@@ -12,10 +12,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-@Component("postgres")
+//@Component("postgres")
 class PostgresDatabase implements Database{
 
-    @Autowired
+ //  @Autowired
     private ConnectionManager connectionManager;
     @Override
     public void add(User user) {
