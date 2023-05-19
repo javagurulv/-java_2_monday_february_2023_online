@@ -67,7 +67,7 @@ public class SearchItemUIAction extends UIAction {
                 userCommunication.informUser(MESSAGE_SEARCH_RESULTS);
                 response.getItems()
                         .forEach(item -> userCommunication.informUser(itemStringProvider.get(item, response.getUserRole())));
-                continuePaging = pagingUIElement.continuePagingThrough(request.getPagingRule(), response.getTotalFoundItemCount());
+                continuePaging = pagingUIElement.continuePagingThrough(request.getPagingRule(), response.isNextPageAvailable());
             }
         } while (continuePaging);
     }

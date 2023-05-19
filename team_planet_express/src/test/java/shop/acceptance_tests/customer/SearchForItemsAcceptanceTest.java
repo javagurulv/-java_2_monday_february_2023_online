@@ -51,7 +51,7 @@ public class SearchForItemsAcceptanceTest {
         SearchItemResponse searchItemResponse =
                 searchItemService.execute(new SearchItemRequest(currentUserId, "robot", "", Collections.emptyList(), null));
         assertFalse(searchItemResponse.hasErrors());
-        assertEquals(2, searchItemResponse.getTotalFoundItemCount());
+        assertFalse(searchItemResponse.isNextPageAvailable());
         assertEquals("Moms Old-Fashioned Robot Oil", searchItemResponse.getItems().get(0).getName());
         assertEquals("Blank Robot", searchItemResponse.getItems().get(1).getName());
     }
@@ -62,7 +62,7 @@ public class SearchForItemsAcceptanceTest {
         SearchItemResponse searchItemResponse =
                 searchItemService.execute(new SearchItemRequest(currentUserId, "", "10", Collections.emptyList(), null));
         assertFalse(searchItemResponse.hasErrors());
-        assertEquals(6, searchItemResponse.getTotalFoundItemCount());
+        assertFalse(searchItemResponse.isNextPageAvailable());
         Optional<Item> wrongItem = searchItemResponse.getItems().stream()
                 .filter(item -> new BigDecimal("10").compareTo(item.getPrice()) < 0)
                 .findAny();
@@ -76,7 +76,7 @@ public class SearchForItemsAcceptanceTest {
         SearchItemResponse searchItemResponse =
                 searchItemService.execute(new SearchItemRequest(currentUserId, "robot", "", List.of(orderingRule), null));
         assertFalse(searchItemResponse.hasErrors());
-        assertEquals(2, searchItemResponse.getTotalFoundItemCount());
+        assertFalse(searchItemResponse.isNextPageAvailable());
         assertTrue(isOrderedCorrectly(searchItemResponse.getItems(), 7L, 4L));
     }
 
@@ -88,6 +88,7 @@ public class SearchForItemsAcceptanceTest {
                 searchItemService.execute(new SearchItemRequest(currentUserId, "", "", Collections.emptyList(), pagingRule));
         assertFalse(searchItemResponse.hasErrors());
         assertEquals(3, searchItemResponse.getItems().size());
+        assertTrue(searchItemResponse.isNextPageAvailable());
         assertTrue(isPageContainingCorrectItems(searchItemResponse.getItems(), 4L, 5L, 6L));
     }
 
@@ -102,7 +103,7 @@ public class SearchForItemsAcceptanceTest {
         SearchItemResponse searchItemResponse =
                 searchItemService.execute(new SearchItemRequest(currentUserId, "T", "25", List.of(orderingRuleName, orderingRulePrice), pagingRule));
         assertFalse(searchItemResponse.hasErrors());
-        assertEquals(5, searchItemResponse.getTotalFoundItemCount());
+        assertTrue(searchItemResponse.isNextPageAvailable());
         Optional<Item> wrongItem = searchItemResponse.getItems().stream()
                 .filter(item -> new BigDecimal("25").compareTo(item.getPrice()) < 0)
                 .findAny();

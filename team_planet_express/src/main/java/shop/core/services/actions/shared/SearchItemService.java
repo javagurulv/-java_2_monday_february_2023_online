@@ -37,14 +37,8 @@ public class SearchItemService {
             response = new SearchItemResponse(errors);
         } else {
             List<Item> items = search(request);
-            //TODO this ain't total anymore
-            Integer totalFoundItemCount = items.size();
-            //TODO this is also trash
-            if (request.getPagingRule() != null &&
-                    items.size() > Integer.parseInt(request.getPagingRule().getPageSize())) {
-                items.remove(items.size() - 1);
-            }
-            response = new SearchItemResponse(items, totalFoundItemCount,
+            boolean nextPageAvailable = isExtraItemAvailable(request, items);
+            response = new SearchItemResponse(items, nextPageAvailable,
                     databaseAccessValidator.getUserById(request.getUserId().getValue()).getUserRole());
         }
         return response;
@@ -69,6 +63,15 @@ public class SearchItemService {
             items = database.accessItemDatabase().getAllItems();
         }
         return items;
+    }
+
+    private boolean isExtraItemAvailable(SearchItemRequest request, List<Item> items) {
+        boolean extraItemPresent = request.getPagingRule() != null &&
+                items.size() > Integer.parseInt(request.getPagingRule().getPageSize());
+        if (extraItemPresent) {
+            items.remove(items.size() - 1);
+        }
+        return extraItemPresent;
     }
 
     private boolean isPresent(String value) {

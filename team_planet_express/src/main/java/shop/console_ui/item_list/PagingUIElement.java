@@ -24,18 +24,18 @@ public class PagingUIElement {
                 : new PagingRule(1, pageSize);
     }
 
-    public boolean continuePagingThrough(PagingRule pagingRule, Integer totalFoundItemCount) {
+    public boolean continuePagingThrough(PagingRule pagingRule, boolean nextPageAvailable) {
         if (pagingRule != null) {
-            String pageNavigationOptions = getPageNavigationOptions(pagingRule.getPageNumber(), Integer.parseInt(pagingRule.getPageSize()), totalFoundItemCount);
+            String pageNavigationOptions = getPageNavigationOptions(pagingRule.getPageNumber(), nextPageAvailable);
             return (pageNavigationOptions.contains(PageNavigation.NEXT.getText()) || pageNavigationOptions.contains(PageNavigation.BACK.getText())) &&
-                    userContinuesPaging(pagingRule, totalFoundItemCount);
+                    userContinuesPaging(pagingRule, nextPageAvailable);
         } else {
             return false;
         }
     }
 
-    private boolean userContinuesPaging(PagingRule pagingRule, Integer totalFoundItemCount) {
-        String pageNavigationOptions = getPageNavigationOptions(pagingRule.getPageNumber(), Integer.parseInt(pagingRule.getPageSize()), totalFoundItemCount);
+    private boolean userContinuesPaging(PagingRule pagingRule, boolean nextPageAvailable) {
+        String pageNavigationOptions = getPageNavigationOptions(pagingRule.getPageNumber(), nextPageAvailable);
         int pageNumberDelta = 0;
         do {
             String userInput = userCommunication.requestInput(pageNavigationOptions + PROMPT_PAGE_NAVIGATION);
@@ -53,12 +53,12 @@ public class PagingUIElement {
         return true;
     }
 
-    private String getPageNavigationOptions(Integer pageNumber, Integer pageSize, Integer totalFoundItemCount) {
+    private String getPageNavigationOptions(Integer pageNumber, boolean nextPageAvailable) {
         StringBuilder promptOptions = new StringBuilder();
         if (pageNumber > 1) {
             promptOptions.append(PageNavigation.BACK.getText()).append(COMA);
         }
-        if (totalFoundItemCount > pageSize) {
+        if (nextPageAvailable) {
             promptOptions.append(PageNavigation.NEXT.getText()).append(COMA);
         }
         promptOptions.append(PageNavigation.EXIT.getText()).append(BLANK);
