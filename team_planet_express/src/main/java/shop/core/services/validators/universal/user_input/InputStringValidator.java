@@ -18,6 +18,7 @@ public class InputStringValidator {
     private static final String ERROR_NEGATIVE = "VDT-IST-VIN";
     private static final String ERROR_ZERO_OR_LESS = "VDT-IST-VZL";
     private static final String ERROR_DECIMAL = "VDT-IST-VID";
+    private static final String ERROR_TOO_LONG = "VDT-IST-VTL";
     private static final String TEXT_TO_REMOVE = "value";
 
     private static final String REGEX_NUMBER = "-?[0-9]+(.[0-9]+)?";
@@ -95,6 +96,20 @@ public class InputStringValidator {
             validateIsNotDecimal(inputStringValidatorData).ifPresent(errors::add);
         }
         return errors;
+    }
+
+    public Optional<CoreError> validateLength(InputStringValidatorData inputStringValidatorData, Integer maxLength) {
+        return (exists(inputStringValidatorData.getValue()) &&
+                inputStringValidatorData.getValue().length() > maxLength)
+                ? Optional.of(getCoreErrorFromErrorProcessor(inputStringValidatorData, ERROR_TOO_LONG))
+                : Optional.empty();
+    }
+
+    public Optional<CoreError> validateDecimalNumberLength(InputStringValidatorData inputStringValidatorData, Integer maxLength) {
+        return (exists(inputStringValidatorData.getValue()) &&
+                inputStringValidatorData.getValue().split("\\.")[0].length() > maxLength)
+                ? Optional.of(getCoreErrorFromErrorProcessor(inputStringValidatorData, ERROR_TOO_LONG))
+                : Optional.empty();
     }
 
     private boolean exists(String value) {

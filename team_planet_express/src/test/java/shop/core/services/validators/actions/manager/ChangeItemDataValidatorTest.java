@@ -71,6 +71,19 @@ class ChangeItemDataValidatorTest {
     }
 
     @Test
+    void shouldValidateName() {
+        when(mockRequest.getItemId()).thenReturn("1");
+        when(mockRequest.getNewItemName()).thenReturn("name");
+        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
+        when(mockItemDatabase.findById(1L)).thenReturn(Optional.of(mockItem));
+        when(mockDatabaseAccessValidator.getItemById(1L)).thenReturn(mockItem);
+        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
+        validator.validate(mockRequest);
+        verify(mockInputStringValidator)
+                .validateLength(argThat(new InputStringValidatorDataMatcher("name", "name", "Item name")), anyInt());
+    }
+
+    @Test
     void shouldValidatePrice() {
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockRequest.getNewPrice()).thenReturn("10.5");
@@ -80,6 +93,8 @@ class ChangeItemDataValidatorTest {
         validator.validate(mockRequest);
         InputStringValidatorDataMatcher matcher =
                 new InputStringValidatorDataMatcher("10.5", "price", "Price");
+        verify(mockInputStringValidator)
+                .validateDecimalNumberLength(argThat(new InputStringValidatorDataMatcher("10.5", "price", "Price")), anyInt());
         verify(mockInputStringValidator).validateIsNumberNotNegative(argThat(matcher));
     }
 

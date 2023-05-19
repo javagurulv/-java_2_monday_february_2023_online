@@ -4,4 +4,4 @@ userRole madness from Q&A (many roles for an action)
 check role permissions in actions
 unique login names
 additemtocart quantity commit db transaction?
-validate all input lengths
+length to error message?
