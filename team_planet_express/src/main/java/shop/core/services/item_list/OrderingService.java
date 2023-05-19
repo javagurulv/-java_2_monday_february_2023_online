@@ -7,6 +7,7 @@ import shop.core.support.ordering.OrderBy;
 import shop.core.support.ordering.OrderDirection;
 import shop.core.support.ordering.OrderingRule;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -27,39 +28,15 @@ public class OrderingService {
         return items;
     }
 
-    //TODO this is trash
     public String getSQLOrderBy(List<OrderingRule> orderingRules) {
-        StringBuilder orderBy = new StringBuilder();
+        String orderBy = "";
         if (orderingEnabled) {
             if (orderingRules != null && orderingRules.size() > 0) {
-                String orderByPrice = "";
-                String orderByName = "";
-                Optional<OrderingRule> orderingRuleForPrice = getOrderingRule(orderingRules, OrderBy.PRICE);
-                if (orderingRuleForPrice.isPresent()) {
-                    orderByPrice = orderingRuleForPrice.get().getOrderBy().toString().toLowerCase() +
-                            " " +
-                            orderingRuleForPrice.get().getOrderDirection().getText();
-                }
-                Optional<OrderingRule> orderingRuleForName = getOrderingRule(orderingRules, OrderBy.NAME);
-                if (orderingRuleForName.isPresent()) {
-                    orderByName = orderingRuleForName.get().getOrderBy().toString().toLowerCase() +
-                            " " +
-                            orderingRuleForName.get().getOrderDirection().getText();
-                }
-                if (orderByName.length() > 0) {
-                    orderBy.append("ORDER BY ").append(orderByName);
-                }
-                if (orderByPrice.length() > 0) {
-                    if (orderBy.length() > 0) {
-                        orderBy.append(", ");
-                    } else {
-                        orderBy.append("ORDER BY ");
-                    }
-                    orderBy.append(orderByPrice);
-                }
+                List<String> sqlParts = getSQLParts(orderingRules);
+                orderBy = concatenateSQLParts(sqlParts);
             }
         }
-        return orderBy.toString();
+        return orderBy;
     }
 
     private List<Item> orderByPrice(List<Item> items, List<OrderingRule> orderingRules) {
@@ -70,6 +47,21 @@ public class OrderingService {
     private List<Item> orderByName(List<Item> items, List<OrderingRule> orderingRules) {
         Optional<OrderingRule> orderingRuleForName = getOrderingRule(orderingRules, OrderBy.NAME);
         return orderWithDirection(items, orderingRuleForName, Comparator.comparing(Item::getName, String.CASE_INSENSITIVE_ORDER));
+    }
+
+    private List<String> getSQLParts(List<OrderingRule> orderingRules) {
+        return Arrays.stream(OrderBy.values())
+                .map(orderByValue -> getOrderingRule(orderingRules, orderByValue))
+                .flatMap(Optional::stream)
+                .map(this::getOrderByPart)
+                .toList();
+    }
+
+    private String concatenateSQLParts(List<String> sqlParts) {
+        if (sqlParts.size() > 0) {
+            return "ORDER BY " + String.join(", ", sqlParts);
+        }
+        return "";
     }
 
     private Optional<OrderingRule> getOrderingRule(List<OrderingRule> orderingRules, OrderBy orderBy) {
@@ -84,6 +76,10 @@ public class OrderingService {
                         ? comparator.reversed()
                         : comparator)
                 .toList()).orElse(items);
+    }
+
+    private String getOrderByPart(OrderingRule orderingRule) {
+        return orderingRule.getOrderBy().toString().toLowerCase() + " " + orderingRule.getOrderDirection().getText();
     }
 
 }
