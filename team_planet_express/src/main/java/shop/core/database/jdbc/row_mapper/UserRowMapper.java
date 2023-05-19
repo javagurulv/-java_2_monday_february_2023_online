@@ -15,22 +15,10 @@ public class UserRowMapper implements RowMapper<User> {
                 rs.getString("name"),
                 rs.getString("login"),
                 rs.getString("password"),
-                convertToUserRoleEnum(rs.getString("role"))
+                UserRole.valueOf(rs.getString("role"))
         );
         user.setId(rs.getLong("id"));
         return user;
-    }
-
-    //TODO TEMPTRASH
-    private UserRole convertToUserRoleEnum(String role) {
-        UserRole userRole;
-        switch (role) {
-            case "CUSTOMER" -> userRole = UserRole.CUSTOMER;
-            case "MANAGER" -> userRole = UserRole.MANAGER;
-            case "ADMIN" -> userRole = UserRole.ADMIN;
-            default -> userRole = UserRole.GUEST;
-        }
-        return userRole;
     }
 
 }

@@ -12,19 +12,10 @@ public class CartRowMapper implements RowMapper<Cart> {
     @Override
     public Cart mapRow(ResultSet rs, int rowNum) throws SQLException {
         Cart cart = new Cart(rs.getLong("user_id"));
-        cart.setCartStatus(convertToCartStatusEnum(rs.getString("status")));
+        cart.setCartStatus(CartStatus.valueOf(rs.getString("status")));
         cart.setLastUpdate(rs.getTimestamp("last_update").toLocalDateTime());
         cart.setId(rs.getLong("id"));
         return cart;
-    }
-
-    //TODO TEMPTRASH
-    private CartStatus convertToCartStatusEnum(String status) {
-        if ("OPEN".equals(status)) {
-            return CartStatus.OPEN;
-        } else {
-            return CartStatus.CLOSED;
-        }
     }
 
 }
