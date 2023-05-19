@@ -82,7 +82,6 @@ public class InMemoryItemDatabaseImpl implements ItemDatabase {
                 .collect(Collectors.toList());
     }
 
-    //TODO lolbad
     @Override
     public List<Item> searchByName(String itemName, String ordering, String paging) {
         return shopItems.stream()
@@ -90,7 +89,6 @@ public class InMemoryItemDatabaseImpl implements ItemDatabase {
                 .collect(Collectors.toList());
     }
 
-    //TODO shame
     @Override
     public List<Item> searchByNameAndPrice(String itemName, BigDecimal price, String ordering, String paging) {
         return shopItems.stream()

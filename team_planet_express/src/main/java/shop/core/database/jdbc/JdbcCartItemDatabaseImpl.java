@@ -46,7 +46,6 @@ public class JdbcCartItemDatabaseImpl implements CartItemDatabase {
 
     @Override
     public void deleteByID(Long idToRemove) {
-        //TODO what's with nonexistent id?
         String sql = "DELETE FROM cart_item WHERE id = ?";
         Object[] args = new Object[]{idToRemove};
         jdbcTemplate.update(sql, args);

@@ -86,7 +86,6 @@ public class JdbcItemDatabaseImpl implements ItemDatabase {
         return jdbcTemplate.query(sql, new ItemRowMapper(), args);
     }
 
-    //TODO Blank works ?
     @Override
     public List<Item> searchByNameAndPrice(String itemName, BigDecimal price) {
         String sql = "SELECT * FROM item WHERE LOWER(name) LIKE ? AND price <= ?;";

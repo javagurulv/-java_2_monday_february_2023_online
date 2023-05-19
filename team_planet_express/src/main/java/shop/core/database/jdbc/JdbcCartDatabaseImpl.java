@@ -37,7 +37,6 @@ public class JdbcCartDatabaseImpl implements CartDatabase {
         return cart;
     }
 
-    //TODO Optional keklol?
     @Override
     public Optional<Cart> findOpenCartForUserId(Long userId) {
         String sql = "SELECT * FROM cart WHERE user_id = ? AND status = 'OPEN';";
@@ -45,7 +44,6 @@ public class JdbcCartDatabaseImpl implements CartDatabase {
         return jdbcTemplate.query(sql, new CartRowMapper(), args).stream().findFirst();
     }
 
-    //TODO nonexistent ?
     @Override
     public void changeCartStatus(Long id, CartStatus newCartStatus) {
         String sql = "UPDATE cart SET status = ? WHERE id = ?;";

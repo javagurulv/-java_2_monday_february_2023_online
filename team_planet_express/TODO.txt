@@ -2,6 +2,5 @@ db background clear closed carts
 sorting & paging to list items and cart
 userRole madness from Q&A (many roles for an action)
 check role permissions in actions
-unique login names
 additemtocart quantity commit db transaction?
 length to error message?

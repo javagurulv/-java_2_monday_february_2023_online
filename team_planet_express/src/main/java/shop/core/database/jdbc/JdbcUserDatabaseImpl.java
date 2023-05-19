@@ -45,7 +45,6 @@ public class JdbcUserDatabaseImpl implements UserDatabase {
         return jdbcTemplate.query(sql, new UserRowMapper(), args).stream().findFirst();
     }
 
-    //TODO make login as unique?
     @Override
     public Optional<User> findByLoginName(String login) {
         String sql = "SELECT * FROM `user` WHERE login = ?;";
