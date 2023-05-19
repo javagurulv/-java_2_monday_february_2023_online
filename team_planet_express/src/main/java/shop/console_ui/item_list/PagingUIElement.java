@@ -25,13 +25,9 @@ public class PagingUIElement {
     }
 
     public boolean continuePagingThrough(PagingRule pagingRule, boolean nextPageAvailable) {
-        if (pagingRule != null) {
-            String pageNavigationOptions = getPageNavigationOptions(pagingRule.getPageNumber(), nextPageAvailable);
-            return (pageNavigationOptions.contains(PageNavigation.NEXT.getText()) || pageNavigationOptions.contains(PageNavigation.BACK.getText())) &&
-                    userContinuesPaging(pagingRule, nextPageAvailable);
-        } else {
-            return false;
-        }
+        return pagingRule != null &&
+                (nextPageAvailable || pagingRule.getPageNumber() > 1) &&
+                userContinuesPaging(pagingRule, nextPageAvailable);
     }
 
     private boolean userContinuesPaging(PagingRule pagingRule, boolean nextPageAvailable) {
