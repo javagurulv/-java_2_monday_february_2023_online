@@ -21,9 +21,11 @@ import java.util.Optional;
 public class ChangeItemDataValidator {
 
     private static final String FIELD_ID = "id";
+    private static final String FIELD_NAME = "name";
     private static final String FIELD_PRICE = "price";
     private static final String FIELD_QUANTITY = "quantity";
     private static final String FIELD_BUTTON = "button";
+    private static final String VALUE_NAME_ITEM = "Item name";
     private static final String VALUE_NAME_ID = "Item id";
     private static final String VALUE_NAME_PRICE = "Price";
     private static final String VALUE_NAME_QUANTITY = "Quantity";
@@ -42,6 +44,7 @@ public class ChangeItemDataValidator {
     public List<CoreError> validate(ChangeItemDataRequest request) {
         List<CoreError> errors = new ArrayList<>();
         validateId(request.getItemId(), errors);
+        validateItemName(request.getNewItemName(), errors);
         validatePrice(request.getNewPrice(), errors);
         validateQuantity(request.getNewAvailableQuantity(), errors);
         if (errors.isEmpty()) {
@@ -60,9 +63,16 @@ public class ChangeItemDataValidator {
         }
     }
 
+    private void validateItemName(String itemName, List<CoreError> errors) {
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(itemName, FIELD_NAME, VALUE_NAME_ITEM);
+        inputStringValidator.validateLength(inputStringValidatorData, 32).ifPresent(errors::add);
+    }
+
     private void validatePrice(String price, List<CoreError> errors) {
         InputStringValidatorData inputStringValidatorData =
                 new InputStringValidatorData(price, FIELD_PRICE, VALUE_NAME_PRICE);
+        inputStringValidator.validateDecimalNumberLength(inputStringValidatorData, 6).ifPresent(errors::add);
         errors.addAll(inputStringValidator.validateIsNumberNotNegative(inputStringValidatorData));
     }
 

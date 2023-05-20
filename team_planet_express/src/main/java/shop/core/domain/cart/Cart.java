@@ -2,7 +2,7 @@ package shop.core.domain.cart;
 
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 public class Cart {
@@ -10,12 +10,11 @@ public class Cart {
     private Long id;
     private final Long userId;
     private CartStatus cartStatus;
-    private LocalDate lastActionDate;
+    private LocalDateTime lastUpdate;
 
     public Cart(long userId) {
         this.userId = userId;
         this.cartStatus = CartStatus.OPEN;
-        this.lastActionDate = LocalDate.now();
     }
 
 }

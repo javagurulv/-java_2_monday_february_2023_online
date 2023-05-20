@@ -1,36 +1,13 @@
 package shop.core.database;
 
-import org.springframework.stereotype.Component;
+public interface Database {
 
-@Component
-public class Database {
+    UserDatabase accessUserDatabase();
 
-    private final UserDatabase userDatabase;
-    private final ItemDatabase itemDatabase;
-    private final CartDatabase cartDatabase;
-    private final CartItemDatabase cartItemDatabase;
+    ItemDatabase accessItemDatabase();
 
-    public Database() {
-        this.userDatabase = new InMemoryUserDatabaseImpl();
-        this.itemDatabase = new InMemoryItemDatabaseImpl();
-        this.cartDatabase = new InMemoryCartDatabaseImpl();
-        this.cartItemDatabase = new InMemoryCartItemDatabaseImpl();
-    }
+    CartDatabase accessCartDatabase();
 
-    public UserDatabase accessUserDatabase() {
-        return userDatabase;
-    }
-
-    public ItemDatabase accessItemDatabase() {
-        return itemDatabase;
-    }
-
-    public CartDatabase accessCartDatabase() {
-        return cartDatabase;
-    }
-
-    public CartItemDatabase accessCartItemDatabase() {
-        return cartItemDatabase;
-    }
+    CartItemDatabase accessCartItemDatabase();
 
 }
