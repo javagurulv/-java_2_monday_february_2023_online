@@ -11,17 +11,13 @@ CREATE TABLE IF NOT EXISTS `ReactionData` (
   `name` varchar(255) NOT NULL,
   `structure_mainProduct_id` int,
   `reactionYield` double,
-  `user_id` int,
-  FOREIGN KEY (`structure_mainProduct_id`) REFERENCES `StructureData` (`id`),
-  FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+  `user_id` int
 );
 
 CREATE TABLE IF NOT EXISTS `ReactionStartingMaterial` (
   `reaction_id` int,
   `structure_id` int,
-  PRIMARY KEY (`reaction_id`, `structure_id`),
-  FOREIGN KEY (`reaction_id`) REFERENCES `ReactionData` (`id`),
-  FOREIGN KEY (`structure_id`) REFERENCES `StructureData` (`id`)
+  PRIMARY KEY (`reaction_id`, `structure_id`)
 );
 
 CREATE TABLE IF NOT EXISTS `ConditionData` (
@@ -31,9 +27,7 @@ CREATE TABLE IF NOT EXISTS `ConditionData` (
   `environment` varchar(255),
   `pressure` int,
   `reactionTime` time,
-  `reaction_id` int,
-  FOREIGN KEY (`reaction_id`) REFERENCES `ReactionData` (`id`),
-  FOREIGN KEY (`structure_solvent_id`) REFERENCES `StructureData` (`id`)
+  `reaction_id` int
 );
 
 CREATE TABLE IF NOT EXISTS `StructureData` (
@@ -51,6 +45,27 @@ CREATE TABLE IF NOT EXISTS `user` (
   `last_name` varchar(255)
 );
 
+ALTER TABLE `ConditionData` ADD FOREIGN KEY (`reaction_id`) REFERENCES `ReactionData` (`id`);
+
+ALTER TABLE `ReactionData` ADD INDEX (`structure_mainProduct_id`);
+
+ALTER TABLE `ReactionData` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
+
+ALTER TABLE `ReactionStartingMaterial` ADD INDEX (`structure_id`);
+
+ALTER TABLE `ConditionData` ADD INDEX (`structure_solvent_id`);
+
+ALTER TABLE `StructureData` ADD FOREIGN KEY (`id`) REFERENCES `ReactionData` (`structure_mainProduct_id`);
+
+ALTER TABLE `ReactionData` ADD FOREIGN KEY (`id`) REFERENCES `ReactionStartingMaterial` (`reaction_id`);
+
+ALTER TABLE `StructureData` ADD FOREIGN KEY (`id`) REFERENCES `ReactionStartingMaterial` (`structure_id`);
+
+ALTER TABLE `StructureData` ADD FOREIGN KEY (`id`) REFERENCES `ConditionData` (`structure_solvent_id`);
+
+ALTER TABLE `user` ADD FOREIGN KEY (`user_id`) REFERENCES `ReactionData` (`user_id`);
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
