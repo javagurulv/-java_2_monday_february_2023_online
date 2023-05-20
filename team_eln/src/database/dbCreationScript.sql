@@ -43,7 +43,6 @@ CREATE TABLE `user` (
   `user_id` int PRIMARY KEY,
   `first_name` varchar(255),
   `last_name` varchar(255),
-  `reaction_id` int
 );
 
 ALTER TABLE `ConditionData` ADD FOREIGN KEY (`reaction_id`) REFERENCES `ReactionData` (`id`);
