@@ -2,7 +2,10 @@ package com.fightclub.core.service;
 
 import com.fightclub.core.domain.error.EmailValidationException;
 import com.fightclub.core.domain.error.NameValidationException;
+import com.fightclub.core.domain.error.PasswordValidationException;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ValidationService {
 
     void validateEmail(String email) {
@@ -34,4 +37,53 @@ public class ValidationService {
         }
     }
 
+    void validatePassword(String password, String repeatedPassword) {
+
+        passwordValidateCommons(password);
+
+        if (!password.equals(repeatedPassword)) {
+            throw new PasswordValidationException("Passwords is Not the same");
+        }
+    }
+
+    void validatePassword(String password) {
+
+        passwordValidateCommons(password);
+    }
+
+
+    private boolean containsCapitalLetter(String text) {
+
+        for (int i = 0; i < text.length(); i++) {
+            if (Character.isUpperCase(text.charAt(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void passwordValidateCommons(String password) {
+
+        if (password == null) {
+            throw new PasswordValidationException("Password is Null");
+        }
+        if (password.length() > 50) {
+            throw new PasswordValidationException("Password is too Long");
+        }
+        if (password.length() < 8) {
+            throw new PasswordValidationException("Password is too Small");
+        }
+        if (!password.contains("!") || !password.contains("?") || !password.contains(",")
+                || !password.contains(".") || !password.contains("@") || !password.contains("-")
+                || !password.contains("_") || !password.contains("=") || !password.contains("+")
+                || !password.contains("#") || !password.contains("$") || !password.contains("%")
+                || !password.contains("^") || !password.contains("&") || !password.contains("*")
+                || !password.contains("(") || !password.contains(")") || !password.contains("{")
+                || !password.contains("}") || !password.contains("[") || !password.contains("]")
+                || !password.contains(";") || !password.contains(":") || !password.contains("'")
+                || !password.contains("\"") || !password.contains("~") || !containsCapitalLetter(password)) {
+            throw new PasswordValidationException("Password Should contain Special Symbol");
+
+        }
+    }
 }

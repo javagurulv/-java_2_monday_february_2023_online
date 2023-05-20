@@ -3,4 +3,6 @@ dependencies {
     implementation project(':team_fight_club_app:core')
     compileOnly 'org.projectlombok:lombok:1.18.26'
     annotationProcessor 'org.projectlombok:lombok:1.18.26'
+    implementation 'org.springframework.boot:spring-boot-starter-web:3.0.5'
+
 }
