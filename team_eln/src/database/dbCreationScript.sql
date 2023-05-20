@@ -5,6 +5,21 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 CREATE SCHEMA IF NOT EXISTS `java2eln` DEFAULT CHARACTER SET utf8 ;
 USE `java2eln` ;
 
+CREATE TABLE IF NOT EXISTS `StructureData` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `smiles` varchar(255),
+  `casNumber` varchar(255),
+  `name` varchar(255),
+  `internalCode` varchar(255),
+  `mass` double
+);
+
+CREATE TABLE IF NOT EXISTS `user` (
+  `user_id` int PRIMARY KEY,
+  `first_name` varchar(255),
+  `last_name` varchar(255)
+);
+
 CREATE TABLE IF NOT EXISTS `ReactionData` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `code` varchar(255) NOT NULL,
@@ -36,20 +51,6 @@ CREATE TABLE IF NOT EXISTS `ConditionData` (
   FOREIGN KEY (`structure_solvent_id`) REFERENCES `StructureData` (`id`)
 );
 
-CREATE TABLE IF NOT EXISTS `StructureData` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `smiles` varchar(255),
-  `casNumber` varchar(255),
-  `name` varchar(255),
-  `internalCode` varchar(255),
-  `mass` double
-);
-
-CREATE TABLE IF NOT EXISTS `user` (
-  `user_id` int PRIMARY KEY,
-  `first_name` varchar(255),
-  `last_name` varchar(255)
-);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
