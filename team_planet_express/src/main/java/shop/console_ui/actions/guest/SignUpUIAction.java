@@ -19,8 +19,7 @@ public class SignUpUIAction extends UIAction {
     private static final String PROMPT_TOPIC_NAME = "your name: ";
     private static final String PROMPT_TOPIC_LOGIN = "your login name: ";
     private static final String PROMPT_TOPIC_PASSWORD = "your password: ";
-    private static final String MESSAGE_USER_CREATED = "Welcome to the Planet Express crew, ";
-    private static final String MESSAGE_EXCLAMATION = "!";
+    private static final String MESSAGE_USER_CREATED = "Welcome to the Planet Express crew, %s!";
 
     @Autowired
     private SignUpService signUpService;
@@ -43,8 +42,7 @@ public class SignUpUIAction extends UIAction {
         if (response.hasErrors()) {
             response.getErrors().forEach(coreError -> userCommunication.informUser(coreError.getMessage()));
         } else {
-            userCommunication.informUser(MESSAGE_USER_CREATED + response.getUser().getName() + MESSAGE_EXCLAMATION);
-
+            userCommunication.informUser(MESSAGE_USER_CREATED.formatted(response.getUser().getName()));
         }
     }
 

@@ -18,8 +18,7 @@ public class SignInUIAction extends UIAction {
 
     private static final String PROMPT_TOPIC_LOGIN = "your login name: ";
     private static final String PROMPT_TOPIC_PASSWORD = "your password: ";
-    private static final String MESSAGE_LOGIN = "Welcome back, ";
-    private static final String MESSAGE_EXCLAMATION = "!";
+    private static final String MESSAGE_LOGIN = "Welcome back, %s!";
 
     @Autowired
     private SignInService signInService;
@@ -41,7 +40,7 @@ public class SignInUIAction extends UIAction {
         if (response.hasErrors()) {
             response.getErrors().forEach(coreError -> userCommunication.informUser(coreError.getMessage()));
         } else {
-            userCommunication.informUser(MESSAGE_LOGIN + response.getUser().getName() + MESSAGE_EXCLAMATION);
+            userCommunication.informUser(MESSAGE_LOGIN.formatted(response.getUser().getName()));
         }
     }
 
