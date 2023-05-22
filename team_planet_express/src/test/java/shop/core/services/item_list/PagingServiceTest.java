@@ -95,6 +95,40 @@ class PagingServiceTest {
         assertTrue(isPageContainingCorrectItems(1L, 2L, 3L, 4L));
     }
 
+    @Test
+    void shouldReturnBlankForDisabled() {
+        ReflectionTestUtils.setField(service, "pagingEnabled", false);
+        PagingRule pagingRule = new PagingRule(1, "4");
+        String actualResult = service.getSQLLimitOffset(pagingRule);
+        String expectedResult = "";
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void shouldReturnBlankForNullPagingRule() {
+        PagingRule pagingRule = null;
+        String actualResult = service.getSQLLimitOffset(pagingRule);
+        String expectedResult = "";
+        assertEquals(expectedResult, actualResult);
+
+    }
+
+    @Test
+    void shouldReturnLimitOnly() {
+        PagingRule pagingRule = new PagingRule(1, "4");
+        String actualResult = service.getSQLLimitOffset(pagingRule);
+        String expectedResult = "LIMIT 5";
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void shouldReturnLimitAndOffset() {
+        PagingRule pagingRule = new PagingRule(3, "2");
+        String actualResult = service.getSQLLimitOffset(pagingRule);
+        String expectedResult = "LIMIT 3 OFFSET 4";
+        assertEquals(expectedResult, actualResult);
+    }
+
     private boolean isPageContainingCorrectItems(Long... ids) {
         return IntStream.range(0, ids.length)
                 .allMatch(index -> ids[index].equals(items.get(index).getId()));

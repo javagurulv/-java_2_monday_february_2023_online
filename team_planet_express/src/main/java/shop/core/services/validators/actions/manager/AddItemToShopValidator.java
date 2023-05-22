@@ -43,6 +43,7 @@ public class AddItemToShopValidator {
         InputStringValidatorData inputStringValidatorData =
                 new InputStringValidatorData(itemName, FIELD_NAME, VALUE_NAME_ITEM);
         inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
+        inputStringValidator.validateLength(inputStringValidatorData, 32).ifPresent(errors::add);
         validateItemNameDoesNotAlreadyExist(itemName).ifPresent(errors::add);
     }
 
@@ -50,6 +51,7 @@ public class AddItemToShopValidator {
         InputStringValidatorData inputStringValidatorData =
                 new InputStringValidatorData(price, FIELD_PRICE, VALUE_NAME_PRICE);
         inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
+        inputStringValidator.validateDecimalNumberLength(inputStringValidatorData, 6).ifPresent(errors::add);
         errors.addAll(inputStringValidator.validateIsNumberNotNegative(inputStringValidatorData));
     }
 

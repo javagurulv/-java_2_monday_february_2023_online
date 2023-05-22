@@ -56,20 +56,24 @@ class SignUpValidatorTest {
     }
 
     @Test
-    void shouldValidateNameIsPresent() {
+    void shouldValidateName() {
         when(mockRequest.getName()).thenReturn("name");
         validator.validate(mockRequest);
         verify(mockInputStringValidator)
                 .validateIsPresent(argThat(new InputStringValidatorDataMatcher("name", "name", "Name")));
+        verify(mockInputStringValidator)
+                .validateLength(argThat(new InputStringValidatorDataMatcher("name", "name", "Name")), anyInt());
     }
 
     @Test
-    void shouldValidateLoginNameIsPresent() {
+    void shouldValidateLoginName() {
         when(mockRequest.getLoginName()).thenReturn("login name");
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
         validator.validate(mockRequest);
         verify(mockInputStringValidator)
                 .validateIsPresent(argThat(new InputStringValidatorDataMatcher("login name", "login", "Login name")));
+        verify(mockInputStringValidator)
+                .validateLength(argThat(new InputStringValidatorDataMatcher("login name", "login", "Login name")), anyInt());
     }
 
     @Test
@@ -83,11 +87,13 @@ class SignUpValidatorTest {
     }
 
     @Test
-    void shouldValidatePasswordIsPresent() {
+    void shouldValidatePassword() {
         when(mockRequest.getPassword()).thenReturn("password");
         validator.validate(mockRequest);
         verify(mockInputStringValidator)
                 .validateIsPresent(argThat(new InputStringValidatorDataMatcher("password", "password", "Password")));
+        verify(mockInputStringValidator)
+                .validateLength(argThat(new InputStringValidatorDataMatcher("password", "password", "Password")), anyInt());
     }
 
     @Test

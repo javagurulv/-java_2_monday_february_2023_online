@@ -12,13 +12,12 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 CREATE TABLE IF NOT EXISTS user (
   id BIGINT NOT NULL AUTO_INCREMENT,
   name VARCHAR(32) NOT NULL,
-  login VARCHAR(32) NOT NULL,
+  login VARCHAR(32) NOT NULL UNIQUE,
   password VARCHAR(32) NOT NULL,
   role VARCHAR(8) NOT NULL,
   PRIMARY KEY (id)
 )
-ENGINE = InnoDB
-AUTO_INCREMENT = 1;
+ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS item (
   id BIGINT NOT NULL AUTO_INCREMENT,
@@ -27,19 +26,17 @@ CREATE TABLE IF NOT EXISTS item (
   available_quantity INT NOT NULL,
   PRIMARY KEY (id)
 )
-ENGINE = InnoDB
-AUTO_INCREMENT = 1;
+ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS cart (
   id BIGINT NOT NULL AUTO_INCREMENT,
   user_id BIGINT NOT NULL,
   status VARCHAR(8) NOT NULL,
-  last_update DATETIME NOT NULL,
+  last_update DATETIME,
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES user(id)
 )
-ENGINE = InnoDB
-AUTO_INCREMENT = 1;
+ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS cart_item (
   id BIGINT NOT NULL AUTO_INCREMENT,
@@ -50,11 +47,42 @@ CREATE TABLE IF NOT EXISTS cart_item (
   FOREIGN KEY (cart_id) REFERENCES cart(id),
   FOREIGN KEY (item_id) REFERENCES item(id)
 )
-ENGINE = InnoDB
-AUTO_INCREMENT = 1;
+ENGINE = InnoDB;
 
-CREATE INDEX role
-ON user (role);
+CREATE INDEX name
+ON item (name);
+
+CREATE INDEX price
+ON item (price);
+
+CREATE INDEX status
+ON cart (status);
+
+CREATE TRIGGER cart_date_on_create BEFORE INSERT ON cart
+FOR EACH ROW
+SET NEW.last_update = NOW();
+
+CREATE TRIGGER cart_date_on_update BEFORE UPDATE ON cart
+FOR EACH ROW
+SET NEW.last_update = NOW();
+
+CREATE TRIGGER cart_item_cart_date_on_create BEFORE INSERT ON cart_item
+FOR EACH ROW
+UPDATE cart
+SET cart.last_update = NOW()
+WHERE cart.id = NEW.cart_id;
+
+CREATE TRIGGER cart_item_cart_date_on_update BEFORE UPDATE ON cart_item
+FOR EACH ROW
+UPDATE cart
+SET cart.last_update = NOW()
+WHERE cart.id = NEW.cart_id;
+
+CREATE TRIGGER cart_item_cart_date_on_delete BEFORE DELETE ON cart_item
+FOR EACH ROW
+UPDATE cart
+SET cart.last_update = NOW()
+WHERE cart.id = OLD.cart_id;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

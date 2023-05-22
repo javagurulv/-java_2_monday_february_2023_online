@@ -15,7 +15,6 @@ import shop.core.domain.user.UserRole;
 import shop.matchers.CartMatcher;
 import shop.matchers.UserMatcher;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,7 +50,7 @@ class UserServiceTest {
         verify(mockUserDatabase)
                 .save(argThat(new UserMatcher("Name", "login name", "password", UserRole.GUEST)));
         verify(mockCartDatabase)
-                .save(argThat(new CartMatcher(1L, CartStatus.OPEN, LocalDate.now())));
+                .save(argThat(new CartMatcher(1L, CartStatus.OPEN)));
     }
 
     @Test
