@@ -1,39 +1,87 @@
-insert into details(`id`, `type`, `side`, `price`)
-values (1,"BONNET", "NO_SIDE", 200);
-insert into details(`type`, `side`, `price`)
-values ("BOOT", "NO_SIDE", 180);
-insert into details(`type`, `side`, `price`)
-values ("ROOF", "NO_SIDE", 250);
-insert into details(`type`, `side`, `price`)
-values ("BUMPER", "FRONT", 180);
-insert into details(`type`, `side`, `price`)
-values ("BUMPER", "REAR", 150);
-insert into details(`type`, `side`, `price`)
-values ("DOOR", "FRONT_LEFT", 180);
-insert into details(`type`, `side`, `price`)
-values ("DOOR", "FRONT_RIGHT", 180);
-insert into details(`type`, `side`, `price`)
-values ("DOOR", "REAR_LEFT", 180);
-insert into details(`type`, `side`, `price`)
-values ("DOOR", "REAR_RIGHT", 180);
-insert into details(`type`, `side`, `price`)
-values ("WING", "FRONT_LEFT", 130);
-insert into details(`type`, `side`, `price`)
-values ("WING", "FRONT_RIGHT", 130);
-insert into details(`type`, `side`, `price`)
-values ("WING", "REAR_LEFT", 160);
-insert into details(`type`, `side`, `price`)
-values ("WING", "REAR_RIGHT", 160);
-insert into details(`type`, `side`, `price`)
-values ("MIRROR", "LEFT", 60);
-insert into details(`type`, `side`, `price`)
-values ("MIRROR", "RIGHT", 60);
+INSERT INTO details_type (`id`, `detail_type`)
+VALUES
+(1, "BONNET"),
+(2, "BOOT"),
+(3, "ROOF"),
+(4, "BUMPER"),
+(5, "DOOR"),
+(6, "WING"),
+(7, "MIRROR");
 
-insert into users(`first_name`, `last_name`, `email`, `phone_number`, `user_type`, `is_inactive`, `password`)
-values ("Alex", "Lee", "myemail@gmail.com", "28555777", "CUSTOMER", false, "777555");
+INSERT INTO details_side (`id`, `detail_side`)
+VALUES
+(1, "FRONT"),
+(2, "REAR"),
+(3, "LEFT"),
+(4, "RIGHT"),
+(5, "FRON_LEFT"),
+(6, "FRONT_RIGHT"),
+(7, "REAR_LEFT"),
+(8, "REAR_RIGHT"),
+(9, "NO_SIDE");
 
-insert into orders(user_id, detail_id, order_date, total_price)
-values (1, 1, "2023-12-15 10:35:00", 260);
+insert into details(`detail_type_id`, `detail_side_id`, `price`)
+VALUES
+(1, 9, 200),
+(2, 9, 180),
+(3, 9, 250),
+(4, 1, 180),
+(4, 2, 150),
+(5, 5, 180),
+(5, 6, 180),
+(5, 7, 180),
+(5, 8, 180),
+(6, 5, 130),
+(6, 6, 130),
+(6, 7, 160),
+(6, 8, 160),
+(7, 3, 60),
+(7, 4, 60);
 
-insert into orders(user_id, detail_id, order_date, total_price)
-values (1, 15, "2023-12-15 10:35:00", 260);
+INSERT INTO colors (`color_code`, `color_name`, `is_metalic`)
+VALUES
+(601, "black", FALSE),
+(651, "black", TRUE);
+
+INSERT INTO orders_status (`order_status`)
+VALUES
+("NEW"),
+("IN_PROGRESS"),
+("SUBMITTED_BY_CLIENT"),
+("REFERED_TO_MANAGER"),
+("MANAGER_PRICE_ADJUSTED"),
+("FINAL_PRICE_CALCULATED"),
+("PROPOSED_TO_CUSTOMER"),
+("DECLINED_BY_CUSTOMER"),
+("DECLINED_BY_MANAGER"),
+("APPROVED_BY_MANAGER"),
+("APPROVED_BY_CUSTOMER");
+
+INSERT INTO users_types (`user_types`)
+VALUES
+("ANONYMOUS"),
+("CUSTOMER"),
+("MANAGER");
+
+INSERT INTO address (`country`, `city`, `street`, `house_number`, `apartment_number`)
+VALUES
+("Latvia", "Riga", "Deglava", "151 A", "401");
+
+INSERT INTO users (`first_name`, `last_name`, `email`, `phone_number`, `is_inactive`, `password`, `user_type_id`, `address_id`)
+VALUES
+("Alex", "Lee", "myemail@gmail.com", "28555777",  false, "777555", 1, 1),
+("John", "Dou", "joundou@gmail.com", "28999888",  false, "777", 2, null),
+("Iam", "Boss", "iamboss@gmail.com", "28777777",  false, "000", 3, null);
+
+INSERT INTO orders (`user_id`, `order_date`, `order_close_date`, `total_price`)
+VALUES
+(1, "2023-12-15 10:35:00", null, 260),
+(2, "2023-12-15 12:00:00", NULL, 630);
+
+INSERT INTO orders_items (`order_id`, `detail_id`, `color_id`, `cunt`)
+VALUES
+(1, 1, 1, 1),
+(1, 7, 1, 1),
+(2, 1, 2, 1),
+(2, 2, 2, 1),
+(2, 3, 2, 1);

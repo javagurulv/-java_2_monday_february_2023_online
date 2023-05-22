@@ -12,6 +12,8 @@ public class Detail {
     private DetailSideEnum side;
     private BigDecimal price;
 
+    public Detail() {}
+
     public Detail(DetailTypeEnum type, DetailSideEnum side, BigDecimal price) {
         this.type = type;
         this.side = side;
