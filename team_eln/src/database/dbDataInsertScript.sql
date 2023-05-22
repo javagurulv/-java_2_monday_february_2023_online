@@ -29,6 +29,33 @@ VALUES (
     (SELECT id FROM `ReactionData` WHERE code = 'TP1')
 );
 
+INSERT INTO `ReactionStartingMaterial` (reaction_id, structure_id)
+VALUES (
+    (SELECT id FROM `ReactionData` WHERE code = 'TP1'),
+    (SELECT id FROM `StructureData` WHERE smiles = 'CC(C)CC1=CC=CC=C1')
+);
+
+INSERT INTO `ReactionStartingMaterial` (reaction_id, structure_id)
+VALUES (
+    (SELECT id FROM `ReactionData` WHERE code = 'TP1'),
+    (SELECT id FROM `StructureData` WHERE smiles = 'CC(=O)OC(=O)')
+);
+
+INSERT INTO `ReactionStartingMaterial` (reaction_id, structure_id)
+VALUES (
+    (SELECT id FROM `ReactionData` WHERE code = 'TP1'),
+    (SELECT id FROM `StructureData` WHERE smiles = '[Al](Cl)(Cl)Cl1')
+);
+
+
+CREATE TABLE IF NOT EXISTS `ReactionStartingMaterial` (
+  `reaction_id` int,
+  `structure_id` int,
+  PRIMARY KEY (`reaction_id`, `structure_id`),
+  FOREIGN KEY (`reaction_id`) REFERENCES `ReactionData` (`id`),
+  FOREIGN KEY (`structure_id`) REFERENCES `StructureData` (`id`)
+);
+
 
 --SELECT reactiondata.code, reactiondata.name AS reaction_name, structuredata.name AS product
 --FROM reactiondata
