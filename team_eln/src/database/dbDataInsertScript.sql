@@ -19,6 +19,17 @@ VALUES ('ClCCl', '75-09-2', 'dichloromethane', '126', 26.60);
 INSERT INTO `reactiondata` (code, name, structure_mainProduct_id)
 VALUES ('TP1', 'The Friedel-Crafts acylation', (SELECT id FROM structuredata WHERE smiles = 'CC(C)CC1=CC=C(C=C1)C(=O)C'));
 
+INSERT INTO `ConditionData` (structure_solvent_id, temperature, environment, pressure, reactionTime, reaction_id)
+VALUES (
+    (SELECT id FROM `StructureData` WHERE smiles = 'ClCCl'),
+    0,
+    'air',
+    1,
+    TIME('00:45:00'),
+    (SELECT id FROM `ReactionData` WHERE code = 'TP1')
+);
+
+
 --SELECT reactiondata.code, reactiondata.name AS reaction_name, structuredata.name AS product
 --FROM reactiondata
 --JOIN structuredata ON reactiondata.structure_mainProduct_id = structuredata.id;
