@@ -43,14 +43,13 @@ class UserServiceTest {
         when(mockRepository.accessUserRepository()).thenReturn(mockUserRepository);
         when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
         when(mockUserRepository.save(any(User.class))).thenReturn(mockUser);
-        when(mockUser.getId()).thenReturn(1L);
         UserCreationData userCreationData =
                 new UserCreationData("Name", "login name", "password", UserRole.GUEST);
         service.createUser(userCreationData);
         verify(mockUserRepository)
                 .save(argThat(new UserMatcher("Name", "login name", "password", UserRole.GUEST.toString())));
         verify(mockCartRepository)
-                .save(argThat(new CartMatcher(1L, CartStatus.OPEN.toString())));
+                .save(argThat(new CartMatcher(mockUser, CartStatus.OPEN.toString())));
     }
 
     @Test

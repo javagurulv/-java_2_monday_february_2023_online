@@ -12,7 +12,6 @@ import shop.core.domain.item.Item;
 import shop.core.domain.user.User;
 
 import java.util.List;
-import java.util.Objects;
 
 @Component
 @Transactional

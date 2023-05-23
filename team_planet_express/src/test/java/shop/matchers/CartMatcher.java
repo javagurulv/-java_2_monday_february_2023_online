@@ -2,21 +2,21 @@ package shop.matchers;
 
 import org.mockito.ArgumentMatcher;
 import shop.core.domain.cart.Cart;
-import shop.core.domain.cart.CartStatus;
+import shop.core.domain.user.User;
 
 public class CartMatcher implements ArgumentMatcher<Cart> {
 
-    private final Long userId;
+    private final User user;
     private final String cartStatus;
 
-    public CartMatcher(Long userId, String cartStatus) {
-        this.userId = userId;
+    public CartMatcher(User user, String cartStatus) {
+        this.user = user;
         this.cartStatus = cartStatus;
     }
 
     @Override
     public boolean matches(Cart cart) {
-        return userId.equals(cart.getUser().getId()) &&
+        return user.equals(cart.getUser()) &&
                 cartStatus.equals(cart.getStatus());
     }
 

@@ -6,13 +6,13 @@ import shop.core.support.CurrentUser;
 
 public class SignUpRequestMatcher implements ArgumentMatcher<SignUpRequest> {
 
-    private final CurrentUser userId;
+    private final CurrentUser currentUser;
     private final String name;
     private final String loginName;
     private final String password;
 
-    public SignUpRequestMatcher(CurrentUser userId, String name, String loginName, String password) {
-        this.userId = userId;
+    public SignUpRequestMatcher(CurrentUser currentUser, String name, String loginName, String password) {
+        this.currentUser = currentUser;
         this.name = name;
         this.loginName = loginName;
         this.password = password;
@@ -20,7 +20,7 @@ public class SignUpRequestMatcher implements ArgumentMatcher<SignUpRequest> {
 
     @Override
     public boolean matches(SignUpRequest request) {
-        return userId.equals(request.getCurrentUser()) &&
+        return currentUser.equals(request.getCurrentUser()) &&
                 name.equals(request.getName()) &&
                 loginName.equals(request.getLoginName()) &&
                 password.equals(request.getPassword());
