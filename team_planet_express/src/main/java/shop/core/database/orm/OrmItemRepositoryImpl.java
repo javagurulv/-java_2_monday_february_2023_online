@@ -22,7 +22,6 @@ public class OrmItemRepositoryImpl implements ItemRepository {
     @Override
     public Item save(Item item) {
         sessionFactory.getCurrentSession().persist(item);
-        //TODO get ID ?
         return item;
     }
 
@@ -39,34 +38,32 @@ public class OrmItemRepositoryImpl implements ItemRepository {
         return query.getResultList().stream().findFirst();
     }
 
+    //TODO all 3 needed ???
     @Override
     public void changeName(Long id, String newName) {
-        //TODO 6 kek
-        Query query = sessionFactory.getCurrentSession()
-                .createQuery("UPDATE Item SET name = :name WHERE id = :id");
-        query.setParameter("name", newName);
-        query.setParameter("id", id);
-        query.executeUpdate();
+        Item item = sessionFactory.getCurrentSession().get(Item.class, id);
+        if (item != null) {
+            item.setName(newName);
+            sessionFactory.getCurrentSession().merge(item);
+        }
     }
 
     @Override
     public void changePrice(Long id, BigDecimal newPrice) {
-        //TODO 6 lol
-        Query query = sessionFactory.getCurrentSession()
-                .createQuery("UPDATE Item SET price = :price WHERE id = :id");
-        query.setParameter("price", newPrice);
-        query.setParameter("id", id);
-        query.executeUpdate();
+        Item item = sessionFactory.getCurrentSession().get(Item.class, id);
+        if (item != null) {
+            item.setPrice(newPrice);
+            sessionFactory.getCurrentSession().merge(item);
+        }
     }
 
     @Override
     public void changeAvailableQuantity(Long id, Integer newAvailableQuantity) {
-        //TODO hibernate 6 update ???
-        Query query = sessionFactory.getCurrentSession()
-                .createQuery("UPDATE Item SET availableQuantity = :quantity WHERE id = :id");
-        query.setParameter("quantity", newAvailableQuantity);
-        query.setParameter("id", id);
-        query.executeUpdate();
+        Item item = sessionFactory.getCurrentSession().get(Item.class, id);
+        if (item != null) {
+            item.setAvailableQuantity(newAvailableQuantity);
+            sessionFactory.getCurrentSession().merge(item);
+        }
     }
 
     @Override
@@ -74,23 +71,6 @@ public class OrmItemRepositoryImpl implements ItemRepository {
         return sessionFactory.getCurrentSession()
                 .createQuery("SELECT i FROM Item i", Item.class)
                 .getResultList();
-    }
-
-    @Override
-    public List<Item> searchByName(String itemName) {
-        Query<Item> query = sessionFactory.getCurrentSession()
-                .createQuery("SELECT i FROM Item i WHERE LOWER(name) LIKE :name", Item.class);
-        query.setParameter("name", "%" + itemName + "%");
-        return query.getResultList();
-    }
-
-    @Override
-    public List<Item> searchByNameAndPrice(String itemName, BigDecimal price) {
-        Query<Item> query = sessionFactory.getCurrentSession()
-                .createQuery("SELECT i FROM Item i WHERE LOWER(name) LIKE :name AND price <= :price", Item.class);
-        query.setParameter("name", "%" + itemName + "%");
-        query.setParameter("price", price);
-        return query.getResultList();
     }
 
     @Override

@@ -21,7 +21,6 @@ public class OrmUserRepositoryImpl implements UserRepository {
     @Override
     public User save(User user) {
         sessionFactory.getCurrentSession().persist(user);
-        //TODO get ID ? is it already here ?
         return user;
     }
 

@@ -27,7 +27,6 @@ public class BuyService {
 
 
     public BuyResponse execute(BuyRequest request) {
-        //TODO Status change ???
         List<CoreError> errors = validator.validate(request);
         if (!errors.isEmpty()) {
             return new BuyResponse(errors);

@@ -51,7 +51,6 @@ class AddItemToCartServiceTest {
 
     @Test
     void shouldAddNewItemToCart() {
-        //TODO mock fiesta ???
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockRequest.getCurrentUser()).thenReturn(mockUserId);
         when(mockUserId.getUser()).thenReturn(mockUser);

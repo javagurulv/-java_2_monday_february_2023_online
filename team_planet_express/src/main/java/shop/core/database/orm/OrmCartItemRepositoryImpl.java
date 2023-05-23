@@ -23,13 +23,11 @@ public class OrmCartItemRepositoryImpl implements CartItemRepository {
     @Override
     public CartItem save(CartItem cartItem) {
         sessionFactory.getCurrentSession().persist(cartItem);
-        //TODO get ID ?
         return cartItem;
     }
 
     @Override
     public Optional<CartItem> findByCartIdAndItemId(Cart cart, Item item) {
-        //TODO ci ?????
         Query<CartItem> query = sessionFactory.getCurrentSession()
                 .createQuery("SELECT ci FROM CartItem ci WHERE cart = :cart AND item = :item", CartItem.class);
         query.setParameter("cart", cart);
@@ -39,19 +37,19 @@ public class OrmCartItemRepositoryImpl implements CartItemRepository {
 
     @Override
     public void deleteByID(Long id) {
-        //TODO ???? deprecated
-        Query query = sessionFactory.getCurrentSession().createQuery(
-                "DELETE CartItem WHERE id = :id");
-        query.setParameter("id", id);
-        query.executeUpdate();
+        CartItem cartItem = sessionFactory.getCurrentSession().get(CartItem.class, id);
+        if (cartItem != null) {
+            sessionFactory.getCurrentSession().remove(cartItem);
+        }
     }
 
     @Override
     public void changeOrderedQuantity(Long id, Integer newOrderedQuantity) {
-        Query<CartItem> query = sessionFactory.getCurrentSession()
-                .createQuery("UPDATE CartItem SET ordered_quantity = :quantity WHERE id = :id", CartItem.class);
-        query.setParameter("quantity", newOrderedQuantity);
-        query.setParameter("id", id);
+        CartItem cartItem = sessionFactory.getCurrentSession().get(CartItem.class, id);
+        if (cartItem != null) {
+            cartItem.setOrderedQuantity(newOrderedQuantity);
+            sessionFactory.getCurrentSession().merge(cartItem);
+        }
     }
 
     @Override

@@ -23,7 +23,6 @@ public class OrmCartRepositoryImpl implements CartRepository {
     @Override
     public Cart save(Cart cart) {
         sessionFactory.getCurrentSession().persist(cart);
-        //TODO get ID ?
         return cart;
     }
 
@@ -37,11 +36,11 @@ public class OrmCartRepositoryImpl implements CartRepository {
 
     @Override
     public void changeCartStatus(Long id, CartStatus cartStatus) {
-        //TODO deprecated ???
-        Query query = sessionFactory.getCurrentSession()
-                .createQuery("UPDATE Cart SET status = :status WHERE id = :id");
-        query.setParameter("status", cartStatus.toString());
-        query.setParameter("id", id);
+        Cart cart = sessionFactory.getCurrentSession().get(Cart.class, id);
+        if (cart != null) {
+            cart.setStatus(cartStatus.toString());
+            sessionFactory.getCurrentSession().merge(cart);
+        }
     }
 
     @Override
