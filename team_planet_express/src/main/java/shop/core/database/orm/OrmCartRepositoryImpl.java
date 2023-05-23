@@ -37,9 +37,10 @@ public class OrmCartRepositoryImpl implements CartRepository {
 
     @Override
     public void changeCartStatus(Long id, CartStatus cartStatus) {
-        Query<Cart> query = sessionFactory.getCurrentSession()
-                .createQuery("UPDATE Cart SET status = :status WHERE id = :id", Cart.class);
-        query.setParameter("status", cartStatus);
+        //TODO deprecated ???
+        Query query = sessionFactory.getCurrentSession()
+                .createQuery("UPDATE Cart SET status = :status WHERE id = :id");
+        query.setParameter("status", cartStatus.toString());
         query.setParameter("id", id);
     }
 

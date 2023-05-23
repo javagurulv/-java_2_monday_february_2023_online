@@ -41,7 +41,7 @@ public class SearchForItemsAcceptanceTest {
 
     @BeforeEach
     void setCurrentUser() {
-        User currentUser = repository.accessUserDatabase().findById(1L).orElseThrow();
+        User currentUser = repository.accessUserRepository().findById(1L).orElseThrow();
         this.currentUser.setUser(currentUser);
     }
 
@@ -96,7 +96,7 @@ public class SearchForItemsAcceptanceTest {
     @Test
     void shouldReturnCorrectItemsInCorrectOrder() {
         Item newItem = new Item("Morbo on Management", new BigDecimal("4.99"), 1);
-        repository.accessItemDatabase().save(newItem);
+        repository.accessItemRepository().save(newItem);
         OrderingRule orderingRuleName = new OrderingRule(OrderBy.NAME, OrderDirection.DESCENDING);
         OrderingRule orderingRulePrice = new OrderingRule(OrderBy.PRICE, OrderDirection.ASCENDING);
         PagingRule pagingRule = new PagingRule(1, "4");

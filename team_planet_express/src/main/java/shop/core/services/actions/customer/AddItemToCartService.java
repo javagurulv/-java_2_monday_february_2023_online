@@ -7,7 +7,6 @@ import shop.core.database.Repository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
 import shop.core.domain.item.Item;
-import shop.core.domain.user.User;
 import shop.core.requests.customer.AddItemToCartRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.customer.AddItemToCartResponse;
@@ -33,7 +32,7 @@ public class AddItemToCartService {
         if (!errors.isEmpty()) {
             return new AddItemToCartResponse(errors);
         }
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getUserId().getUser());
+        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getCurrentUser().getUser());
         Item item = databaseAccessValidator.getItemByName(request.getItemName());
         Integer orderedQuantity = Integer.parseInt(request.getOrderedQuantity());
         addItemToCart(cart, item, orderedQuantity);
@@ -42,18 +41,18 @@ public class AddItemToCartService {
     }
 
     private void addItemToCart(Cart cart, Item item, Integer orderedQuantity) {
-        Optional<CartItem> cartItem = repository.accessCartItemDatabase().findByCartIdAndItemId(cart, item);
+        Optional<CartItem> cartItem = repository.accessCartItemRepository().findByCartIdAndItemId(cart, item);
         if (cartItem.isEmpty()) {
-            repository.accessCartItemDatabase().save(new CartItem(cart, item, orderedQuantity));
+            repository.accessCartItemRepository().save(new CartItem(cart, item, orderedQuantity));
         } else {
             Integer newCartItemQuantity = cartItem.get().getOrderedQuantity() + orderedQuantity;
-            repository.accessCartItemDatabase().changeOrderedQuantity(cartItem.get().getId(), newCartItemQuantity);
+            repository.accessCartItemRepository().changeOrderedQuantity(cartItem.get().getId(), newCartItemQuantity);
         }
     }
 
     private void changeItemAvailability(Item item, Integer orderedQuantity) {
         Integer newAvailableQuantity = item.getAvailableQuantity() - orderedQuantity;
-        repository.accessItemDatabase().changeAvailableQuantity(item.getId(), newAvailableQuantity);
+        repository.accessItemRepository().changeAvailableQuantity(item.getId(), newAvailableQuantity);
     }
 
 }

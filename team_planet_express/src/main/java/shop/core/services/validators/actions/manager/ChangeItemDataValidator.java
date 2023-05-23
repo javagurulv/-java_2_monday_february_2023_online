@@ -86,7 +86,7 @@ public class ChangeItemDataValidator {
         Item originalItem = databaseAccessValidator.getItemById(Long.parseLong(request.getItemId()));
         String newItemName = setNewItemName(request, originalItem);
         BigDecimal newPrice = setNewPrice(request, originalItem);
-        return (repository.accessItemDatabase().getAllItems().stream()
+        return (repository.accessItemRepository().getAllItems().stream()
                 .filter(item -> !originalItem.getId().equals(item.getId()))
                 .anyMatch(item -> newItemName.equals(item.getName()) && newPrice.compareTo(item.getPrice()) == 0))
                 ? Optional.of(errorProcessor.getCoreError(FIELD_BUTTON, ERROR_ITEM_EXISTS))
@@ -95,7 +95,7 @@ public class ChangeItemDataValidator {
 
     private Optional<CoreError> validateIdExistsInShop(String id) {
         return (id != null && !id.isBlank() &&
-                repository.accessItemDatabase().findById(Long.parseLong(id)).isEmpty())
+                repository.accessItemRepository().findById(Long.parseLong(id)).isEmpty())
                 ? Optional.of(errorProcessor.getCoreError(FIELD_ID, ERROR_ID_NOT_EXISTS))
                 : Optional.empty();
     }

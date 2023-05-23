@@ -40,8 +40,8 @@ class UserServiceTest {
 
     @Test
     void shouldSaveUserAndCart() {
-        when(mockRepository.accessUserDatabase()).thenReturn(mockUserRepository);
-        when(mockRepository.accessCartDatabase()).thenReturn(mockCartRepository);
+        when(mockRepository.accessUserRepository()).thenReturn(mockUserRepository);
+        when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
         when(mockUserRepository.save(any(User.class))).thenReturn(mockUser);
         when(mockUser.getId()).thenReturn(1L);
         UserCreationData userCreationData =
@@ -55,8 +55,8 @@ class UserServiceTest {
 
     @Test
     void shouldReturnExistingGuest() {
-        when(mockRepository.accessUserDatabase()).thenReturn(mockUserRepository);
-        when(mockRepository.accessCartDatabase()).thenReturn(mockCartRepository);
+        when(mockRepository.accessUserRepository()).thenReturn(mockUserRepository);
+        when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
         when(mockUserRepository.getAllUsers()).thenReturn(List.of(mockUser));
         when(mockUser.getUserRole()).thenReturn("GUEST");
         when(mockCartRepository.findOpenCartForUserId(mockUser)).thenReturn(Optional.of(mockCart));
@@ -65,7 +65,7 @@ class UserServiceTest {
 
     @Test
     void shouldReturnEmptyOptionalForNoGuest() {
-        when(mockRepository.accessUserDatabase()).thenReturn(mockUserRepository);
+        when(mockRepository.accessUserRepository()).thenReturn(mockUserRepository);
         when(mockUserRepository.getAllUsers()).thenReturn(List.of(mockUser));
         when(mockUser.getUserRole()).thenReturn("ADMIN");
         assertTrue(service.findGuestWithOpenCart().isEmpty());
@@ -73,8 +73,8 @@ class UserServiceTest {
 
     @Test
     void shouldReturnEmptyOptionalForNoOpenCart() {
-        when(mockRepository.accessUserDatabase()).thenReturn(mockUserRepository);
-        when(mockRepository.accessCartDatabase()).thenReturn(mockCartRepository);
+        when(mockRepository.accessUserRepository()).thenReturn(mockUserRepository);
+        when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
         when(mockUserRepository.getAllUsers()).thenReturn(List.of(mockUser));
         when(mockUser.getUserRole()).thenReturn("GUEST");
         when(mockCartRepository.findOpenCartForUserId(mockUser)).thenReturn(Optional.empty());

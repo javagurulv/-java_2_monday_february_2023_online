@@ -69,7 +69,7 @@ public class SignUpValidator {
 
     private Optional<CoreError> validateLoginNameDoesNotAlreadyExist(String loginName) {
         return (loginName != null && !loginName.isBlank() &&
-                repository.accessUserDatabase().findByLoginName(loginName).isPresent())
+                repository.accessUserRepository().findByLoginName(loginName).isPresent())
                 ? Optional.of(errorProcessor.getCoreError(FIELD_LOGIN_NAME, ERROR_LOGIN_EXISTS))
                 : Optional.empty();
     }

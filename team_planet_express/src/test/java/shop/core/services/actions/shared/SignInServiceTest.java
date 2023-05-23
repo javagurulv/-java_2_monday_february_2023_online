@@ -53,7 +53,7 @@ class SignInServiceTest {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockRequest.getLoginName()).thenReturn("login name");
         when(mockDatabaseAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
-        when(mockRequest.getUserId()).thenReturn(mockCurrentUser);
+        when(mockRequest.getCurrentUser()).thenReturn(mockCurrentUser);
         SignInResponse response = service.execute(mockRequest);
         assertNull(response.getErrors());
     }
@@ -63,7 +63,7 @@ class SignInServiceTest {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockRequest.getLoginName()).thenReturn("login name");
         when(mockDatabaseAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
-        when(mockRequest.getUserId()).thenReturn(mockCurrentUser);
+        when(mockRequest.getCurrentUser()).thenReturn(mockCurrentUser);
         service.execute(mockRequest);
         verify(mockCurrentUser).setUser(any(User.class));
     }

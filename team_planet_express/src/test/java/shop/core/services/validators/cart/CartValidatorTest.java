@@ -40,7 +40,7 @@ class CartValidatorTest {
 
     @Test
     void shouldReturnNoError() {
-        when(mockRepository.accessCartDatabase()).thenReturn(mockCartRepository);
+        when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
         when(mockCartRepository.findOpenCartForUserId(mockUser)).thenReturn(Optional.of(mockCart));
         Optional<CoreError> error = validator.validateOpenCartExistsForUserId(mockUser);
         assertTrue(error.isEmpty());
@@ -48,7 +48,7 @@ class CartValidatorTest {
 
     @Test
     void shouldReturnError() {
-        when(mockRepository.accessCartDatabase()).thenReturn(mockCartRepository);
+        when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
         when(mockCartRepository.findOpenCartForUserId(mockUser)).thenReturn(Optional.empty());
         when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
         validator.validateOpenCartExistsForUserId(mockUser);

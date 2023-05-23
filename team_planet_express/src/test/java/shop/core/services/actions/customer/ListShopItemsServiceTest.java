@@ -1,6 +1,5 @@
 package shop.core.services.actions.customer;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,9 +24,9 @@ class ListShopItemsServiceTest {
     @Mock
     private DatabaseAccessValidator mockDatabaseAccessValidator;
     @Mock
-    private ItemRepository mockItemRepository;
-    @Mock
     private ListShopItemsRequest mockRequest;
+    @Mock
+    private ItemRepository mockItemRepository;
     @Mock
     private User mockUser;
     @Mock
@@ -36,14 +35,13 @@ class ListShopItemsServiceTest {
     @InjectMocks
     private ListShopItemsService service;
 
-    @Disabled
     @Test
     void shouldGetItemsFromDatabase() {
-        //TODO cba
-        when(mockRepository.accessItemDatabase()).thenReturn(mockItemRepository);
+        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         when(mockDatabaseAccessValidator.getUserById(anyLong())).thenReturn(mockUser);
         when(mockRequest.getCurrentUser()).thenReturn(mockCurrentUser);
         when(mockCurrentUser.getUser()).thenReturn(mockUser);
+        when(mockUser.getUserRole()).thenReturn("GUEST");
         service.execute(mockRequest);
         verify(mockItemRepository).getAllItems();
     }

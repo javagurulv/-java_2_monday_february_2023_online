@@ -6,7 +6,7 @@ import shop.core.support.CurrentUser;
 @Value
 public class AddItemToCartRequest {
 
-    CurrentUser userId;
+    CurrentUser currentUser;
     String itemName;
     String orderedQuantity;
 

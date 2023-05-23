@@ -2,6 +2,7 @@ package shop.core.services.actions.shared;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import shop.core.database.Repository;
 import shop.core.domain.item.Item;
 import shop.core.domain.user.UserRole;
@@ -18,6 +19,7 @@ import java.math.RoundingMode;
 import java.util.List;
 
 @Component
+@Transactional
 public class SearchItemService {
 
     @Autowired
@@ -49,19 +51,19 @@ public class SearchItemService {
         List<Item> items;
         //TODO is blank actually ok in here ?
         if (request.getItemName() != null && !isPresent(request.getPrice())) {
-            items = repository.accessItemDatabase().searchByName(
+            items = repository.accessItemRepository().searchByName(
                     request.getItemName().toLowerCase(),
                     orderingService.getSQLOrderBy(request.getOrderingRules()),
                     pagingService.getSQLLimitOffset(request.getPagingRule()));
         } else if (request.getItemName() != null && isPresent(request.getPrice())) {
             BigDecimal price = new BigDecimal(request.getPrice()).setScale(2, RoundingMode.HALF_UP);
-            items = repository.accessItemDatabase().searchByNameAndPrice(
+            items = repository.accessItemRepository().searchByNameAndPrice(
                     request.getItemName().toLowerCase(),
                     price,
                     orderingService.getSQLOrderBy(request.getOrderingRules()),
                     pagingService.getSQLLimitOffset(request.getPagingRule()));
         } else {
-            items = repository.accessItemDatabase().getAllItems();
+            items = repository.accessItemRepository().getAllItems();
         }
         return items;
     }

@@ -7,7 +7,6 @@ import shop.core.database.Repository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
 import shop.core.domain.item.Item;
-import shop.core.domain.user.User;
 import shop.core.requests.customer.RemoveItemFromCartRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.customer.RemoveItemFromCartResponse;
@@ -33,12 +32,12 @@ public class RemoveItemFromCartService {
         if (!errors.isEmpty()) {
             return new RemoveItemFromCartResponse(errors);
         }
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getUserId().getUser());
+        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getCurrentUser().getUser());
         Item item = databaseAccessValidator.getItemByName(request.getItemName());
         CartItem cartItem = databaseAccessValidator.getCartItemByCartIdAndItemId(cart, item);
         Integer newAvailableQuantity = item.getAvailableQuantity() + cartItem.getOrderedQuantity();
-        repository.accessCartItemDatabase().deleteByID(cartItem.getId());
-        repository.accessItemDatabase().changeAvailableQuantity(item.getId(), newAvailableQuantity);
+        repository.accessCartItemRepository().deleteByID(cartItem.getId());
+        repository.accessItemRepository().changeAvailableQuantity(item.getId(), newAvailableQuantity);
         return new RemoveItemFromCartResponse();
     }
 

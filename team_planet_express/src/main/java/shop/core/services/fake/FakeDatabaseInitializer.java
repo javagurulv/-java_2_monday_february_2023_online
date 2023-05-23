@@ -27,21 +27,21 @@ public class FakeDatabaseInitializer {
     private void createFakeUsers() {
         List<User> fakeUsers = new FakeUserGenerator().createUsers();
         for (User user : fakeUsers) {
-            repository.accessUserDatabase().save(user);
+            repository.accessUserRepository().save(user);
         }
     }
 
     private void createFakeCartsForUsers() {
-        List<Cart> fakeCarts = new FakeCartGenerator().createCartsForUsers(repository.accessUserDatabase().getAllUsers());
+        List<Cart> fakeCarts = new FakeCartGenerator().createCartsForUsers(repository.accessUserRepository().getAllUsers());
         for (Cart cart : fakeCarts) {
-            repository.accessCartDatabase().save(cart);
+            repository.accessCartRepository().save(cart);
         }
     }
 
     private void createFakeItems() {
         List<Item> fakeItems = new RandomItemGeneratorImpl().createItems();
         for (Item item : fakeItems) {
-            repository.accessItemDatabase().save(item);
+            repository.accessItemRepository().save(item);
         }
     }
 

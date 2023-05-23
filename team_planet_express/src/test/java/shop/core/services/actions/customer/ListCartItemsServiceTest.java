@@ -58,8 +58,8 @@ class ListCartItemsServiceTest {
 
     @BeforeEach
     void initMock() {
-        when(mockRepository.accessCartItemDatabase()).thenReturn(mockCartItemRepository);
-        when(mockRequest.getUserId()).thenReturn(mockCurrentUser);
+        when(mockRepository.accessCartItemRepository()).thenReturn(mockCartItemRepository);
+        when(mockRequest.getCurrentUser()).thenReturn(mockCurrentUser);
     }
 
     @Test

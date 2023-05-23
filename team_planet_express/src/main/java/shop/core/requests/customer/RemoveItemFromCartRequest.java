@@ -6,7 +6,7 @@ import shop.core.support.CurrentUser;
 @Value
 public class RemoveItemFromCartRequest {
 
-    CurrentUser userId;
+    CurrentUser currentUser;
     String itemName;
 
 }

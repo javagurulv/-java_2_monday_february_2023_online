@@ -20,11 +20,11 @@ public abstract class Tester {
     }
 
     protected Tester checkItemInCart(String itemName, Integer quantity) {
-        Optional<Cart> cart = getDatabase().accessCartDatabase().findOpenCartForUserId(getCurrentUser().getUser());
+        Optional<Cart> cart = getDatabase().accessCartRepository().findOpenCartForUserId(getCurrentUser().getUser());
         assertTrue(cart.isPresent());
-        Optional<CartItem> cartItem = getDatabase().accessCartItemDatabase().findByCartIdAndItemId(
+        Optional<CartItem> cartItem = getDatabase().accessCartItemRepository().findByCartIdAndItemId(
                 cart.get(),
-                getDatabase().accessItemDatabase().findByName(itemName).orElseThrow()
+                getDatabase().accessItemRepository().findByName(itemName).orElseThrow()
         );
         assertTrue(cartItem.isPresent());
         assertEquals(quantity, cartItem.get().getOrderedQuantity());
@@ -32,18 +32,18 @@ public abstract class Tester {
     }
 
     protected Tester checkItemInShop(String itemName, int quantity) {
-        assertTrue(getDatabase().accessItemDatabase().getAllItems().stream()
+        assertTrue(getDatabase().accessItemRepository().getAllItems().stream()
                 .anyMatch(item -> item.getName().equals(itemName) && item.getAvailableQuantity() == quantity));
         return this;
 
     }
 
     protected Tester notItemInCart(String itemName) {
-        Optional<Cart> cart = getDatabase().accessCartDatabase().findOpenCartForUserId(getCurrentUser().getUser());
+        Optional<Cart> cart = getDatabase().accessCartRepository().findOpenCartForUserId(getCurrentUser().getUser());
         if (cart.isPresent()) {
-            Optional<CartItem> cartItem = getDatabase().accessCartItemDatabase().findByCartIdAndItemId(
+            Optional<CartItem> cartItem = getDatabase().accessCartItemRepository().findByCartIdAndItemId(
                     cart.get(),
-                    getDatabase().accessItemDatabase().findByName(itemName).orElseThrow()
+                    getDatabase().accessItemRepository().findByName(itemName).orElseThrow()
             );
             assertTrue(cartItem.isEmpty());
         }

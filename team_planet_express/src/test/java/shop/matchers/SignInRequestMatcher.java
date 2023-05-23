@@ -18,7 +18,7 @@ public class SignInRequestMatcher implements ArgumentMatcher<SignInRequest> {
 
     @Override
     public boolean matches(SignInRequest request) {
-        return userId.equals(request.getUserId()) &&
+        return userId.equals(request.getCurrentUser()) &&
                 loginName.equals(request.getLoginName()) &&
                 password.equals(request.getPassword());
     }

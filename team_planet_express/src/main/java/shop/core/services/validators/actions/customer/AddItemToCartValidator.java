@@ -3,7 +3,6 @@ package shop.core.services.validators.actions.customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import shop.core.database.Repository;
-import shop.core.domain.user.User;
 import shop.core.requests.customer.AddItemToCartRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.cart.CartValidator;
@@ -41,9 +40,9 @@ public class AddItemToCartValidator {
     private ErrorProcessor errorProcessor;
 
     public List<CoreError> validate(AddItemToCartRequest request) {
-        userIdValidator.validateCurrentUserIdIsPresent(request.getUserId());
+        userIdValidator.validateCurrentUserIdIsPresent(request.getCurrentUser());
         List<CoreError> errors = new ArrayList<>();
-        cartValidator.validateOpenCartExistsForUserId(request.getUserId().getUser()).ifPresent(errors::add);
+        cartValidator.validateOpenCartExistsForUserId(request.getCurrentUser().getUser()).ifPresent(errors::add);
         if (errors.isEmpty()) {
             validateItemName(request.getItemName(), errors);
             validateQuantity(request.getOrderedQuantity(), errors);
@@ -77,7 +76,7 @@ public class AddItemToCartValidator {
 
     private Optional<CoreError> validateItemNameExistsInShop(String itemName) {
         return (itemName == null ||
-                repository.accessItemDatabase().findByName(itemName).isEmpty())
+                repository.accessItemRepository().findByName(itemName).isEmpty())
                 ? Optional.of(errorProcessor.getCoreError(FIELD_NAME, ERROR_NO_SUCH_ITEM))
                 : Optional.empty();
     }

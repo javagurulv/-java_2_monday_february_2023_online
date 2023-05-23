@@ -31,7 +31,7 @@ public class ApplicationContextSetup {
         List<Item> fakeItems = new HardcodedItemGeneratorImpl().createItems();
         Repository repository = applicationContext.getBean(Repository.class);
         for (Item item : fakeItems) {
-            repository.accessItemDatabase().save(item);
+            repository.accessItemRepository().save(item);
         }
     }
 
@@ -39,7 +39,7 @@ public class ApplicationContextSetup {
         List<User> fakeUsers = new FakeUserGenerator().createUsers();
         Repository repository = applicationContext.getBean(Repository.class);
         for (User user : fakeUsers) {
-            repository.accessUserDatabase().save(user);
+            repository.accessUserRepository().save(user);
         }
     }
 

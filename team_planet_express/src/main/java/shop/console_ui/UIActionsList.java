@@ -36,7 +36,7 @@ public class UIActionsList {
     }
 
     public List<UIAction> getUIActionsListForUserRole() {
-        Optional<User> currentUser = repository.accessUserDatabase().findById(this.currentUser.getUser().getId());
+        Optional<User> currentUser = repository.accessUserRepository().findById(this.currentUser.getUser().getId());
         UserRole filterRole = currentUser.isEmpty() ? UserRole.GUEST : UserRole.valueOf(currentUser.get().getUserRole());
         return uiActionsList.stream()
                 .filter(uiAction -> filterRole.checkPermission(uiAction.getAccessNumber()))

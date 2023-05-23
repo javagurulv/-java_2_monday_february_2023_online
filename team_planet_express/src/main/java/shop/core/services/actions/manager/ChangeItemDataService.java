@@ -36,21 +36,21 @@ public class ChangeItemDataService {
 
     private void changeItemName(Long itemId, String newItemName) {
         if (newItemName != null && !newItemName.isBlank()) {
-            repository.accessItemDatabase().changeName(itemId, newItemName);
+            repository.accessItemRepository().changeName(itemId, newItemName);
         }
     }
 
     private void changePrice(Long itemId, String newPriceString) {
         if (newPriceString != null && !newPriceString.isBlank()) {
             BigDecimal newPrice = new BigDecimal(newPriceString).setScale(2, RoundingMode.HALF_UP);
-            repository.accessItemDatabase().changePrice(itemId, newPrice);
+            repository.accessItemRepository().changePrice(itemId, newPrice);
         }
     }
 
     private void changeAvailableQuantity(Long itemId, String newAvailableQuantityString) {
         if (newAvailableQuantityString != null && !newAvailableQuantityString.isBlank()) {
             Integer newAvailableQuantity = Integer.parseInt(newAvailableQuantityString);
-            repository.accessItemDatabase().changeAvailableQuantity(itemId, newAvailableQuantity);
+            repository.accessItemRepository().changeAvailableQuantity(itemId, newAvailableQuantity);
         }
     }
 

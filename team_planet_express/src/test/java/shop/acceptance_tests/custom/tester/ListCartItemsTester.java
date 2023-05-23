@@ -26,7 +26,7 @@ public class ListCartItemsTester extends Tester {
     }
 
     public ListCartItemsTester checkItemInCartResponse(String itemName, int quantity) {
-        Optional<Item> itemOptional = getDatabase().accessItemDatabase().getAllItems().stream()
+        Optional<Item> itemOptional = getDatabase().accessItemRepository().getAllItems().stream()
                 .filter(item -> item.getName().equals(itemName)).findFirst();
         assertTrue(itemOptional.isPresent());
         assertTrue(listCartItemsResponse.getCartItemsForList().stream()
