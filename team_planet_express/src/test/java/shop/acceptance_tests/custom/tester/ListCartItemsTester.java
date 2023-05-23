@@ -20,7 +20,7 @@ public class ListCartItemsTester extends Tester {
 
     public ListCartItemsTester showListCartItems() {
         ListCartItemsService listCartItemsService = applicationContext.getBean(ListCartItemsService.class);
-        ListCartItemsRequest listCartItemsRequest = new ListCartItemsRequest(getCurrentUserId());
+        ListCartItemsRequest listCartItemsRequest = new ListCartItemsRequest(getCurrentUser());
         listCartItemsResponse = listCartItemsService.execute(listCartItemsRequest);
         return this;
     }

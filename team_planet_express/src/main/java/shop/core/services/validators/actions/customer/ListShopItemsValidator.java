@@ -14,7 +14,7 @@ public class ListShopItemsValidator {
     private CurrentUserIdValidator userIdValidator;
 
     public List<CoreError> validate(ListShopItemsRequest request) {
-        userIdValidator.validateCurrentUserIdIsPresent(request.getUserId());
+        userIdValidator.validateCurrentUserIdIsPresent(request.getCurrentUser());
         List<CoreError> errors = new ArrayList<>();
         return errors;
     }

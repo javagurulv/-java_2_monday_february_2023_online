@@ -8,7 +8,7 @@ import shop.core.domain.user.UserRole;
 import shop.core.requests.shared.SignOutRequest;
 import shop.core.responses.shared.SignOutResponse;
 import shop.core.services.actions.shared.SignOutService;
-import shop.core.support.CurrentUserId;
+import shop.core.support.CurrentUser;
 
 @Component
 public class SignOutUIAction extends UIAction {
@@ -21,7 +21,7 @@ public class SignOutUIAction extends UIAction {
     @Autowired
     private SignOutService signOutService;
     @Autowired
-    private CurrentUserId currentUserId;
+    private CurrentUser currentUser;
     @Autowired
     private UserCommunication userCommunication;
 
@@ -31,7 +31,7 @@ public class SignOutUIAction extends UIAction {
 
     @Override
     public void execute() {
-        SignOutRequest request = new SignOutRequest(currentUserId);
+        SignOutRequest request = new SignOutRequest(currentUser);
         SignOutResponse response = signOutService.execute(request);
         if (response.hasErrors()) {
             response.getErrors().forEach(coreError -> userCommunication.informUser(coreError.getMessage()));

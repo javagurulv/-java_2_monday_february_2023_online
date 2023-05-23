@@ -9,7 +9,7 @@ import shop.core.domain.user.UserRole;
 import shop.core.requests.customer.ListShopItemsRequest;
 import shop.core.responses.customer.ListShopItemsResponse;
 import shop.core.services.actions.customer.ListShopItemsService;
-import shop.core.support.CurrentUserId;
+import shop.core.support.CurrentUser;
 
 @Component
 public class ListShopItemsUIAction extends UIAction {
@@ -22,7 +22,7 @@ public class ListShopItemsUIAction extends UIAction {
     @Autowired
     private ListShopItemsService listShopItemsService;
     @Autowired
-    private CurrentUserId currentUserId;
+    private CurrentUser currentUser;
     @Autowired
     private ItemStringProvider itemStringProvider;
     @Autowired
@@ -35,7 +35,7 @@ public class ListShopItemsUIAction extends UIAction {
     @Override
     public void execute() {
         userCommunication.informUser(HEADER_TEXT);
-        ListShopItemsRequest request = new ListShopItemsRequest(currentUserId);
+        ListShopItemsRequest request = new ListShopItemsRequest(currentUser);
         ListShopItemsResponse response = listShopItemsService.execute(request);
         response.getShopItems()
                 .forEach(item -> userCommunication.informUser(itemStringProvider.get(item, response.getUserRole())));

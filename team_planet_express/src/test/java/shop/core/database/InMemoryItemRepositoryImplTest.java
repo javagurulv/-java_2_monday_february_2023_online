@@ -5,7 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import shop.core.database.in_memory.InMemoryItemDatabaseImpl;
+import shop.core.database.in_memory.InMemoryItemRepositoryImpl;
 import shop.core.domain.item.Item;
 
 import java.math.BigDecimal;
@@ -16,13 +16,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class InMemoryItemDatabaseImplTest {
+class InMemoryItemRepositoryImplTest {
 
     @Mock
     private Item mockItem;
 
     @InjectMocks
-    private InMemoryItemDatabaseImpl database;
+    private InMemoryItemRepositoryImpl database;
 
     @Test
     void shouldIncreaseInSizeAfterSave() {

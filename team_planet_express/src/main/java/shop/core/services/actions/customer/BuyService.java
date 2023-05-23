@@ -2,9 +2,11 @@ package shop.core.services.actions.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.database.Database;
+import org.springframework.transaction.annotation.Transactional;
+import shop.core.database.Repository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart.CartStatus;
+import shop.core.domain.user.User;
 import shop.core.requests.customer.BuyRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.customer.BuyResponse;
@@ -17,7 +19,7 @@ import java.util.List;
 public class BuyService {
 
     @Autowired
-    private Database database;
+    private Repository repository;
     @Autowired
     private BuyValidator validator;
     @Autowired
@@ -29,8 +31,8 @@ public class BuyService {
         if (!errors.isEmpty()) {
             return new BuyResponse(errors);
         }
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getUserId().getValue());
-        database.accessCartDatabase().changeCartStatus(cart.getId(), CartStatus.CLOSED);
+        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getUserId().getUser());
+        repository.accessCartDatabase().changeCartStatus(cart.getId(), CartStatus.CLOSED);
         return new BuyResponse();
     }
 

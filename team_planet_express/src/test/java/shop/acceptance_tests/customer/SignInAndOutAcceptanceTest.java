@@ -7,7 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import shop.config.ShopConfiguration;
-import shop.core.database.Database;
+import shop.core.database.Repository;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
 import shop.core.requests.shared.SignInRequest;
@@ -16,7 +16,7 @@ import shop.core.responses.shared.SignInResponse;
 import shop.core.responses.shared.SignOutResponse;
 import shop.core.services.actions.shared.SignInService;
 import shop.core.services.actions.shared.SignOutService;
-import shop.core.support.CurrentUserId;
+import shop.core.support.CurrentUser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -26,9 +26,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 public class SignInAndOutAcceptanceTest {
 
     @Autowired
-    private Database database;
+    private Repository repository;
     @Autowired
-    private CurrentUserId currentUserId;
+    private CurrentUser currentUser;
     @Autowired
     private SignInService signInService;
     @Autowired
@@ -38,17 +38,17 @@ public class SignInAndOutAcceptanceTest {
     @Test
     void shouldSignInAsCustomerAndBecomeGuestAfterSignOut() {
         User customer = new User("Morbo", "theAnnihilator", "pathetichumans", UserRole.CUSTOMER);
-        database.accessUserDatabase().save(customer);
+        repository.accessUserDatabase().save(customer);
         SignInResponse signInResponse =
-                signInService.execute(new SignInRequest(currentUserId, "theAnnihilator", "pathetichumans"));
+                signInService.execute(new SignInRequest(currentUser, "theAnnihilator", "pathetichumans"));
         assertFalse(signInResponse.hasErrors());
-        assertEquals(currentUserId.getValue(), database.accessUserDatabase().findByLoginName("theAnnihilator").orElseThrow().getId());
-        assertEquals(UserRole.CUSTOMER, signInResponse.getUser().getUserRole());
+        assertEquals(currentUser.getUser().getId(), repository.accessUserDatabase().findByLoginName("theAnnihilator").orElseThrow().getId());
+        assertEquals(UserRole.CUSTOMER.toString(), signInResponse.getUser().getUserRole());
         assertEquals("Morbo", signInResponse.getUser().getName());
         SignOutResponse signOutResponse =
-                signOutService.execute(new SignOutRequest(currentUserId));
+                signOutService.execute(new SignOutRequest(currentUser));
         assertFalse(signOutResponse.hasErrors());
-        assertEquals(UserRole.GUEST, database.accessUserDatabase().findById(currentUserId.getValue()).orElseThrow().getUserRole());
+        assertEquals(UserRole.GUEST.toString(), repository.accessUserDatabase().findById(currentUser.getUser().getId()).orElseThrow().getUserRole());
     }
 
 }

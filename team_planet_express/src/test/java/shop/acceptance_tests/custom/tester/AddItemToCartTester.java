@@ -3,7 +3,7 @@ package shop.acceptance_tests.custom.tester;
 import org.springframework.context.ApplicationContext;
 import shop.core.requests.customer.AddItemToCartRequest;
 import shop.core.services.actions.customer.AddItemToCartService;
-import shop.core.support.CurrentUserId;
+import shop.core.support.CurrentUser;
 
 public class AddItemToCartTester extends Tester {
 
@@ -18,7 +18,7 @@ public class AddItemToCartTester extends Tester {
         this.itemName = itemName;
         this.quantity = quantity;
         AddItemToCartService addItemToCartService = applicationContext.getBean(AddItemToCartService.class);
-        AddItemToCartRequest addItemToCartRequest = new AddItemToCartRequest(applicationContext.getBean(CurrentUserId.class), itemName, quantity.toString());
+        AddItemToCartRequest addItemToCartRequest = new AddItemToCartRequest(applicationContext.getBean(CurrentUser.class), itemName, quantity.toString());
         addItemToCartService.execute(addItemToCartRequest);
         return this;
     }

@@ -1,10 +1,10 @@
 package shop.acceptance_tests.custom.tester;
 
 import org.springframework.context.ApplicationContext;
-import shop.core.database.Database;
+import shop.core.database.Repository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
-import shop.core.support.CurrentUserId;
+import shop.core.support.CurrentUser;
 
 import java.util.Optional;
 
@@ -20,11 +20,11 @@ public abstract class Tester {
     }
 
     protected Tester checkItemInCart(String itemName, Integer quantity) {
-        Optional<Cart> cart = getDatabase().accessCartDatabase().findOpenCartForUserId(getCurrentUserId().getValue());
+        Optional<Cart> cart = getDatabase().accessCartDatabase().findOpenCartForUserId(getCurrentUser().getUser());
         assertTrue(cart.isPresent());
         Optional<CartItem> cartItem = getDatabase().accessCartItemDatabase().findByCartIdAndItemId(
-                cart.get().getId(),
-                getDatabase().accessItemDatabase().findByName(itemName).orElseThrow().getId()
+                cart.get(),
+                getDatabase().accessItemDatabase().findByName(itemName).orElseThrow()
         );
         assertTrue(cartItem.isPresent());
         assertEquals(quantity, cartItem.get().getOrderedQuantity());
@@ -39,23 +39,23 @@ public abstract class Tester {
     }
 
     protected Tester notItemInCart(String itemName) {
-        Optional<Cart> cart = getDatabase().accessCartDatabase().findOpenCartForUserId(getCurrentUserId().getValue());
+        Optional<Cart> cart = getDatabase().accessCartDatabase().findOpenCartForUserId(getCurrentUser().getUser());
         if (cart.isPresent()) {
             Optional<CartItem> cartItem = getDatabase().accessCartItemDatabase().findByCartIdAndItemId(
-                    cart.get().getId(),
-                    getDatabase().accessItemDatabase().findByName(itemName).orElseThrow().getId()
+                    cart.get(),
+                    getDatabase().accessItemDatabase().findByName(itemName).orElseThrow()
             );
             assertTrue(cartItem.isEmpty());
         }
         return this;
     }
 
-    protected Database getDatabase() {
-        return applicationContext.getBean(Database.class);
+    protected Repository getDatabase() {
+        return applicationContext.getBean(Repository.class);
     }
 
-    protected CurrentUserId getCurrentUserId() {
-        return applicationContext.getBean(CurrentUserId.class);
+    protected CurrentUser getCurrentUser() {
+        return applicationContext.getBean(CurrentUser.class);
     }
 
 }

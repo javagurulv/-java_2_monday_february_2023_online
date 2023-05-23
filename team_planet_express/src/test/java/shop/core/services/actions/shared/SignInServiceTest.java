@@ -11,7 +11,7 @@ import shop.core.responses.CoreError;
 import shop.core.responses.shared.SignInResponse;
 import shop.core.services.validators.actions.shared.SignInValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
-import shop.core.support.CurrentUserId;
+import shop.core.support.CurrentUser;
 
 import java.util.Collections;
 import java.util.List;
@@ -36,7 +36,7 @@ class SignInServiceTest {
     @Mock
     private User mockUser;
     @Mock
-    private CurrentUserId mockCurrentUserId;
+    private CurrentUser mockCurrentUser;
 
     @InjectMocks
     private SignInService service;
@@ -53,7 +53,7 @@ class SignInServiceTest {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockRequest.getLoginName()).thenReturn("login name");
         when(mockDatabaseAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
-        when(mockRequest.getUserId()).thenReturn(mockCurrentUserId);
+        when(mockRequest.getUserId()).thenReturn(mockCurrentUser);
         SignInResponse response = service.execute(mockRequest);
         assertNull(response.getErrors());
     }
@@ -63,9 +63,9 @@ class SignInServiceTest {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockRequest.getLoginName()).thenReturn("login name");
         when(mockDatabaseAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
-        when(mockRequest.getUserId()).thenReturn(mockCurrentUserId);
+        when(mockRequest.getUserId()).thenReturn(mockCurrentUser);
         service.execute(mockRequest);
-        verify(mockCurrentUserId).setValue(any(Long.class));
+        verify(mockCurrentUser).setUser(any(User.class));
     }
 
 }

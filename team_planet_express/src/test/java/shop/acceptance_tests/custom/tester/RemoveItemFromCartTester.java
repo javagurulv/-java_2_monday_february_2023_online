@@ -3,7 +3,7 @@ package shop.acceptance_tests.custom.tester;
 import org.springframework.context.ApplicationContext;
 import shop.core.requests.customer.RemoveItemFromCartRequest;
 import shop.core.services.actions.customer.RemoveItemFromCartService;
-import shop.core.support.CurrentUserId;
+import shop.core.support.CurrentUser;
 
 public class RemoveItemFromCartTester extends Tester {
 
@@ -16,7 +16,7 @@ public class RemoveItemFromCartTester extends Tester {
     public RemoveItemFromCartTester remove(String itemName) {
         this.itemName = itemName;
         RemoveItemFromCartService removeItemFromCartService = applicationContext.getBean(RemoveItemFromCartService.class);
-        RemoveItemFromCartRequest removeItemFromCartRequest = new RemoveItemFromCartRequest(applicationContext.getBean(CurrentUserId.class), itemName);
+        RemoveItemFromCartRequest removeItemFromCartRequest = new RemoveItemFromCartRequest(applicationContext.getBean(CurrentUser.class), itemName);
         removeItemFromCartService.execute(removeItemFromCartRequest);
         return this;
     }

@@ -1,12 +1,12 @@
 package shop.core.requests.customer;
 
 import lombok.Value;
-import shop.core.support.CurrentUserId;
+import shop.core.support.CurrentUser;
 
 @Value
 public class AddItemToCartRequest {
 
-    CurrentUserId userId;
+    CurrentUser userId;
     String itemName;
     String orderedQuantity;
 

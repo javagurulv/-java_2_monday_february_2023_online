@@ -8,7 +8,7 @@ import shop.core.domain.user.UserRole;
 import shop.core.requests.customer.AddItemToCartRequest;
 import shop.core.responses.customer.AddItemToCartResponse;
 import shop.core.services.actions.customer.AddItemToCartService;
-import shop.core.support.CurrentUserId;
+import shop.core.support.CurrentUser;
 
 @Component
 public class AddItemToCartUIAction extends UIAction {
@@ -23,7 +23,7 @@ public class AddItemToCartUIAction extends UIAction {
     @Autowired
     private AddItemToCartService addItemToCartService;
     @Autowired
-    private CurrentUserId currentUserId;
+    private CurrentUser currentUser;
     @Autowired
     private UserCommunication userCommunication;
 
@@ -36,7 +36,7 @@ public class AddItemToCartUIAction extends UIAction {
         String itemName = userCommunication.requestInput(PROMPT_TOPIC_ITEM);
         String orderedQuantity = userCommunication.requestInput(PROMPT_TOPIC_QUANTITY);
         AddItemToCartRequest request =
-                new AddItemToCartRequest(currentUserId, itemName, orderedQuantity);
+                new AddItemToCartRequest(currentUser, itemName, orderedQuantity);
         AddItemToCartResponse response = addItemToCartService.execute(request);
         if (response.hasErrors()) {
             response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));

@@ -31,7 +31,7 @@ public class SignOutService {
         UserCreationData userCreationData = new UserCreationData(UserRole.GUEST.getDefaultName(), BLANK, BLANK, UserRole.GUEST);
         User newUser = userService.findGuestWithOpenCart().orElseGet(
                 () -> userService.createUser(userCreationData));
-        request.getUserId().setValue(newUser.getId());
+        request.getUserId().setUser(newUser);
         return new SignOutResponse();
     }
 

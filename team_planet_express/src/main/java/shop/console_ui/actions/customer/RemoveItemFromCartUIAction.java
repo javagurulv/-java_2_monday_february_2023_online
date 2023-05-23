@@ -8,7 +8,7 @@ import shop.core.domain.user.UserRole;
 import shop.core.requests.customer.RemoveItemFromCartRequest;
 import shop.core.responses.customer.RemoveItemFromCartResponse;
 import shop.core.services.actions.customer.RemoveItemFromCartService;
-import shop.core.support.CurrentUserId;
+import shop.core.support.CurrentUser;
 
 @Component
 public class RemoveItemFromCartUIAction extends UIAction {
@@ -22,7 +22,7 @@ public class RemoveItemFromCartUIAction extends UIAction {
     @Autowired
     private RemoveItemFromCartService removeItemFromCartService;
     @Autowired
-    private CurrentUserId currentUserId;
+    private CurrentUser currentUser;
     @Autowired
     private UserCommunication userCommunication;
 
@@ -35,7 +35,7 @@ public class RemoveItemFromCartUIAction extends UIAction {
     public void execute() {
         String itemName = userCommunication.requestInput(PROMPT_TOPIC_ITEM);
         RemoveItemFromCartRequest request =
-                new RemoveItemFromCartRequest(currentUserId, itemName);
+                new RemoveItemFromCartRequest(currentUser, itemName);
         RemoveItemFromCartResponse response = removeItemFromCartService.execute(request);
         if (response.hasErrors()) {
             response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));

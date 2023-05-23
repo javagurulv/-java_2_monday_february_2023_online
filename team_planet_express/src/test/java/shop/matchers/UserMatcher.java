@@ -9,9 +9,9 @@ public class UserMatcher implements ArgumentMatcher<User> {
     private final String name;
     private final String login;
     private final String password;
-    private final UserRole userRole;
+    private final String userRole;
 
-    public UserMatcher(String name, String login, String password, UserRole userRole) {
+    public UserMatcher(String name, String login, String password, String userRole) {
         this.name = name;
         this.login = login;
         this.password = password;

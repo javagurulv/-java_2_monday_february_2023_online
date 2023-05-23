@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import shop.console_ui.actions.UIAction;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
-import shop.core.support.CurrentUserId;
+import shop.core.support.CurrentUser;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class UIMenu {
     @Autowired
     private UserCommunication userCommunication;
     @Autowired
-    private CurrentUserId currentUserId;
+    private CurrentUser currentUser;
 
     public void startUI() {
         while (true) {
@@ -49,7 +49,7 @@ public class UIMenu {
     }
 
     private String getCurrentUserName() {
-        return databaseAccessValidator.getUserById(currentUserId.getValue()).getName();
+        return databaseAccessValidator.getUserById(currentUser.getUser().getId()).getName();
     }
 
 }

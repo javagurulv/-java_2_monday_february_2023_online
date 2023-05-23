@@ -1,11 +1,11 @@
 package shop.core.requests.shared;
 
 import lombok.Value;
-import shop.core.support.CurrentUserId;
+import shop.core.support.CurrentUser;
 
 @Value
 public class SignOutRequest {
 
-    CurrentUserId userId;
+    CurrentUser userId;
 
 }

@@ -1,7 +1,7 @@
 package shop.core.database.in_memory;
 
 import lombok.Data;
-import shop.core.database.ItemDatabase;
+import shop.core.database.ItemRepository;
 import shop.core.domain.item.Item;
 
 import java.math.BigDecimal;
@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Data
-public class InMemoryItemDatabaseImpl implements ItemDatabase {
+public class InMemoryItemRepositoryImpl implements ItemRepository {
 
     private Long nextId = 1L;
     private final List<Item> shopItems = new ArrayList<>();

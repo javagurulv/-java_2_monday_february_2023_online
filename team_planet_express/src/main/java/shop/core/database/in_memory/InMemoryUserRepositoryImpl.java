@@ -1,7 +1,7 @@
 package shop.core.database.in_memory;
 
 import lombok.Data;
-import shop.core.database.UserDatabase;
+import shop.core.database.UserRepository;
 import shop.core.domain.user.User;
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Data
-public class InMemoryUserDatabaseImpl implements UserDatabase {
+public class InMemoryUserRepositoryImpl implements UserRepository {
 
     private Long nextId = 1L;
     private final List<User> users = new ArrayList<>();
@@ -23,9 +23,9 @@ public class InMemoryUserDatabaseImpl implements UserDatabase {
     }
 
     @Override
-    public Optional<User> findById(Long itemId) {
+    public Optional<User> findById(Long userId) {
         return users.stream()
-                .filter(user -> user.getId().equals(itemId))
+                .filter(user -> user.getId().equals(userId))
                 .findFirst();
     }
 

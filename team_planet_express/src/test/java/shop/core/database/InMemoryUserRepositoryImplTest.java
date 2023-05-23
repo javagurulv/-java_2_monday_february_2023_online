@@ -5,7 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import shop.core.database.in_memory.InMemoryUserDatabaseImpl;
+import shop.core.database.in_memory.InMemoryUserRepositoryImpl;
 import shop.core.domain.user.User;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,13 +13,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class InMemoryUserDatabaseImplTest {
+class InMemoryUserRepositoryImplTest {
 
     @Mock
     private User mockUser;
 
     @InjectMocks
-    private InMemoryUserDatabaseImpl database;
+    private InMemoryUserRepositoryImpl database;
 
     @Test
     void shouldIncreaseInSizeAfterSave() {
