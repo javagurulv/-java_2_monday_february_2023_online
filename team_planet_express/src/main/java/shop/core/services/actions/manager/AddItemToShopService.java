@@ -2,6 +2,7 @@ package shop.core.services.actions.manager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import shop.core.database.Repository;
 import shop.core.domain.item.Item;
 import shop.core.requests.manager.AddItemToShopRequest;
@@ -14,6 +15,7 @@ import java.math.RoundingMode;
 import java.util.List;
 
 @Component
+@Transactional
 public class AddItemToShopService {
 
     @Autowired
@@ -30,7 +32,7 @@ public class AddItemToShopService {
         String itemName = request.getItemName();
         BigDecimal price = new BigDecimal(request.getPrice()).setScale(2, RoundingMode.HALF_UP);
         Integer availableQuantity = Integer.parseInt(request.getAvailableQuantity());
-        repository.accessItemDatabase().save(new Item(itemName, price, availableQuantity));
+        repository.accessItemRepository().save(new Item(itemName, price, availableQuantity));
         return new AddItemToShopResponse();
     }
 

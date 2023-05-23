@@ -21,7 +21,7 @@ public class CartValidator {
     private ErrorProcessor errorProcessor;
 
     public Optional<CoreError> validateOpenCartExistsForUserId(User user) {
-        return (repository.accessCartDatabase().findOpenCartForUserId(user).isEmpty())
+        return (repository.accessCartRepository().findOpenCartForUserId(user).isEmpty())
                 ? Optional.of(errorProcessor.getCoreError(FIELD_BUTTON, ERROR_NO_OPEN_CART))
                 : Optional.empty();
     }

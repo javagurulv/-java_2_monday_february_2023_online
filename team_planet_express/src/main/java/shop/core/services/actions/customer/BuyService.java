@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import shop.core.database.Repository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart.CartStatus;
-import shop.core.domain.user.User;
 import shop.core.requests.customer.BuyRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.customer.BuyResponse;
@@ -16,6 +15,7 @@ import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import java.util.List;
 
 @Component
+@Transactional
 public class BuyService {
 
     @Autowired
@@ -27,12 +27,13 @@ public class BuyService {
 
 
     public BuyResponse execute(BuyRequest request) {
+        //TODO Status change ???
         List<CoreError> errors = validator.validate(request);
         if (!errors.isEmpty()) {
             return new BuyResponse(errors);
         }
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getUserId().getUser());
-        repository.accessCartDatabase().changeCartStatus(cart.getId(), CartStatus.CLOSED);
+        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getCurrentUser().getUser());
+        repository.accessCartRepository().changeCartStatus(cart.getId(), CartStatus.CLOSED);
         return new BuyResponse();
     }
 

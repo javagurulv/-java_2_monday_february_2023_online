@@ -2,6 +2,7 @@ package shop.core.services.actions.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import shop.core.database.Repository;
 import shop.core.domain.user.UserRole;
 import shop.core.requests.customer.ListShopItemsRequest;
@@ -9,6 +10,7 @@ import shop.core.responses.customer.ListShopItemsResponse;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 
 @Component
+@Transactional
 public class ListShopItemsService {
 
     @Autowired
@@ -17,7 +19,7 @@ public class ListShopItemsService {
     private DatabaseAccessValidator databaseAccessValidator;
 
     public ListShopItemsResponse execute(ListShopItemsRequest request) {
-        return new ListShopItemsResponse(repository.accessItemDatabase().getAllItems(),
+        return new ListShopItemsResponse(repository.accessItemRepository().getAllItems(),
                 UserRole.valueOf(databaseAccessValidator.getUserById(request.getCurrentUser().getUser().getId()).getUserRole()));
     }
 

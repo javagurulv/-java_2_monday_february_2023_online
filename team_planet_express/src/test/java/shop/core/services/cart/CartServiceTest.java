@@ -40,7 +40,7 @@ class CartServiceTest {
 
     @Test
     void shouldReturnSum() {
-        when(mockRepository.accessCartItemDatabase()).thenReturn(mockCartItemRepository);
+        when(mockRepository.accessCartItemRepository()).thenReturn(mockCartItemRepository);
         when(mockCartItemRepository.getAllCartItemsForCartId(mockCart)).thenReturn(List.of(mockCartItem, mockCartItem, mockCartItem));
         when(mockCartItem.getItem()).thenReturn(mockItem);
         when(mockDatabaseAccessValidator.getItemById(anyLong())).thenReturn(mockItem);

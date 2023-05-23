@@ -38,17 +38,17 @@ public class SignInAndOutAcceptanceTest {
     @Test
     void shouldSignInAsCustomerAndBecomeGuestAfterSignOut() {
         User customer = new User("Morbo", "theAnnihilator", "pathetichumans", UserRole.CUSTOMER);
-        repository.accessUserDatabase().save(customer);
+        repository.accessUserRepository().save(customer);
         SignInResponse signInResponse =
                 signInService.execute(new SignInRequest(currentUser, "theAnnihilator", "pathetichumans"));
         assertFalse(signInResponse.hasErrors());
-        assertEquals(currentUser.getUser().getId(), repository.accessUserDatabase().findByLoginName("theAnnihilator").orElseThrow().getId());
+        assertEquals(currentUser.getUser().getId(), repository.accessUserRepository().findByLoginName("theAnnihilator").orElseThrow().getId());
         assertEquals(UserRole.CUSTOMER.toString(), signInResponse.getUser().getUserRole());
         assertEquals("Morbo", signInResponse.getUser().getName());
         SignOutResponse signOutResponse =
                 signOutService.execute(new SignOutRequest(currentUser));
         assertFalse(signOutResponse.hasErrors());
-        assertEquals(UserRole.GUEST.toString(), repository.accessUserDatabase().findById(currentUser.getUser().getId()).orElseThrow().getUserRole());
+        assertEquals(UserRole.GUEST.toString(), repository.accessUserRepository().findById(currentUser.getUser().getId()).orElseThrow().getUserRole());
     }
 
 }

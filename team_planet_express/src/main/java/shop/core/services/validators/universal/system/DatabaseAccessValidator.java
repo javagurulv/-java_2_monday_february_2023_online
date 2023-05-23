@@ -16,32 +16,32 @@ public class DatabaseAccessValidator {
     private Repository repository;
 
     public User getUserById(Long userId) {
-        return repository.accessUserDatabase().findById(userId)
+        return repository.accessUserRepository().findById(userId)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 
     public User getUserByLoginName(String login) {
-        return repository.accessUserDatabase().findByLoginName(login)
+        return repository.accessUserRepository().findByLoginName(login)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 
     public Item getItemById(Long itemId) {
-        return repository.accessItemDatabase().findById(itemId)
+        return repository.accessItemRepository().findById(itemId)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 
     public Item getItemByName(String itemName) {
-        return repository.accessItemDatabase().findByName(itemName)
+        return repository.accessItemRepository().findByName(itemName)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 
     public Cart getOpenCartByUserId(User user) {
-        return repository.accessCartDatabase().findOpenCartForUserId(user)
+        return repository.accessCartRepository().findOpenCartForUserId(user)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 
     public CartItem getCartItemByCartIdAndItemId(Cart cart, Item item) {
-        return repository.accessCartItemDatabase().findByCartIdAndItemId(cart, item)
+        return repository.accessCartItemRepository().findByCartIdAndItemId(cart, item)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 

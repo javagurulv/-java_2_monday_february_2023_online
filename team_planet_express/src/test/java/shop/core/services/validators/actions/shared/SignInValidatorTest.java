@@ -53,10 +53,10 @@ class SignInValidatorTest {
 
     @Test
     void shouldValidateUserIdIsPresent() {
-        when(mockRequest.getUserId()).thenReturn(mockUserId);
+        when(mockRequest.getCurrentUser()).thenReturn(mockUserId);
         when(mockRequest.getLoginName()).thenReturn("login name");
         when(mockRequest.getPassword()).thenReturn("password");
-        when(mockRepository.accessUserDatabase()).thenReturn(mockUserRepository);
+        when(mockRepository.accessUserRepository()).thenReturn(mockUserRepository);
         when(mockUserRepository.findByLoginName("login name")).thenReturn(Optional.of(mockUser));
         when(mockUser.getPassword()).thenReturn("password");
         when(mockDatabaseAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
@@ -68,7 +68,7 @@ class SignInValidatorTest {
     void shouldValidateLoginNameIsPresent() {
         when(mockRequest.getLoginName()).thenReturn("login name");
         when(mockRequest.getPassword()).thenReturn("password");
-        when(mockRepository.accessUserDatabase()).thenReturn(mockUserRepository);
+        when(mockRepository.accessUserRepository()).thenReturn(mockUserRepository);
         when(mockUserRepository.findByLoginName("login name")).thenReturn(Optional.of(mockUser));
         when(mockUser.getPassword()).thenReturn("password");
         when(mockDatabaseAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
@@ -80,7 +80,7 @@ class SignInValidatorTest {
     @Test
     void shouldReturnErrorForNonexistentLoginName() {
         when(mockRequest.getLoginName()).thenReturn("login name");
-        when(mockRepository.accessUserDatabase()).thenReturn(mockUserRepository);
+        when(mockRepository.accessUserRepository()).thenReturn(mockUserRepository);
         when(mockUserRepository.findByLoginName("login name")).thenReturn(Optional.empty());
         when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
         validator.validate(mockRequest);
@@ -91,7 +91,7 @@ class SignInValidatorTest {
     void shouldValidatePasswordIsPresent() {
         when(mockRequest.getLoginName()).thenReturn("login name");
         when(mockRequest.getPassword()).thenReturn("password");
-        when(mockRepository.accessUserDatabase()).thenReturn(mockUserRepository);
+        when(mockRepository.accessUserRepository()).thenReturn(mockUserRepository);
         when(mockUserRepository.findByLoginName("login name")).thenReturn(Optional.of(mockUser));
         when(mockUser.getPassword()).thenReturn("password");
         when(mockDatabaseAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
@@ -104,7 +104,7 @@ class SignInValidatorTest {
     void shouldReturnErrorForWrongPassword() {
         when(mockRequest.getLoginName()).thenReturn("login name");
         when(mockRequest.getPassword()).thenReturn("wrong password");
-        when(mockRepository.accessUserDatabase()).thenReturn(mockUserRepository);
+        when(mockRepository.accessUserRepository()).thenReturn(mockUserRepository);
         when(mockUserRepository.findByLoginName("login name")).thenReturn(Optional.of(mockUser));
         when(mockDatabaseAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
         when(mockUser.getPassword()).thenReturn("password");
@@ -124,7 +124,7 @@ class SignInValidatorTest {
     void shouldReturnNoErrorsForValidInput() {
         when(mockRequest.getLoginName()).thenReturn("login name");
         when(mockRequest.getPassword()).thenReturn("password");
-        when(mockRepository.accessUserDatabase()).thenReturn(mockUserRepository);
+        when(mockRepository.accessUserRepository()).thenReturn(mockUserRepository);
         when(mockUserRepository.findByLoginName("login name")).thenReturn(Optional.of(mockUser));
         when(mockDatabaseAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
         when(mockUser.getPassword()).thenReturn("password");

@@ -46,16 +46,16 @@ public class SignUpAndOrderAnItemAcceptanceTest {
         assertFalse(signUpResponse.hasErrors());
         User newUser = signUpResponse.getUser();
         assertEquals(UserRole.CUSTOMER.toString(), newUser.getUserRole());
-        assertTrue(repository.accessCartDatabase().findOpenCartForUserId(newUser).isPresent());
-        Item orderedItem = repository.accessItemDatabase().findByName("Lightspeed Briefs").orElseThrow();
+        assertTrue(repository.accessCartRepository().findOpenCartForUserId(newUser).isPresent());
+        Item orderedItem = repository.accessItemRepository().findByName("Lightspeed Briefs").orElseThrow();
         AddItemToCartResponse addItemToCartResponse =
                 addItemToCartService.execute(new AddItemToCartRequest(currentUser, orderedItem.getName(), "1"));
         assertFalse(addItemToCartResponse.hasErrors());
-        Cart userCart = repository.accessCartDatabase().findOpenCartForUserId(newUser).get();
-        List<CartItem> cartItems = repository.accessCartItemDatabase().getAllCartItemsForCartId(userCart);
+        Cart userCart = repository.accessCartRepository().findOpenCartForUserId(newUser).get();
+        List<CartItem> cartItems = repository.accessCartItemRepository().getAllCartItemsForCartId(userCart);
         assertEquals(1, cartItems.size());
         CartItem cartItem = cartItems.get(0);
-        Item originalItem = repository.accessItemDatabase().findById(cartItem.getItem().getId()).orElseThrow();
+        Item originalItem = repository.accessItemRepository().findById(cartItem.getItem().getId()).orElseThrow();
         assertEquals("Lightspeed Briefs", originalItem.getName());
         assertEquals(1, cartItem.getOrderedQuantity());
         assertEquals(2, originalItem.getAvailableQuantity());

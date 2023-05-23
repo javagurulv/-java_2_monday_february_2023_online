@@ -18,16 +18,16 @@ public class UserService {
     private Repository repository;
 
     public User createUser(UserCreationData userCreationData) {
-        User createdUser = repository.accessUserDatabase()
+        User createdUser = repository.accessUserRepository()
                 .save(new User(userCreationData.getName(), userCreationData.getLoginName(), userCreationData.getPassword(), userCreationData.getUserRole()));
-        repository.accessCartDatabase().save(new Cart(createdUser));
+        repository.accessCartRepository().save(new Cart(createdUser));
         return createdUser;
     }
 
     public Optional<User> findGuestWithOpenCart() {
-        return repository.accessUserDatabase().getAllUsers().stream()
+        return repository.accessUserRepository().getAllUsers().stream()
                 .filter(user -> UserRole.GUEST.toString().equals(user.getUserRole()))
-                .filter(user -> repository.accessCartDatabase().findOpenCartForUserId(user).isPresent())
+                .filter(user -> repository.accessCartRepository().findOpenCartForUserId(user).isPresent())
                 .findFirst();
     }
 

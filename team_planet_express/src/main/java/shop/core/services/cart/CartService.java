@@ -17,7 +17,7 @@ public class CartService {
     private DatabaseAccessValidator databaseAccessValidator;
 
     public BigDecimal getSum(Cart cart) {
-        return repository.accessCartItemDatabase().getAllCartItemsForCartId(cart)
+        return repository.accessCartItemRepository().getAllCartItemsForCartId(cart)
                 .stream()
                 .map(cartItem -> databaseAccessValidator.getItemById(cartItem.getItem().getId()).getPrice()
                         .multiply(new BigDecimal(cartItem.getOrderedQuantity())))

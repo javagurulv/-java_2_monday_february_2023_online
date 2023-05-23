@@ -45,7 +45,7 @@ class AddItemToShopValidatorTest {
     @Test
     void shouldValidateName() {
         when(mockRequest.getItemName()).thenReturn("name");
-        when(mockRepository.accessItemDatabase()).thenReturn(mockItemRepository);
+        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         validator.validate(mockRequest);
         verify(mockInputStringValidator)
                 .validateIsPresent(argThat(new InputStringValidatorDataMatcher("name", "name", "Item name")));
@@ -56,7 +56,7 @@ class AddItemToShopValidatorTest {
     @Test
     void shouldReturnErrorForExistingName() {
         when(mockRequest.getItemName()).thenReturn("name");
-        when(mockRepository.accessItemDatabase()).thenReturn(mockItemRepository);
+        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         when(mockItemRepository.findByName("name")).thenReturn(Optional.of(mockItem));
         when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
         validator.validate(mockRequest);

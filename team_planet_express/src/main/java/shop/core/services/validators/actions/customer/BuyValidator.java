@@ -34,18 +34,18 @@ public class BuyValidator {
     private ErrorProcessor errorProcessor;
 
     public List<CoreError> validate(BuyRequest request) {
-        userIdValidator.validateCurrentUserIdIsPresent(request.getUserId());
+        userIdValidator.validateCurrentUserIdIsPresent(request.getCurrentUser());
         List<CoreError> errors = new ArrayList<>();
-        cartValidator.validateOpenCartExistsForUserId(request.getUserId().getUser()).ifPresent(errors::add);
+        cartValidator.validateOpenCartExistsForUserId(request.getCurrentUser().getUser()).ifPresent(errors::add);
         if (errors.isEmpty()) {
-            validateCartIsNotEmpty(request.getUserId().getUser()).ifPresent(errors::add);
+            validateCartIsNotEmpty(request.getCurrentUser().getUser()).ifPresent(errors::add);
         }
         return errors;
     }
 
     private Optional<CoreError> validateCartIsNotEmpty(User user) {
         Cart cart = databaseAccessValidator.getOpenCartByUserId(user);
-        return (repository.accessCartItemDatabase().getAllCartItemsForCartId(cart).size() == 0)
+        return (repository.accessCartItemRepository().getAllCartItemsForCartId(cart).size() == 0)
                 ? Optional.of(errorProcessor.getCoreError(FIELD_NAME, ERROR_CART_EMPTY))
                 : Optional.empty();
     }

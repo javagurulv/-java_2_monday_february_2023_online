@@ -2,12 +2,12 @@ package shop.core.database;
 
 public interface Repository {
 
-    UserRepository accessUserDatabase();
+    UserRepository accessUserRepository();
 
-    ItemRepository accessItemDatabase();
+    ItemRepository accessItemRepository();
 
-    CartRepository accessCartDatabase();
+    CartRepository accessCartRepository();
 
-    CartItemRepository accessCartItemDatabase();
+    CartItemRepository accessCartItemRepository();
 
 }

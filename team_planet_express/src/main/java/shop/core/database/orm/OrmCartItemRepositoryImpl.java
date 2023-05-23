@@ -40,8 +40,8 @@ public class OrmCartItemRepositoryImpl implements CartItemRepository {
     @Override
     public void deleteByID(Long id) {
         //TODO ???? deprecated
-        Query<CartItem> query = sessionFactory.getCurrentSession().createQuery(
-                "DELETE CartItem WHERE id = :id", CartItem.class);
+        Query query = sessionFactory.getCurrentSession().createQuery(
+                "DELETE CartItem WHERE id = :id");
         query.setParameter("id", id);
         query.executeUpdate();
     }

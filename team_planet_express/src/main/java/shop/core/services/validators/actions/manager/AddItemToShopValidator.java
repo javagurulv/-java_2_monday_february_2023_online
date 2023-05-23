@@ -64,7 +64,7 @@ public class AddItemToShopValidator {
 
     private Optional<CoreError> validateItemNameDoesNotAlreadyExist(String itemName) {
         return (itemName != null && !itemName.isBlank() &&
-                repository.accessItemDatabase().findByName(itemName).isPresent())
+                repository.accessItemRepository().findByName(itemName).isPresent())
                 ? Optional.of(errorProcessor.getCoreError(FIELD_NAME, ERROR_ITEM_EXISTS))
                 : Optional.empty();
     }

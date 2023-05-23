@@ -17,22 +17,22 @@ public class OrmRepositoryImpl implements Repository {
     private CartItemRepository cartItemRepository;
 
     @Override
-    public UserRepository accessUserDatabase() {
+    public UserRepository accessUserRepository() {
         return userRepository;
     }
 
     @Override
-    public ItemRepository accessItemDatabase() {
+    public ItemRepository accessItemRepository() {
         return itemRepository;
     }
 
     @Override
-    public CartRepository accessCartDatabase() {
+    public CartRepository accessCartRepository() {
         return cartRepository;
     }
 
     @Override
-    public CartItemRepository accessCartItemDatabase() {
+    public CartItemRepository accessCartItemRepository() {
         return cartItemRepository;
     }
 

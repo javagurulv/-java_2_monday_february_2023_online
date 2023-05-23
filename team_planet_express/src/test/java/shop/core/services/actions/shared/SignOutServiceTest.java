@@ -52,7 +52,7 @@ public class SignOutServiceTest {
     void shouldReturnNoErrorsForValidRequest() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockUserService.findGuestWithOpenCart()).thenReturn(Optional.of(mockUser));
-        when(mockRequest.getUserId()).thenReturn(mockCurrentUser);
+        when(mockRequest.getCurrentUser()).thenReturn(mockCurrentUser);
         SignOutResponse response = service.execute(mockRequest);
         assertNull(response.getErrors());
     }
@@ -61,7 +61,7 @@ public class SignOutServiceTest {
     void shouldUseExistingGuestIfPresent() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockUserService.findGuestWithOpenCart()).thenReturn(Optional.of(mockUser));
-        when(mockRequest.getUserId()).thenReturn(mockCurrentUser);
+        when(mockRequest.getCurrentUser()).thenReturn(mockCurrentUser);
         service.execute(mockRequest);
         verify(mockCurrentUser).setUser(mockUser);
         verify(mockUserService, times(0)).createUser(any(UserCreationData.class));
@@ -72,7 +72,7 @@ public class SignOutServiceTest {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockUserService.findGuestWithOpenCart()).thenReturn(Optional.empty());
         when(mockUserService.createUser(any(UserCreationData.class))).thenReturn(mockUser);
-        when(mockRequest.getUserId()).thenReturn(mockCurrentUser);
+        when(mockRequest.getCurrentUser()).thenReturn(mockCurrentUser);
         service.execute(mockRequest);
         verify(mockCurrentUser).setUser(mockUser);
         verify(mockUserService).createUser(any(UserCreationData.class));
@@ -82,7 +82,7 @@ public class SignOutServiceTest {
     void shouldChangeUserId() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockUserService.createUser(any(UserCreationData.class))).thenReturn(mockUser);
-        when(mockRequest.getUserId()).thenReturn(mockCurrentUser);
+        when(mockRequest.getCurrentUser()).thenReturn(mockCurrentUser);
         service.execute(mockRequest);
         verify(mockCurrentUser).setUser(mockUser);
     }

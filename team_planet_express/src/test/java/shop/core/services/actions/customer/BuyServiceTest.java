@@ -41,9 +41,9 @@ class BuyServiceTest {
 
     @Test
     void shouldCloseCart() {
-        when(mockRepository.accessCartDatabase()).thenReturn(mockCartRepository);
+        when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
         when(mockValidator.validate(any())).thenReturn(List.of());
-        when(mockRequest.getUserId()).thenReturn(mockCurrentUser);
+        when(mockRequest.getCurrentUser()).thenReturn(mockCurrentUser);
         when(mockDatabaseAccessValidator.getOpenCartByUserId(any())).thenReturn(mockCart);
         when(mockCart.getId()).thenReturn(1L);
         service.execute(mockRequest);

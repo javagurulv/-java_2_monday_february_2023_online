@@ -6,6 +6,6 @@ import shop.core.support.CurrentUser;
 @Value
 public class BuyRequest {
 
-    CurrentUser userId;
+    CurrentUser currentUser;
 
 }

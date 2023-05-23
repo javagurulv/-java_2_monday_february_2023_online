@@ -27,7 +27,7 @@ public class BuyTester extends Tester {
     public BuyTester checkCartIsClosed() {
         Repository repository = applicationContext.getBean(Repository.class);
         CurrentUser currentUser = applicationContext.getBean(CurrentUser.class);
-        Optional<Cart> cart = repository.accessCartDatabase().findOpenCartForUserId(currentUser.getUser());
+        Optional<Cart> cart = repository.accessCartRepository().findOpenCartForUserId(currentUser.getUser());
         assertTrue(cart.isEmpty());
         return this;
     }
