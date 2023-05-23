@@ -2,7 +2,6 @@ package shop.matchers;
 
 import org.mockito.ArgumentMatcher;
 import shop.core.domain.user.User;
-import shop.core.domain.user.UserRole;
 
 public class UserMatcher implements ArgumentMatcher<User> {
 
