@@ -12,10 +12,10 @@ import shop.console_ui.actions.shared.ExitUIAction;
 import shop.console_ui.actions.shared.SearchItemUIAction;
 import shop.console_ui.actions.shared.SignInUIAction;
 import shop.console_ui.actions.shared.SignOutUIAction;
-import shop.core.database.Database;
+import shop.core.database.Repository;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
-import shop.core.support.CurrentUserId;
+import shop.core.support.CurrentUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +26,9 @@ import java.util.stream.Collectors;
 public class UIActionsList {
     private final List<UIAction> uiActionsList;
     @Autowired
-    Database database;
+    Repository repository;
     @Autowired
-    CurrentUserId currentUserId;
+    CurrentUser currentUser;
 
     @Autowired
     public UIActionsList(List<UIAction> uiActionsList) {
@@ -36,8 +36,8 @@ public class UIActionsList {
     }
 
     public List<UIAction> getUIActionsListForUserRole() {
-        Optional<User> currentUser = database.accessUserDatabase().findById(currentUserId.getValue());
-        UserRole filterRole = currentUser.isEmpty() ? UserRole.GUEST : currentUser.get().getUserRole();
+        Optional<User> currentUser = repository.accessUserDatabase().findById(this.currentUser.getUser().getId());
+        UserRole filterRole = currentUser.isEmpty() ? UserRole.GUEST : UserRole.valueOf(currentUser.get().getUserRole());
         return uiActionsList.stream()
                 .filter(uiAction -> filterRole.checkPermission(uiAction.getAccessNumber()))
                 .collect(Collectors.toList());

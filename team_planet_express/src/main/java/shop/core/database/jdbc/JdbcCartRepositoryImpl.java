@@ -4,19 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Component;
-import shop.core.database.CartDatabase;
+import shop.core.database.CartRepository;
 import shop.core.database.jdbc.row_mapper.CartRowMapper;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart.CartStatus;
+import shop.core.domain.user.User;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
-@Component
-public class JdbcCartDatabaseImpl implements CartDatabase {
+//@Component
+public class JdbcCartRepositoryImpl implements CartRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -27,8 +27,8 @@ public class JdbcCartDatabaseImpl implements CartDatabase {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            statement.setLong(1, cart.getUserId());
-            statement.setString(2, cart.getCartStatus().toString());
+            statement.setLong(1, cart.getUser().getId());
+            statement.setString(2, cart.getStatus().toString());
             return statement;
         }, keyHolder);
         if (keyHolder.getKey() != null) {
@@ -38,9 +38,9 @@ public class JdbcCartDatabaseImpl implements CartDatabase {
     }
 
     @Override
-    public Optional<Cart> findOpenCartForUserId(Long userId) {
+    public Optional<Cart> findOpenCartForUserId(User user) {
         String sql = "SELECT * FROM cart WHERE user_id = ? AND status = 'OPEN';";
-        Object[] args = new Object[]{userId};
+        Object[] args = new Object[]{user.getId()};
         return jdbcTemplate.query(sql, new CartRowMapper(), args).stream().findFirst();
     }
 

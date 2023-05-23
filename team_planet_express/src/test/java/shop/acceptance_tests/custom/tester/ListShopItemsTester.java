@@ -4,7 +4,7 @@ import org.springframework.context.ApplicationContext;
 import shop.core.requests.customer.ListShopItemsRequest;
 import shop.core.responses.customer.ListShopItemsResponse;
 import shop.core.services.actions.customer.ListShopItemsService;
-import shop.core.support.CurrentUserId;
+import shop.core.support.CurrentUser;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -18,7 +18,7 @@ public class ListShopItemsTester extends Tester {
 
     public ListShopItemsTester showListShopItems() {
         ListShopItemsService listShopItemsService = applicationContext.getBean(ListShopItemsService.class);
-        ListShopItemsRequest listShopItemsRequest = new ListShopItemsRequest(applicationContext.getBean(CurrentUserId.class));
+        ListShopItemsRequest listShopItemsRequest = new ListShopItemsRequest(applicationContext.getBean(CurrentUser.class));
         listShopItemsResponse = listShopItemsService.execute(listShopItemsRequest);
         return this;
     }

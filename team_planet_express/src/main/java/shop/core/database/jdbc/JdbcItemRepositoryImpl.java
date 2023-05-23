@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
-import shop.core.database.ItemDatabase;
+import shop.core.database.ItemRepository;
 import shop.core.database.jdbc.row_mapper.ItemRowMapper;
 import shop.core.domain.item.Item;
 
@@ -15,8 +15,8 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
-@Component
-public class JdbcItemDatabaseImpl implements ItemDatabase {
+//@Component
+public class JdbcItemRepositoryImpl implements ItemRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

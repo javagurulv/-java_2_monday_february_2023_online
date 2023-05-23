@@ -2,10 +2,12 @@ package shop.core.services.actions.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.database.Database;
+import org.springframework.transaction.annotation.Transactional;
+import shop.core.database.Repository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
 import shop.core.domain.item.Item;
+import shop.core.domain.user.User;
 import shop.core.requests.customer.AddItemToCartRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.customer.AddItemToCartResponse;
@@ -16,10 +18,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
+@Transactional
 public class AddItemToCartService {
 
     @Autowired
-    private Database database;
+    private Repository repository;
     @Autowired
     private AddItemToCartValidator validator;
     @Autowired
@@ -30,7 +33,7 @@ public class AddItemToCartService {
         if (!errors.isEmpty()) {
             return new AddItemToCartResponse(errors);
         }
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getUserId().getValue());
+        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getUserId().getUser());
         Item item = databaseAccessValidator.getItemByName(request.getItemName());
         Integer orderedQuantity = Integer.parseInt(request.getOrderedQuantity());
         addItemToCart(cart, item, orderedQuantity);
@@ -39,18 +42,18 @@ public class AddItemToCartService {
     }
 
     private void addItemToCart(Cart cart, Item item, Integer orderedQuantity) {
-        Optional<CartItem> cartItem = database.accessCartItemDatabase().findByCartIdAndItemId(cart.getId(), item.getId());
+        Optional<CartItem> cartItem = repository.accessCartItemDatabase().findByCartIdAndItemId(cart, item);
         if (cartItem.isEmpty()) {
-            database.accessCartItemDatabase().save(new CartItem(cart.getId(), item.getId(), orderedQuantity));
+            repository.accessCartItemDatabase().save(new CartItem(cart, item, orderedQuantity));
         } else {
             Integer newCartItemQuantity = cartItem.get().getOrderedQuantity() + orderedQuantity;
-            database.accessCartItemDatabase().changeOrderedQuantity(cartItem.get().getId(), newCartItemQuantity);
+            repository.accessCartItemDatabase().changeOrderedQuantity(cartItem.get().getId(), newCartItemQuantity);
         }
     }
 
     private void changeItemAvailability(Item item, Integer orderedQuantity) {
         Integer newAvailableQuantity = item.getAvailableQuantity() - orderedQuantity;
-        database.accessItemDatabase().changeAvailableQuantity(item.getId(), newAvailableQuantity);
+        repository.accessItemDatabase().changeAvailableQuantity(item.getId(), newAvailableQuantity);
     }
 
 }

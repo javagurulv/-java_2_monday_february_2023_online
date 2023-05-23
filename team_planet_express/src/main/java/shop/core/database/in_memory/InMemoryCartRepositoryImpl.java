@@ -1,9 +1,10 @@
 package shop.core.database.in_memory;
 
 import lombok.Data;
-import shop.core.database.CartDatabase;
+import shop.core.database.CartRepository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart.CartStatus;
+import shop.core.domain.user.User;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Data
-public class InMemoryCartDatabaseImpl implements CartDatabase {
+public class InMemoryCartRepositoryImpl implements CartRepository {
 
     private Long nextId = 1L;
     private final List<Cart> carts = new ArrayList<>();
@@ -25,10 +26,10 @@ public class InMemoryCartDatabaseImpl implements CartDatabase {
     }
 
     @Override
-    public Optional<Cart> findOpenCartForUserId(Long userId) {
+    public Optional<Cart> findOpenCartForUserId(User user) {
         return carts.stream()
-                .filter(cart -> cart.getUserId().equals(userId))
-                .filter(cart -> cart.getCartStatus().equals(CartStatus.OPEN))
+                .filter(cart -> cart.getUser().getId().equals(user.getId()))
+                .filter(cart -> cart.getStatus().equals(CartStatus.OPEN.toString()))
                 .findFirst();
     }
 
@@ -37,7 +38,7 @@ public class InMemoryCartDatabaseImpl implements CartDatabase {
         carts.stream()
                 .filter(cart -> cart.getId().equals(id))
                 .findFirst()
-                .ifPresent(cart -> cart.setCartStatus(newCartStatus));
+                .ifPresent(cart -> cart.setStatus(newCartStatus.toString()));
     }
 
     public void changeLastActionDate(Long id, LocalDateTime newLastActionDate) {

@@ -2,16 +2,17 @@ package shop.core.database.jdbc.cleaner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import shop.core.database.DatabaseCleaner;
 
 import java.util.List;
 
-@Component
-public class DatabaseCleaner {
+//@Component
+public class JdbcDatabaseCleanerImpl implements DatabaseCleaner {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Override
     public void clean() {
         getTableNames().forEach(tableName -> jdbcTemplate.execute("DELETE FROM " + tableName));
     }
@@ -21,7 +22,7 @@ public class DatabaseCleaner {
                 "cart_item",
                 "cart",
                 "item",
-                "user"
+                "shop_user"
         );
     }
 

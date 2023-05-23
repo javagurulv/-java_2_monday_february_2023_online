@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
-import shop.core.database.UserDatabase;
+import shop.core.database.UserRepository;
 import shop.core.database.jdbc.row_mapper.UserRowMapper;
 import shop.core.domain.user.User;
 
@@ -14,15 +14,15 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
-@Component
-public class JdbcUserDatabaseImpl implements UserDatabase {
+//@Component
+public class JdbcUserRepositoryImpl implements UserRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Override
     public User save(User user) {
-        String sql = "INSERT INTO `user` (name, login, password, role) VALUES (?, ?, ?, ?);";
+        String sql = "INSERT INTO shop_user (name, login, password, role) VALUES (?, ?, ?, ?);";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -39,22 +39,22 @@ public class JdbcUserDatabaseImpl implements UserDatabase {
     }
 
     @Override
-    public Optional<User> findById(Long itemId) {
-        String sql = "SELECT * FROM `user` WHERE id = ?;";
-        Object[] args = new Object[]{itemId};
+    public Optional<User> findById(Long userId) {
+        String sql = "SELECT * FROM shop_user WHERE id = ?;";
+        Object[] args = new Object[]{userId};
         return jdbcTemplate.query(sql, new UserRowMapper(), args).stream().findFirst();
     }
 
     @Override
     public Optional<User> findByLoginName(String login) {
-        String sql = "SELECT * FROM `user` WHERE login = ?;";
+        String sql = "SELECT * FROM shop_user WHERE login = ?;";
         Object[] args = new Object[]{login};
         return jdbcTemplate.query(sql, new UserRowMapper(), args).stream().findFirst();
     }
 
     @Override
     public List<User> getAllUsers() {
-        String sql = "SELECT * FROM `user`;";
+        String sql = "SELECT * FROM shop_user;";
         return jdbcTemplate.query(sql, new UserRowMapper());
     }
 

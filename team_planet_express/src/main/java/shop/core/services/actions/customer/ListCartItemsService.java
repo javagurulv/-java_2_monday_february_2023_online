@@ -2,10 +2,11 @@ package shop.core.services.actions.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.database.Database;
+import shop.core.database.Repository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
 import shop.core.domain.item.Item;
+import shop.core.domain.user.User;
 import shop.core.requests.customer.ListCartItemsRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.customer.ListCartItemsResponse;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 public class ListCartItemsService {
 
     @Autowired
-    private Database database;
+    private Repository repository;
     @Autowired
     private ListCartItemValidator validator;
     @Autowired
@@ -35,17 +36,17 @@ public class ListCartItemsService {
         if (!errors.isEmpty()) {
             return new ListCartItemsResponse(errors);
         }
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getUserId().getValue());
-        List<CartItem> cartItems = database.accessCartItemDatabase().getAllCartItemsForCartId(cart.getId());
+        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getUserId().getUser());
+        List<CartItem> cartItems = repository.accessCartItemDatabase().getAllCartItemsForCartId(cart);
         List<CartItemForList> cartItemsForList = cartItems.stream()
                 .map(this::createCartItemForList)
                 .collect(Collectors.toList());
-        BigDecimal cartTotal = cartService.getSum(cart.getUserId());
+        BigDecimal cartTotal = cartService.getSum(cart);
         return new ListCartItemsResponse(cartItemsForList, cartTotal);
     }
 
     private CartItemForList createCartItemForList(CartItem cartItem) {
-        Item item = databaseAccessValidator.getItemById(cartItem.getItemId());
+        Item item = databaseAccessValidator.getItemById(cartItem.getItem().getId());
         return new CartItemForList(item.getName(), item.getPrice(), cartItem.getOrderedQuantity());
     }
 

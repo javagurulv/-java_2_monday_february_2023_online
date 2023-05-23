@@ -2,7 +2,7 @@ package shop.core.services.validators.actions.manager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.database.Database;
+import shop.core.database.Repository;
 import shop.core.requests.manager.AddItemToShopRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
@@ -25,7 +25,7 @@ public class AddItemToShopValidator {
     private static final String ERROR_ITEM_EXISTS = "VDT-AIS-IAE";
 
     @Autowired
-    private Database database;
+    private Repository repository;
     @Autowired
     private InputStringValidator inputStringValidator;
     @Autowired
@@ -64,7 +64,7 @@ public class AddItemToShopValidator {
 
     private Optional<CoreError> validateItemNameDoesNotAlreadyExist(String itemName) {
         return (itemName != null && !itemName.isBlank() &&
-                database.accessItemDatabase().findByName(itemName).isPresent())
+                repository.accessItemDatabase().findByName(itemName).isPresent())
                 ? Optional.of(errorProcessor.getCoreError(FIELD_NAME, ERROR_ITEM_EXISTS))
                 : Optional.empty();
     }

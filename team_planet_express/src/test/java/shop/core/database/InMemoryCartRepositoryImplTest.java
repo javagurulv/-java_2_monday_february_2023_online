@@ -5,9 +5,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import shop.core.database.in_memory.InMemoryCartDatabaseImpl;
+import shop.core.database.in_memory.InMemoryCartRepositoryImpl;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart.CartStatus;
+import shop.core.domain.user.User;
 
 import java.time.LocalDateTime;
 
@@ -17,13 +18,15 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class InMemoryCartDatabaseImplTest {
+class InMemoryCartRepositoryImplTest {
 
     @Mock
     private Cart mockCart;
+    @Mock
+    private User mockUser;
 
     @InjectMocks
-    private InMemoryCartDatabaseImpl database;
+    private InMemoryCartRepositoryImpl database;
 
     @Test
     void shouldIncreaseInSizeAfterSave() {
@@ -33,18 +36,18 @@ class InMemoryCartDatabaseImplTest {
 
     @Test
     void shouldReturnFoundOpenCart() {
-        when(mockCart.getUserId()).thenReturn(1L);
-        when(mockCart.getCartStatus()).thenReturn(CartStatus.OPEN);
+        when(mockCart.getUser()).thenReturn(mockUser);
+        when(mockCart.getStatus()).thenReturn("OPEN");
         database.getCarts().add(mockCart);
-        assertTrue(database.findOpenCartForUserId(1L).isPresent());
+        assertTrue(database.findOpenCartForUserId(mockUser).isPresent());
     }
 
     @Test
     void shouldReturnEmptyOptionalWhenNoOpenCarts() {
-        when(mockCart.getUserId()).thenReturn(1L);
-        when(mockCart.getCartStatus()).thenReturn(CartStatus.CLOSED);
+        when(mockCart.getUser()).thenReturn(mockUser);
+        when(mockCart.getStatus()).thenReturn("CLOSED");
         database.getCarts().add(mockCart);
-        assertTrue(database.findOpenCartForUserId(1L).isEmpty());
+        assertTrue(database.findOpenCartForUserId(mockUser).isEmpty());
     }
 
     @Test
@@ -52,7 +55,7 @@ class InMemoryCartDatabaseImplTest {
         when(mockCart.getId()).thenReturn(1L);
         database.getCarts().add(mockCart);
         database.changeCartStatus(1L, CartStatus.CLOSED);
-        verify(mockCart).setCartStatus(CartStatus.CLOSED);
+        verify(mockCart).setStatus("CLOSED");
     }
 
     @Test

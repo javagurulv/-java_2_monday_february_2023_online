@@ -5,8 +5,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import shop.core.database.Database;
-import shop.core.database.ItemDatabase;
+import shop.core.database.Repository;
+import shop.core.database.ItemRepository;
 import shop.core.domain.item.Item;
 import shop.core.requests.manager.AddItemToShopRequest;
 import shop.core.responses.CoreError;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.*;
 class AddItemToShopValidatorTest {
 
     @Mock
-    private Database mockDatabase;
+    private Repository mockRepository;
     @Mock
     private InputStringValidator mockInputStringValidator;
     @Mock
@@ -33,7 +33,7 @@ class AddItemToShopValidatorTest {
     @Mock
     private AddItemToShopRequest mockRequest;
     @Mock
-    private ItemDatabase mockItemDatabase;
+    private ItemRepository mockItemRepository;
     @Mock
     private Item mockItem;
     @Mock
@@ -45,7 +45,7 @@ class AddItemToShopValidatorTest {
     @Test
     void shouldValidateName() {
         when(mockRequest.getItemName()).thenReturn("name");
-        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
+        when(mockRepository.accessItemDatabase()).thenReturn(mockItemRepository);
         validator.validate(mockRequest);
         verify(mockInputStringValidator)
                 .validateIsPresent(argThat(new InputStringValidatorDataMatcher("name", "name", "Item name")));
@@ -56,8 +56,8 @@ class AddItemToShopValidatorTest {
     @Test
     void shouldReturnErrorForExistingName() {
         when(mockRequest.getItemName()).thenReturn("name");
-        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
-        when(mockItemDatabase.findByName("name")).thenReturn(Optional.of(mockItem));
+        when(mockRepository.accessItemDatabase()).thenReturn(mockItemRepository);
+        when(mockItemRepository.findByName("name")).thenReturn(Optional.of(mockItem));
         when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
         validator.validate(mockRequest);
         verify(mockErrorProcessor).getCoreError("name", "VDT-AIS-IAE");

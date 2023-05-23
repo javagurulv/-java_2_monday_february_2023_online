@@ -25,7 +25,7 @@ public class SignInService {
             return new SignInResponse(errors);
         }
         User newUser = databaseAccessValidator.getUserByLoginName(request.getLoginName());
-        request.getUserId().setValue(newUser.getId());
+        request.getUserId().setUser(newUser);
         return new SignInResponse(newUser);
     }
 

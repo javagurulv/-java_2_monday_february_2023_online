@@ -5,15 +5,15 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import shop.core.database.Database;
-import shop.core.database.UserDatabase;
+import shop.core.database.Repository;
+import shop.core.database.UserRepository;
 import shop.core.domain.user.User;
 import shop.core.requests.guest.SignUpRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
-import shop.core.support.CurrentUserId;
+import shop.core.support.CurrentUser;
 import shop.core.support.error_code_processing.ErrorProcessor;
 import shop.matchers.InputStringValidatorDataMatcher;
 
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.*;
 class SignUpValidatorTest {
 
     @Mock
-    private Database mockDatabase;
+    private Repository mockRepository;
     @Mock
     private CurrentUserIdValidator mockCurrentUserIdValidator;
     @Mock
@@ -37,9 +37,9 @@ class SignUpValidatorTest {
     @Mock
     private SignUpRequest mockRequest;
     @Mock
-    private CurrentUserId mockUserId;
+    private CurrentUser mockUserId;
     @Mock
-    private UserDatabase mockUserDatabase;
+    private UserRepository mockUserRepository;
     @Mock
     private User mockUser;
     @Mock
@@ -50,7 +50,7 @@ class SignUpValidatorTest {
 
     @Test
     void shouldValidateUserIdIsPresent() {
-        when(mockRequest.getUserId()).thenReturn(mockUserId);
+        when(mockRequest.getCurrentUser()).thenReturn(mockUserId);
         validator.validate(mockRequest);
         verify(mockCurrentUserIdValidator).validateCurrentUserIdIsPresent(mockUserId);
     }
@@ -68,7 +68,7 @@ class SignUpValidatorTest {
     @Test
     void shouldValidateLoginName() {
         when(mockRequest.getLoginName()).thenReturn("login name");
-        when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
+        when(mockRepository.accessUserDatabase()).thenReturn(mockUserRepository);
         validator.validate(mockRequest);
         verify(mockInputStringValidator)
                 .validateIsPresent(argThat(new InputStringValidatorDataMatcher("login name", "login", "Login name")));
@@ -79,8 +79,8 @@ class SignUpValidatorTest {
     @Test
     void shouldReturnErrorForExistingLoginName() {
         when(mockRequest.getLoginName()).thenReturn("login");
-        when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
-        when(mockUserDatabase.findByLoginName("login")).thenReturn(Optional.of(mockUser));
+        when(mockRepository.accessUserDatabase()).thenReturn(mockUserRepository);
+        when(mockUserRepository.findByLoginName("login")).thenReturn(Optional.of(mockUser));
         when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
         validator.validate(mockRequest);
         verify(mockErrorProcessor).getCoreError("login", "VDT-SUP-LAE");

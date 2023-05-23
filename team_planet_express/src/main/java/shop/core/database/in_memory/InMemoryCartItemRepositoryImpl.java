@@ -1,8 +1,10 @@
 package shop.core.database.in_memory;
 
 import lombok.Data;
-import shop.core.database.CartItemDatabase;
+import shop.core.database.CartItemRepository;
+import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
+import shop.core.domain.item.Item;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +12,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Data
-public class InMemoryCartItemDatabaseImpl implements CartItemDatabase {
+public class InMemoryCartItemRepositoryImpl implements CartItemRepository {
 
     private Long nextId = 1L;
     private final List<CartItem> cartItems = new ArrayList<>();
@@ -24,10 +26,10 @@ public class InMemoryCartItemDatabaseImpl implements CartItemDatabase {
     }
 
     @Override
-    public Optional<CartItem> findByCartIdAndItemId(Long cartId, Long itemId) {
+    public Optional<CartItem> findByCartIdAndItemId(Cart cart, Item item) {
         return cartItems.stream()
-                .filter(cartItem -> cartItem.getCartId().equals(cartId))
-                .filter(cartItem -> cartItem.getItemId().equals(itemId))
+                .filter(cartItem -> cartItem.getCart().getId().equals(cart.getId()))
+                .filter(cartItem -> cartItem.getItem().getId().equals(item.getId()))
                 .findFirst();
     }
 
@@ -53,9 +55,9 @@ public class InMemoryCartItemDatabaseImpl implements CartItemDatabase {
     }
 
     @Override
-    public List<CartItem> getAllCartItemsForCartId(Long cartId) {
+    public List<CartItem> getAllCartItemsForCartId(Cart cart) {
         return cartItems.stream()
-                .filter(cartItem -> cartItem.getCartId().equals(cartId))
+                .filter(cartItem -> cartItem.getCart().getId().equals(cart.getId()))
                 .collect(Collectors.toList());
     }
 }

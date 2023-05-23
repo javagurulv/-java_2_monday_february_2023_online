@@ -7,17 +7,17 @@ import shop.core.domain.cart.CartStatus;
 public class CartMatcher implements ArgumentMatcher<Cart> {
 
     private final Long userId;
-    private final CartStatus cartStatus;
+    private final String cartStatus;
 
-    public CartMatcher(Long userId, CartStatus cartStatus) {
+    public CartMatcher(Long userId, String cartStatus) {
         this.userId = userId;
         this.cartStatus = cartStatus;
     }
 
     @Override
     public boolean matches(Cart cart) {
-        return userId.equals(cart.getUserId()) &&
-                cartStatus.equals(cart.getCartStatus());
+        return userId.equals(cart.getUser().getId()) &&
+                cartStatus.equals(cart.getStatus());
     }
 
 }
