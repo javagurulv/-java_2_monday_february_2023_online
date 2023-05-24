@@ -27,10 +27,10 @@ public class User {
         this.email = email;
     }
     public void setUsername(String username) {
-        this.email = email;
+        this.username = username;
     }
     public void setPassword(String password) {
-        this.email = email;
+        this.password = password;
     }
 
     public void setEndOfSubscriptionDate(Date endOfSubscriptionDate) {
