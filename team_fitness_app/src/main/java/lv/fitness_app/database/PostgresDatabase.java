@@ -1,8 +1,6 @@
 package lv.fitness_app.database;
 
-import lv.fitness_app.users.core.domain.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import lv.fitness_app.core.domain.User;
 
 import java.sql.BatchUpdateException;
 import java.sql.Connection;
@@ -10,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 //@Component("postgres")
 class PostgresDatabase implements Database{

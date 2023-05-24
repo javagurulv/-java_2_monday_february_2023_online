@@ -4,9 +4,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-import lv.fitness_app.users.core.domain.Subscription;
+import lv.fitness_app.core.domain.Subscription;
 import org.springframework.jdbc.core.RowMapper;
-import lv.fitness_app.users.core.domain.User;
+import lv.fitness_app.core.domain.User;
 
 
 public class UserRowMapper implements RowMapper<User> {
