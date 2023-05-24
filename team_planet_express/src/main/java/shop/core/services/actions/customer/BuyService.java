@@ -11,7 +11,6 @@ import shop.core.responses.customer.BuyResponse;
 import shop.core.services.validators.actions.customer.BuyValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Component
@@ -32,7 +31,6 @@ public class BuyService {
         }
         Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getUserId().getValue());
         database.accessCartDatabase().changeCartStatus(cart.getId(), CartStatus.CLOSED);
-        database.accessCartDatabase().changeLastActionDate(cart.getId(), LocalDate.now());
         return new BuyResponse();
     }
 

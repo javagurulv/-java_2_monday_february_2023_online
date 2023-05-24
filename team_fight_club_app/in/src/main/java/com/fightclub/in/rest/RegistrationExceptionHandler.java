@@ -2,6 +2,7 @@ package com.fightclub.in.rest;
 
 import com.fightclub.core.domain.error.EmailValidationException;
 import com.fightclub.core.domain.error.NameValidationException;
+import com.fightclub.core.domain.error.PasswordValidationException;
 import com.fightclub.in.rest.api.RegistrationResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -19,6 +20,13 @@ public class RegistrationExceptionHandler {
 
     @ExceptionHandler(NameValidationException.class)
     public ResponseEntity<RegistrationResponse> handleNameError(NameValidationException exception) {
+
+        RegistrationResponse registrationResponse = new RegistrationResponse(null, exception.getMessage());
+        return ResponseEntity.badRequest().body(registrationResponse);
+    }
+
+    @ExceptionHandler(PasswordValidationException.class)
+    public ResponseEntity<RegistrationResponse> handlePasswordError(PasswordValidationException exception) {
 
         RegistrationResponse registrationResponse = new RegistrationResponse(null, exception.getMessage());
         return ResponseEntity.badRequest().body(registrationResponse);

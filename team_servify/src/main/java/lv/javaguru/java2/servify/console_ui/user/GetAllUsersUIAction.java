@@ -30,7 +30,8 @@ public class GetAllUsersUIAction implements UIAction {
     @Override
     public List<UserType> getAccessUserByType() {
         return new ArrayList<>(List.of(
-                UserType.MANAGER
+                UserType.MANAGER,
+                UserType.CUSTOMER
         ));
     }
 }

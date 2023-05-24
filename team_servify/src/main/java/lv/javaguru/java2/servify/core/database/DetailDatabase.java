@@ -9,7 +9,7 @@ public interface DetailDatabase {
 
     void save(Detail detail);
 
-    void deleteById(Long id);
+    boolean deleteById(Long id);
 
     List<Detail> getAllDetails();
 

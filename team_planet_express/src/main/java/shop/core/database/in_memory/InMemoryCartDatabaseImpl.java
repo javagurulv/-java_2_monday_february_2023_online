@@ -1,10 +1,11 @@
-package shop.core.database;
+package shop.core.database.in_memory;
 
 import lombok.Data;
+import shop.core.database.CartDatabase;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart.CartStatus;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -39,12 +40,11 @@ public class InMemoryCartDatabaseImpl implements CartDatabase {
                 .ifPresent(cart -> cart.setCartStatus(newCartStatus));
     }
 
-    @Override
-    public void changeLastActionDate(Long id, LocalDate newLastActionDate) {
+    public void changeLastActionDate(Long id, LocalDateTime newLastActionDate) {
         carts.stream()
                 .filter(cart -> cart.getId().equals(id))
                 .findFirst()
-                .ifPresent(cart -> cart.setLastActionDate(LocalDate.now()));
+                .ifPresent(cart -> cart.setLastUpdate(newLastActionDate));
     }
 
     @Override

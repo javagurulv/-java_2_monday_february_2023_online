@@ -14,7 +14,6 @@ import shop.core.services.validators.actions.customer.BuyValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.support.CurrentUserId;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -48,9 +47,7 @@ class BuyServiceTest {
         when(mockDatabaseAccessValidator.getOpenCartByUserId(any())).thenReturn(mockCart);
         when(mockCart.getId()).thenReturn(1L);
         service.execute(mockRequest);
-
         verify(mockCartDatabase).changeCartStatus(1L, CartStatus.CLOSED);
-        verify(mockCartDatabase).changeLastActionDate(1L, LocalDate.now());
     }
 
 }

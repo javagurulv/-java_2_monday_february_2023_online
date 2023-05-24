@@ -27,4 +27,18 @@ public class PagingService {
         return items;
     }
 
+    public String getSQLLimitOffset(PagingRule pagingRule) {
+        StringBuilder limitOffset = new StringBuilder();
+        if (pagingEnabled) {
+            if (pagingRule != null) {
+                int pageSize = Integer.parseInt(pagingRule.getPageSize());
+                limitOffset.append("LIMIT ").append(pageSize + 1);
+                if (pagingRule.getPageNumber() > 1) {
+                    limitOffset.append(" OFFSET ").append((pagingRule.getPageNumber() - 1) * pageSize);
+                }
+            }
+        }
+        return limitOffset.toString();
+    }
+
 }

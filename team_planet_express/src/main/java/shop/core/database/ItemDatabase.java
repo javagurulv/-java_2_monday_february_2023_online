@@ -25,4 +25,9 @@ public interface ItemDatabase {
     List<Item> searchByName(String itemName);
 
     List<Item> searchByNameAndPrice(String itemName, BigDecimal price);
+
+    List<Item> searchByName(String itemName, String ordering, String paging);
+
+    List<Item> searchByNameAndPrice(String itemName, BigDecimal price, String ordering, String paging);
+
 }

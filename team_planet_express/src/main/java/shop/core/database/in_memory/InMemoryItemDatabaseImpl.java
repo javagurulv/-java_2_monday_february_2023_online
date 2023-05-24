@@ -1,6 +1,7 @@
-package shop.core.database;
+package shop.core.database.in_memory;
 
 import lombok.Data;
+import shop.core.database.ItemDatabase;
 import shop.core.domain.item.Item;
 
 import java.math.BigDecimal;
@@ -75,6 +76,21 @@ public class InMemoryItemDatabaseImpl implements ItemDatabase {
 
     @Override
     public List<Item> searchByNameAndPrice(String itemName, BigDecimal price) {
+        return shopItems.stream()
+                .filter(item -> item.getName().toLowerCase().contains(itemName.toLowerCase()) &&
+                        item.getPrice().compareTo(price) <= 0)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Item> searchByName(String itemName, String ordering, String paging) {
+        return shopItems.stream()
+                .filter(item -> item.getName().toLowerCase().contains(itemName.toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Item> searchByNameAndPrice(String itemName, BigDecimal price, String ordering, String paging) {
         return shopItems.stream()
                 .filter(item -> item.getName().toLowerCase().contains(itemName.toLowerCase()) &&
                         item.getPrice().compareTo(price) <= 0)

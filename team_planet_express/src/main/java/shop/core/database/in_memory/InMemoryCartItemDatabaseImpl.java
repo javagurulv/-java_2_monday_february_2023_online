@@ -1,6 +1,7 @@
-package shop.core.database;
+package shop.core.database.in_memory;
 
 import lombok.Data;
+import shop.core.database.CartItemDatabase;
 import shop.core.domain.cart_item.CartItem;
 
 import java.util.ArrayList;

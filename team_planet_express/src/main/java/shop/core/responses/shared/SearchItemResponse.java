@@ -12,12 +12,12 @@ import java.util.List;
 public class SearchItemResponse extends CoreResponse {
 
     private List<Item> items;
-    private Integer totalFoundItemCount;
+    private boolean nextPageAvailable;
     private UserRole userRole;
 
-    public SearchItemResponse(List<Item> items, Integer totalFoundItemCount, UserRole userRole) {
+    public SearchItemResponse(List<Item> items, boolean nextPageAvailable, UserRole userRole) {
         this.items = items;
-        this.totalFoundItemCount = totalFoundItemCount;
+        this.nextPageAvailable = nextPageAvailable;
         this.userRole = userRole;
     }
 

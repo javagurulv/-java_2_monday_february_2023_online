@@ -5,9 +5,9 @@ import shop.acceptance_tests.ApplicationContextSetup;
 import shop.acceptance_tests.custom.tester.*;
 
 public abstract class CustomAcceptanceTest {
+
     private final ApplicationContextSetup applicationContextSetup = new ApplicationContextSetup();
     private final ApplicationContext applicationContext = applicationContextSetup.setupApplicationContext();
-
 
     protected AddItemToCartTester addItemToCart() {
         return new AddItemToCartTester(applicationContext);

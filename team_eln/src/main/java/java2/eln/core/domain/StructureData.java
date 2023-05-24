@@ -13,6 +13,10 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 public class StructureData {
     private String smiles; // "CC(=O)O";
+    private String casNumber;
+    private String name;
+    private String internalCode;
+    private double mass;
 
     private void setSmiles(String smiles) {
         this.smiles = smiles;
@@ -26,10 +30,7 @@ public class StructureData {
         return smiles;
     }
 
-    private String casNumber;
-    private String name;
-    private String internalCode;
-    private double mass;
+
 
     public String getName() {
         return name;
