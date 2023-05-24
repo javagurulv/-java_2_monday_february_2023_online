@@ -1,19 +1,42 @@
 package shop.core.domain.cart_item;
 
-import lombok.Data;
+import lombok.*;
+import shop.core.domain.cart.Cart;
+import shop.core.domain.item.Item;
 
-@Data
+import javax.persistence.*;
+
+@Entity
+@Table(name = "cart_item")
+@Getter
+@Setter
+@RequiredArgsConstructor
+@NoArgsConstructor
 public class CartItem {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private final Long cartId;
-    private final Long itemId;
+
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+    @NonNull
+    private Cart cart;
+
+    @ManyToOne
+    @JoinColumn(name = "item_id")
+    @NonNull
+    private Item item;
+
+    @Column(name = "ordered_quantity")
+    @NonNull
     private Integer orderedQuantity;
 
-    public CartItem(Long cartId, Long itemId, Integer orderedQuantity) {
-        this.cartId = cartId;
-        this.itemId = itemId;
-        this.orderedQuantity = orderedQuantity;
+    public long getItemId() {
+        return item.getId();
     }
 
+    public long getCartId() {
+        return cart.getId();
+    }
 }

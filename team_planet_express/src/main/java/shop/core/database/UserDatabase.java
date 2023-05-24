@@ -10,7 +10,7 @@ public interface UserDatabase {
 
     User save(User user);
 
-    Optional<User> findById(Long itemId);
+    Optional<User> findById(Long userId);
 
     Optional<User> findByLoginName(String login);
 

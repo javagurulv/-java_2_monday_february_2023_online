@@ -5,7 +5,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import shop.config.ShopConfiguration;
 import shop.console_ui.UIMenu;
 import shop.core.database.Database;
-import shop.core.database.jdbc.cleaner.DatabaseCleaner;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
 import shop.core.services.fake.FakeDatabaseInitializer;
@@ -21,7 +20,7 @@ public class ShopApplication {
 
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(ShopConfiguration.class);
 
-        applicationContext.getBean(DatabaseCleaner.class).clean();
+        //applicationContext.getBean(DatabaseCleaner.class).clean();
         new FakeDatabaseInitializer(applicationContext.getBean(Database.class)).initialize();
 
         UserService userService = applicationContext.getBean(UserService.class);

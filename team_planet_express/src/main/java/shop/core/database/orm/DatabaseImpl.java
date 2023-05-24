@@ -1,11 +1,11 @@
-package shop.core.database.jdbc;
+package shop.core.database.orm;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import shop.core.database.*;
 
 @Component
-public class JdbcDatabaseImpl implements Database {
+public class DatabaseImpl implements Database {
 
     @Autowired
     private UserDatabase userDatabase;
@@ -35,5 +35,4 @@ public class JdbcDatabaseImpl implements Database {
     public CartItemDatabase accessCartItemDatabase() {
         return cartItemDatabase;
     }
-
 }

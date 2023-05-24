@@ -41,7 +41,7 @@ public class AddItemToCartService {
     private void addItemToCart(Cart cart, Item item, Integer orderedQuantity) {
         Optional<CartItem> cartItem = database.accessCartItemDatabase().findByCartIdAndItemId(cart.getId(), item.getId());
         if (cartItem.isEmpty()) {
-            database.accessCartItemDatabase().save(new CartItem(cart.getId(), item.getId(), orderedQuantity));
+            database.accessCartItemDatabase().save(new CartItem(cart, item, orderedQuantity));
         } else {
             Integer newCartItemQuantity = cartItem.get().getOrderedQuantity() + orderedQuantity;
             database.accessCartItemDatabase().changeOrderedQuantity(cartItem.get().getId(), newCartItemQuantity);
