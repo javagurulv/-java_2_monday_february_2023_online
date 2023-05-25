@@ -1,10 +1,9 @@
 package shop.core.domain.cart_item;
 
+import jakarta.persistence.*;
 import lombok.*;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.item.Item;
-
-import javax.persistence.*;
 
 @Entity
 @Table(name = "cart_item")

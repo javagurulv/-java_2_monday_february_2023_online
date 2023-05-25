@@ -1,8 +1,8 @@
 package shop.core.domain.item;
 
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -17,11 +17,9 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
     @NonNull
     private String name;
 
-    @Column(name = "price")
     @NonNull
     private BigDecimal price;
 

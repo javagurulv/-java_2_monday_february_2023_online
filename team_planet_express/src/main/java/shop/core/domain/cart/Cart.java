@@ -1,9 +1,9 @@
 package shop.core.domain.cart;
 
+import jakarta.persistence.*;
 import lombok.*;
 import shop.core.domain.user.User;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity

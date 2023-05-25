@@ -26,7 +26,7 @@ public class CartItemDatabaseImpl implements CartItemDatabase {
     @Override
     public Optional<CartItem> findByCartIdAndItemId(Long cartId, Long itemId) {
         Query<CartItem> query = sessionFactory.getCurrentSession()
-                .createQuery("SELECT cartItem FROM CartItem cartItem WHERE cart.id =:cart_id AND item.id =:item_id", CartItem.class);
+                .createQuery("SELECT ci FROM CartItem ci WHERE cart.id =:cart_id AND item.id =:item_id", CartItem.class);
         query.setParameter("cart_id", cartId);
         query.setParameter("item_id", itemId);
         return query.uniqueResultOptional();
@@ -36,7 +36,7 @@ public class CartItemDatabaseImpl implements CartItemDatabase {
     public void deleteByID(Long id) {
         CartItem cartItem = new CartItem();
         cartItem.setId(id);
-        sessionFactory.getCurrentSession().delete(cartItem); // need test
+        sessionFactory.getCurrentSession().remove(cartItem); // need test
     }
 
     @Override
@@ -50,14 +50,14 @@ public class CartItemDatabaseImpl implements CartItemDatabase {
     @Override
     public List<CartItem> getAllCartItems() {
         Query<CartItem> query = sessionFactory.getCurrentSession()
-                .createQuery("SELECT cartItem FROM CartItem cartItem", CartItem.class);
+                .createQuery("SELECT ci FROM CartItem ci", CartItem.class);
         return query.getResultList();
     }
 
     @Override
     public List<CartItem> getAllCartItemsForCartId(Long cartId) {
         Query<CartItem> query = sessionFactory.getCurrentSession()
-                .createQuery("SELECT cartItem FROM CartItem cartItem WHERE cart.id =:cart_id", CartItem.class);
+                .createQuery("SELECT ci FROM CartItem ci WHERE cart.id =:cart_id", CartItem.class);
         query.setParameter("cart_id", cartId);
         return query.getResultList();
     }

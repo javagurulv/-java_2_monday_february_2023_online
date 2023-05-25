@@ -32,7 +32,7 @@ public class UserDatabaseImpl implements UserDatabase {
     @Override
     public Optional<User> findByLoginName(String login) {
         Query<User> query = sessionFactory.getCurrentSession()
-                .createQuery("SELECT user FROM User user WHERE login = :login", User.class);
+                .createQuery("SELECT u FROM User u WHERE login = :login", User.class);
         query.setParameter("login", login);
         return query.uniqueResultOptional();
     }
@@ -40,7 +40,7 @@ public class UserDatabaseImpl implements UserDatabase {
     @Override
     public List<User> getAllUsers() {
         return sessionFactory.getCurrentSession()
-                .createQuery("SELECT user FROM User user", User.class)
+                .createQuery("SELECT u FROM User u", User.class)
                 .getResultList();
     }
 }

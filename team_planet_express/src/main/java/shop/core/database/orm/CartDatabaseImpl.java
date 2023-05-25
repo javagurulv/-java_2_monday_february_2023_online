@@ -27,7 +27,7 @@ public class CartDatabaseImpl implements CartDatabase {
     @Override
     public Optional<Cart> findOpenCartForUserId(Long userId) {
         Query<Cart> query = sessionFactory.getCurrentSession()
-                .createQuery("SELECT cart FROM Cart cart WHERE user.id = :user_id AND status = 'OPEN'", Cart.class);
+                .createQuery("SELECT c FROM Cart c WHERE user.id = :user_id AND status = 'OPEN'", Cart.class);
         query.setParameter("user_id", userId);
         return query.uniqueResultOptional();
     }
@@ -43,7 +43,7 @@ public class CartDatabaseImpl implements CartDatabase {
     @Override
     public List<Cart> getAllCarts() {
         Query<Cart> query = sessionFactory.getCurrentSession()
-                .createQuery("SELECT cart FROM Cart cart", Cart.class);
+                .createQuery("SELECT c FROM Cart c", Cart.class);
         return query.getResultList();
     }
 }
