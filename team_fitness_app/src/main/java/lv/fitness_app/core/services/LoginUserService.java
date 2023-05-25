@@ -1,6 +1,6 @@
 package lv.fitness_app.core.services;
 
-import lv.fitness_app.database.Database;
+import lv.fitness_app.database.UserRepository;
 import lv.fitness_app.core.domain.User;
 import lv.fitness_app.core.requests.LoginUserRequest;
 import lv.fitness_app.core.responses.CoreError;
@@ -14,7 +14,7 @@ import java.util.List;
 public class LoginUserService {
 
     @Autowired
-    private Database database;
+    private UserRepository userRepository;
     @Autowired private LoginUserRequestValidator validator;
 
 
@@ -23,8 +23,8 @@ public class LoginUserService {
         boolean isUserLogged = false;
         if (!errors.isEmpty()) {
             return new LoginUserResponse(errors);
-        } else if (database.findUserByEmail(request.getEmail()) != null ) {
-            User user = database.findUserByEmail(request.getEmail());
+        } else if (userRepository.findUserByEmail(request.getEmail()) != null ) {
+            User user = userRepository.findUserByEmail(request.getEmail());
             if (user.getEmail().equals(request.getEmail()) && user.getPassword().equals(request.getPassword())) {
                 isUserLogged = true;
             }

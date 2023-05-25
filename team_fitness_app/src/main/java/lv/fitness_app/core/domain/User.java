@@ -1,16 +1,30 @@
 package lv.fitness_app.core.domain;
 
+import javax.persistence.*;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
+@Table(name = "user")
 public class User {
 
+    @Id
+    @Column(name = "email")
     private String email;
+
+    @Column(name="user_name", nullable = false)
     private String username;
+
+    @Column(name="password", nullable = false)
     private String password;
 
+
+    @Column(name="subscription_ends", nullable = false)
     Date endOfSubscriptionDate;
+
+    @Column(name="subscription", nullable = false)
+   @Enumerated(EnumType.STRING)
     Subscription subscription;
 
     public User() { }

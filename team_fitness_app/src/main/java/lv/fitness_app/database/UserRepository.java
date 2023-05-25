@@ -4,7 +4,7 @@ import lv.fitness_app.core.domain.User;
 
 import java.util.List;
 
-public interface Database {
+public interface UserRepository {
 
     void add(User user);
 
