@@ -47,9 +47,9 @@ class UserServiceTest {
                 new UserCreationData("Name", "login name", "password", UserRole.GUEST);
         service.createUser(userCreationData);
         verify(mockUserRepository)
-                .save(argThat(new UserMatcher("Name", "login name", "password", UserRole.GUEST.toString())));
+                .save(argThat(new UserMatcher("Name", "login name", "password", UserRole.GUEST)));
         verify(mockCartRepository)
-                .save(argThat(new CartMatcher(mockUser, CartStatus.OPEN.toString())));
+                .save(argThat(new CartMatcher(mockUser, CartStatus.OPEN)));
     }
 
     @Test
@@ -57,7 +57,7 @@ class UserServiceTest {
         when(mockRepository.accessUserRepository()).thenReturn(mockUserRepository);
         when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
         when(mockUserRepository.getAllUsers()).thenReturn(List.of(mockUser));
-        when(mockUser.getUserRole()).thenReturn("GUEST");
+        when(mockUser.getUserRole()).thenReturn(UserRole.GUEST);
         when(mockCartRepository.findOpenCartForUserId(mockUser)).thenReturn(Optional.of(mockCart));
         assertTrue(service.findGuestWithOpenCart().isPresent());
     }
@@ -66,7 +66,7 @@ class UserServiceTest {
     void shouldReturnEmptyOptionalForNoGuest() {
         when(mockRepository.accessUserRepository()).thenReturn(mockUserRepository);
         when(mockUserRepository.getAllUsers()).thenReturn(List.of(mockUser));
-        when(mockUser.getUserRole()).thenReturn("ADMIN");
+        when(mockUser.getUserRole()).thenReturn(UserRole.ADMIN);
         assertTrue(service.findGuestWithOpenCart().isEmpty());
     }
 
@@ -75,7 +75,7 @@ class UserServiceTest {
         when(mockRepository.accessUserRepository()).thenReturn(mockUserRepository);
         when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
         when(mockUserRepository.getAllUsers()).thenReturn(List.of(mockUser));
-        when(mockUser.getUserRole()).thenReturn("GUEST");
+        when(mockUser.getUserRole()).thenReturn(UserRole.GUEST);
         when(mockCartRepository.findOpenCartForUserId(mockUser)).thenReturn(Optional.empty());
         assertTrue(service.findGuestWithOpenCart().isEmpty());
     }

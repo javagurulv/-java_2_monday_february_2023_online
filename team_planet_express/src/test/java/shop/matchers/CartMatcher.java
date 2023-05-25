@@ -2,14 +2,15 @@ package shop.matchers;
 
 import org.mockito.ArgumentMatcher;
 import shop.core.domain.cart.Cart;
+import shop.core.domain.cart.CartStatus;
 import shop.core.domain.user.User;
 
 public class CartMatcher implements ArgumentMatcher<Cart> {
 
     private final User user;
-    private final String cartStatus;
+    private final CartStatus cartStatus;
 
-    public CartMatcher(User user, String cartStatus) {
+    public CartMatcher(User user, CartStatus cartStatus) {
         this.user = user;
         this.cartStatus = cartStatus;
     }

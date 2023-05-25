@@ -14,20 +14,21 @@ import java.time.LocalDateTime;
 public class Cart {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-    @Column(name = "status")
-    private String status;
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private CartStatus status;
     @Column(name = "last_update")
     private LocalDateTime lastUpdate;
 
     public Cart(User user) {
         this.user = user;
-        this.status = CartStatus.OPEN.toString();
+        this.status = CartStatus.OPEN;
     }
 
 }

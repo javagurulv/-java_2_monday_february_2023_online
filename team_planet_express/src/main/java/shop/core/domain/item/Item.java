@@ -13,14 +13,14 @@ import java.math.BigDecimal;
 public class Item {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "price")
+    @Column(name = "price", nullable = false)
     private BigDecimal price;
-    @Column(name = "available_quantity")
+    @Column(name = "available_quantity", nullable = false)
     private Integer availableQuantity;
 
     public Item(String name, BigDecimal price, Integer availableQuantity) {

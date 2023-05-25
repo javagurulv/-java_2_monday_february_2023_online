@@ -38,7 +38,7 @@ public class OrmCartRepositoryImpl implements CartRepository {
     public void changeCartStatus(Long id, CartStatus cartStatus) {
         Cart cart = sessionFactory.getCurrentSession().get(Cart.class, id);
         if (cart != null) {
-            cart.setStatus(cartStatus.toString());
+            cart.setStatus(cartStatus);
             sessionFactory.getCurrentSession().merge(cart);
         }
     }

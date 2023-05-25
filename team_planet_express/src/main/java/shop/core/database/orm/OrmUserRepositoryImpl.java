@@ -26,7 +26,7 @@ public class OrmUserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> findById(Long userId) {
-        return Optional.of(sessionFactory.getCurrentSession().get(User.class, userId));
+        return Optional.ofNullable(sessionFactory.getCurrentSession().get(User.class, userId));
     }
 
     @Override
