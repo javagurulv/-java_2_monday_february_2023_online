@@ -1,6 +1,6 @@
 package lv.fitness_app.core.services;
 
-import lv.fitness_app.database.Database;
+import lv.fitness_app.database.UserRepository;
 import lv.fitness_app.core.requests.GetAllUsersRequest;
 import lv.fitness_app.core.responses.GetAllUsersResponse;
 import lv.fitness_app.core.domain.User;
@@ -13,11 +13,11 @@ import java.util.List;
 public class GetAllUsersService {
 
     @Autowired
-    private Database database;
+    private UserRepository userRepository;
 
 
     public GetAllUsersResponse execute(GetAllUsersRequest request) {
-        List<User> users = database.getAllUsers();
+        List<User> users = userRepository.getAllUsers();
         return new GetAllUsersResponse(users);
     }
 }

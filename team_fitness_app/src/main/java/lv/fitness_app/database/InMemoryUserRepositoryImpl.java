@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //@Component("inMemory")
-public class InMemoryDatabaseImpl implements Database {
+public class InMemoryUserRepositoryImpl implements UserRepository {
 
     private static Long nextId = 1L;
 

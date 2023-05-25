@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 //@Component("postgres")
-class PostgresDatabase implements Database{
+class PostgresUserRepository implements UserRepository {
 
  //  @Autowired
     private ConnectionManager connectionManager;
