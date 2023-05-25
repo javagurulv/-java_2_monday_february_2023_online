@@ -8,11 +8,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.ItemRepository;
 import shop.core.database.Repository;
 import shop.core.domain.user.User;
+import shop.core.domain.user.UserRole;
 import shop.core.requests.customer.ListShopItemsRequest;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.support.CurrentUser;
 
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -21,8 +20,6 @@ class ListShopItemsServiceTest {
 
     @Mock
     private Repository mockRepository;
-    @Mock
-    private DatabaseAccessValidator mockDatabaseAccessValidator;
     @Mock
     private ListShopItemsRequest mockRequest;
     @Mock
@@ -38,10 +35,9 @@ class ListShopItemsServiceTest {
     @Test
     void shouldGetItemsFromDatabase() {
         when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
-        when(mockDatabaseAccessValidator.getUserById(anyLong())).thenReturn(mockUser);
         when(mockRequest.getCurrentUser()).thenReturn(mockCurrentUser);
         when(mockCurrentUser.getUser()).thenReturn(mockUser);
-        when(mockUser.getUserRole()).thenReturn("GUEST");
+        when(mockUser.getUserRole()).thenReturn(UserRole.GUEST);
         service.execute(mockRequest);
         verify(mockItemRepository).getAllItems();
     }

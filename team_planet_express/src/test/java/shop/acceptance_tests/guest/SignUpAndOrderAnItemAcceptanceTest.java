@@ -45,7 +45,7 @@ public class SignUpAndOrderAnItemAcceptanceTest {
                 signUpService.execute(new SignUpRequest(currentUser, "Brannigan", "captain", "password"));
         assertFalse(signUpResponse.hasErrors());
         User newUser = signUpResponse.getUser();
-        assertEquals(UserRole.CUSTOMER.toString(), newUser.getUserRole());
+        assertEquals(UserRole.CUSTOMER, newUser.getUserRole());
         assertTrue(repository.accessCartRepository().findOpenCartForUserId(newUser).isPresent());
         Item orderedItem = repository.accessItemRepository().findByName("Lightspeed Briefs").orElseThrow();
         AddItemToCartResponse addItemToCartResponse =

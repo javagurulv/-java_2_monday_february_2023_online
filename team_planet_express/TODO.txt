@@ -8,3 +8,4 @@ yeet red warnings
 check tests, make tests
 look at enums
 check paging sqls
+ids back into database method calls ?

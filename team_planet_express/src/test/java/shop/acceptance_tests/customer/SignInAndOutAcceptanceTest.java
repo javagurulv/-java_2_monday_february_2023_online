@@ -43,12 +43,12 @@ public class SignInAndOutAcceptanceTest {
                 signInService.execute(new SignInRequest(currentUser, "theAnnihilator", "pathetichumans"));
         assertFalse(signInResponse.hasErrors());
         assertEquals(currentUser.getUser().getId(), repository.accessUserRepository().findByLoginName("theAnnihilator").orElseThrow().getId());
-        assertEquals(UserRole.CUSTOMER.toString(), signInResponse.getUser().getUserRole());
+        assertEquals(UserRole.CUSTOMER, signInResponse.getUser().getUserRole());
         assertEquals("Morbo", signInResponse.getUser().getName());
         SignOutResponse signOutResponse =
                 signOutService.execute(new SignOutRequest(currentUser));
         assertFalse(signOutResponse.hasErrors());
-        assertEquals(UserRole.GUEST.toString(), repository.accessUserRepository().findById(currentUser.getUser().getId()).orElseThrow().getUserRole());
+        assertEquals(UserRole.GUEST, repository.accessUserRepository().findById(currentUser.getUser().getId()).orElseThrow().getUserRole());
     }
 
 }

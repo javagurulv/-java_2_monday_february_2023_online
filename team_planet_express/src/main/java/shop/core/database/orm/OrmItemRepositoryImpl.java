@@ -27,7 +27,7 @@ public class OrmItemRepositoryImpl implements ItemRepository {
 
     @Override
     public Optional<Item> findById(Long itemId) {
-        return Optional.of(sessionFactory.getCurrentSession().get(Item.class, itemId));
+        return Optional.ofNullable(sessionFactory.getCurrentSession().get(Item.class, itemId));
     }
 
     @Override

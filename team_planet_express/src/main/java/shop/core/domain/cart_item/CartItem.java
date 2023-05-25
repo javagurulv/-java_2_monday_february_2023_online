@@ -13,7 +13,7 @@ import shop.core.domain.item.Item;
 public class CartItem {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
@@ -22,7 +22,7 @@ public class CartItem {
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
-    @Column(name = "ordered_quantity")
+    @Column(name = "ordered_quantity", nullable = false)
     private Integer orderedQuantity;
 
     public CartItem(Cart cart, Item item, Integer orderedQuantity) {
