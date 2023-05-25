@@ -1,21 +1,22 @@
 package lv.javaguru.java2.servify.core.requests.detail;
 
-import lv.javaguru.java2.servify.domain.detail.Detail;
-import lv.javaguru.java2.servify.domain.detail.DetailSideEnum;
-import lv.javaguru.java2.servify.domain.detail.DetailTypeEnum;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import java.math.BigDecimal;
 
+@Data
+@AllArgsConstructor
 public class AddDetailRequest {
 
     private Long id;
+    private String detailType;
+    private String detailSide;
+    private BigDecimal detailPrice;
 
-    public AddDetailRequest(Long id) {
-        this.id = id;
+    public AddDetailRequest(String detailType, String detailSide, BigDecimal detailPrice) {
+        this.detailType = detailType;
+        this.detailSide = detailSide;
+        this.detailPrice = detailPrice;
     }
-
-    public Long getId() {
-        return id;
-    }
-
 }

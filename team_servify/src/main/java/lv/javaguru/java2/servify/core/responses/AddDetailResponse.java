@@ -1,9 +1,8 @@
-package lv.javaguru.java2.servify.core.responses.detail;
+package lv.javaguru.java2.servify.core.responses;
 
 import lv.javaguru.java2.servify.core.responses.CoreError;
 import lv.javaguru.java2.servify.core.responses.CoreResponse;
-import lv.javaguru.java2.servify.domain.UserEntity;
-import lv.javaguru.java2.servify.domain.detail.Detail;
+import lv.javaguru.java2.servify.core.domain.Detail;
 
 import java.util.List;
 

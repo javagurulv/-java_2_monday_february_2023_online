@@ -1,8 +1,7 @@
 package lv.javaguru.java2.servify.core.services.detail;
 
-import lv.javaguru.java2.servify.core.database.DetailDatabase;
-import lv.javaguru.java2.servify.domain.detail.Detail;
-import lv.javaguru.java2.servify.domain.PriceList;
+import lv.javaguru.java2.servify.core.database.DetailRepository;
+import lv.javaguru.java2.servify.core.domain.Detail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
@@ -11,12 +10,11 @@ import java.util.List;
 @Service
 public class GetTotalPriceService {
 
-    @Autowired private DetailDatabase database;
+    @Autowired private DetailRepository detailRepository;
 
     public BigDecimal execute() {
-        PriceList data = new PriceList();
-        List<Detail> listWithPrices = data.getDetailPricesList();
-        return database.getTotalPrice(listWithPrices);
+        List<Detail> listWithPrices = detailRepository.getAllDetails();
+        return detailRepository.getTotalPrice(listWithPrices);
     }
 
 }

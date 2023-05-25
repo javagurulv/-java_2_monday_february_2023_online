@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servify.core.database;
 
-import lv.javaguru.java2.servify.domain.detail.Detail;
+import lv.javaguru.java2.servify.core.domain.Detail;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -8,17 +8,17 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
-public class JdbcDatabaseImpl implements DetailDatabase {
-    private final JdbcTemplate jdbcTemplate;
+public class JdbcRepositoryImpl implements DetailRepository {
+    private JdbcTemplate jdbcTemplate;
 
-    public JdbcDatabaseImpl(JdbcTemplate jdbcTemplate) {
+    public JdbcRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
     public void save(Detail detail) {
         jdbcTemplate.update(
-                "INSERT INTO details (detail_type_id, detail_side_id, price"
+                "INSERT INTO details (detail_type, detail_side, price"
                 + "VALUES (?, ?, ?)",
                 detail.getType(), detail.getSide(), detail.getPrice()
         );

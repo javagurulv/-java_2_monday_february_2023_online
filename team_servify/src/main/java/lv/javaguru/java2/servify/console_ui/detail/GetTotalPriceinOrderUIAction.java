@@ -2,7 +2,6 @@ package lv.javaguru.java2.servify.console_ui.detail;
 
 import lv.javaguru.java2.servify.console_ui.UIAction;
 import lv.javaguru.java2.servify.core.services.detail.GetTotalPriceService;
-import lv.javaguru.java2.servify.domain.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,14 +21,6 @@ public class GetTotalPriceinOrderUIAction implements UIAction {
     @Override
     public String getMenuItem() {
         return "Show order's Total price";
-    }
-
-    @Override
-    public List<UserType> getAccessUserByType() {
-        return new ArrayList<>(List.of(
-                UserType.CUSTOMER,
-                UserType.MANAGER
-        ));
     }
 
 }

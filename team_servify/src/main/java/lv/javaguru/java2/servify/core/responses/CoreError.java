@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servify.core.responses;
 
-import lv.javaguru.java2.servify.domain.FieldTitle;
+import lv.javaguru.java2.servify.core.domain.FieldTitle;
 
 public class CoreError {
 

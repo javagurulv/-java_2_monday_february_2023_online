@@ -1,14 +1,14 @@
 package lv.javaguru.java2.servify.core.database;
 
-import lv.javaguru.java2.servify.domain.detail.Detail;
-import org.springframework.stereotype.Repository;
+import lv.javaguru.java2.servify.core.domain.Detail;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 //@Repository
-public class InMemoryDetailDatabaseImpl implements DetailDatabase {
+public class InMemoryDetailRepositoryImpl implements DetailRepository {
 
     private Long nextId = 1L;
     private final List<Detail> details = new ArrayList<>();
