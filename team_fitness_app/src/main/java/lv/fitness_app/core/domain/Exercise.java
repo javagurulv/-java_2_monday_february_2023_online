@@ -13,10 +13,11 @@ public class Exercise {
     private String equipment;
     private Difficulty difficulty;
     private String description;
+    private String gif;
 
     public Exercise() { }
 
-    public Exercise(String name, String muscleGroup, String detailedMuscleGroup, String otherMuscleGroup, Type type, String mechanics, String equipment, Difficulty difficulty, String description) {
+    public Exercise(String name, String muscleGroup, String detailedMuscleGroup, String otherMuscleGroup, Type type, String mechanics, String equipment, Difficulty difficulty, String description, String gif) {
         this.name = name;
         this.muscleGroup = muscleGroup;
         DetailedMuscleGroup = detailedMuscleGroup;
@@ -26,6 +27,7 @@ public class Exercise {
         this.equipment = equipment;
         this.difficulty = difficulty;
         this.description = description;
+        this.gif = gif;
     }
 
     public String getName() {
@@ -100,17 +102,20 @@ public class Exercise {
         this.description = description;
     }
 
+    public String getGif(){return gif;}
+    public void setGif(String gif) {this.gif = gif;}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Exercise exercise = (Exercise) o;
-        return Objects.equals(name, exercise.name) && Objects.equals(muscleGroup, exercise.muscleGroup) && Objects.equals(DetailedMuscleGroup, exercise.DetailedMuscleGroup) && Objects.equals(OtherMuscleGroup, exercise.OtherMuscleGroup) && type == exercise.type && Objects.equals(mechanics, exercise.mechanics) && Objects.equals(equipment, exercise.equipment) && difficulty == exercise.difficulty && Objects.equals(description, exercise.description);
+        return Objects.equals(name, exercise.name) && Objects.equals(muscleGroup, exercise.muscleGroup) && Objects.equals(DetailedMuscleGroup, exercise.DetailedMuscleGroup) && Objects.equals(OtherMuscleGroup, exercise.OtherMuscleGroup) && type == exercise.type && Objects.equals(mechanics, exercise.mechanics) && Objects.equals(equipment, exercise.equipment) && difficulty == exercise.difficulty && Objects.equals(description, exercise.description) && Objects.equals(gif, exercise.gif);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, muscleGroup, DetailedMuscleGroup, OtherMuscleGroup, type, mechanics, equipment, difficulty, description);
+        return Objects.hash(name, muscleGroup, DetailedMuscleGroup, OtherMuscleGroup, type, mechanics, equipment, difficulty, description, gif);
     }
 
     @Override
@@ -125,6 +130,7 @@ public class Exercise {
                 ", equipment='" + equipment + '\'' +
                 ", difficulty=" + difficulty +
                 ", description='" + description + '\'' +
+                ", gif='"+gif+'\''+
                 '}';
     }
 }
