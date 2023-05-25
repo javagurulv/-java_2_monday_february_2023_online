@@ -9,6 +9,7 @@ public enum FieldTitle {
     PASSWORD,
     PHONE_NUMBER,
     DETAIL_TYPE,
-    DETAIL_SIDE
+    DETAIL_SIDE,
+
 
 }

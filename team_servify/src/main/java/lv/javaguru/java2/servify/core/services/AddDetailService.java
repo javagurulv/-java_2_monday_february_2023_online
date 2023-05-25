@@ -1,9 +1,9 @@
-package lv.javaguru.java2.servify.core.services.detail;
+package lv.javaguru.java2.servify.core.services;
 
-import lv.javaguru.java2.servify.core.requests.detail.AddDetailRequest;
+import lv.javaguru.java2.servify.core.requests.AddDetailRequest;
 import lv.javaguru.java2.servify.core.responses.CoreError;
 import lv.javaguru.java2.servify.core.responses.AddDetailResponse;
-import lv.javaguru.java2.servify.core.validators.AddDetailValidator;
+import lv.javaguru.java2.servify.core.services.validators.AddDetailRequestValidator;
 import lv.javaguru.java2.servify.core.domain.Detail;
 import lv.javaguru.java2.servify.core.database.DetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class AddDetailService {
     private DetailRepository detailRepository;
 
     @Autowired
-    private AddDetailValidator validator;
+    private AddDetailRequestValidator validator;
 
     public AddDetailResponse execute(AddDetailRequest request) {
         List<CoreError> errors = validator.validate(request);

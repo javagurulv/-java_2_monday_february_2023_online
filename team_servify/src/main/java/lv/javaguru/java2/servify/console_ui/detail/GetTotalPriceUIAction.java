@@ -1,15 +1,12 @@
 package lv.javaguru.java2.servify.console_ui.detail;
 
 import lv.javaguru.java2.servify.console_ui.UIAction;
-import lv.javaguru.java2.servify.core.services.detail.GetTotalPriceService;
+import lv.javaguru.java2.servify.core.services.GetTotalPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Component
-public class GetTotalPriceinOrderUIAction implements UIAction {
+public class GetTotalPriceUIAction implements UIAction {
 
     @Autowired private GetTotalPriceService getTotalPriceService;
 
@@ -20,7 +17,7 @@ public class GetTotalPriceinOrderUIAction implements UIAction {
 
     @Override
     public String getMenuItem() {
-        return "Show order's Total price";
+        return "Show Total price";
     }
 
 }

@@ -59,21 +59,21 @@ public class ServifyConfiguration {
         return properties;
     }
 
-//    @Bean
-//    public SessionFactory sessionFactory(DataSource dataSource,
-//                                         @Value("${hibernate.packagesToScan}") String packagesToScan,
-//                                         Properties hibernateProperties
-//    ) throws IOException {
-//        LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
-//        sessionFactoryBean.setPackagesToScan(packagesToScan);
-//        sessionFactoryBean.setDataSource(dataSource);
-//        sessionFactoryBean.setHibernateProperties(hibernateProperties);
-//        sessionFactoryBean.afterPropertiesSet();
-//        return sessionFactoryBean.getObject();
-//    }
-//
-//    @Bean
-//    public PlatformTransactionManager transactionManager(SessionFactory sessionFactory) {
-//        return new HibernateTransactionManager(sessionFactory);
-//    }
+    @Bean
+    public SessionFactory sessionFactory(DataSource dataSource,
+                                         @Value("${hibernate.packagesToScan}") String packagesToScan,
+                                         Properties hibernateProperties
+    ) throws IOException {
+        LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
+        sessionFactoryBean.setPackagesToScan(packagesToScan);
+        sessionFactoryBean.setDataSource(dataSource);
+        sessionFactoryBean.setHibernateProperties(hibernateProperties);
+        sessionFactoryBean.afterPropertiesSet();
+        return sessionFactoryBean.getObject();
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager(SessionFactory sessionFactory) {
+        return new HibernateTransactionManager(sessionFactory);
+    }
 }

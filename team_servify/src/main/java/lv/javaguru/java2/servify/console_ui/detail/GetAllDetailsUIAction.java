@@ -1,12 +1,9 @@
 package lv.javaguru.java2.servify.console_ui.detail;
 
 import lv.javaguru.java2.servify.console_ui.UIAction;
-import lv.javaguru.java2.servify.core.services.detail.GetAllDetailsService;
+import lv.javaguru.java2.servify.core.services.GetAllDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class GetAllDetailsUIAction implements UIAction {

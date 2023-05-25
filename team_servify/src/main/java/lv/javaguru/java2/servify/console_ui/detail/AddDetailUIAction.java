@@ -1,9 +1,9 @@
 package lv.javaguru.java2.servify.console_ui.detail;
 
 import lv.javaguru.java2.servify.console_ui.UIAction;
-import lv.javaguru.java2.servify.core.requests.detail.AddDetailRequest;
+import lv.javaguru.java2.servify.core.requests.AddDetailRequest;
 import lv.javaguru.java2.servify.core.responses.AddDetailResponse;
-import lv.javaguru.java2.servify.core.services.detail.AddDetailService;
+import lv.javaguru.java2.servify.core.services.AddDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +14,6 @@ import java.util.Scanner;
 public class AddDetailUIAction implements UIAction {
     @Autowired
     private AddDetailService addDetailService;
-
 
     @Override
     public void execute() {

@@ -39,17 +39,23 @@ public class InMemoryDetailRepositoryImpl implements DetailRepository {
     }
 
     @Override
-    public BigDecimal getTotalPrice(List<Detail> listWithPrices) {
-        BigDecimal totalPrice = BigDecimal.ZERO;
-
-        List<BigDecimal> bigDecimals = details.stream()
-                .map(Detail::getPrice)
-                .toList();
-
-        for (BigDecimal price : bigDecimals) {
-            totalPrice = totalPrice.add(price);
-        }
-
-        return totalPrice;
+    public List<Detail> findByDetailType(String detailType) {
+        return null;
     }
+
+    @Override
+    public List<Detail> findByDetailSide(String detailSide) {
+        return null;
+    }
+
+    @Override
+    public List<Detail> findByDetailTypeSide(String detailType, String detailSide) {
+        return null;
+    }
+
+    @Override
+    public List<Detail> findByDetailPrice(BigDecimal detailPrice) {
+        return null;
+    }
+
 }

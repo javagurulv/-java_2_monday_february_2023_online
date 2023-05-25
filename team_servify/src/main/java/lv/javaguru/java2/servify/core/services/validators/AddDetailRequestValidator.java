@@ -1,6 +1,6 @@
-package lv.javaguru.java2.servify.core.validators;
+package lv.javaguru.java2.servify.core.services.validators;
 
-import lv.javaguru.java2.servify.core.requests.detail.AddDetailRequest;
+import lv.javaguru.java2.servify.core.requests.AddDetailRequest;
 import lv.javaguru.java2.servify.core.responses.CoreError;
 import lv.javaguru.java2.servify.core.domain.FieldTitle;
 import org.springframework.stereotype.Service;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AddDetailValidator {
+public class AddDetailRequestValidator {
 
     public List<CoreError> validate(AddDetailRequest request) {
         List<CoreError> errors = new ArrayList<>();
