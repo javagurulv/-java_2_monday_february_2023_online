@@ -2,10 +2,12 @@ package com.fightclub.out.registration;
 
 import com.fightclub.core.domain.User;
 import com.fightclub.core.outbound.SaveUserPort;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Component
 public class RegistrationUserInMemory implements SaveUserPort {
 
 

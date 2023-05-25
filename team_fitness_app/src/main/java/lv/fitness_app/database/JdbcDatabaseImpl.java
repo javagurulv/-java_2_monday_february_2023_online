@@ -1,11 +1,10 @@
 package lv.fitness_app.database;
 
-import lv.fitness_app.users.core.domain.User;
+import lv.fitness_app.core.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import java.sql.SQLException;
 import java.util.List;
 @Component
 public class JdbcDatabaseImpl implements Database {

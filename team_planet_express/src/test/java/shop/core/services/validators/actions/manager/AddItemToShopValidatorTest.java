@@ -43,12 +43,14 @@ class AddItemToShopValidatorTest {
     private AddItemToShopValidator validator;
 
     @Test
-    void shouldValidateNameIsPresent() {
+    void shouldValidateName() {
         when(mockRequest.getItemName()).thenReturn("name");
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         validator.validate(mockRequest);
         verify(mockInputStringValidator)
                 .validateIsPresent(argThat(new InputStringValidatorDataMatcher("name", "name", "Item name")));
+        verify(mockInputStringValidator)
+                .validateLength(argThat(new InputStringValidatorDataMatcher("name", "name", "Item name")), anyInt());
     }
 
     @Test
@@ -68,6 +70,8 @@ class AddItemToShopValidatorTest {
         InputStringValidatorDataMatcher matcher =
                 new InputStringValidatorDataMatcher("100.10", "price", "Price");
         verify(mockInputStringValidator).validateIsPresent(argThat(matcher));
+        verify(mockInputStringValidator)
+                .validateDecimalNumberLength(argThat(new InputStringValidatorDataMatcher("100.10", "price", "Price")), anyInt());
         verify(mockInputStringValidator).validateIsNumberNotNegative(argThat(matcher));
     }
 

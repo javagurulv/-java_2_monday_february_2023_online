@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class OrderingServiceTest {
@@ -128,6 +129,54 @@ class OrderingServiceTest {
         List<OrderingRule> orderingRules = List.of(orderingRuleName, orderingRulePrice);
         items = service.getOrderedItems(items, orderingRules);
         assertTrue(isOrderedCorrectly(2L, 4L, 5L, 3L, 1L));
+    }
+
+    @Test
+    void shouldReturnBlankForDisabled() {
+        ReflectionTestUtils.setField(service, "orderingEnabled", false);
+        OrderingRule orderingRuleName = new OrderingRule(OrderBy.NAME, OrderDirection.DESCENDING);
+        OrderingRule orderingRulePrice = new OrderingRule(OrderBy.PRICE, OrderDirection.DESCENDING);
+        List<OrderingRule> orderingRules = List.of(orderingRuleName, orderingRulePrice);
+        String actualResult = service.getSQLOrderBy(orderingRules);
+        String expectedResult = "";
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void shouldReturnBlankForNullOrderingRules() {
+        List<OrderingRule> orderingRules = null;
+        String actualResult = service.getSQLOrderBy(orderingRules);
+        String expectedResult = "";
+        assertEquals(expectedResult, actualResult);
+
+    }
+
+    @Test
+    void shouldReturnOrderByNameAscending() {
+        OrderingRule orderingRule = new OrderingRule(OrderBy.NAME, OrderDirection.ASCENDING);
+        List<OrderingRule> orderingRules = List.of(orderingRule);
+        String actualResult = service.getSQLOrderBy(orderingRules);
+        String expectedResult = "ORDER BY name ASC";
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void shouldReturnOrderByPriceDescending() {
+        OrderingRule orderingRule = new OrderingRule(OrderBy.PRICE, OrderDirection.DESCENDING);
+        List<OrderingRule> orderingRules = List.of(orderingRule);
+        String actualResult = service.getSQLOrderBy(orderingRules);
+        String expectedResult = "ORDER BY price DESC";
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void shouldReturnOrderByPriceAndName() {
+        OrderingRule orderingRuleName = new OrderingRule(OrderBy.NAME, OrderDirection.DESCENDING);
+        OrderingRule orderingRulePrice = new OrderingRule(OrderBy.PRICE, OrderDirection.ASCENDING);
+        List<OrderingRule> orderingRules = List.of(orderingRuleName, orderingRulePrice);
+        String actualResult = service.getSQLOrderBy(orderingRules);
+        String expectedResult = "ORDER BY name DESC, price ASC";
+        assertEquals(expectedResult, actualResult);
     }
 
     private boolean isOrderedCorrectly(Long... ids) {

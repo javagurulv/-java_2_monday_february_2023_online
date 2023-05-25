@@ -5,8 +5,9 @@ import org.springframework.stereotype.Repository;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-@Repository
+//@Repository
 public class InMemoryDetailDatabaseImpl implements DetailDatabase {
 
     private Long nextId = 1L;
@@ -20,11 +21,16 @@ public class InMemoryDetailDatabaseImpl implements DetailDatabase {
     }
 
     @Override
-    public void deleteById(Long id) {
-        details.stream()
+    public boolean deleteById(Long id) {
+        boolean isDetailDeleted = false;
+        Optional<Detail> detailToDeleteOpt = details.stream()
                 .filter(detail -> detail.getId().equals(id))
-                .findFirst()
-                .ifPresent(details::remove);
+                .findFirst();
+        if (detailToDeleteOpt.isPresent()) {
+            Detail detailToRemove = detailToDeleteOpt.get();
+            isDetailDeleted = details.remove(detailToRemove);
+        }
+        return isDetailDeleted;
     }
 
     @Override

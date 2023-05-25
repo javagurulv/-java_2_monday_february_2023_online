@@ -1,0 +1,44 @@
+DROP TABLE IF EXISTS cart_item;
+DROP TABLE IF EXISTS cart;
+DROP TABLE IF EXISTS item;
+DROP TABLE IF EXISTS `user`;
+
+CREATE TABLE IF NOT EXISTS `user` (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(32) NOT NULL,
+  login VARCHAR(32) NOT NULL UNIQUE,
+  password VARCHAR(32) NOT NULL,
+  role VARCHAR(8) NOT NULL,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS item (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(32) NOT NULL,
+  price DECIMAL(8,2) NOT NULL,
+  available_quantity INT NOT NULL,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS cart (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  user_id BIGINT NOT NULL,
+  status VARCHAR(8) NOT NULL,
+  last_update DATETIME,
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id) REFERENCES `user`(id)
+);
+
+CREATE TABLE IF NOT EXISTS cart_item (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  cart_id BIGINT NOT NULL,
+  item_id BIGINT NOT NULL,
+  ordered_quantity INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (cart_id) REFERENCES cart(id),
+  FOREIGN KEY (item_id) REFERENCES item(id)
+);
+
+CREATE TRIGGER cart_date_on_create AFTER INSERT ON cart
+FOR EACH ROW
+CALL "shop.acceptance_tests.CartDateOnCreateTrigger";

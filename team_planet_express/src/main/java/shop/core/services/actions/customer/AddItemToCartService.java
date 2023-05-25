@@ -44,7 +44,7 @@ public class AddItemToCartService {
             database.accessCartItemDatabase().save(new CartItem(cart.getId(), item.getId(), orderedQuantity));
         } else {
             Integer newCartItemQuantity = cartItem.get().getOrderedQuantity() + orderedQuantity;
-            cartItem.get().setOrderedQuantity(newCartItemQuantity);
+            database.accessCartItemDatabase().changeOrderedQuantity(cartItem.get().getId(), newCartItemQuantity);
         }
     }
 

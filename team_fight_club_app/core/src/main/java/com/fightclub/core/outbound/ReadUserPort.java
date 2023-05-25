@@ -5,4 +5,6 @@ import com.fightclub.core.domain.User;
 public interface ReadUserPort {
 
     User readById(Long id);
+
+    User readByEmail(String email);
 }

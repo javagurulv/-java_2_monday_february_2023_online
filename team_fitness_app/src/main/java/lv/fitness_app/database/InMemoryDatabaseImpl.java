@@ -1,11 +1,9 @@
 package lv.fitness_app.database;
 
-import lv.fitness_app.users.core.domain.User;
-import org.springframework.stereotype.Component;
+import lv.fitness_app.core.domain.User;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 //@Component("inMemory")
 public class InMemoryDatabaseImpl implements Database {
