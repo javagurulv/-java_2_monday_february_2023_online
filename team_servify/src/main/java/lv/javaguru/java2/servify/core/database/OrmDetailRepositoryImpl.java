@@ -40,22 +40,35 @@ public class OrmDetailRepositoryImpl implements DetailRepository {
 
     @Override
     public List<Detail> findByDetailType(String detailType) {
-        return null;
+        Query query = sessionFactory.getCurrentSession().createQuery(
+                "SELECT d FROM Detail d WHERE detail_type = :detail_type");
+        query.setParameter("detail_type", detailType);
+        return query.getResultList();
     }
 
     @Override
     public List<Detail> findByDetailSide(String detailSide) {
-        return null;
+        Query query = sessionFactory.getCurrentSession().createQuery(
+                "SELECT d FROM Detail d WHERE detail_side =:detail_side");
+        query.setParameter("detail_side", detailSide);
+        return query.getResultList();
     }
 
     @Override
     public List<Detail> findByDetailTypeSide(String detailType, String detailSide) {
-        return null;
+        Query query = sessionFactory.getCurrentSession().createQuery(
+                "SELECT d FROM Detail d WHERE detail_side =:detailSide AND  detail_type = :detailType");
+        query.setParameter("detail_side", detailSide);
+        query.setParameter("detail_type", detailType);
+        return query.getResultList();
     }
 
     @Override
     public List<Detail> findByDetailPrice(BigDecimal detailPrice) {
-        return null;
+        Query query = sessionFactory.getCurrentSession().createQuery(
+                "SELECT d FROM Detail d WHERE price =:price");
+        query.setParameter("price", detailPrice);
+        return query.getResultList();
     }
 }
 
