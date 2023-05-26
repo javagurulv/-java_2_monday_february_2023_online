@@ -10,11 +10,10 @@ import shop.core.database.ItemRepository;
 import shop.core.database.Repository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.item.Item;
-import shop.core.domain.user.User;
 import shop.core.requests.customer.AddItemToCartRequest;
 import shop.core.services.validators.actions.customer.AddItemToCartValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
-import shop.core.support.CurrentUser;
+import shop.core.support.CurrentUserId;
 import shop.matchers.CartItemMatcher;
 
 import java.util.Collections;
@@ -34,7 +33,7 @@ class AddItemToCartServiceTest {
     @Mock
     private final AddItemToCartRequest mockRequest = mock(AddItemToCartRequest.class);
     @Mock
-    private final CurrentUser mockUserId = mock(CurrentUser.class);
+    private final CurrentUserId mockUserId = mock(CurrentUserId.class);
     @Mock
     private final ItemRepository mockItemRepository = mock(ItemRepository.class);
     @Mock
@@ -43,8 +42,6 @@ class AddItemToCartServiceTest {
     private final Item mockItem = mock(Item.class);
     @Mock
     private final Cart mockCart = mock(Cart.class);
-    @Mock
-    private final User mockUser = mock(User.class);
 
     @InjectMocks
     private AddItemToCartService service;
@@ -52,14 +49,16 @@ class AddItemToCartServiceTest {
     @Test
     void shouldAddNewItemToCart() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
-        when(mockRequest.getCurrentUser()).thenReturn(mockUserId);
-        when(mockUserId.getUser()).thenReturn(mockUser);
-        when(mockDatabaseAccessValidator.getOpenCartByUserId(mockUser)).thenReturn(mockCart);
+        when(mockRequest.getCurrentUserId()).thenReturn(mockUserId);
+        when(mockUserId.getValue()).thenReturn(1L);
+        when(mockDatabaseAccessValidator.getOpenCartByUserId(1L)).thenReturn(mockCart);
         when(mockRequest.getItemName()).thenReturn("item name");
         when(mockDatabaseAccessValidator.getItemByName("item name")).thenReturn(mockItem);
         when(mockRequest.getOrderedQuantity()).thenReturn("10");
+        when(mockCart.getId()).thenReturn(1L);
+        when(mockItem.getId()).thenReturn(1L);
         when(mockRepository.accessCartItemRepository()).thenReturn(mockCartItemRepository);
-        when(mockCartItemRepository.findByCartIdAndItemId(mockCart, mockItem)).thenReturn(Optional.empty());
+        when(mockCartItemRepository.findByCartIdAndItemId(1L, 1L)).thenReturn(Optional.empty());
         when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         service.execute(mockRequest);
         verify(mockCartItemRepository).save(argThat(new CartItemMatcher(mockCart, mockItem, 10)));
@@ -68,9 +67,9 @@ class AddItemToCartServiceTest {
     @Test
     void shouldDecreaseAvailableQuantity() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
-        when(mockRequest.getCurrentUser()).thenReturn(mockUserId);
-        when(mockUserId.getUser()).thenReturn(mockUser);
-        when(mockDatabaseAccessValidator.getOpenCartByUserId(mockUser)).thenReturn(mockCart);
+        when(mockRequest.getCurrentUserId()).thenReturn(mockUserId);
+        when(mockUserId.getValue()).thenReturn(1L);
+        when(mockDatabaseAccessValidator.getOpenCartByUserId(1L)).thenReturn(mockCart);
         when(mockRequest.getItemName()).thenReturn("item name");
         when(mockDatabaseAccessValidator.getItemByName("item name")).thenReturn(mockItem);
         when(mockRequest.getOrderedQuantity()).thenReturn("10");

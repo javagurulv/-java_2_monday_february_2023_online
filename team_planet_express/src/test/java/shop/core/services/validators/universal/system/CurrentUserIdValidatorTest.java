@@ -6,16 +6,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.services.exception.ServiceMissingDataException;
-import shop.core.support.CurrentUser;
+import shop.core.support.CurrentUserId;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
-class CurrentUserValidatorTest {
+class CurrentUserIdValidatorTest {
 
     @Mock
-    private CurrentUser mockUserId;
+    private CurrentUserId mockUserId;
 
     @InjectMocks
     private CurrentUserIdValidator validator;

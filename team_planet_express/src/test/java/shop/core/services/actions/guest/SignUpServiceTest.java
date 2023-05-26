@@ -13,7 +13,7 @@ import shop.core.responses.guest.SignUpResponse;
 import shop.core.services.user.UserCreationData;
 import shop.core.services.user.UserService;
 import shop.core.services.validators.actions.guest.SignUpValidator;
-import shop.core.support.CurrentUser;
+import shop.core.support.CurrentUserId;
 import shop.matchers.UserCreationDataMatcher;
 
 import java.util.Collections;
@@ -37,7 +37,7 @@ class SignUpServiceTest {
     @Mock
     private User mockUser;
     @Mock
-    private CurrentUser mockCurrentUser;
+    private CurrentUserId mockCurrentUserId;
 
     @InjectMocks
     private SignUpService service;
@@ -53,7 +53,7 @@ class SignUpServiceTest {
     void shouldReturnNoErrorsForValidRequest() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockUserService.createUser(any(UserCreationData.class))).thenReturn(mockUser);
-        when(mockRequest.getCurrentUser()).thenReturn(mockCurrentUser);
+        when(mockRequest.getCurrentUserId()).thenReturn(mockCurrentUserId);
         SignUpResponse response = service.execute(mockRequest);
         assertNull(response.getErrors());
     }
@@ -65,7 +65,7 @@ class SignUpServiceTest {
         when(mockRequest.getLoginName()).thenReturn("login");
         when(mockRequest.getPassword()).thenReturn("password");
         when(mockUserService.createUser(any(UserCreationData.class))).thenReturn(mockUser);
-        when(mockRequest.getCurrentUser()).thenReturn(mockCurrentUser);
+        when(mockRequest.getCurrentUserId()).thenReturn(mockCurrentUserId);
         service.execute(mockRequest);
         verify(mockUserService)
                 .createUser(argThat(new UserCreationDataMatcher("name", "login", "password", UserRole.CUSTOMER)));
@@ -75,9 +75,10 @@ class SignUpServiceTest {
     void shouldUpdateCurrentUserId() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockUserService.createUser(any(UserCreationData.class))).thenReturn(mockUser);
-        when(mockRequest.getCurrentUser()).thenReturn(mockCurrentUser);
+        when(mockUser.getId()).thenReturn(1L);
+        when(mockRequest.getCurrentUserId()).thenReturn(mockCurrentUserId);
         service.execute(mockRequest);
-        verify(mockCurrentUser).setUser(mockUser);
+        verify(mockCurrentUserId).setValue(1L);
     }
 
 }

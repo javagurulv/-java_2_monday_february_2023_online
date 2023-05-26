@@ -11,6 +11,7 @@ import shop.core.responses.shared.SearchItemResponse;
 import shop.core.services.item_list.OrderingService;
 import shop.core.services.item_list.PagingService;
 import shop.core.services.validators.actions.shared.SearchItemValidator;
+import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -28,6 +29,8 @@ public class SearchItemService {
     private OrderingService orderingService;
     @Autowired
     private PagingService pagingService;
+    @Autowired
+    private DatabaseAccessValidator databaseAccessValidator;
 
     public SearchItemResponse execute(SearchItemRequest request) {
         List<CoreError> errors = validator.validate(request);
@@ -38,7 +41,7 @@ public class SearchItemService {
             List<Item> items = search(request);
             boolean nextPageAvailable = isExtraItemAvailable(request, items);
             response = new SearchItemResponse(items, nextPageAvailable,
-                    request.getCurrentUser().getUser().getUserRole());
+                    databaseAccessValidator.getUserById(request.getCurrentUserId().getValue()).getUserRole());
         }
         return response;
     }

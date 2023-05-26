@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.requests.customer.ListShopItemsRequest;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
-import shop.core.support.CurrentUser;
+import shop.core.support.CurrentUserId;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -20,14 +20,14 @@ class ListShopItemsValidatorTest {
     @Mock
     private ListShopItemsRequest mockRequest;
     @Mock
-    private CurrentUser mockUserId;
+    private CurrentUserId mockUserId;
 
     @InjectMocks
     private ListShopItemsValidator validator;
 
     @Test
     void shouldValidateUserIdIsPresent() {
-        when(mockRequest.getCurrentUser()).thenReturn(mockUserId);
+        when(mockRequest.getCurrentUserId()).thenReturn(mockUserId);
         validator.validate(mockRequest);
         verify(mockCurrentUserIdValidator).validateCurrentUserIdIsPresent(mockUserId);
     }

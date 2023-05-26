@@ -35,7 +35,7 @@ public class OrmItemRepositoryImpl implements ItemRepository {
         Query<Item> query = sessionFactory.getCurrentSession()
                 .createQuery("SELECT i FROM Item i WHERE name = :name", Item.class);
         query.setParameter("name", name);
-        return query.getResultList().stream().findFirst();
+        return query.getResultStream().findFirst();
     }
 
     //TODO all 3 needed ???

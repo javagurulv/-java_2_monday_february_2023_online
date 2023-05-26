@@ -4,7 +4,7 @@ import org.springframework.context.ApplicationContext;
 import shop.core.database.Repository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
-import shop.core.support.CurrentUser;
+import shop.core.support.CurrentUserId;
 
 import java.util.Optional;
 
@@ -20,11 +20,11 @@ public abstract class Tester {
     }
 
     protected Tester checkItemInCart(String itemName, Integer quantity) {
-        Optional<Cart> cart = getDatabase().accessCartRepository().findOpenCartForUserId(getCurrentUser().getUser());
+        Optional<Cart> cart = getDatabase().accessCartRepository().findOpenCartForUserId(getCurrentUser().getValue());
         assertTrue(cart.isPresent());
         Optional<CartItem> cartItem = getDatabase().accessCartItemRepository().findByCartIdAndItemId(
-                cart.get(),
-                getDatabase().accessItemRepository().findByName(itemName).orElseThrow()
+                cart.get().getId(),
+                getDatabase().accessItemRepository().findByName(itemName).orElseThrow().getId()
         );
         assertTrue(cartItem.isPresent());
         assertEquals(quantity, cartItem.get().getOrderedQuantity());
@@ -39,11 +39,11 @@ public abstract class Tester {
     }
 
     protected Tester notItemInCart(String itemName) {
-        Optional<Cart> cart = getDatabase().accessCartRepository().findOpenCartForUserId(getCurrentUser().getUser());
+        Optional<Cart> cart = getDatabase().accessCartRepository().findOpenCartForUserId(getCurrentUser().getValue());
         if (cart.isPresent()) {
             Optional<CartItem> cartItem = getDatabase().accessCartItemRepository().findByCartIdAndItemId(
-                    cart.get(),
-                    getDatabase().accessItemRepository().findByName(itemName).orElseThrow()
+                    cart.get().getId(),
+                    getDatabase().accessItemRepository().findByName(itemName).orElseThrow().getId()
             );
             assertTrue(cartItem.isEmpty());
         }
@@ -54,8 +54,8 @@ public abstract class Tester {
         return applicationContext.getBean(Repository.class);
     }
 
-    protected CurrentUser getCurrentUser() {
-        return applicationContext.getBean(CurrentUser.class);
+    protected CurrentUserId getCurrentUser() {
+        return applicationContext.getBean(CurrentUserId.class);
     }
 
 }

@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import shop.core.database.CartItemRepository;
-import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
-import shop.core.domain.item.Item;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,12 +25,12 @@ public class OrmCartItemRepositoryImpl implements CartItemRepository {
     }
 
     @Override
-    public Optional<CartItem> findByCartIdAndItemId(Cart cart, Item item) {
+    public Optional<CartItem> findByCartIdAndItemId(Long cartId, Long itemId) {
         Query<CartItem> query = sessionFactory.getCurrentSession()
-                .createQuery("SELECT ci FROM CartItem ci WHERE cart = :cart AND item = :item", CartItem.class);
-        query.setParameter("cart", cart);
-        query.setParameter("item", item);
-        return query.getResultList().stream().findFirst();
+                .createQuery("SELECT ci FROM CartItem ci WHERE cart.id = :cart_id AND item.id = :item_id", CartItem.class);
+        query.setParameter("cart_id", cartId);
+        query.setParameter("item_id", itemId);
+        return query.getResultStream().findFirst();
     }
 
     @Override
@@ -60,10 +58,10 @@ public class OrmCartItemRepositoryImpl implements CartItemRepository {
     }
 
     @Override
-    public List<CartItem> getAllCartItemsForCartId(Cart cart) {
+    public List<CartItem> getAllCartItemsForCartId(Long cartId) {
         Query<CartItem> query = sessionFactory.getCurrentSession()
-                .createQuery("SELECT ci FROM CartItem ci WHERE cart = :cart", CartItem.class);
-        query.setParameter("cart", cart);
+                .createQuery("SELECT ci FROM CartItem ci WHERE cart.id = :cart_id", CartItem.class);
+        query.setParameter("cart_id", cartId);
         return query.getResultList();
     }
 

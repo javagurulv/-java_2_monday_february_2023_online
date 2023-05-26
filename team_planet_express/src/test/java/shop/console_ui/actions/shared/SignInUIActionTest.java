@@ -12,7 +12,7 @@ import shop.core.requests.shared.SignInRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.shared.SignInResponse;
 import shop.core.services.actions.shared.SignInService;
-import shop.core.support.CurrentUser;
+import shop.core.support.CurrentUserId;
 import shop.matchers.SignInRequestMatcher;
 
 import java.util.List;
@@ -25,7 +25,7 @@ class SignInUIActionTest {
     @Mock
     private SignInService mockSignInService;
     @Mock
-    private CurrentUser mockCurrentUser;
+    private CurrentUserId mockCurrentUserId;
     @Mock
     private UserCommunication mockUserCommunication;
     @Mock
@@ -57,7 +57,7 @@ class SignInUIActionTest {
         when(mockSignInResponse.getUser()).thenReturn(mockUser);
         action.execute();
         verify(mockSignInService)
-                .execute(argThat(new SignInRequestMatcher(mockCurrentUser, "login", "password")));
+                .execute(argThat(new SignInRequestMatcher(mockCurrentUserId, "login", "password")));
     }
 
     @Test

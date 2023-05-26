@@ -14,7 +14,7 @@ import shop.core.domain.user.User;
 import shop.core.requests.shared.SearchItemRequest;
 import shop.core.responses.shared.SearchItemResponse;
 import shop.core.services.actions.shared.SearchItemService;
-import shop.core.support.CurrentUser;
+import shop.core.support.CurrentUserId;
 import shop.core.support.ordering.OrderBy;
 import shop.core.support.ordering.OrderDirection;
 import shop.core.support.ordering.OrderingRule;
@@ -35,21 +35,21 @@ public class SearchForItemsAcceptanceTest {
     @Autowired
     private Repository repository;
     @Autowired
-    private CurrentUser currentUser;
+    private CurrentUserId currentUserId;
     @Autowired
     private SearchItemService searchItemService;
 
     @BeforeEach
     void setCurrentUser() {
         User currentUser = repository.accessUserRepository().findById(1L).orElseThrow();
-        this.currentUser.setUser(currentUser);
+        this.currentUserId.setValue(currentUser.getId());
     }
 
     @Sql({"/testDatabaseTableCreation.sql", "/testDatabaseDataInsertion.sql"})
     @Test
     void shouldReturnAllItemsWithRobotInTheName() {
         SearchItemResponse searchItemResponse =
-                searchItemService.execute(new SearchItemRequest(currentUser, "robot", "", Collections.emptyList(), null));
+                searchItemService.execute(new SearchItemRequest(currentUserId, "robot", "", Collections.emptyList(), null));
         assertFalse(searchItemResponse.hasErrors());
         assertFalse(searchItemResponse.isNextPageAvailable());
         assertEquals("Moms Old-Fashioned Robot Oil", searchItemResponse.getItems().get(0).getName());
@@ -60,7 +60,7 @@ public class SearchForItemsAcceptanceTest {
     @Test
     void shouldReturnAllItemsCheaperThan10() {
         SearchItemResponse searchItemResponse =
-                searchItemService.execute(new SearchItemRequest(currentUser, "", "10", Collections.emptyList(), null));
+                searchItemService.execute(new SearchItemRequest(currentUserId, "", "10", Collections.emptyList(), null));
         assertFalse(searchItemResponse.hasErrors());
         assertFalse(searchItemResponse.isNextPageAvailable());
         Optional<Item> wrongItem = searchItemResponse.getItems().stream()
@@ -74,7 +74,7 @@ public class SearchForItemsAcceptanceTest {
     void shouldOrderRobotItemsAscending() {
         OrderingRule orderingRule = new OrderingRule(OrderBy.NAME, OrderDirection.ASCENDING);
         SearchItemResponse searchItemResponse =
-                searchItemService.execute(new SearchItemRequest(currentUser, "robot", "", List.of(orderingRule), null));
+                searchItemService.execute(new SearchItemRequest(currentUserId, "robot", "", List.of(orderingRule), null));
         assertFalse(searchItemResponse.hasErrors());
         assertFalse(searchItemResponse.isNextPageAvailable());
         assertTrue(isOrderedCorrectly(searchItemResponse.getItems(), 7L, 4L));
@@ -85,7 +85,7 @@ public class SearchForItemsAcceptanceTest {
     void shouldReturnSecondThreeItemPage() {
         PagingRule pagingRule = new PagingRule(2, "3");
         SearchItemResponse searchItemResponse =
-                searchItemService.execute(new SearchItemRequest(currentUser, "", "", Collections.emptyList(), pagingRule));
+                searchItemService.execute(new SearchItemRequest(currentUserId, "", "", Collections.emptyList(), pagingRule));
         assertFalse(searchItemResponse.hasErrors());
         assertEquals(3, searchItemResponse.getItems().size());
         assertTrue(searchItemResponse.isNextPageAvailable());
@@ -101,7 +101,7 @@ public class SearchForItemsAcceptanceTest {
         OrderingRule orderingRulePrice = new OrderingRule(OrderBy.PRICE, OrderDirection.ASCENDING);
         PagingRule pagingRule = new PagingRule(1, "4");
         SearchItemResponse searchItemResponse =
-                searchItemService.execute(new SearchItemRequest(currentUser, "T", "25", List.of(orderingRuleName, orderingRulePrice), pagingRule));
+                searchItemService.execute(new SearchItemRequest(currentUserId, "T", "25", List.of(orderingRuleName, orderingRulePrice), pagingRule));
         assertFalse(searchItemResponse.hasErrors());
         assertTrue(searchItemResponse.isNextPageAvailable());
         Optional<Item> wrongItem = searchItemResponse.getItems().stream()
@@ -112,7 +112,7 @@ public class SearchForItemsAcceptanceTest {
         assertEquals(4, searchItemResponse.getItems().size());
         pagingRule = new PagingRule(2, "4");
         searchItemResponse =
-                searchItemService.execute(new SearchItemRequest(currentUser, "T", "25", List.of(orderingRuleName, orderingRulePrice), pagingRule));
+                searchItemService.execute(new SearchItemRequest(currentUserId, "T", "25", List.of(orderingRuleName, orderingRulePrice), pagingRule));
         assertEquals(1, searchItemResponse.getItems().size());
         assertTrue(isPageContainingCorrectItems(searchItemResponse.getItems(), 7L));
     }

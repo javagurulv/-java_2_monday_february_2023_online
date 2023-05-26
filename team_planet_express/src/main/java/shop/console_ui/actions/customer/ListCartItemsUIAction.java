@@ -9,7 +9,7 @@ import shop.core.requests.customer.ListCartItemsRequest;
 import shop.core.responses.customer.ListCartItemsResponse;
 import shop.core.services.actions.customer.ListCartItemsService;
 import shop.core.support.CartItemForList;
-import shop.core.support.CurrentUser;
+import shop.core.support.CurrentUserId;
 
 import java.math.BigDecimal;
 
@@ -26,7 +26,7 @@ public class ListCartItemsUIAction extends UIAction {
     @Autowired
     private ListCartItemsService listCartItemsService;
     @Autowired
-    private CurrentUser currentUser;
+    private CurrentUserId currentUserId;
     @Autowired
     private UserCommunication userCommunication;
 
@@ -37,7 +37,7 @@ public class ListCartItemsUIAction extends UIAction {
     @Override
     public void execute() {
         userCommunication.informUser(HEADER_TEXT);
-        ListCartItemsRequest request = new ListCartItemsRequest(currentUser);
+        ListCartItemsRequest request = new ListCartItemsRequest(currentUserId);
         ListCartItemsResponse response = listCartItemsService.execute(request);
         if (response.hasErrors()) {
             response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));

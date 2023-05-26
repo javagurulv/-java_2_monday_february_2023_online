@@ -8,7 +8,7 @@ import shop.core.domain.user.UserRole;
 import shop.core.requests.guest.SignUpRequest;
 import shop.core.responses.guest.SignUpResponse;
 import shop.core.services.actions.guest.SignUpService;
-import shop.core.support.CurrentUser;
+import shop.core.support.CurrentUserId;
 
 @Component
 public class SignUpUIAction extends UIAction {
@@ -24,7 +24,7 @@ public class SignUpUIAction extends UIAction {
     @Autowired
     private SignUpService signUpService;
     @Autowired
-    private CurrentUser currentUser;
+    private CurrentUserId currentUserId;
     @Autowired
     private UserCommunication userCommunication;
 
@@ -37,7 +37,7 @@ public class SignUpUIAction extends UIAction {
         String name = userCommunication.requestInput(PROMPT_TOPIC_NAME);
         String login = userCommunication.requestInput(PROMPT_TOPIC_LOGIN);
         String password = userCommunication.requestInput(PROMPT_TOPIC_PASSWORD);
-        SignUpRequest request = new SignUpRequest(currentUser, name, login, password);
+        SignUpRequest request = new SignUpRequest(currentUserId, name, login, password);
         SignUpResponse response = signUpService.execute(request);
         if (response.hasErrors()) {
             response.getErrors().forEach(coreError -> userCommunication.informUser(coreError.getMessage()));

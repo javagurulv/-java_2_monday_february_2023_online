@@ -11,7 +11,7 @@ import shop.core.services.validators.item_list.OrderingRuleValidator;
 import shop.core.services.validators.item_list.PagingRuleValidator;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
-import shop.core.support.CurrentUser;
+import shop.core.support.CurrentUserId;
 import shop.core.support.paging.PagingRule;
 
 import java.util.Collections;
@@ -35,7 +35,7 @@ class SearchItemValidatorTest {
     @Mock
     private SearchItemRequest mockRequest;
     @Mock
-    private CurrentUser mockUserId;
+    private CurrentUserId mockUserId;
     @Mock
     private PagingRule mockPagingRule;
     @Mock
@@ -46,7 +46,7 @@ class SearchItemValidatorTest {
 
     @Test
     void shouldValidateUserIdIsPresent() {
-        when(mockRequest.getCurrentUser()).thenReturn(mockUserId);
+        when(mockRequest.getCurrentUserId()).thenReturn(mockUserId);
         validator.validate(mockRequest);
         verify(mockCurrentUserIdValidator).validateCurrentUserIdIsPresent(mockUserId);
     }

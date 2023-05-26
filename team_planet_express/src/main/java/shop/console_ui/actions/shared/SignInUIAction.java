@@ -8,7 +8,7 @@ import shop.core.domain.user.UserRole;
 import shop.core.requests.shared.SignInRequest;
 import shop.core.responses.shared.SignInResponse;
 import shop.core.services.actions.shared.SignInService;
-import shop.core.support.CurrentUser;
+import shop.core.support.CurrentUserId;
 
 @Component
 public class SignInUIAction extends UIAction {
@@ -23,7 +23,7 @@ public class SignInUIAction extends UIAction {
     @Autowired
     private SignInService signInService;
     @Autowired
-    private CurrentUser currentUser;
+    private CurrentUserId currentUserId;
     @Autowired
     private UserCommunication userCommunication;
 
@@ -35,7 +35,7 @@ public class SignInUIAction extends UIAction {
     public void execute() {
         String login = userCommunication.requestInput(PROMPT_TOPIC_LOGIN);
         String password = userCommunication.requestInput(PROMPT_TOPIC_PASSWORD);
-        SignInRequest request = new SignInRequest(currentUser, login, password);
+        SignInRequest request = new SignInRequest(currentUserId, login, password);
         SignInResponse response = signInService.execute(request);
         if (response.hasErrors()) {
             response.getErrors().forEach(coreError -> userCommunication.informUser(coreError.getMessage()));
