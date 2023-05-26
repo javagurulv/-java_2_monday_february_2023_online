@@ -11,7 +11,7 @@ import shop.core.services.fake.FakeUserGenerator;
 import shop.core.services.fake.fake_item_generator.HardcodedItemGeneratorImpl;
 import shop.core.services.user.UserCreationData;
 import shop.core.services.user.UserService;
-import shop.core.support.CurrentUser;
+import shop.core.support.CurrentUserId;
 
 import java.util.List;
 
@@ -48,8 +48,8 @@ public class ApplicationContextSetup {
         UserCreationData userCreationData = new UserCreationData(UserRole.GUEST.getDefaultName(), BLANK, BLANK, UserRole.GUEST);
         User currentUser = userService.findGuestWithOpenCart().orElseGet(
                 () -> userService.createUser(userCreationData));
-        CurrentUser currentUserId = applicationContext.getBean(CurrentUser.class);
-        currentUserId.setUser(currentUser);
+        CurrentUserId currentUserId = applicationContext.getBean(CurrentUserId.class);
+        currentUserId.setValue(currentUser.getId());
     }
 
 }

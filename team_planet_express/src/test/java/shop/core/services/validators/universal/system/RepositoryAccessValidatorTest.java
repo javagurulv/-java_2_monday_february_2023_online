@@ -102,29 +102,29 @@ class RepositoryAccessValidatorTest {
     @Test
     void shouldReturnOpenCartByUserId() {
         when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
-        when(mockCartRepository.findOpenCartForUserId(mockUser)).thenReturn(Optional.of(mockCart));
-        assertNotNull(databaseAccessValidator.getOpenCartByUserId(mockUser));
+        when(mockCartRepository.findOpenCartForUserId(1L)).thenReturn(Optional.of(mockCart));
+        assertNotNull(databaseAccessValidator.getOpenCartByUserId(1L));
     }
 
     @Test
     void shouldThrowExceptionForMissingOptionalForOpenCartByUserId() {
         when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
-        when(mockCartRepository.findOpenCartForUserId(mockUser)).thenReturn(Optional.empty());
-        assertThrows(ServiceMissingDataException.class, () -> databaseAccessValidator.getOpenCartByUserId(mockUser));
+        when(mockCartRepository.findOpenCartForUserId(1L)).thenReturn(Optional.empty());
+        assertThrows(ServiceMissingDataException.class, () -> databaseAccessValidator.getOpenCartByUserId(1L));
     }
 
     @Test
     void shouldReturnCartItemByCartIdAndItemId() {
         when(mockRepository.accessCartItemRepository()).thenReturn(mockCartItemRepository);
-        when(mockCartItemRepository.findByCartIdAndItemId(mockCart, mockItem)).thenReturn(Optional.of(mockCartItem));
-        assertNotNull(databaseAccessValidator.getCartItemByCartIdAndItemId(mockCart, mockItem));
+        when(mockCartItemRepository.findByCartIdAndItemId(1L, 1L)).thenReturn(Optional.of(mockCartItem));
+        assertNotNull(databaseAccessValidator.getCartItemByCartIdAndItemId(1L, 1L));
     }
 
     @Test
     void shouldThrowExceptionForMissingOptionalForCartItemByCartIdAndItemId() {
         when(mockRepository.accessCartItemRepository()).thenReturn(mockCartItemRepository);
-        when(mockCartItemRepository.findByCartIdAndItemId(mockCart, mockItem)).thenReturn(Optional.empty());
-        assertThrows(ServiceMissingDataException.class, () -> databaseAccessValidator.getCartItemByCartIdAndItemId(mockCart, mockItem));
+        when(mockCartItemRepository.findByCartIdAndItemId(1L, 1L)).thenReturn(Optional.empty());
+        assertThrows(ServiceMissingDataException.class, () -> databaseAccessValidator.getCartItemByCartIdAndItemId(1L, 1L));
     }
 
 }

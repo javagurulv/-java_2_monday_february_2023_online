@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import shop.core.database.Repository;
 import shop.core.requests.customer.ListShopItemsRequest;
 import shop.core.responses.customer.ListShopItemsResponse;
+import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 
 @Component
 @Transactional
@@ -13,10 +14,12 @@ public class ListShopItemsService {
 
     @Autowired
     private Repository repository;
+    @Autowired
+    private DatabaseAccessValidator databaseAccessValidator;
 
     public ListShopItemsResponse execute(ListShopItemsRequest request) {
         return new ListShopItemsResponse(repository.accessItemRepository().getAllItems(),
-                request.getCurrentUser().getUser().getUserRole());
+                databaseAccessValidator.getUserById(request.getCurrentUserId().getValue()).getUserRole());
     }
 
 }

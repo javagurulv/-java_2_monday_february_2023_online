@@ -8,7 +8,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.CartRepository;
 import shop.core.database.Repository;
 import shop.core.domain.cart.Cart;
-import shop.core.domain.user.User;
 import shop.core.responses.CoreError;
 import shop.core.support.error_code_processing.ErrorProcessor;
 
@@ -31,8 +30,6 @@ class CartValidatorTest {
     @Mock
     private Cart mockCart;
     @Mock
-    private User mockUser;
-    @Mock
     private CoreError mockCoreError;
 
     @InjectMocks
@@ -41,17 +38,17 @@ class CartValidatorTest {
     @Test
     void shouldReturnNoError() {
         when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
-        when(mockCartRepository.findOpenCartForUserId(mockUser)).thenReturn(Optional.of(mockCart));
-        Optional<CoreError> error = validator.validateOpenCartExistsForUserId(mockUser);
+        when(mockCartRepository.findOpenCartForUserId(1L)).thenReturn(Optional.of(mockCart));
+        Optional<CoreError> error = validator.validateOpenCartExistsForUserId(1L);
         assertTrue(error.isEmpty());
     }
 
     @Test
     void shouldReturnError() {
         when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
-        when(mockCartRepository.findOpenCartForUserId(mockUser)).thenReturn(Optional.empty());
+        when(mockCartRepository.findOpenCartForUserId(1L)).thenReturn(Optional.empty());
         when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
-        validator.validateOpenCartExistsForUserId(mockUser);
+        validator.validateOpenCartExistsForUserId(1L);
         verify(mockErrorProcessor).getCoreError("button", "VDT-CRT-NOC");
     }
 

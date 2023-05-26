@@ -35,13 +35,13 @@ public class DatabaseAccessValidator {
                 .orElseThrow(ServiceMissingDataException::new);
     }
 
-    public Cart getOpenCartByUserId(User user) {
-        return repository.accessCartRepository().findOpenCartForUserId(user)
+    public Cart getOpenCartByUserId(Long userId) {
+        return repository.accessCartRepository().findOpenCartForUserId(userId)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 
-    public CartItem getCartItemByCartIdAndItemId(Cart cart, Item item) {
-        return repository.accessCartItemRepository().findByCartIdAndItemId(cart, item)
+    public CartItem getCartItemByCartIdAndItemId(Long cartId, Long itemId) {
+        return repository.accessCartItemRepository().findByCartIdAndItemId(cartId, itemId)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 

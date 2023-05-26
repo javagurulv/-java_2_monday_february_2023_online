@@ -8,7 +8,7 @@ import shop.core.domain.user.UserRole;
 import shop.core.requests.customer.BuyRequest;
 import shop.core.responses.customer.BuyResponse;
 import shop.core.services.actions.customer.BuyService;
-import shop.core.support.CurrentUser;
+import shop.core.support.CurrentUserId;
 
 @Component
 public class BuyUIAction extends UIAction {
@@ -21,7 +21,7 @@ public class BuyUIAction extends UIAction {
     @Autowired
     private BuyService buyService;
     @Autowired
-    private CurrentUser currentUser;
+    private CurrentUserId currentUserId;
     @Autowired
     private UserCommunication userCommunication;
 
@@ -31,7 +31,7 @@ public class BuyUIAction extends UIAction {
 
     @Override
     public void execute() {
-        BuyRequest request = new BuyRequest(currentUser);
+        BuyRequest request = new BuyRequest(currentUserId);
         BuyResponse response = buyService.execute(request);
         if (response.hasErrors()) {
             response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));

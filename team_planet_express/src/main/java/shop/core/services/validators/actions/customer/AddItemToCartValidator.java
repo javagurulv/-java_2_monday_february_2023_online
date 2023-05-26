@@ -40,9 +40,9 @@ public class AddItemToCartValidator {
     private ErrorProcessor errorProcessor;
 
     public List<CoreError> validate(AddItemToCartRequest request) {
-        userIdValidator.validateCurrentUserIdIsPresent(request.getCurrentUser());
+        userIdValidator.validateCurrentUserIdIsPresent(request.getCurrentUserId());
         List<CoreError> errors = new ArrayList<>();
-        cartValidator.validateOpenCartExistsForUserId(request.getCurrentUser().getUser()).ifPresent(errors::add);
+        cartValidator.validateOpenCartExistsForUserId(request.getCurrentUserId().getValue()).ifPresent(errors::add);
         if (errors.isEmpty()) {
             validateItemName(request.getItemName(), errors);
             validateQuantity(request.getOrderedQuantity(), errors);

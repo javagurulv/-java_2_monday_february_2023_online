@@ -58,7 +58,8 @@ class UserServiceTest {
         when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
         when(mockUserRepository.getAllUsers()).thenReturn(List.of(mockUser));
         when(mockUser.getUserRole()).thenReturn(UserRole.GUEST);
-        when(mockCartRepository.findOpenCartForUserId(mockUser)).thenReturn(Optional.of(mockCart));
+        when(mockUser.getId()).thenReturn(1L);
+        when(mockCartRepository.findOpenCartForUserId(1L)).thenReturn(Optional.of(mockCart));
         assertTrue(service.findGuestWithOpenCart().isPresent());
     }
 
@@ -76,7 +77,8 @@ class UserServiceTest {
         when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
         when(mockUserRepository.getAllUsers()).thenReturn(List.of(mockUser));
         when(mockUser.getUserRole()).thenReturn(UserRole.GUEST);
-        when(mockCartRepository.findOpenCartForUserId(mockUser)).thenReturn(Optional.empty());
+        when(mockUser.getId()).thenReturn(1L);
+        when(mockCartRepository.findOpenCartForUserId(1L)).thenReturn(Optional.empty());
         assertTrue(service.findGuestWithOpenCart().isEmpty());
     }
 

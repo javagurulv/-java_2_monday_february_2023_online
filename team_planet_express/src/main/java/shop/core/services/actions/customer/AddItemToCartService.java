@@ -32,7 +32,7 @@ public class AddItemToCartService {
         if (!errors.isEmpty()) {
             return new AddItemToCartResponse(errors);
         }
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getCurrentUser().getUser());
+        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getCurrentUserId().getValue());
         Item item = databaseAccessValidator.getItemByName(request.getItemName());
         Integer orderedQuantity = Integer.parseInt(request.getOrderedQuantity());
         addItemToCart(cart, item, orderedQuantity);
@@ -41,7 +41,7 @@ public class AddItemToCartService {
     }
 
     private void addItemToCart(Cart cart, Item item, Integer orderedQuantity) {
-        Optional<CartItem> cartItem = repository.accessCartItemRepository().findByCartIdAndItemId(cart, item);
+        Optional<CartItem> cartItem = repository.accessCartItemRepository().findByCartIdAndItemId(cart.getId(), item.getId());
         if (cartItem.isEmpty()) {
             repository.accessCartItemRepository().save(new CartItem(cart, item, orderedQuantity));
         } else {

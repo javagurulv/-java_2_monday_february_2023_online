@@ -16,7 +16,7 @@ public class SignOutValidator {
     private CurrentUserIdValidator userIdValidator;
 
     public List<CoreError> validate(SignOutRequest request) {
-        userIdValidator.validateCurrentUserIdIsPresent(request.getCurrentUser());
+        userIdValidator.validateCurrentUserIdIsPresent(request.getCurrentUserId());
         List<CoreError> errors = new ArrayList<>();
         return errors;
     }

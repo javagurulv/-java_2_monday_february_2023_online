@@ -15,7 +15,7 @@ import shop.console_ui.actions.shared.SignOutUIAction;
 import shop.core.database.Repository;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
-import shop.core.support.CurrentUser;
+import shop.core.support.CurrentUserId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class UIActionsList {
     @Autowired
     Repository repository;
     @Autowired
-    CurrentUser currentUser;
+    CurrentUserId currentUserId;
 
     @Autowired
     public UIActionsList(List<UIAction> uiActionsList) {
@@ -36,7 +36,7 @@ public class UIActionsList {
     }
 
     public List<UIAction> getUIActionsListForUserRole() {
-        Optional<User> currentUser = repository.accessUserRepository().findById(this.currentUser.getUser().getId());
+        Optional<User> currentUser = repository.accessUserRepository().findById(currentUserId.getValue());
         UserRole filterRole = currentUser.isEmpty() ? UserRole.GUEST : currentUser.get().getUserRole();
         return uiActionsList.stream()
                 .filter(uiAction -> filterRole.checkPermission(uiAction.getAccessNumber()))

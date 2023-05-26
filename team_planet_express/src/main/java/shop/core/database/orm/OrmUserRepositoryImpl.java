@@ -34,7 +34,7 @@ public class OrmUserRepositoryImpl implements UserRepository {
         Query<User> query = sessionFactory.getCurrentSession()
                 .createQuery("SELECT u FROM User u WHERE login = :login", User.class);
         query.setParameter("login", login);
-        return query.getResultList().stream().findFirst();
+        return query.getResultStream().findFirst();
     }
 
     @Override

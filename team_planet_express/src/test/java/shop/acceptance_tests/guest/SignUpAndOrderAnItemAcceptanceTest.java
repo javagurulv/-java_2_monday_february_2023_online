@@ -19,7 +19,7 @@ import shop.core.responses.customer.AddItemToCartResponse;
 import shop.core.responses.guest.SignUpResponse;
 import shop.core.services.actions.customer.AddItemToCartService;
 import shop.core.services.actions.guest.SignUpService;
-import shop.core.support.CurrentUser;
+import shop.core.support.CurrentUserId;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class SignUpAndOrderAnItemAcceptanceTest {
     @Autowired
     private Repository repository;
     @Autowired
-    private CurrentUser currentUser;
+    private CurrentUserId currentUserId;
     @Autowired
     private SignUpService signUpService;
     @Autowired
@@ -42,17 +42,17 @@ public class SignUpAndOrderAnItemAcceptanceTest {
     @Test
     void shouldBecomeCustomerAndHaveAnItemInTheCart() {
         SignUpResponse signUpResponse =
-                signUpService.execute(new SignUpRequest(currentUser, "Brannigan", "captain", "password"));
+                signUpService.execute(new SignUpRequest(currentUserId, "Brannigan", "captain", "password"));
         assertFalse(signUpResponse.hasErrors());
         User newUser = signUpResponse.getUser();
         assertEquals(UserRole.CUSTOMER, newUser.getUserRole());
-        assertTrue(repository.accessCartRepository().findOpenCartForUserId(newUser).isPresent());
+        assertTrue(repository.accessCartRepository().findOpenCartForUserId(newUser.getId()).isPresent());
         Item orderedItem = repository.accessItemRepository().findByName("Lightspeed Briefs").orElseThrow();
         AddItemToCartResponse addItemToCartResponse =
-                addItemToCartService.execute(new AddItemToCartRequest(currentUser, orderedItem.getName(), "1"));
+                addItemToCartService.execute(new AddItemToCartRequest(currentUserId, orderedItem.getName(), "1"));
         assertFalse(addItemToCartResponse.hasErrors());
-        Cart userCart = repository.accessCartRepository().findOpenCartForUserId(newUser).get();
-        List<CartItem> cartItems = repository.accessCartItemRepository().getAllCartItemsForCartId(userCart);
+        Cart userCart = repository.accessCartRepository().findOpenCartForUserId(newUser.getId()).get();
+        List<CartItem> cartItems = repository.accessCartItemRepository().getAllCartItemsForCartId(userCart.getId());
         assertEquals(1, cartItems.size());
         CartItem cartItem = cartItems.get(0);
         Item originalItem = repository.accessItemRepository().findById(cartItem.getItem().getId()).orElseThrow();
