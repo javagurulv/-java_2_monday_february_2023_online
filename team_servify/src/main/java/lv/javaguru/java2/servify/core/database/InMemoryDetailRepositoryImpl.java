@@ -58,4 +58,9 @@ public class InMemoryDetailRepositoryImpl implements DetailRepository {
         return null;
     }
 
+    @Override
+    public List<Detail> findByDetailTypePrice(String detailType, BigDecimal detailPrice) {
+        return null;
+    }
+
 }

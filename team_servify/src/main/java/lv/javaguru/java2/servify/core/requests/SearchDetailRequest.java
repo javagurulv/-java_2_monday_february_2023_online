@@ -20,6 +20,6 @@ public class SearchDetailRequest {
     }
 
     public boolean isPriceProvided() {
-        return this.detailPrice != null;
+        return this.detailPrice != null && this.detailPrice.compareTo(BigDecimal.ZERO) > 0;
     }
 }

@@ -36,7 +36,7 @@ public class SearchBooksUIAction implements UIAction {
 		if (response.hasErrors()) {
 			response.getErrors().forEach(coreError -> System.out.println("Error: " + coreError.getField() + " " + coreError.getMessage()));
 		} else {
-			response.getBooks().forEach(Book::toString);
+			response.getBooks().forEach(System.out::println);
 		}
 	}
 

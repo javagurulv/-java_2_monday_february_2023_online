@@ -21,7 +21,7 @@ public class SearchDetailService {
 
     public SearchDetailResponse execute(SearchDetailRequest request) {
         List<CoreError> errors = validator.validate(request);
-        if (errors.isEmpty()) {
+        if (!errors.isEmpty()) {
             return new SearchDetailResponse(null, errors);
         }
         List<Detail> details = search(request);
@@ -39,9 +39,13 @@ public class SearchDetailService {
         if (!request.isTypeProvided() && !request.isSideProvided() && request.isPriceProvided()) {
             details = detailRepository.findByDetailPrice(request.getDetailPrice());
         }
-        if (request.isTypeProvided() && request.isSideProvided()) {
+        if (request.isTypeProvided() && request.isSideProvided() && !request.isPriceProvided()) {
             details = detailRepository.findByDetailTypeSide(request.getDetailType(), request.getDetailSide());
         }
+        if (request.isTypeProvided() && !request.isSideProvided() && request.isPriceProvided()) {
+            details = detailRepository.findByDetailTypePrice(request.getDetailType(), request.getDetailPrice());
+        }
+
         return details;
     }
 }

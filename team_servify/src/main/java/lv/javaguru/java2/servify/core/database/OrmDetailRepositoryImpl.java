@@ -25,7 +25,7 @@ public class OrmDetailRepositoryImpl implements DetailRepository {
     @Override
     public boolean deleteById(Long id) {
         Query query = sessionFactory.getCurrentSession().createQuery(
-                "DELETE Detail WHERE id = :id");
+                "DELETE Detail WHERE id = :id", Detail.class);
         query.setParameter("id", id);
         int result = query.executeUpdate();
         return result == 1;
@@ -41,32 +41,41 @@ public class OrmDetailRepositoryImpl implements DetailRepository {
     @Override
     public List<Detail> findByDetailType(String detailType) {
         Query query = sessionFactory.getCurrentSession().createQuery(
-                "SELECT d FROM Detail d WHERE detail_type = :detail_type");
-        query.setParameter("detail_type", detailType);
+                "SELECT d FROM Detail d WHERE type = :type", Detail.class);
+        query.setParameter("type", detailType);
         return query.getResultList();
     }
 
     @Override
     public List<Detail> findByDetailSide(String detailSide) {
         Query query = sessionFactory.getCurrentSession().createQuery(
-                "SELECT d FROM Detail d WHERE detail_side =:detail_side");
-        query.setParameter("detail_side", detailSide);
+                "SELECT d FROM Detail d WHERE side =:side", Detail.class);
+        query.setParameter("side", detailSide);
         return query.getResultList();
     }
 
     @Override
     public List<Detail> findByDetailTypeSide(String detailType, String detailSide) {
         Query query = sessionFactory.getCurrentSession().createQuery(
-                "SELECT d FROM Detail d WHERE detail_side =:detailSide AND  detail_type = :detailType");
-        query.setParameter("detail_side", detailSide);
-        query.setParameter("detail_type", detailType);
+                "SELECT d FROM Detail d WHERE side =:side AND  type = :type", Detail.class);
+        query.setParameter("side", detailSide);
+        query.setParameter("type", detailType);
         return query.getResultList();
     }
 
     @Override
     public List<Detail> findByDetailPrice(BigDecimal detailPrice) {
         Query query = sessionFactory.getCurrentSession().createQuery(
-                "SELECT d FROM Detail d WHERE price =:price");
+                "SELECT d FROM Detail d WHERE price =:price", Detail.class);
+        query.setParameter("price", detailPrice);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Detail> findByDetailTypePrice(String detailType, BigDecimal detailPrice) {
+        Query query = sessionFactory.getCurrentSession().createQuery(
+                "SELECT d FROM Detail d WHERE type = :type AND price =:price", Detail.class);
+        query.setParameter("type", detailType);
         query.setParameter("price", detailPrice);
         return query.getResultList();
     }

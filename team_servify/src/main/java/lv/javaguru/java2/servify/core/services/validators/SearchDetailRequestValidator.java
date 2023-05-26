@@ -18,9 +18,10 @@ public class SearchDetailRequestValidator {
 
     public List<CoreError> validateSearchFieldRequest(SearchDetailRequest request) {
         List<CoreError> errors = new ArrayList<>();
-        if (isEmpty(request.getDetailType()) && isEmpty(request.getDetailSide())) {
+        if (isEmpty(request.getDetailType()) && isEmpty(request.getDetailSide()) && isEmpty(request.getDetailPrice().toString())) {
             errors.add(new CoreError(FieldTitle.DETAIL_TYPE, "Must not be empty!"));
             errors.add(new CoreError(FieldTitle.DETAIL_SIDE, "Must not be empty!"));
+            errors.add(new CoreError(FieldTitle.DETAIL_PRICE, "Must not be empty!"));
         }
         return errors;
     }

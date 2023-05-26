@@ -22,13 +22,22 @@ public class SearchDetailUIAction implements UIAction {
         System.out.println("Enter detail side: ");
         String detailSide = scanner.nextLine();
         System.out.println("Enter detail price: ");
-        BigDecimal detailPrice = new BigDecimal(scanner.nextLine());
-        SearchDetailRequest request = new SearchDetailRequest(detailType, detailSide,detailPrice);
+        String price = scanner.nextLine();
+        BigDecimal detailPrice = validate(price);
+        SearchDetailRequest request = new SearchDetailRequest(detailType, detailSide, detailPrice);
         SearchDetailResponse response = searchDetailService.execute(request);
         if (response.hasErrors()) {
             response.getErrors().forEach(coreError -> System.out.println("Error: " + coreError.getField() + " " + coreError.getMessage()));
         } else {
-            response.getDetails().forEach(Detail::toString);
+            response.getDetails().forEach(System.out::println);
+        }
+    }
+
+    private static BigDecimal validate(String price) {
+        if (price.isEmpty()) {
+            return null;
+        } else {
+            return new BigDecimal(price);
         }
     }
 

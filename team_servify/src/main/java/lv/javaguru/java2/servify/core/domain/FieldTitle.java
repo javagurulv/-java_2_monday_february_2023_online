@@ -10,6 +10,7 @@ public enum FieldTitle {
     PHONE_NUMBER,
     DETAIL_TYPE,
     DETAIL_SIDE,
+    DETAIL_PRICE
 
 
 }
