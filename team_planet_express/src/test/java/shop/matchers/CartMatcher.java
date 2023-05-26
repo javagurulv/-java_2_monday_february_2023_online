@@ -17,7 +17,7 @@ public class CartMatcher implements ArgumentMatcher<Cart> {
     @Override
     public boolean matches(Cart cart) {
         return userId.equals(cart.getUserId()) &&
-                cartStatus.equals(cart.getCartStatus());
+                cartStatus.equals(cart.getStatus());
     }
 
 }
