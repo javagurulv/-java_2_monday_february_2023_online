@@ -33,7 +33,7 @@ public class SignUpService {
         String password = request.getPassword();
         UserCreationData userCreationData = new UserCreationData(name, loginName, password, UserRole.CUSTOMER);
         User createdUser = userService.createUser(userCreationData);
-        request.getCurrentUser().setUser(createdUser);
+        request.getCurrentUserId().setValue(createdUser.getId());
         return new SignUpResponse(createdUser);
     }
 

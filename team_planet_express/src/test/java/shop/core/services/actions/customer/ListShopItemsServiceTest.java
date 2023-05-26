@@ -8,10 +8,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.ItemRepository;
 import shop.core.database.Repository;
 import shop.core.domain.user.User;
-import shop.core.domain.user.UserRole;
 import shop.core.requests.customer.ListShopItemsRequest;
-import shop.core.support.CurrentUser;
+import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.support.CurrentUserId;
 
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -21,13 +22,15 @@ class ListShopItemsServiceTest {
     @Mock
     private Repository mockRepository;
     @Mock
+    private DatabaseAccessValidator mockDatabaseAccessValidator;
+    @Mock
     private ListShopItemsRequest mockRequest;
     @Mock
     private ItemRepository mockItemRepository;
     @Mock
     private User mockUser;
     @Mock
-    private CurrentUser mockCurrentUser;
+    private CurrentUserId mockCurrentUserId;
 
     @InjectMocks
     private ListShopItemsService service;
@@ -35,9 +38,8 @@ class ListShopItemsServiceTest {
     @Test
     void shouldGetItemsFromDatabase() {
         when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
-        when(mockRequest.getCurrentUser()).thenReturn(mockCurrentUser);
-        when(mockCurrentUser.getUser()).thenReturn(mockUser);
-        when(mockUser.getUserRole()).thenReturn(UserRole.GUEST);
+        when(mockDatabaseAccessValidator.getUserById(anyLong())).thenReturn(mockUser);
+        when(mockRequest.getCurrentUserId()).thenReturn(mockCurrentUserId);
         service.execute(mockRequest);
         verify(mockItemRepository).getAllItems();
     }

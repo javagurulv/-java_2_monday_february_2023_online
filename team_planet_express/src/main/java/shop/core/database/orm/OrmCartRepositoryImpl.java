@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import shop.core.database.CartRepository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart.CartStatus;
-import shop.core.domain.user.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,11 +26,11 @@ public class OrmCartRepositoryImpl implements CartRepository {
     }
 
     @Override
-    public Optional<Cart> findOpenCartForUserId(User user) {
+    public Optional<Cart> findOpenCartForUserId(Long userId) {
         Query<Cart> query = sessionFactory.getCurrentSession()
-                .createQuery("SELECT c FROM Cart c WHERE user = :user AND status = 'OPEN'", Cart.class);
-        query.setParameter("user", user);
-        return query.getResultList().stream().findFirst();
+                .createQuery("SELECT c FROM Cart c WHERE user.id = :user_id AND status = 'OPEN'", Cart.class);
+        query.setParameter("user_id", userId);
+        return query.getResultStream().findFirst();
     }
 
     @Override

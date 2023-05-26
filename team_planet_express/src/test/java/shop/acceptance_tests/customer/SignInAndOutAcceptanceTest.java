@@ -16,7 +16,7 @@ import shop.core.responses.shared.SignInResponse;
 import shop.core.responses.shared.SignOutResponse;
 import shop.core.services.actions.shared.SignInService;
 import shop.core.services.actions.shared.SignOutService;
-import shop.core.support.CurrentUser;
+import shop.core.support.CurrentUserId;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -28,7 +28,7 @@ public class SignInAndOutAcceptanceTest {
     @Autowired
     private Repository repository;
     @Autowired
-    private CurrentUser currentUser;
+    private CurrentUserId currentUserId;
     @Autowired
     private SignInService signInService;
     @Autowired
@@ -40,15 +40,15 @@ public class SignInAndOutAcceptanceTest {
         User customer = new User("Morbo", "theAnnihilator", "pathetichumans", UserRole.CUSTOMER);
         repository.accessUserRepository().save(customer);
         SignInResponse signInResponse =
-                signInService.execute(new SignInRequest(currentUser, "theAnnihilator", "pathetichumans"));
+                signInService.execute(new SignInRequest(currentUserId, "theAnnihilator", "pathetichumans"));
         assertFalse(signInResponse.hasErrors());
-        assertEquals(currentUser.getUser().getId(), repository.accessUserRepository().findByLoginName("theAnnihilator").orElseThrow().getId());
+        assertEquals(currentUserId.getValue(), repository.accessUserRepository().findByLoginName("theAnnihilator").orElseThrow().getId());
         assertEquals(UserRole.CUSTOMER, signInResponse.getUser().getUserRole());
         assertEquals("Morbo", signInResponse.getUser().getName());
         SignOutResponse signOutResponse =
-                signOutService.execute(new SignOutRequest(currentUser));
+                signOutService.execute(new SignOutRequest(currentUserId));
         assertFalse(signOutResponse.hasErrors());
-        assertEquals(UserRole.GUEST, repository.accessUserRepository().findById(currentUser.getUser().getId()).orElseThrow().getUserRole());
+        assertEquals(UserRole.GUEST, repository.accessUserRepository().findById(currentUserId.getValue()).orElseThrow().getUserRole());
     }
 
 }

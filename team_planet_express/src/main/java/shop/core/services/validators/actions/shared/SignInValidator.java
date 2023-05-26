@@ -37,7 +37,7 @@ public class SignInValidator {
     private ErrorProcessor errorProcessor;
 
     public List<CoreError> validate(SignInRequest request) {
-        userIdValidator.validateCurrentUserIdIsPresent(request.getCurrentUser());
+        userIdValidator.validateCurrentUserIdIsPresent(request.getCurrentUserId());
         List<CoreError> errors = new ArrayList<>();
         validateLoginName(request.getLoginName(), errors);
         validatePassword(request.getPassword(), errors);

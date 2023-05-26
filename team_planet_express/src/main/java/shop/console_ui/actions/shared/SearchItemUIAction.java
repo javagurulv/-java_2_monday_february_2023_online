@@ -11,7 +11,7 @@ import shop.core.domain.user.UserRole;
 import shop.core.requests.shared.SearchItemRequest;
 import shop.core.responses.shared.SearchItemResponse;
 import shop.core.services.actions.shared.SearchItemService;
-import shop.core.support.CurrentUser;
+import shop.core.support.CurrentUserId;
 import shop.core.support.ordering.OrderingRule;
 import shop.core.support.paging.PagingRule;
 
@@ -31,7 +31,7 @@ public class SearchItemUIAction extends UIAction {
     @Autowired
     private SearchItemService searchItemService;
     @Autowired
-    private CurrentUser currentUser;
+    private CurrentUserId currentUserId;
     @Autowired
     private OrderingUIElement orderingUIElement;
     @Autowired
@@ -51,7 +51,7 @@ public class SearchItemUIAction extends UIAction {
         String price = userCommunication.requestInput(PROMPT_TOPIC_PRICE);
         List<OrderingRule> orderingRules = orderingUIElement.getOrderingRules();
         PagingRule pagingRule = pagingUIElement.getPagingRule();
-        SearchItemRequest request = new SearchItemRequest(currentUser, itemName, price, orderingRules, pagingRule);
+        SearchItemRequest request = new SearchItemRequest(currentUserId, itemName, price, orderingRules, pagingRule);
         showResults(request);
     }
 

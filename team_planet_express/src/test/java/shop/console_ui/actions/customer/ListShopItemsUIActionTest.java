@@ -12,7 +12,7 @@ import shop.core.domain.item.Item;
 import shop.core.requests.customer.ListShopItemsRequest;
 import shop.core.responses.customer.ListShopItemsResponse;
 import shop.core.services.actions.customer.ListShopItemsService;
-import shop.core.support.CurrentUser;
+import shop.core.support.CurrentUserId;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ class ListShopItemsUIActionTest {
     @Mock
     private ListShopItemsService mockListShopItemsService;
     @Mock
-    private CurrentUser mockCurrentUser;
+    private CurrentUserId mockCurrentUserId;
     @Mock
     private ItemStringProvider mockItemStringProvider;
     @Mock

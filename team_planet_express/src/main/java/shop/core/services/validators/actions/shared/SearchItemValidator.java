@@ -30,7 +30,7 @@ public class SearchItemValidator {
 
 
     public List<CoreError> validate(SearchItemRequest request) {
-        userIdValidator.validateCurrentUserIdIsPresent(request.getCurrentUser());
+        userIdValidator.validateCurrentUserIdIsPresent(request.getCurrentUserId());
         List<CoreError> errors = new ArrayList<>();
         validatePrice(request.getPrice(), errors);
         validateOrderingIfPresent(request, errors);

@@ -5,7 +5,4 @@ check role permissions in actions
 additemtocart quantity commit db transaction?
 length to error message?
 yeet red warnings
-check tests, make tests
-look at enums
 check paging sqls
-ids back into database method calls ?

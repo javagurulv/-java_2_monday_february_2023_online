@@ -32,9 +32,9 @@ public class RemoveItemFromCartService {
         if (!errors.isEmpty()) {
             return new RemoveItemFromCartResponse(errors);
         }
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getCurrentUser().getUser());
+        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getCurrentUserId().getValue());
         Item item = databaseAccessValidator.getItemByName(request.getItemName());
-        CartItem cartItem = databaseAccessValidator.getCartItemByCartIdAndItemId(cart, item);
+        CartItem cartItem = databaseAccessValidator.getCartItemByCartIdAndItemId(cart.getId(), item.getId());
         Integer newAvailableQuantity = item.getAvailableQuantity() + cartItem.getOrderedQuantity();
         repository.accessCartItemRepository().deleteByID(cartItem.getId());
         repository.accessItemRepository().changeAvailableQuantity(item.getId(), newAvailableQuantity);

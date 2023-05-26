@@ -7,7 +7,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.CartItemRepository;
 import shop.core.database.Repository;
-import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
 import shop.core.domain.item.Item;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
@@ -31,8 +30,6 @@ class CartServiceTest {
     @Mock
     private CartItem mockCartItem;
     @Mock
-    private Cart mockCart;
-    @Mock
     private Item mockItem;
 
     @InjectMocks
@@ -41,12 +38,12 @@ class CartServiceTest {
     @Test
     void shouldReturnSum() {
         when(mockRepository.accessCartItemRepository()).thenReturn(mockCartItemRepository);
-        when(mockCartItemRepository.getAllCartItemsForCartId(mockCart)).thenReturn(List.of(mockCartItem, mockCartItem, mockCartItem));
+        when(mockCartItemRepository.getAllCartItemsForCartId(1L)).thenReturn(List.of(mockCartItem, mockCartItem, mockCartItem));
         when(mockCartItem.getItem()).thenReturn(mockItem);
         when(mockDatabaseAccessValidator.getItemById(anyLong())).thenReturn(mockItem);
         when(mockItem.getPrice()).thenReturn(new BigDecimal("10"), new BigDecimal("7.52"), new BigDecimal("0.27"));
         when(mockCartItem.getOrderedQuantity()).thenReturn(1, 3, 7);
-        BigDecimal actualResult = service.getSum(mockCart);
+        BigDecimal actualResult = service.getSum(1L);
         assertEquals(new BigDecimal("34.45"), actualResult);
     }
 

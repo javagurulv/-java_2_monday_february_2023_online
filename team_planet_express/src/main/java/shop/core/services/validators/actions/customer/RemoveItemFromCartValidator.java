@@ -40,9 +40,9 @@ public class RemoveItemFromCartValidator {
     private ErrorProcessor errorProcessor;
 
     public List<CoreError> validate(RemoveItemFromCartRequest request) {
-        userIdValidator.validateCurrentUserIdIsPresent(request.getCurrentUser());
+        userIdValidator.validateCurrentUserIdIsPresent(request.getCurrentUserId());
         List<CoreError> errors = new ArrayList<>();
-        cartValidator.validateOpenCartExistsForUserId(request.getCurrentUser().getUser()).ifPresent(errors::add);
+        cartValidator.validateOpenCartExistsForUserId(request.getCurrentUserId().getValue()).ifPresent(errors::add);
         if (errors.isEmpty()) {
             validateItemName(request.getItemName(), errors);
             if (errors.isEmpty()) {
@@ -66,9 +66,9 @@ public class RemoveItemFromCartValidator {
     }
 
     private Optional<CoreError> validateItemNameInCart(RemoveItemFromCartRequest request) {
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getCurrentUser().getUser());
+        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getCurrentUserId().getValue());
         Item item = databaseAccessValidator.getItemByName(request.getItemName());
-        return (repository.accessCartItemRepository().findByCartIdAndItemId(cart, item).isEmpty())
+        return (repository.accessCartItemRepository().findByCartIdAndItemId(cart.getId(), item.getId()).isEmpty())
                 ? Optional.of(errorProcessor.getCoreError(FIELD_NAME, ERROR_NO_SUCH_ITEM_IN_CART))
                 : Optional.empty();
     }

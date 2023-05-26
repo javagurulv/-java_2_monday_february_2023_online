@@ -5,7 +5,7 @@ import shop.core.database.Repository;
 import shop.core.domain.cart.Cart;
 import shop.core.requests.customer.BuyRequest;
 import shop.core.services.actions.customer.BuyService;
-import shop.core.support.CurrentUser;
+import shop.core.support.CurrentUserId;
 
 import java.util.Optional;
 
@@ -19,15 +19,15 @@ public class BuyTester extends Tester {
 
     public BuyTester buy() {
         BuyService buyService = applicationContext.getBean(BuyService.class);
-        BuyRequest buyRequest = new BuyRequest(applicationContext.getBean(CurrentUser.class));
+        BuyRequest buyRequest = new BuyRequest(applicationContext.getBean(CurrentUserId.class));
         buyService.execute(buyRequest);
         return this;
     }
 
     public BuyTester checkCartIsClosed() {
         Repository repository = applicationContext.getBean(Repository.class);
-        CurrentUser currentUser = applicationContext.getBean(CurrentUser.class);
-        Optional<Cart> cart = repository.accessCartRepository().findOpenCartForUserId(currentUser.getUser());
+        CurrentUserId currentUserId = applicationContext.getBean(CurrentUserId.class);
+        Optional<Cart> cart = repository.accessCartRepository().findOpenCartForUserId(currentUserId.getValue());
         assertTrue(cart.isEmpty());
         return this;
     }

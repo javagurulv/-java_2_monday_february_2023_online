@@ -14,7 +14,7 @@ import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
-import shop.core.support.CurrentUser;
+import shop.core.support.CurrentUserId;
 import shop.core.support.error_code_processing.ErrorProcessor;
 import shop.matchers.InputStringValidatorDataMatcher;
 
@@ -40,7 +40,7 @@ class SignInValidatorTest {
     @Mock
     private SignInRequest mockRequest;
     @Mock
-    private CurrentUser mockUserId;
+    private CurrentUserId mockUserId;
     @Mock
     private UserRepository mockUserRepository;
     @Mock
@@ -53,7 +53,7 @@ class SignInValidatorTest {
 
     @Test
     void shouldValidateUserIdIsPresent() {
-        when(mockRequest.getCurrentUser()).thenReturn(mockUserId);
+        when(mockRequest.getCurrentUserId()).thenReturn(mockUserId);
         when(mockRequest.getLoginName()).thenReturn("login name");
         when(mockRequest.getPassword()).thenReturn("password");
         when(mockRepository.accessUserRepository()).thenReturn(mockUserRepository);

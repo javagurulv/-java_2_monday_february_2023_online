@@ -1,8 +1,6 @@
 package shop.core.database;
 
-import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
-import shop.core.domain.item.Item;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +9,7 @@ public interface CartItemRepository {
 
     CartItem save(CartItem cartItem);
 
-    Optional<CartItem> findByCartIdAndItemId(Cart cart, Item item);
+    Optional<CartItem> findByCartIdAndItemId(Long cartId, Long itemId);
 
     void deleteByID(Long id);
 
@@ -19,6 +17,6 @@ public interface CartItemRepository {
 
     List<CartItem> getAllCartItems();
 
-    List<CartItem> getAllCartItemsForCartId(Cart cart);
+    List<CartItem> getAllCartItemsForCartId(Long cartId);
 
 }

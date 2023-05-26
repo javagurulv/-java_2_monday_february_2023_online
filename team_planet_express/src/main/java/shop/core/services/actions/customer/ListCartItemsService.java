@@ -37,12 +37,12 @@ public class ListCartItemsService {
         if (!errors.isEmpty()) {
             return new ListCartItemsResponse(errors);
         }
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getCurrentUser().getUser());
-        List<CartItem> cartItems = repository.accessCartItemRepository().getAllCartItemsForCartId(cart);
+        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getCurrentUserId().getValue());
+        List<CartItem> cartItems = repository.accessCartItemRepository().getAllCartItemsForCartId(cart.getId());
         List<CartItemForList> cartItemsForList = cartItems.stream()
                 .map(this::createCartItemForList)
                 .collect(Collectors.toList());
-        BigDecimal cartTotal = cartService.getSum(cart);
+        BigDecimal cartTotal = cartService.getSum(cart.getId());
         return new ListCartItemsResponse(cartItemsForList, cartTotal);
     }
 

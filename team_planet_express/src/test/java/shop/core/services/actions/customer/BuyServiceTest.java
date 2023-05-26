@@ -12,7 +12,7 @@ import shop.core.domain.cart.CartStatus;
 import shop.core.requests.customer.BuyRequest;
 import shop.core.services.validators.actions.customer.BuyValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
-import shop.core.support.CurrentUser;
+import shop.core.support.CurrentUserId;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ class BuyServiceTest {
     @Mock
     private CartRepository mockCartRepository;
     @Mock
-    private CurrentUser mockCurrentUser;
+    private CurrentUserId mockCurrentUserId;
     @Mock
     private Cart mockCart;
 
@@ -43,7 +43,7 @@ class BuyServiceTest {
     void shouldCloseCart() {
         when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
         when(mockValidator.validate(any())).thenReturn(List.of());
-        when(mockRequest.getCurrentUser()).thenReturn(mockCurrentUser);
+        when(mockRequest.getCurrentUserId()).thenReturn(mockCurrentUserId);
         when(mockDatabaseAccessValidator.getOpenCartByUserId(any())).thenReturn(mockCart);
         when(mockCart.getId()).thenReturn(1L);
         service.execute(mockRequest);

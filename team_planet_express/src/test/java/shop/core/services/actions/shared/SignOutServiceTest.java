@@ -12,7 +12,7 @@ import shop.core.responses.shared.SignOutResponse;
 import shop.core.services.user.UserCreationData;
 import shop.core.services.user.UserService;
 import shop.core.services.validators.actions.shared.SignOutValidator;
-import shop.core.support.CurrentUser;
+import shop.core.support.CurrentUserId;
 
 import java.util.Collections;
 import java.util.List;
@@ -36,7 +36,7 @@ public class SignOutServiceTest {
     @Mock
     private User mockUser;
     @Mock
-    private CurrentUser mockCurrentUser;
+    private CurrentUserId mockCurrentUserId;
 
     @InjectMocks
     private SignOutService service;
@@ -52,7 +52,7 @@ public class SignOutServiceTest {
     void shouldReturnNoErrorsForValidRequest() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockUserService.findGuestWithOpenCart()).thenReturn(Optional.of(mockUser));
-        when(mockRequest.getCurrentUser()).thenReturn(mockCurrentUser);
+        when(mockRequest.getCurrentUserId()).thenReturn(mockCurrentUserId);
         SignOutResponse response = service.execute(mockRequest);
         assertNull(response.getErrors());
     }
@@ -61,9 +61,10 @@ public class SignOutServiceTest {
     void shouldUseExistingGuestIfPresent() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockUserService.findGuestWithOpenCart()).thenReturn(Optional.of(mockUser));
-        when(mockRequest.getCurrentUser()).thenReturn(mockCurrentUser);
+        when(mockRequest.getCurrentUserId()).thenReturn(mockCurrentUserId);
+        when(mockUser.getId()).thenReturn(1L);
         service.execute(mockRequest);
-        verify(mockCurrentUser).setUser(mockUser);
+        verify(mockCurrentUserId).setValue(1L);
         verify(mockUserService, times(0)).createUser(any(UserCreationData.class));
     }
 
@@ -72,9 +73,10 @@ public class SignOutServiceTest {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockUserService.findGuestWithOpenCart()).thenReturn(Optional.empty());
         when(mockUserService.createUser(any(UserCreationData.class))).thenReturn(mockUser);
-        when(mockRequest.getCurrentUser()).thenReturn(mockCurrentUser);
+        when(mockRequest.getCurrentUserId()).thenReturn(mockCurrentUserId);
+        when(mockUser.getId()).thenReturn(1L);
         service.execute(mockRequest);
-        verify(mockCurrentUser).setUser(mockUser);
+        verify(mockCurrentUserId).setValue(1L);
         verify(mockUserService).createUser(any(UserCreationData.class));
     }
 
@@ -82,9 +84,10 @@ public class SignOutServiceTest {
     void shouldChangeUserId() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockUserService.createUser(any(UserCreationData.class))).thenReturn(mockUser);
-        when(mockRequest.getCurrentUser()).thenReturn(mockCurrentUser);
+        when(mockRequest.getCurrentUserId()).thenReturn(mockCurrentUserId);
+        when(mockUser.getId()).thenReturn(1L);
         service.execute(mockRequest);
-        verify(mockCurrentUser).setUser(mockUser);
+        verify(mockCurrentUserId).setValue(1L);
     }
 
 }
