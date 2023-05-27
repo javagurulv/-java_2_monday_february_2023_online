@@ -1,7 +1,7 @@
 package lv.javaguru.java2.servify.console_ui.detail;
 
 import lv.javaguru.java2.servify.console_ui.UIAction;
-import lv.javaguru.java2.servify.core.services.GetTotalPriceService;
+import lv.javaguru.java2.servify.core.services.details.GetTotalPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

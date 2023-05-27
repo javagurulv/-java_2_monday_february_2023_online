@@ -1,4 +1,4 @@
-package lv.javaguru.java2.servify.core.services;
+package lv.javaguru.java2.servify.core.services.details;
 
 import lv.javaguru.java2.servify.core.database.DetailRepository;
 import lv.javaguru.java2.servify.core.dto.requests.RemoveDetailRequest;

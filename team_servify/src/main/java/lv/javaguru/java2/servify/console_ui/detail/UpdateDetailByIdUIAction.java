@@ -2,8 +2,8 @@ package lv.javaguru.java2.servify.console_ui.detail;
 
 import lv.javaguru.java2.servify.console_ui.UIAction;
 import lv.javaguru.java2.servify.core.dto.requests.UpdateDetailRequest;
-import lv.javaguru.java2.servify.core.services.GetDetailByIdService;
-import lv.javaguru.java2.servify.core.services.UpdateDetailService;
+import lv.javaguru.java2.servify.core.services.details.GetDetailByIdService;
+import lv.javaguru.java2.servify.core.services.details.UpdateDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -1,7 +1,6 @@
 package lv.javaguru.java2.servify.core.database;
 
 import lv.javaguru.java2.servify.core.domain.Detail;
-import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

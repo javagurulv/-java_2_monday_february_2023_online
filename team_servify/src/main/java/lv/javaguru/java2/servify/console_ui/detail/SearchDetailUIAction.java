@@ -3,7 +3,7 @@ package lv.javaguru.java2.servify.console_ui.detail;
 import lv.javaguru.java2.servify.console_ui.UIAction;
 import lv.javaguru.java2.servify.core.dto.requests.SearchDetailRequest;
 import lv.javaguru.java2.servify.core.dto.responses.SearchDetailResponse;
-import lv.javaguru.java2.servify.core.services.SearchDetailService;
+import lv.javaguru.java2.servify.core.services.details.SearchDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

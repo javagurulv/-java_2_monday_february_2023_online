@@ -1,4 +1,4 @@
-package lv.javaguru.java2.servify.core.services;
+package lv.javaguru.java2.servify.core.services.details;
 
 import lv.javaguru.java2.servify.core.dto.requests.AddDetailRequest;
 import lv.javaguru.java2.servify.core.dto.responses.CoreError;
@@ -25,7 +25,9 @@ public class AddDetailService {
         if (!errors.isEmpty()) {
             return new AddDetailResponse(errors);
         }
-        Detail newDetail = new Detail(request.getDetailType(), request.getDetailSide(), request.getDetailPrice());
+        Detail newDetail = new Detail(request.getDetailType(),
+                request.getDetailSide(),
+                request.getDetailPrice());
         detailRepository.save(newDetail);
         return new AddDetailResponse(newDetail);
     }

@@ -3,12 +3,14 @@ package lv.javaguru.java2.servify.core.domain;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 //import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "details")
 public class Detail {
@@ -23,7 +25,7 @@ public class Detail {
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
-    public Detail() {}
+    //public Detail() {}
 
     public Detail(String type, String side, BigDecimal price) {
         this.type = type;

@@ -36,10 +36,6 @@ public class OrmDetailRepositoryImpl implements DetailRepository {
 
     @Override
     public Optional<Detail> findById(Long id) {
-//        Query query = sessionFactory.getCurrentSession()
-//                .createQuery("SELECT d FROM Detail d WHERE id = id", Detail.class);
-//        query.setParameter("id", id);
-//        return query.getResultList().stream().findFirst();
         var detail = sessionFactory.getCurrentSession().get(Detail.class, id);
         return Optional.ofNullable(detail);
 
