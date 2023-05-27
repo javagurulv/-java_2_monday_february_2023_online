@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-
-//@Entity
-//@Table(name = "orders_items")
+@NoArgsConstructor
+@Entity
+@Table(name = "orders_items")
 public class OrderItems {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
@@ -25,9 +25,6 @@ public class OrderItems {
     @JoinColumn(name = "color_id", nullable = false)
     private Color color;
     @Column(name = "count")
-    private Integer countDetail;
+    private Long countDetail;
 
-    public OrderItems() {
-
-    }
 }

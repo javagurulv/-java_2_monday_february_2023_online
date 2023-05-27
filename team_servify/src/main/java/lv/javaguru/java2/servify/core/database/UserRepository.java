@@ -14,7 +14,7 @@ public class UserRepository {
     private SessionFactory sessionFactory;
     public List<UserEntity> getAllUsers() {
         return sessionFactory.getCurrentSession()
-                .createQuery("SELECT u FROM User u", UserEntity.class)
+                .createQuery("SELECT u FROM UserEntity u", UserEntity.class)
                 .getResultList();
     }
 }

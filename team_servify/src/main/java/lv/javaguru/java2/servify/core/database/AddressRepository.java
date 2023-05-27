@@ -14,7 +14,7 @@ public class AddressRepository {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public List<Address> getAllAddreses() {
+    public List<Address> getAll() {
         return sessionFactory.getCurrentSession()
                 .createQuery("SELECT ad FROM Address ad", Address.class)
                 .getResultList();

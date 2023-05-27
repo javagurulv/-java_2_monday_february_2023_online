@@ -8,12 +8,13 @@ import java.util.Set;
 
 @Data
 @AllArgsConstructor
-//@Entity
-//@Table(name = "users")
+@NoArgsConstructor
+@Entity
+@Table(name = "users")
 public class UserEntity {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "first_name")
     private String firstName;
@@ -22,7 +23,7 @@ public class UserEntity {
     @Column(name = "email")
     private String email;
     @Column(name = "phone_number")
-    private String phoneNumber;
+    private Integer phoneNumber;
     @OneToOne
     @JoinColumn(name = "address_id")
     private Address address;
@@ -31,9 +32,7 @@ public class UserEntity {
     @Column(name = "user_type")
     private String userType;
 //    @ElementCollection(targetClass = UserType.class, fetch = FetchType.EAGER)
-//    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+//    @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "id"))
 //    @Enumerated(EnumType.STRING)
 //    private Set<UserType> userType;
-
-    public UserEntity() {}
 }
