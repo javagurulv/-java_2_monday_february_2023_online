@@ -2,13 +2,11 @@ package shop.core.services.actions.shared;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.database.Database;
+import shop.core.database.ItemDatabase;
 import shop.core.domain.item.Item;
 import shop.core.requests.shared.SearchItemRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.shared.SearchItemResponse;
-import shop.core.services.item_list.OrderingService;
-import shop.core.services.item_list.PagingService;
 import shop.core.services.validators.actions.shared.SearchItemValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 
@@ -20,13 +18,9 @@ import java.util.List;
 public class SearchItemService {
 
     @Autowired
-    private Database database;
+    private ItemDatabase itemDatabase;
     @Autowired
     private SearchItemValidator validator;
-    @Autowired
-    private OrderingService orderingService;
-    @Autowired
-    private PagingService pagingService;
     @Autowired
     private DatabaseAccessValidator databaseAccessValidator;
 
@@ -48,26 +42,26 @@ public class SearchItemService {
         List<Item> items;
         //TODO is blank actually ok in here ?
         if (request.getItemName() != null && !isPresent(request.getPrice())) {
-            items = database.accessItemDatabase().searchByName(
+            items = itemDatabase.searchByName(
                     request.getItemName().toLowerCase(),
-                    orderingService.getSQLOrderBy(request.getOrderingRules()),
-                    pagingService.getSQLLimitOffset(request.getPagingRule()));
+                    request.getOrderingRules(),
+                    request.getPagingRule());
         } else if (request.getItemName() != null && isPresent(request.getPrice())) {
             BigDecimal price = new BigDecimal(request.getPrice()).setScale(2, RoundingMode.HALF_UP);
-            items = database.accessItemDatabase().searchByNameAndPrice(
+            items = itemDatabase.searchByNameAndPrice(
                     request.getItemName().toLowerCase(),
                     price,
-                    orderingService.getSQLOrderBy(request.getOrderingRules()),
-                    pagingService.getSQLLimitOffset(request.getPagingRule()));
+                    request.getOrderingRules(),
+                    request.getPagingRule());
         } else {
-            items = database.accessItemDatabase().getAllItems();
+            items = itemDatabase.getAllItems();
         }
         return items;
     }
 
     private boolean isExtraItemAvailable(SearchItemRequest request, List<Item> items) {
         boolean extraItemPresent = request.getPagingRule() != null &&
-                items.size() > Integer.parseInt(request.getPagingRule().getPageSize());
+                items.size() > Integer.valueOf(request.getPagingRule().getPageSize());
         if (extraItemPresent) {
             items.remove(items.size() - 1);
         }

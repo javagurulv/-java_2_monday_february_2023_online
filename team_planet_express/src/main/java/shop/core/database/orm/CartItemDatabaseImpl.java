@@ -2,11 +2,16 @@ package shop.core.database.orm;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import shop.core.database.CartItemDatabase;
+import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
+import shop.core.domain.cart_item.CartItem_;
+import shop.core.domain.item.Item;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,11 +30,14 @@ public class CartItemDatabaseImpl implements CartItemDatabase {
 
     @Override
     public Optional<CartItem> findByCartIdAndItemId(Long cartId, Long itemId) {
-        TypedQuery<CartItem> query = entityManager
-                .createQuery("SELECT ci FROM CartItem ci WHERE cart.id =:cart_id AND item.id =:item_id", CartItem.class);
-        query.setParameter("cart_id", cartId);
-        query.setParameter("item_id", itemId);
-        return query.getResultStream().findFirst();
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<CartItem> cr = cb.createQuery(CartItem.class);
+        Root<CartItem> root = cr.from(CartItem.class);
+        cr.select(root).where(
+                cb.equal(root.get(CartItem_.cart), entityManager.getReference(Cart.class, cartId)),
+                cb.equal(root.get(CartItem_.item), entityManager.getReference(Item.class, itemId))
+        );
+        return entityManager.createQuery(cr).getResultStream().findFirst();
     }
 
     @Override
@@ -40,24 +48,26 @@ public class CartItemDatabaseImpl implements CartItemDatabase {
 
     @Override
     public void changeOrderedQuantity(Long id, Integer newOrderedQuantity) {
-        TypedQuery<CartItem> query = entityManager
-                .createQuery("UPDATE CartItem SET ordered_quantity =:ordered_quantity WHERE id =:id", CartItem.class);
-        query.setParameter("id", id);
-        query.setParameter("ordered_quantity", newOrderedQuantity);
+        CartItem cartItem = entityManager.getReference(CartItem.class, id);
+        cartItem.setOrderedQuantity(newOrderedQuantity);
     }
 
     @Override
     public List<CartItem> getAllCartItems() {
-        TypedQuery<CartItem> query = entityManager
-                .createQuery("SELECT ci FROM CartItem ci", CartItem.class);
-        return query.getResultList();
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<CartItem> cr = cb.createQuery(CartItem.class);
+        Root<CartItem> root = cr.from(CartItem.class);
+        return entityManager.createQuery(cr.select(root)).getResultList();
     }
 
     @Override
     public List<CartItem> getAllCartItemsForCartId(Long cartId) {
-        TypedQuery<CartItem> query = entityManager
-                .createQuery("SELECT ci FROM CartItem ci WHERE cart.id =:cart_id", CartItem.class);
-        query.setParameter("cart_id", cartId);
-        return query.getResultList();
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<CartItem> cr = cb.createQuery(CartItem.class);
+        Root<CartItem> root = cr.from(CartItem.class);
+        cr.select(root).where(
+                cb.equal(root.get(CartItem_.cart), entityManager.getReference(Cart.class, cartId))
+        );
+        return entityManager.createQuery(cr).getResultList();
     }
 }

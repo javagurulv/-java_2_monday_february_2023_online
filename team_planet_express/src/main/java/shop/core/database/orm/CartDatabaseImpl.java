@@ -2,7 +2,6 @@ package shop.core.database.orm;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -35,7 +34,7 @@ public class CartDatabaseImpl implements CartDatabase {
         CriteriaQuery<Cart> cr = cb.createQuery(Cart.class);
         Root<Cart> root = cr.from(Cart.class);
         cr.select(root).where(
-                cb.equal(root.get("user"), entityManager.getReference(User.class, userId)),
+                cb.equal(root.get(Cart_.user), entityManager.getReference(User.class, userId)),
                 cb.equal(root.get(Cart_.status), CartStatus.OPEN)
         );
         return entityManager.createQuery(cr).getResultStream().findFirst();
@@ -49,8 +48,9 @@ public class CartDatabaseImpl implements CartDatabase {
 
     @Override
     public List<Cart> getAllCarts() {
-        TypedQuery<Cart> query = entityManager
-                .createQuery("SELECT c FROM Cart c", Cart.class);
-        return query.getResultList();
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Cart> cr = cb.createQuery(Cart.class);
+        Root<Cart> root = cr.from(Cart.class);
+        return entityManager.createQuery(cr.select(root)).getResultList();
     }
 }

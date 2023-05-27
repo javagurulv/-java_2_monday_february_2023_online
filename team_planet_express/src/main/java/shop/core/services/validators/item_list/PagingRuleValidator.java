@@ -35,7 +35,7 @@ public class PagingRuleValidator {
 
     private void validatePageSize(String pageSize, List<CoreError> errors) {
         InputStringValidatorData inputStringValidatorData =
-                new InputStringValidatorData(pageSize, FIELD_PAGE_SIZE, VALUE_NAME_PAGE_SIZE);
+                new InputStringValidatorData(String.valueOf(pageSize), FIELD_PAGE_SIZE, VALUE_NAME_PAGE_SIZE);
         inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
         errors.addAll(inputStringValidator.validateIsNumberGreaterThanZeroNotDecimal(inputStringValidatorData));
     }

@@ -6,8 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.console_ui.UserCommunication;
-import shop.core.support.ordering.OrderBy;
-import shop.core.support.ordering.OrderDirection;
+import shop.core.domain.item.Item_;
 import shop.core.support.ordering.OrderingRule;
 
 import java.util.List;
@@ -38,8 +37,8 @@ class OrderingUIElementTest {
         when(mockUserCommunication.requestInput(anyString())).thenReturn("y", "");
         List<OrderingRule> result = orderingUIElement.getOrderingRules();
         assertEquals(1, result.size());
-        assertEquals(OrderBy.NAME, result.get(0).getOrderBy());
-        assertEquals(OrderDirection.ASCENDING, result.get(0).getOrderDirection());
+        assertEquals(Item_.name, result.get(0).getOrderBy());
+        assertEquals(true, result.get(0).isAscending());
     }
 
     @Test
@@ -47,8 +46,8 @@ class OrderingUIElementTest {
         when(mockUserCommunication.requestInput(anyString())).thenReturn("", "y", "");
         List<OrderingRule> result = orderingUIElement.getOrderingRules();
         assertEquals(1, result.size());
-        assertEquals(OrderBy.PRICE, result.get(0).getOrderBy());
-        assertEquals(OrderDirection.ASCENDING, result.get(0).getOrderDirection());
+        assertEquals(Item_.price, result.get(0).getOrderBy());
+        assertEquals(true, result.get(0).isAscending());
     }
 
     @Test
@@ -56,10 +55,10 @@ class OrderingUIElementTest {
         when(mockUserCommunication.requestInput(anyString())).thenReturn("y", "", "y", "");
         List<OrderingRule> result = orderingUIElement.getOrderingRules();
         assertEquals(2, result.size());
-        assertEquals(OrderBy.NAME, result.get(0).getOrderBy());
-        assertEquals(OrderDirection.ASCENDING, result.get(0).getOrderDirection());
-        assertEquals(OrderBy.PRICE, result.get(1).getOrderBy());
-        assertEquals(OrderDirection.ASCENDING, result.get(1).getOrderDirection());
+        assertEquals(Item_.name, result.get(0).getOrderBy());
+        assertEquals(true, result.get(0).isAscending());
+        assertEquals(Item_.price, result.get(1).getOrderBy());
+        assertEquals(true, result.get(1).isAscending());
     }
 
     @Test
@@ -67,8 +66,8 @@ class OrderingUIElementTest {
         when(mockUserCommunication.requestInput(anyString())).thenReturn("y", "y", "");
         List<OrderingRule> result = orderingUIElement.getOrderingRules();
         assertEquals(1, result.size());
-        assertEquals(OrderBy.NAME, result.get(0).getOrderBy());
-        assertEquals(OrderDirection.DESCENDING, result.get(0).getOrderDirection());
+        assertEquals(Item_.name, result.get(0).getOrderBy());
+        assertEquals(false, result.get(0).isAscending());
     }
 
     @Test
@@ -76,8 +75,8 @@ class OrderingUIElementTest {
         when(mockUserCommunication.requestInput(anyString())).thenReturn("", "y", "y");
         List<OrderingRule> result = orderingUIElement.getOrderingRules();
         assertEquals(1, result.size());
-        assertEquals(OrderBy.PRICE, result.get(0).getOrderBy());
-        assertEquals(OrderDirection.DESCENDING, result.get(0).getOrderDirection());
+        assertEquals(Item_.price, result.get(0).getOrderBy());
+        assertEquals(false, result.get(0).isAscending());
     }
 
     @Test
@@ -85,10 +84,10 @@ class OrderingUIElementTest {
         when(mockUserCommunication.requestInput(anyString())).thenReturn("y", "y", "y", "");
         List<OrderingRule> result = orderingUIElement.getOrderingRules();
         assertEquals(2, result.size());
-        assertEquals(OrderBy.NAME, result.get(0).getOrderBy());
-        assertEquals(OrderDirection.DESCENDING, result.get(0).getOrderDirection());
-        assertEquals(OrderBy.PRICE, result.get(1).getOrderBy());
-        assertEquals(OrderDirection.ASCENDING, result.get(1).getOrderDirection());
+        assertEquals(Item_.name, result.get(0).getOrderBy());
+        assertEquals(false, result.get(0).isAscending());
+        assertEquals(Item_.price, result.get(1).getOrderBy());
+        assertEquals(true, result.get(1).isAscending());
     }
 
     @Test
@@ -96,10 +95,10 @@ class OrderingUIElementTest {
         when(mockUserCommunication.requestInput(anyString())).thenReturn("y", "", "y", "y");
         List<OrderingRule> result = orderingUIElement.getOrderingRules();
         assertEquals(2, result.size());
-        assertEquals(OrderBy.NAME, result.get(0).getOrderBy());
-        assertEquals(OrderDirection.ASCENDING, result.get(0).getOrderDirection());
-        assertEquals(OrderBy.PRICE, result.get(1).getOrderBy());
-        assertEquals(OrderDirection.DESCENDING, result.get(1).getOrderDirection());
+        assertEquals(Item_.name, result.get(0).getOrderBy());
+        assertEquals(true, result.get(0).isAscending());
+        assertEquals(Item_.price, result.get(1).getOrderBy());
+        assertEquals(false, result.get(1).isAscending());
     }
 
     @Test
@@ -107,10 +106,10 @@ class OrderingUIElementTest {
         when(mockUserCommunication.requestInput(anyString())).thenReturn("y");
         List<OrderingRule> result = orderingUIElement.getOrderingRules();
         assertEquals(2, result.size());
-        assertEquals(OrderBy.NAME, result.get(0).getOrderBy());
-        assertEquals(OrderDirection.DESCENDING, result.get(0).getOrderDirection());
-        assertEquals(OrderBy.PRICE, result.get(1).getOrderBy());
-        assertEquals(OrderDirection.DESCENDING, result.get(1).getOrderDirection());
+        assertEquals(Item_.name, result.get(0).getOrderBy());
+        assertEquals(false, result.get(0).isAscending());
+        assertEquals(Item_.price, result.get(1).getOrderBy());
+        assertEquals(false, result.get(1).isAscending());
     }
 
     @Test
@@ -118,8 +117,8 @@ class OrderingUIElementTest {
         when(mockUserCommunication.requestInput(anyString())).thenReturn("Y", "Y", "");
         List<OrderingRule> result = orderingUIElement.getOrderingRules();
         assertEquals(1, result.size());
-        assertEquals(OrderBy.NAME, result.get(0).getOrderBy());
-        assertEquals(OrderDirection.DESCENDING, result.get(0).getOrderDirection());
+        assertEquals(Item_.name, result.get(0).getOrderBy());
+        assertEquals(false, result.get(0).isAscending());
     }
 
 }

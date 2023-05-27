@@ -2,11 +2,14 @@ package shop.core.database.orm;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import shop.core.database.UserDatabase;
 import shop.core.domain.user.User;
+import shop.core.domain.user.User_;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,16 +34,21 @@ public class UserDatabaseImpl implements UserDatabase {
 
     @Override
     public Optional<User> findByLoginName(String login) {
-        TypedQuery<User> query = entityManager
-                .createQuery("SELECT u FROM User u WHERE login = :login", User.class);
-        query.setParameter("login", login);
-        return query.getResultStream().findFirst();
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> cr = cb.createQuery(User.class);
+        Root<User> root = cr.from(User.class);
+
+        cr.select(root).where(
+                cb.equal(root.get(User_.login), login)
+        );
+        return entityManager.createQuery(cr).getResultStream().findFirst();
     }
 
     @Override
     public List<User> getAllUsers() {
-        return entityManager
-                .createQuery("SELECT u FROM User u", User.class)
-                .getResultList();
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> cr = cb.createQuery(User.class);
+        Root<User> root = cr.from(User.class);
+        return entityManager.createQuery(cr.select(root)).getResultList();
     }
 }

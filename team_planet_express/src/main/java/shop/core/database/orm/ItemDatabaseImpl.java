@@ -2,11 +2,16 @@ package shop.core.database.orm;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import shop.core.database.ItemDatabase;
 import shop.core.domain.item.Item;
+import shop.core.domain.item.Item_;
+import shop.core.support.ordering.OrderingRule;
+import shop.core.support.paging.PagingRule;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -32,10 +37,14 @@ public class ItemDatabaseImpl implements ItemDatabase {
 
     @Override
     public Optional<Item> findByName(String name) {
-        TypedQuery<Item> query = entityManager
-                .createQuery("SELECT i FROM Item i WHERE name = :name", Item.class);
-        query.setParameter("name", name);
-        return query.getResultStream().findFirst();
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Item> cr = cb.createQuery(Item.class);
+        Root<Item> root = cr.from(Item.class);
+
+        cr.select(root).where(
+                cb.equal(root.get(Item_.name), name)
+        );
+        return entityManager.createQuery(cr).getResultStream().findFirst();
     }
 
     @Override
@@ -61,44 +70,79 @@ public class ItemDatabaseImpl implements ItemDatabase {
 
     @Override
     public List<Item> getAllItems() {
-        return entityManager
-                .createQuery("SELECT i FROM Item i", Item.class)
-                .getResultList();
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Item> cr = cb.createQuery(Item.class);
+        Root<Item> root = cr.from(Item.class);
+        return entityManager.createQuery(cr.select(root)).getResultList();
     }
 
     @Override
-    public List<Item> searchByName(String itemName) {
-        TypedQuery<Item> query = entityManager
-                .createQuery("SELECT i FROM Item i WHERE LOWER(name) LIKE :name", Item.class);
-        query.setParameter("name", "%%%s%%".formatted(itemName.toLowerCase()));
-        return query.getResultList();
+    public List<Item> searchByName(String itemName, List<OrderingRule> orderingRules, String sqlLimitOffset) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Item> cr = cb.createQuery(Item.class);
+        Root<Item> root = cr.from(Item.class);
+
+        cr.select(root).where(
+                cb.like(root.get(Item_.name), "%" + itemName.toLowerCase() + "%")
+        );
+        return entityManager.createQuery(cr).getResultList();
     }
 
     @Override
     public List<Item> searchByNameAndPrice(String itemName, BigDecimal price) {
-        TypedQuery<Item> query = entityManager
-                .createQuery("SELECT i FROM Item i WHERE LOWER(name) LIKE :name AND price <= :price", Item.class);
-        query.setParameter("name", "%%%s%%".formatted(itemName.toLowerCase()));
-        query.setParameter("price", price);
-        return query.getResultList();
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Item> cr = cb.createQuery(Item.class);
+        Root<Item> root = cr.from(Item.class);
+
+        cr.select(root).where(
+                cb.like(root.get(Item_.name), "%" + itemName.toLowerCase() + "%"),
+                cb.equal(root.get(Item_.price), price)
+        );
+        return entityManager.createQuery(cr).getResultList();
     }
 
     @Override
-    public List<Item> searchByName(String itemName, String ordering, String paging) {
-        String queryString = "SELECT i FROM Item i WHERE LOWER(name) LIKE :name" + ordering + paging;
-        TypedQuery<Item> query = entityManager
-                .createQuery(queryString, Item.class);
-        query.setParameter("name", "%%%s%%".formatted(itemName.toLowerCase()));
-        return query.getResultList();
+    public List<Item> searchByName(String itemName, List<OrderingRule> orderingRules, PagingRule pagingRule) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Item> cr = cb.createQuery(Item.class);
+        Root<Item> root = cr.from(Item.class);
+
+        cr.select(root).where(
+                cb.like(root.get(Item_.name), "%" + itemName.toLowerCase() + "%")
+        );
+        for (OrderingRule orderingRule : orderingRules) {
+            cr.orderBy(orderingRule.isAscending() ?
+                    cb.asc(root.get(orderingRule.getOrderBy())) :
+                    cb.desc(root.get(orderingRule.getOrderBy())));
+        }
+
+        return entityManager
+                .createQuery(cr)
+                .setFirstResult((Integer.valueOf(pagingRule.getPageSize()) - 1) * pagingRule.getPageNumber())
+                .setMaxResults(Integer.valueOf(pagingRule.getPageSize()) + 1)
+                .getResultList();
     }
 
     @Override
-    public List<Item> searchByNameAndPrice(String itemName, BigDecimal price, String ordering, String paging) {
-        String queryString = "SELECT i FROM Item i WHERE LOWER(name) LIKE :name AND price <= :price" + ordering + paging;
-        TypedQuery<Item> query = entityManager
-                .createQuery(queryString, Item.class);
-        query.setParameter("name", "%%%s%%".formatted(itemName.toLowerCase()));
-        query.setParameter("price", price);
-        return query.getResultList();
+    public List<Item> searchByNameAndPrice(String itemName, BigDecimal price, List<OrderingRule> orderingRules, PagingRule pagingRule) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Item> cr = cb.createQuery(Item.class);
+        Root<Item> root = cr.from(Item.class);
+
+        cr.select(root).where(
+                cb.like(root.get(Item_.name), "%" + itemName.toLowerCase() + "%"),
+                cb.equal(root.get(Item_.price), price)
+        );
+        for (OrderingRule orderingRule : orderingRules) {
+            cr.orderBy(orderingRule.isAscending() ?
+                    cb.asc(root.get(orderingRule.getOrderBy())) :
+                    cb.desc(root.get(orderingRule.getOrderBy())));
+        }
+
+        return entityManager
+                .createQuery(cr)
+                .setFirstResult((pagingRule.getPageNumber() - 1) * Integer.valueOf(pagingRule.getPageSize()))
+                .setMaxResults(Integer.valueOf(pagingRule.getPageSize()) + 1)
+                .getResultList();
     }
 }

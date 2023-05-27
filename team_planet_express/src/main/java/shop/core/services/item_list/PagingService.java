@@ -16,7 +16,7 @@ public class PagingService {
     public List<Item> getPage(List<Item> items, PagingRule pagingRule) {
         if (pagingEnabled) {
             if (pagingRule != null) {
-                long pageSize = Long.parseLong(pagingRule.getPageSize());
+                Integer pageSize = Integer.valueOf(pagingRule.getPageSize());
                 long itemCountToSkip = (pagingRule.getPageNumber() - 1) * pageSize;
                 items = items.stream()
                         .skip(itemCountToSkip)
@@ -31,7 +31,7 @@ public class PagingService {
         StringBuilder limitOffset = new StringBuilder();
         if (pagingEnabled) {
             if (pagingRule != null) {
-                int pageSize = Integer.parseInt(pagingRule.getPageSize());
+                Integer pageSize = Integer.valueOf(pagingRule.getPageSize());
                 limitOffset.append("LIMIT ").append(pageSize + 1);
                 if (pagingRule.getPageNumber() > 1) {
                     limitOffset.append(" OFFSET ").append((pagingRule.getPageNumber() - 1) * pageSize);

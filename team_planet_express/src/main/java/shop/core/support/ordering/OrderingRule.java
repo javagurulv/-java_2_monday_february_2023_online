@@ -1,21 +1,17 @@
 package shop.core.support.ordering;
 
+import jakarta.persistence.metamodel.SingularAttribute;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public class OrderingRule {
 
-    private final OrderBy orderBy;
-    private final OrderDirection orderDirection;
+    private SingularAttribute orderBy;
+    private Boolean ascending;
 
-    public OrderingRule(OrderBy orderBy, OrderDirection orderDirection) {
-        this.orderBy = orderBy;
-        this.orderDirection = orderDirection;
+    public Boolean isAscending() {
+        return ascending;
     }
-
-    public OrderBy getOrderBy() {
-        return orderBy;
-    }
-
-    public OrderDirection getOrderDirection() {
-        return orderDirection;
-    }
-
 }

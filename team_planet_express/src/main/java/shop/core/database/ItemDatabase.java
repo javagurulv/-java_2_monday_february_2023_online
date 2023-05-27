@@ -1,6 +1,8 @@
 package shop.core.database;
 
 import shop.core.domain.item.Item;
+import shop.core.support.ordering.OrderingRule;
+import shop.core.support.paging.PagingRule;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -22,12 +24,11 @@ public interface ItemDatabase {
 
     List<Item> getAllItems();
 
-    List<Item> searchByName(String itemName);
+    List<Item> searchByName(String itemName, List<OrderingRule> orderingRules, String sqlLimitOffset);
 
     List<Item> searchByNameAndPrice(String itemName, BigDecimal price);
 
-    List<Item> searchByName(String itemName, String ordering, String paging);
+    List<Item> searchByName(String itemName, List<OrderingRule> ordering, PagingRule paging);
 
-    List<Item> searchByNameAndPrice(String itemName, BigDecimal price, String ordering, String paging);
-
+    List<Item> searchByNameAndPrice(String itemName, BigDecimal price, List<OrderingRule> orderingRules, PagingRule pagingRule);
 }
