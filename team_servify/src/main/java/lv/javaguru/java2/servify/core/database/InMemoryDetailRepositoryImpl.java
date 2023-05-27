@@ -1,11 +1,13 @@
 package lv.javaguru.java2.servify.core.database;
 
 import lv.javaguru.java2.servify.core.domain.Detail;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 
 //@Repository
 public class InMemoryDetailRepositoryImpl implements DetailRepository {
@@ -15,9 +17,26 @@ public class InMemoryDetailRepositoryImpl implements DetailRepository {
 
     @Override
     public void save(Detail detail) {
+        if (detail.getId() != null) {
+            updateExistDetail(detail);
+        } else {
+            saveNewDetail(detail);
+        }
+    }
+
+    private void saveNewDetail(Detail detail) {
         detail.setId(nextId);
         nextId++;
         details.add(detail);
+    }
+
+    private void updateExistDetail(Detail detail) {
+        for (int i = 0; i < details.size(); i++) {
+            var existDetail = details.get(i);
+            if (existDetail.getId().equals(detail.getId())) {
+                details.set(i, detail);
+            }
+        }
     }
 
     @Override
@@ -31,6 +50,13 @@ public class InMemoryDetailRepositoryImpl implements DetailRepository {
             isDetailDeleted = details.remove(detailToRemove);
         }
         return isDetailDeleted;
+    }
+
+    @Override
+    public Optional<Detail> findById(Long id) {
+        return details.stream()
+                .filter(detail -> detail.getId().equals(id))
+                .findFirst();
     }
 
     @Override

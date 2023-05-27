@@ -9,7 +9,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import lv.javaguru.java2.servify.core.domain.Detail;
+
 import java.math.BigDecimal;
+import java.util.Optional;
 
 
 @Repository
@@ -17,6 +19,7 @@ import java.math.BigDecimal;
 public class OrmDetailRepositoryImpl implements DetailRepository {
     @Autowired
     private SessionFactory sessionFactory;
+
     @Override
     public void save(Detail detail) {
         sessionFactory.getCurrentSession().save(detail);
@@ -29,6 +32,18 @@ public class OrmDetailRepositoryImpl implements DetailRepository {
         query.setParameter("id", id);
         int result = query.executeUpdate();
         return result == 1;
+    }
+
+    @Override
+    public Optional<Detail> findById(Long id) {
+//        Query query = sessionFactory.getCurrentSession()
+//                .createQuery("SELECT d FROM Detail d WHERE id = id", Detail.class);
+//        query.setParameter("id", id);
+//        return query.getResultList().stream().findFirst();
+        var detail = sessionFactory.getCurrentSession().get(Detail.class, id);
+        return Optional.ofNullable(detail);
+
+
     }
 
     @Override

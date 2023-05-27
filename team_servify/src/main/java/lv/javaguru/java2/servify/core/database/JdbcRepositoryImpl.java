@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 //@Repository
 public class JdbcRepositoryImpl implements DetailRepository {
@@ -27,6 +28,11 @@ public class JdbcRepositoryImpl implements DetailRepository {
         String sql = "DELETE FROM details WHERE id = ?";
         Object[] args = new Object[] {id};
         return jdbcTemplate.update(sql, args) == 1;
+    }
+
+    @Override
+    public Optional<Detail> findById(Long id) {
+        return Optional.empty();
     }
 
     @Override
