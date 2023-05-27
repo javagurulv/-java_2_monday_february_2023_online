@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
-@Entity
-@Table(name = "address")
+//@Entity
+//@Table(name = "address")
 public class Address {
     @Id
     @Column(name = "id")
@@ -27,4 +26,6 @@ public class Address {
     private String apartmentNumber;
     @Column(name = "postal_code")
     private String postalCode;
+
+    public Address() {}
 }

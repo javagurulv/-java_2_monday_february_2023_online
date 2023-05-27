@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
-@Entity
-@Table(name = "orders_items")
+
+//@Entity
+//@Table(name = "orders_items")
 public class OrderItems {
     @Id
     @Column(name = "id")
@@ -26,4 +26,8 @@ public class OrderItems {
     private Color color;
     @Column(name = "count")
     private Integer countDetail;
+
+    public OrderItems() {
+
+    }
 }

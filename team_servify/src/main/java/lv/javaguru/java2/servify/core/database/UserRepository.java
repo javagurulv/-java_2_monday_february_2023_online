@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-//@Repository
-//@Transactional
+@Repository
+@Transactional
 public class UserRepository {
     @Autowired
     private SessionFactory sessionFactory;

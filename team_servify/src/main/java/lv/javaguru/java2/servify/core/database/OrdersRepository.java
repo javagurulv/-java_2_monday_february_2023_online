@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-//@Repository
-//@Transactional
+@Repository
+@Transactional
 public class OrdersRepository {
     @Autowired
     private SessionFactory sessionFactory;

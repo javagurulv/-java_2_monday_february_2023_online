@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "colors")
 public class Color {
@@ -21,4 +20,6 @@ public class Color {
     private String description;
     @Column(name = "is_metalic")
     private boolean isMetalic;
+
+    public Color() {}
 }

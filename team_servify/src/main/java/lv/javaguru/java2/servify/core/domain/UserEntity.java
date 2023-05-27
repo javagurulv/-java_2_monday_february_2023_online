@@ -8,9 +8,8 @@ import java.util.Set;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
-@Entity
-@Table(name = "users")
+//@Entity
+//@Table(name = "users")
 public class UserEntity {
     @Id
     @Column(name = "id")
@@ -35,4 +34,6 @@ public class UserEntity {
 //    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
 //    @Enumerated(EnumType.STRING)
 //    private Set<UserType> userType;
+
+    public UserEntity() {}
 }

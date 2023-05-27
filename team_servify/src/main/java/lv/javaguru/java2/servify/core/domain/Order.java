@@ -10,9 +10,8 @@ import java.util.Set;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
-@Entity
-@Table(name = "orders")
+//@Entity
+//@Table(name = "orders")
 public class Order {
     @Id
     @Column(name = "id")
@@ -34,4 +33,8 @@ public class Order {
 //    private Set<OrderStatus> orderStatus;
     @Column(name = "order_status")
     private String orderStatus;
+
+    public Order() {
+
+    }
 }
