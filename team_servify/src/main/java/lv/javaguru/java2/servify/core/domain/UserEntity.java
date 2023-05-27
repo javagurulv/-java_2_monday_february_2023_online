@@ -23,7 +23,7 @@ public class UserEntity {
     @Column(name = "email")
     private String email;
     @Column(name = "phone_number")
-    private Integer phoneNumber;
+    private String phoneNumber;
     @OneToOne
     @JoinColumn(name = "address_id")
     private Address address;
