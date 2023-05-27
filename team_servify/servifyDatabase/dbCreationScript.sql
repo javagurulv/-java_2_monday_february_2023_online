@@ -111,3 +111,9 @@ ENGINE = InnoDB;
 
 ALTER TABLE `users`
 ALTER COLUMN `is_inactive` SET DEFAULT FALSE;
+
+ALTER TABLE `address`
+ADD COLUMN `postal_code`VARCHAR(500);
+
+ALTER TABLE `orders`
+ADD COLUMN `notes` VARCHAR(2000);
