@@ -1,8 +1,8 @@
 package lv.javaguru.java2.servify.console_ui.detail;
 
 import lv.javaguru.java2.servify.console_ui.UIAction;
-import lv.javaguru.java2.servify.core.requests.RemoveDetailRequest;
-import lv.javaguru.java2.servify.core.responses.RemoveDetailResponse;
+import lv.javaguru.java2.servify.core.dto.requests.RemoveDetailRequest;
+import lv.javaguru.java2.servify.core.dto.responses.RemoveDetailResponse;
 import lv.javaguru.java2.servify.core.services.GetAllDetailsService;
 import lv.javaguru.java2.servify.core.services.RemoveDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +19,7 @@ public class RemoveDetailUIAction implements UIAction {
     @Override
     public void execute() {
         Scanner scanner = new Scanner(System.in);
-
-        getAllDetailsService.execute().forEach(System.out::println);
-
+        getAllDetailsService.getAll().getDetails().forEach(System.out::println);
         System.out.println("Enter detail id to remove (only use id that is visible in the list!): ");
         Long detailId = Long.parseLong(scanner.nextLine());
         RemoveDetailRequest request = new RemoveDetailRequest(detailId);

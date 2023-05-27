@@ -2,9 +2,9 @@ package lv.javaguru.java2.servify.core.services;
 
 import lv.javaguru.java2.servify.core.database.DetailRepository;
 import lv.javaguru.java2.servify.core.domain.Detail;
-import lv.javaguru.java2.servify.core.requests.SearchDetailRequest;
-import lv.javaguru.java2.servify.core.responses.CoreError;
-import lv.javaguru.java2.servify.core.responses.SearchDetailResponse;
+import lv.javaguru.java2.servify.core.dto.requests.SearchDetailRequest;
+import lv.javaguru.java2.servify.core.dto.responses.CoreError;
+import lv.javaguru.java2.servify.core.dto.responses.SearchDetailResponse;
 import lv.javaguru.java2.servify.core.services.validators.SearchDetailRequestValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

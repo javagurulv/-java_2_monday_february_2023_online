@@ -1,7 +1,5 @@
-package lv.javaguru.java2.servify.core.responses;
+package lv.javaguru.java2.servify.core.dto.responses;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lv.javaguru.java2.servify.core.domain.Detail;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package lv.javaguru.java2.servify.core.services.validators;
 
-import lv.javaguru.java2.servify.core.requests.AddDetailRequest;
-import lv.javaguru.java2.servify.core.responses.CoreError;
+import lv.javaguru.java2.servify.core.dto.requests.AddDetailRequest;
+import lv.javaguru.java2.servify.core.dto.responses.CoreError;
 import lv.javaguru.java2.servify.core.domain.FieldTitle;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package lv.javaguru.java2.servify.core.requests;
+package lv.javaguru.java2.servify.core.dto.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

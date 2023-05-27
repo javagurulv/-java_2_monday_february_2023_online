@@ -1,7 +1,5 @@
-package lv.javaguru.java2.servify.core.responses;
+package lv.javaguru.java2.servify.core.dto.responses;
 
-import lv.javaguru.java2.servify.core.responses.CoreError;
-import lv.javaguru.java2.servify.core.responses.CoreResponse;
 import lv.javaguru.java2.servify.core.domain.Detail;
 
 import java.util.List;

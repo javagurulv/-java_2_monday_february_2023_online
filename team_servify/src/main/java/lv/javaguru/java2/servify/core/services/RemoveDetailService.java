@@ -1,9 +1,9 @@
 package lv.javaguru.java2.servify.core.services;
 
 import lv.javaguru.java2.servify.core.database.DetailRepository;
-import lv.javaguru.java2.servify.core.requests.RemoveDetailRequest;
-import lv.javaguru.java2.servify.core.responses.CoreError;
-import lv.javaguru.java2.servify.core.responses.RemoveDetailResponse;
+import lv.javaguru.java2.servify.core.dto.requests.RemoveDetailRequest;
+import lv.javaguru.java2.servify.core.dto.responses.CoreError;
+import lv.javaguru.java2.servify.core.dto.responses.RemoveDetailResponse;
 import lv.javaguru.java2.servify.core.services.validators.RemoveDetailRequestValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

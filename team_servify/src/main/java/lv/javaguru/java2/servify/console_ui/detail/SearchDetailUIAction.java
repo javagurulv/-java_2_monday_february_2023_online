@@ -1,9 +1,8 @@
 package lv.javaguru.java2.servify.console_ui.detail;
 
 import lv.javaguru.java2.servify.console_ui.UIAction;
-import lv.javaguru.java2.servify.core.domain.Detail;
-import lv.javaguru.java2.servify.core.requests.SearchDetailRequest;
-import lv.javaguru.java2.servify.core.responses.SearchDetailResponse;
+import lv.javaguru.java2.servify.core.dto.requests.SearchDetailRequest;
+import lv.javaguru.java2.servify.core.dto.responses.SearchDetailResponse;
 import lv.javaguru.java2.servify.core.services.SearchDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

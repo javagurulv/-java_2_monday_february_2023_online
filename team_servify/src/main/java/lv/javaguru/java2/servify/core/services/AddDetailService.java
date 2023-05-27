@@ -1,8 +1,8 @@
 package lv.javaguru.java2.servify.core.services;
 
-import lv.javaguru.java2.servify.core.requests.AddDetailRequest;
-import lv.javaguru.java2.servify.core.responses.CoreError;
-import lv.javaguru.java2.servify.core.responses.AddDetailResponse;
+import lv.javaguru.java2.servify.core.dto.requests.AddDetailRequest;
+import lv.javaguru.java2.servify.core.dto.responses.CoreError;
+import lv.javaguru.java2.servify.core.dto.responses.AddDetailResponse;
 import lv.javaguru.java2.servify.core.services.validators.AddDetailRequestValidator;
 import lv.javaguru.java2.servify.core.domain.Detail;
 import lv.javaguru.java2.servify.core.database.DetailRepository;

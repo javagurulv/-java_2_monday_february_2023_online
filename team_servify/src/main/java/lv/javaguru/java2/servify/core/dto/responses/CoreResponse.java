@@ -1,4 +1,4 @@
-package lv.javaguru.java2.servify.core.responses;
+package lv.javaguru.java2.servify.core.dto.responses;
 
 import java.util.List;
 

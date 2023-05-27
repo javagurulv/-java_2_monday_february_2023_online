@@ -13,7 +13,7 @@ public class GetAllDetailsUIAction implements UIAction {
     @Override
     public void execute() {
         System.out.println("Detail list: ");
-        getAllDetailsService.execute().forEach(System.out::println);
+        getAllDetailsService.getAll().getDetails().forEach(System.out::println);
         System.out.println("Detail list end.");
     }
 

@@ -1,4 +1,4 @@
-package lv.javaguru.java2.servify.core.requests;
+package lv.javaguru.java2.servify.core.dto.requests;
 
 public class RemoveDetailRequest {
 

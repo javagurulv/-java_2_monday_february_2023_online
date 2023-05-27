@@ -5,7 +5,7 @@ import lv.javaguru.java2.servify.config.ServifyConfiguration;
 import lv.javaguru.java2.servify.console_ui.*;
 
 
-class DetailListApplication {
+class ServifyApplication {
 
     @SuppressWarnings("InfiniteLoopStatement")
     public static void main(String[] args) {
