@@ -35,4 +35,13 @@ public class UserEntity {
 //    @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "id"))
 //    @Enumerated(EnumType.STRING)
 //    private Set<UserType> userType;
+
+    public UserEntity(String firstName, String lastName, String email, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.isInactive = false;
+        this.userType = "ANONYMOUS";
+    }
 }
