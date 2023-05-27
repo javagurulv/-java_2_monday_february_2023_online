@@ -17,4 +17,11 @@ public class UserRepository {
                 .createQuery("SELECT u FROM UserEntity u", UserEntity.class)
                 .getResultList();
     }
+
+    public UserEntity findBiId(Long id) {
+        return sessionFactory.getCurrentSession().get(UserEntity.class, id);
+    }
+    public void save(UserEntity user) {
+        sessionFactory.getCurrentSession().save(user);
+    }
 }
