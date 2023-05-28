@@ -5,6 +5,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -17,6 +18,7 @@ public class StructureData {
     private String name;
     private String internalCode;
     private double mass;
+    private Integer id;
 
     private void setSmiles(String smiles) {
         this.smiles = smiles;
@@ -172,5 +174,9 @@ public class StructureData {
                 ", internalCode='" + internalCode + '\'' +
                 ", mass=" + mass +
                 '}';
+    }
+
+    public Integer getId() {
+        return id;
     }
 }
