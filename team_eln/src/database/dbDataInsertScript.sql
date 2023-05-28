@@ -48,15 +48,6 @@ VALUES (
 );
 
 
-CREATE TABLE IF NOT EXISTS `ReactionStartingMaterial` (
-  `reaction_id` int,
-  `structure_id` int,
-  PRIMARY KEY (`reaction_id`, `structure_id`),
-  FOREIGN KEY (`reaction_id`) REFERENCES `ReactionData` (`id`),
-  FOREIGN KEY (`structure_id`) REFERENCES `StructureData` (`id`)
-);
-
-
 --SELECT reactiondata.code, reactiondata.name AS reaction_name, structuredata.name AS product
 --FROM reactiondata
 --JOIN structuredata ON reactiondata.structure_mainProduct_id = structuredata.id;
