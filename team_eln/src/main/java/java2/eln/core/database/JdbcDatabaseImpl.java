@@ -1,11 +1,17 @@
 package java2.eln.core.database;
 
 import java2.eln.core.domain.ReactionData;
+import java2.eln.core.domain.StructureData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 class JdbcDatabaseImpl implements DatabaseIM {
@@ -15,12 +21,54 @@ class JdbcDatabaseImpl implements DatabaseIM {
 
     @Override
     public void addReaction(ReactionData reaction) {
-        String querySQL = "INSERT INTO ReactionData (code, name, structure_mainProduct_id, reactionYield) " +
-                "VALUES (?, ?, ?, ?)";
-        int userId = (reaction.getUser() != null) ? reaction.getUser().getUserId() : 0;
-        jdbcTemplate.update(querySQL, reaction.getCode(), reaction.getName(), reaction.getMainProduct().getId(),
-                reaction.getReactionYield());
+        String reactionQuery = "INSERT INTO ReactionData (code, name, reactionYield) VALUES (?, ?, ?)";
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(con -> {
+            PreparedStatement ps = con.prepareStatement(reactionQuery, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, reaction.getCode());
+            ps.setString(2, reaction.getName());
+            ps.setDouble(3, reaction.getReactionYield());
+            return ps;
+        }, keyHolder);
+
+        int reactionId = Objects.requireNonNull(keyHolder.getKey()).intValue();
+
+        int mainProductId = saveStructureData(reaction.getMainProduct());
+        updateReactionMainProduct(reactionId, mainProductId);
+
+        reaction.getStartingMaterials().stream()
+                .map(this::saveStructureData)
+                .forEach(structureId -> saveReactionStartingMaterial(reactionId, structureId));
     }
+
+    private int saveStructureData(StructureData structureData) {
+        String structureQuery = "INSERT INTO `StructureData` (smiles, casNumber, name, internalCode, mass) VALUES (?, ?, ?, ?, ?)";
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(con -> {
+            PreparedStatement ps = con.prepareStatement(structureQuery, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, structureData.getSmiles());
+            ps.setString(2, structureData.getCasNumber());
+            ps.setString(3, structureData.getName());
+            ps.setString(4, structureData.getInternalCode());
+            ps.setDouble(5, structureData.getMass());
+            return ps;
+        }, keyHolder);
+
+        return Objects.requireNonNull(keyHolder.getKey()).intValue();
+    }
+
+    private void updateReactionMainProduct(int reactionId, int mainProductId) {
+        String updateQuery = "UPDATE `ReactionData` SET `structure_mainProduct_id` = ? WHERE `id` = ?";
+        jdbcTemplate.update(updateQuery, mainProductId, reactionId);
+    }
+
+    private void saveReactionStartingMaterial(int reactionId, int structureId) {
+        String reactionStartingMaterialQuery = "INSERT INTO `ReactionStartingMaterial` (reaction_id, structure_id) VALUES (?, ?)";
+        jdbcTemplate.update(reactionStartingMaterialQuery, reactionId, structureId);
+    }
+
 
 
     @Override
