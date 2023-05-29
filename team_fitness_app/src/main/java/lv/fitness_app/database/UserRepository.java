@@ -8,7 +8,7 @@ public interface UserRepository {
 
     void add(User user);
 
-    void deleteUser(String email);
+    void deleteUser(User user);
 
     List<User> getAllUsers();
 

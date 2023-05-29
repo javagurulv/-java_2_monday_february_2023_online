@@ -6,53 +6,35 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-@Table(name = "user")
+@Table(name = "client")
 public class User {
 
     @Id
     @Column(name = "email")
     private String email;
-
-    @Column(name="user_name", nullable = false)
+    @Column(name = "user_name", nullable = false)
     private String username;
-
-    @Column(name="password", nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
-
-
-    @Column(name="subscription_ends", nullable = false)
+    @Column(name = "subscription_ends", nullable = false)
     Date endOfSubscriptionDate;
-
-    @Column(name="subscription", nullable = false)
-   @Enumerated(EnumType.STRING)
+    @Column(name = "subscription", nullable = false)
+    @Enumerated(EnumType.STRING)
     Subscription subscription;
 
-    public User() { }
+    public User() {
+    }
 
     public User(String email, String username, String password) {
         this.email = email;
         this.username = username;
         this.password = password;
-        this.subscription = subscription.TRAIL;
-        endOfSubscriptionDate =  Date.valueOf(LocalDate.now().plusDays(30));
+        this.subscription = Subscription.TRAIL;
+        endOfSubscriptionDate = Date.valueOf(LocalDate.now().plusDays(30));
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public void setUsername(String username) {
-        this.username = username;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setEndOfSubscriptionDate(Date endOfSubscriptionDate) {
-        this.endOfSubscriptionDate = endOfSubscriptionDate;
-    }
-
-    public void setSubscription(Subscription subscription) {
-        this.subscription = subscription;
+    public String getEmail() {
+        return email;
     }
 
     public String getUsername() {
@@ -63,16 +45,32 @@ public class User {
         return password;
     }
 
-    public String getEmail() {
-        return email;
+    public String getSubscription() {
+        return subscription.name().toUpperCase();
     }
 
     public Date getEndOfSubscriptionDate() {
         return endOfSubscriptionDate;
     }
 
-    public Subscription getSubscription() {
-        return subscription;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setSubscription(String subscription) {
+        this.subscription = Subscription.valueOf(subscription.toUpperCase());
+    }
+
+    public void setEndOfSubscriptionDate(Date endOfSubscriptionDate) {
+        this.endOfSubscriptionDate = endOfSubscriptionDate;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
@@ -97,13 +95,5 @@ public class User {
                 ", endOfSubscriptionDate=" + endOfSubscriptionDate +
                 ", subscription=" + subscription +
                 '}';
-    }
-
-    public boolean hasAccessToPremiumFeatures() {
-        if (subscription == Subscription.PREMIUM) {
-            return true;
-        } else {
-            return false;
-        }
     }
 }

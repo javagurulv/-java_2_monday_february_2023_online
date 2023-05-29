@@ -25,7 +25,7 @@ class PostgresUserRepository implements UserRepository {
             statement.setString(1, user.getEmail());
             statement.setString(2, user.getUsername());
             statement.setString(3, user.getPassword());
-            statement.setString(4, user.getSubscription().name());
+            statement.setString(4, user.getSubscription());
             statement.setDate(5, user.getEndOfSubscriptionDate());
             statement.addBatch();
 
@@ -42,7 +42,7 @@ class PostgresUserRepository implements UserRepository {
     }
 
     @Override
-    public void deleteUser(String email) {
+    public void deleteUser(User user) {
 
     }
 

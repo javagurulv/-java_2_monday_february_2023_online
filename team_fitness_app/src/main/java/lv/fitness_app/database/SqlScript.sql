@@ -1,16 +1,14 @@
-create schema user_db;
-
-create table user_db.user(
+create table user(
     email varchar(255) primary key,
-    user_name varchar(255),
-    password varchar(255),
-    subscription varchar(25),
-    subscription_ends date
+    user_name varchar(255) NOT NULL,
+    password varchar(255) NOT NULL,
+    subscription varchar(20) NOT NULL,
+    subscription_ends date NOT NULL
 );
 
-create schema exercices_db;
 
-create table exercises_db.exercises(
+
+create table exercises(
     id bigserial(255) primary key,
     difficulty varchar(255),
     equipment varchar(255),

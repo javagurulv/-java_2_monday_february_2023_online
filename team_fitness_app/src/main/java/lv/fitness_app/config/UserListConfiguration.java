@@ -42,7 +42,6 @@ public class UserListConfiguration {
         dataSource.setDriverClassName(driverClass);
         dataSource.setUsername(userName);
         dataSource.setPassword(password);
-        dataSource.setMaxTotal(10);
         return dataSource;
     }
 

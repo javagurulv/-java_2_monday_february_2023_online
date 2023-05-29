@@ -30,7 +30,7 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void deleteUser(String email) {
-        users.remove(email);
+    public void deleteUser(User user) {
+        users.remove(user);
     }
 }

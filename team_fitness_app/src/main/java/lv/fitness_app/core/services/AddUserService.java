@@ -1,10 +1,10 @@
 package lv.fitness_app.core.services;
 
+import lv.fitness_app.core.domain.User;
 import lv.fitness_app.database.UserRepository;
 import lv.fitness_app.core.requests.AddUserRequest;
 import lv.fitness_app.core.responses.AddUserResponse;
 import lv.fitness_app.core.responses.CoreError;
-import lv.fitness_app.core.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

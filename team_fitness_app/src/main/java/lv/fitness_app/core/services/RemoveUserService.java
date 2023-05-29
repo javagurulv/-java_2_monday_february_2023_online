@@ -1,9 +1,9 @@
 package lv.fitness_app.core.services;
 
+import lv.fitness_app.core.domain.User;
 import lv.fitness_app.database.UserRepository;
 import lv.fitness_app.core.responses.CoreError;
 import lv.fitness_app.core.responses.RemoveUserResponse;
-import lv.fitness_app.core.domain.User;
 import lv.fitness_app.core.requests.RemoveUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,7 +26,7 @@ public class RemoveUserService {
         } else if (userRepository.findUserByEmail(request.getEmail())!= null) {
             User user = userRepository.findUserByEmail(request.getEmail());
             if (user.getEmail().equals(request.getEmail()) && user.getPassword().equals(request.getPassword())) {
-                userRepository.deleteUser(user.getEmail());
+                userRepository.deleteUser(user);
                 isUserRemoved = true;
             }
         }
