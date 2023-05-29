@@ -1,5 +1,7 @@
 package java2.eln.core.domain;
 
+import java2.eln.core.database.User;
+
 import java.io.File;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -15,6 +17,7 @@ public class ReactionData {
     private StructureData mainProduct;
     private List<File> analyticalResults;
     private double reactionYield;
+    private User user;
 
     public ReactionData(String code, String name) {
         this.code = code;
@@ -29,7 +32,9 @@ public class ReactionData {
         return name;
     }
 
-
+    public User getUser() {
+        return user;
+    }
 
     public void addStartingMaterial (StructureData material){
         startingMaterials.add(material);

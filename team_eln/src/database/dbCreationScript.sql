@@ -51,6 +51,11 @@ CREATE TABLE IF NOT EXISTS `ConditionData` (
   FOREIGN KEY (`structure_solvent_id`) REFERENCES `StructureData` (`id`)
 );
 
+ALTER TABLE StructureData
+ADD INDEX idx_smiles (smiles);
+
+ALTER TABLE ReactionData
+ADD INDEX idx_code (code);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
