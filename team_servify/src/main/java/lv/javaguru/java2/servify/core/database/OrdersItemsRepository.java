@@ -16,7 +16,7 @@ public class OrdersItemsRepository {
 
     public List<OrderItems> getAll() {
         return sessionFactory.getCurrentSession()
-                .createQuery("SELECT oi FROM OrderItem oi", OrderItems.class)
+                .createQuery("SELECT oi FROM OrderItems oi", OrderItems.class)
                 .getResultList();
     }
 }

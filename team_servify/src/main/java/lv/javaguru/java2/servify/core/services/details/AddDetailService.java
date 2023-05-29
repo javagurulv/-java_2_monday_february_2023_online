@@ -13,10 +13,8 @@ import java.util.List;
 
 @Service
 public class AddDetailService {
-
     @Autowired
     private DetailRepository detailRepository;
-
     @Autowired
     private AddDetailRequestValidator validator;
 

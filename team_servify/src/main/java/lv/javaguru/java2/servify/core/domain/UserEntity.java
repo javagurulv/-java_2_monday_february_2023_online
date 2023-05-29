@@ -8,12 +8,13 @@ import java.util.Set;
 
 @Data
 @AllArgsConstructor
-//@Entity
-//@Table(name = "users")
+@NoArgsConstructor
+@Entity
+@Table(name = "users")
 public class UserEntity {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "first_name")
     private String firstName;
@@ -26,14 +27,23 @@ public class UserEntity {
     @OneToOne
     @JoinColumn(name = "address_id")
     private Address address;
+    @Column(name = "password")
+    private String password;
     @Column(name = "is_inactive")
     private boolean isInactive;
     @Column(name = "user_type")
     private String userType;
 //    @ElementCollection(targetClass = UserType.class, fetch = FetchType.EAGER)
-//    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+//    @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "id"))
 //    @Enumerated(EnumType.STRING)
 //    private Set<UserType> userType;
 
-    public UserEntity() {}
+    public UserEntity(String firstName, String lastName, String email, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.isInactive = false;
+        this.userType = "ANONYMOUS";
+    }
 }

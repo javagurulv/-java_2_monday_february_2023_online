@@ -5,14 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @AllArgsConstructor
-//@Entity
-//@Table(name = "address")
+@NoArgsConstructor
+@Entity
+@Table(name = "address")
 public class Address {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "country")
     private String country;
@@ -27,5 +29,4 @@ public class Address {
     @Column(name = "postal_code")
     private String postalCode;
 
-    public Address() {}
 }

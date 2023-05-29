@@ -5,24 +5,28 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 
 @Data
 @AllArgsConstructor
-//@Entity
-//@Table(name = "orders")
+@NoArgsConstructor
+@Entity
+@Table(name = "orders")
 public class Order {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "user_id")
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "order_date")
-    private LocalDate orderDate;
+    private Date orderDate;
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "order_close_date")
-    private LocalDate orderComplete;
+    private Date orderComplete;
     @Column(name = "total_price")
     private BigDecimal totalPrice;
     @Column(name = "notes")
@@ -34,7 +38,4 @@ public class Order {
     @Column(name = "order_status")
     private String orderStatus;
 
-    public Order() {
-
-    }
 }

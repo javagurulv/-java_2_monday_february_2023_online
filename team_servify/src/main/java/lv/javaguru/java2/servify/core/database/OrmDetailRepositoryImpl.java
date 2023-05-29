@@ -26,6 +26,12 @@ public class OrmDetailRepositoryImpl implements DetailRepository {
     }
 
     @Override
+    public void update(Detail detail) {
+        sessionFactory.getCurrentSession().update(detail);
+    }
+
+
+    @Override
     public boolean deleteById(Long id) {
         Query query = sessionFactory.getCurrentSession().createQuery(
                 "DELETE Detail WHERE id = :id");

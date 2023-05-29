@@ -16,7 +16,7 @@ public class ColorRepository {
 
     public List<Color> getAll() {
         return sessionFactory.getCurrentSession()
-                .createQuery("SELECT c FROM Color", Color.class)
+                .createQuery("SELECT c FROM Color c", Color.class)
                 .getResultList();
     }
 }

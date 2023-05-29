@@ -23,6 +23,11 @@ public class JdbcRepositoryImpl implements DetailRepository {
     }
 
     @Override
+    public void update(Detail detail) {
+
+    }
+
+    @Override
     public boolean deleteById(Long id) {
         String sql = "DELETE FROM details WHERE id = ?";
         Object[] args = new Object[] {id};

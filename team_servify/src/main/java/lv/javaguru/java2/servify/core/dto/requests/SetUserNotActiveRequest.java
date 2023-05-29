@@ -4,12 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @AllArgsConstructor
+@Data
 @NoArgsConstructor
-public class UpdateDetailRequest {
-    private Long id;
-    private String type;
-    private String side;
-    private String price;
+public class SetUserNotActiveRequest {
+    private Long userIdToSetInactive;
 }
