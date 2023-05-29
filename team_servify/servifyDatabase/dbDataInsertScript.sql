@@ -34,8 +34,9 @@ VALUES
 
 INSERT INTO orders (`user_id`, `order_date`, `order_close_date`, `order_status`, `total_price`)
 VALUES
-(1, "2023-12-15 10:35:00", null, "NEW", 260),
-(2, "2023-12-15 12:00:00", NULL, "IN_PROGRESS", 630);
+(1, "2023-12-15 10:35:00", "2023-12-20 10:00:00", "COMPLETE", 260),
+(2, "2023-12-15 12:00:00", NULL, "IN_PROGRESS", 630),
+(1, "2023-12-15 10:35:00", null, "NEW", 330);
 
 INSERT INTO orders_items (`order_id`, `detail_id`, `color_id`, `count`)
 VALUES
@@ -43,4 +44,6 @@ VALUES
 (1, 7, 1, 1),
 (2, 1, 2, 1),
 (2, 2, 2, 1),
-(2, 3, 2, 1);
+(2, 3, 2, 1),
+(3, 4, 2, 1),
+(3, 5, 2, 1);
