@@ -8,7 +8,7 @@ import shop.core.services.actions.customer.AddItemToCartService;
 @Component
 public class AddItemToCartTester extends Tester {
     @Autowired
-    AddItemToCartService addItemToCartService;
+    private AddItemToCartService addItemToCartService;
     private String itemName;
     private Integer quantity;
 

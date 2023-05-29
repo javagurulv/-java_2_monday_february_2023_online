@@ -3,7 +3,6 @@ package shop.acceptance_tests.custom;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -11,7 +10,6 @@ import shop.config.ShopConfiguration;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {ShopConfiguration.class})
-@Import(CustomAcceptanceTest.class)
 public class BuyItemAcceptanceTest extends CustomAcceptanceTest {
 
 

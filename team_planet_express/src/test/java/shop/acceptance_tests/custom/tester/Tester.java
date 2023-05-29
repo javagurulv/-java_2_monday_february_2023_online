@@ -1,11 +1,6 @@
 package shop.acceptance_tests.custom.tester;
 
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import shop.config.ShopConfiguration;
 import shop.core.database.CartDatabase;
 import shop.core.database.CartItemDatabase;
 import shop.core.database.ItemDatabase;
@@ -19,12 +14,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {ShopConfiguration.class})
 public abstract class Tester {
 
-    @Autowired
-    protected ApplicationContext applicationContext;
     @Autowired
     protected CurrentUserId currentUserId;
     @Autowired

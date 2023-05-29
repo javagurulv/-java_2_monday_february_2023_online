@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Component
 public class BuyTester extends Tester {
     @Autowired
-    BuyService buyService;
+    private BuyService buyService;
 
     public BuyTester buy() {
         BuyRequest buyRequest = new BuyRequest(currentUserId);

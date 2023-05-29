@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Component
 public class ListShopItemsTester extends Tester {
     @Autowired
-    ListShopItemsService listShopItemsService;
+    private ListShopItemsService listShopItemsService;
     private ListShopItemsResponse listShopItemsResponse;
 
     public ListShopItemsTester showListShopItems() {

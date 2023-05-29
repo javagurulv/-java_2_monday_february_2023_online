@@ -1,8 +1,6 @@
 package shop.acceptance_tests.custom;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Import;
-import org.springframework.stereotype.Component;
 import shop.acceptance_tests.ApplicationContextSetup;
 import shop.acceptance_tests.custom.tester.*;
 import shop.core.domain.user.User;
@@ -11,12 +9,6 @@ import shop.core.services.user.UserCreationData;
 import shop.core.services.user.UserService;
 import shop.core.support.CurrentUserId;
 
-@Component
-@Import({
-        ListCartItemsTester.class, ListShopItemsTester.class,
-        AddItemToCartTester.class, RemoveItemFromCartTester.class,
-        BuyTester.class
-})
 public abstract class CustomAcceptanceTest {
 
     protected final ApplicationContextSetup applicationContextSetup = new ApplicationContextSetup();

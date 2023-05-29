@@ -8,7 +8,7 @@ import shop.core.services.actions.customer.RemoveItemFromCartService;
 @Component
 public class RemoveItemFromCartTester extends Tester {
     @Autowired
-    RemoveItemFromCartService removeItemFromCartService;
+    private RemoveItemFromCartService removeItemFromCartService;
     private String itemName;
 
 
