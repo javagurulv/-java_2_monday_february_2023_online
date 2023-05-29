@@ -28,7 +28,7 @@ public class OrmUserRepositoryImpl implements UserRepository {
     @Override
     public List<User> getAllUsers() {
         return sessionFactory.getCurrentSession()
-                .createQuery("SELECT c from client c", User.class)
+                .createQuery("SELECT u from User u", User.class)
                 .getResultList();
     }
 
