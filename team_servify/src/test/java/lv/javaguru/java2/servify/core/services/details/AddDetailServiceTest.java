@@ -5,6 +5,7 @@ import lv.javaguru.java2.servify.core.domain.FieldTitle;
 import lv.javaguru.java2.servify.core.dto.requests.AddDetailRequest;
 import lv.javaguru.java2.servify.core.dto.responses.AddDetailResponse;
 import lv.javaguru.java2.servify.core.dto.responses.CoreError;
+import lv.javaguru.java2.servify.core.services.matchers.DetailMatcher;
 import lv.javaguru.java2.servify.core.services.validators.AddDetailRequestValidator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +18,6 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
 
@@ -89,31 +89,48 @@ public class AddDetailServiceTest {
         service.execute(notValidRequest);
         verifyNoInteractions(detailRepository);
     }
-//
-//    @Test
-//    public void shouldAddBookToDatabaseWhenRequestIsValid() {
-//        AddBookRequest validRequest = new AddBookRequest("Title", "Author");
-//        when(validator.validate(validRequest)).thenReturn(List.of());
-//        service.execute(validRequest);
-//        verify(bookRepository).save(argThat(new BookMatcher("Title", "Author")));
-//    }
-//
-//    @Test
-//    public void shouldReturnResponseWithoutErrorsWhenRequestIsValid() {
-//        AddBookRequest validRequest = new AddBookRequest("Title", "Author");
-//        when(validator.validate(validRequest)).thenReturn(List.of());
-//        AddBookResponse response = service.execute(validRequest);
-//        assertFalse(response.hasErrors());
-//    }
-//
-//    @Test
-//    public void shouldReturnResponseWithBookWhenRequestIsValid() {
-//        AddBookRequest validRequest = new AddBookRequest("Title", "Author");
-//        when(validator.validate(validRequest)).thenReturn(List.of());
-//        AddBookResponse response = service.execute(validRequest);
-//        assertNotNull(response.getNewBook());
-//        assertEquals(response.getNewBook().getTitle(), validRequest.getTitle());
-//        assertEquals(response.getNewBook().getAuthor(), validRequest.getAuthor());
-//    }
+
+    @Test
+    public void shouldNotInvokeDatabaseWhenRequestValidationFailsB() {
+        AddDetailRequest notValidRequest = new AddDetailRequest("Type", null, BigDecimal.ZERO);
+        when(validator.validate(notValidRequest)).thenReturn(List.of(new CoreError(FieldTitle.DETAIL_SIDE, "Not valid Type")));
+        service.execute(notValidRequest);
+        verifyNoInteractions(detailRepository);
+    }
+
+    @Test
+    public void shouldNotInvokeDatabaseWhenRequestValidationFailsC() {
+        AddDetailRequest notValidRequest = new AddDetailRequest("Type", "Side", null);
+        when(validator.validate(notValidRequest)).thenReturn(List.of(new CoreError(FieldTitle.DETAIL_PRICE, "Not valid Type")));
+        service.execute(notValidRequest);
+        verifyNoInteractions(detailRepository);
+    }
+
+    @Test
+    public void shouldAddDetailToDatabaseWhenRequestIsValid() {
+        AddDetailRequest validRequest = new AddDetailRequest("Type", "Side", BigDecimal.ZERO);
+        when(validator.validate(validRequest)).thenReturn(List.of());
+        service.execute(validRequest);
+        verify(detailRepository).save(argThat(new DetailMatcher("Type", "Side", BigDecimal.ZERO)));
+    }
+
+    @Test
+    public void shouldReturnResponseWithoutErrorsWhenRequestIsValid() {
+        AddDetailRequest validRequest = new AddDetailRequest("Type", "Side", BigDecimal.ZERO);
+        when(validator.validate(validRequest)).thenReturn(List.of());
+        AddDetailResponse response = service.execute(validRequest);
+        assertFalse(response.hasErrors());
+    }
+
+    @Test
+    public void shouldReturnResponseWithDetailWhenRequestIsValid() {
+        AddDetailRequest validRequest = new AddDetailRequest("Type", "Side", BigDecimal.ZERO);
+        when(validator.validate(validRequest)).thenReturn(List.of());
+        AddDetailResponse response = service.execute(validRequest);
+        assertNotNull(response.newDetail());
+        assertEquals(response.newDetail().getType(), validRequest.getDetailType());
+        assertEquals(response.newDetail().getSide(), validRequest.getDetailSide());
+        assertEquals(response.newDetail().getPrice(), validRequest.getDetailPrice());
+    }
 
 }
