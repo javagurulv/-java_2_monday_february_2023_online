@@ -23,6 +23,11 @@ public class InMemoryDetailRepositoryImpl implements DetailRepository {
         }
     }
 
+    @Override
+    public void update(Detail detail) {
+
+    }
+
     private void saveNewDetail(Detail detail) {
         detail.setId(nextId);
         nextId++;

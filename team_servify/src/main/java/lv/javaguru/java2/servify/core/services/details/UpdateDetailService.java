@@ -16,7 +16,7 @@ public class UpdateDetailService {
     public void update(UpdateDetailRequest request) {
         detailRepository.findById(request.getId())
                 .map(detail -> updateFields(detail, request))
-                .ifPresent(detailRepository::save);
+                .ifPresent(detailRepository::update);
     }
 
     private Detail updateFields(Detail detail, UpdateDetailRequest request) {

@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface DetailRepository {
 
     void save(Detail detail);
-
+    void update(Detail detail);
     boolean deleteById(Long id);
     Optional<Detail> findById(Long id);
     List<Detail> getAllDetails();

@@ -27,6 +27,8 @@ public class UserEntity {
     @OneToOne
     @JoinColumn(name = "address_id")
     private Address address;
+    @Column(name = "password")
+    private String password;
     @Column(name = "is_inactive")
     private boolean isInactive;
     @Column(name = "user_type")
