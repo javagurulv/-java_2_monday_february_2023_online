@@ -8,7 +8,7 @@ import shop.core.domain.item.Item;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(CartItem.class)
-public class CartItem_ {
+public abstract class CartItem_ {
     public static final String ITEM = "item";
     public static final String CART = "cart";
     public static final String ORDERED_QUANTITY = "orderedQuantity";

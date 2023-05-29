@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(Item.class)
-public class Item_ {
+public abstract class Item_ {
     public static final String NAME = "name";
     public static final String PRICE = "price";
     public static final String AVAILABLE_QUANTITY = "availableQuantity";

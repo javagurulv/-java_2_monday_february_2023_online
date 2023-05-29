@@ -6,7 +6,7 @@ import jakarta.persistence.metamodel.StaticMetamodel;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(User.class)
-public class User_ {
+public abstract class User_ {
     public static final String NAME = "name";
     public static final String LOGIN = "login";
     public static final String PASSWORD = "password";

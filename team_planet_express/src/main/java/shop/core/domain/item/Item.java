@@ -23,8 +23,8 @@ public class Item {
     @NonNull
     private BigDecimal price;
 
-    @Column(name = "available_quantity")
     @NonNull
+    @Column(name = "available_quantity")
     private Integer availableQuantity;
 
 
