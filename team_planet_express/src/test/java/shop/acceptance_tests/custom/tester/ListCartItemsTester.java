@@ -1,6 +1,7 @@
 package shop.acceptance_tests.custom.tester;
 
-import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.core.domain.item.Item;
 import shop.core.requests.customer.ListCartItemsRequest;
 import shop.core.responses.customer.ListCartItemsResponse;
@@ -10,23 +11,23 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Component
 public class ListCartItemsTester extends Tester {
+
+    @Autowired
+    private ListCartItemsService listCartItemsService;
 
     private ListCartItemsResponse listCartItemsResponse;
 
-    public ListCartItemsTester(ApplicationContext applicationContext) {
-        super(applicationContext);
-    }
-
     public ListCartItemsTester showListCartItems() {
-        ListCartItemsService listCartItemsService = applicationContext.getBean(ListCartItemsService.class);
-        ListCartItemsRequest listCartItemsRequest = new ListCartItemsRequest(getCurrentUser());
+        ListCartItemsRequest listCartItemsRequest = new ListCartItemsRequest(currentUserId);
         listCartItemsResponse = listCartItemsService.execute(listCartItemsRequest);
         return this;
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public ListCartItemsTester checkItemInCartResponse(String itemName, int quantity) {
-        Optional<Item> itemOptional = getDatabase().accessItemRepository().getAllItems().stream()
+        Optional<Item> itemOptional = repository.accessItemRepository().getAllItems().stream()
                 .filter(item -> item.getName().equals(itemName)).findFirst();
         assertTrue(itemOptional.isPresent());
         assertTrue(listCartItemsResponse.getCartItemsForList().stream()
