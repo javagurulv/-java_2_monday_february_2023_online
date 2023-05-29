@@ -22,36 +22,36 @@ public class BuyItemAcceptanceTest extends CustomAcceptanceTest {
     @Test
     void shouldBuyItem() {
 
-        listShopItems
+        listShopItemsTester
                 .showListShopItems()
                 .checkItemInListShopResponse("Lightspeed Briefs", 3)
                 .checkItemInShop("Lightspeed Briefs", 3);
-        addItemToCart
+        addItemToCartTester
                 .add("Lightspeed Briefs", 2)
                 .checkItemInCart()
                 .checkItemInShop(1);
-        listShopItems
+        listShopItemsTester
                 .showListShopItems()
                 .checkItemInListShopResponse("Lightspeed Briefs", 1);
-        removeItemFromCart
+        removeItemFromCartTester
                 .remove("Lightspeed Briefs")
                 .notItemInCart()
                 .checkItemInShop("Lightspeed Briefs", 3);
-        listShopItems
+        listShopItemsTester
                 .showListShopItems()
                 .checkItemInListShopResponse("Lightspeed Briefs", 3)
                 .checkItemInShop("Lightspeed Briefs", 3);
-        addItemToCart
+        addItemToCartTester
                 .add("Lightspeed Briefs", 2).checkItemInCart()
                 .checkItemInShop(1);
-        listCartItems
+        listCartItemsTester
                 .showListCartItems()
                 .checkItemInCart("Lightspeed Briefs", 2)
                 .checkItemInCartResponse("Lightspeed Briefs", 2);
-        buyCart
+        buyTester
                 .buy()
                 .checkCartIsClosed();
-        listShopItems
+        listShopItemsTester
                 .showListShopItems()
                 .checkItemInListShopResponse("Lightspeed Briefs", 1)
                 .checkItemInShop("Lightspeed Briefs", 1);

@@ -22,7 +22,7 @@ public class BuyTester extends Tester {
     }
 
     public BuyTester checkCartIsClosed() {
-        Optional<Cart> cart = cartDatabase.findOpenCartForUserId(currentUserId.getValue());
+        Optional<Cart> cart = database.accessCartDatabase().findOpenCartForUserId(currentUserId.getValue());
         assertTrue(cart.isEmpty());
         return this;
     }

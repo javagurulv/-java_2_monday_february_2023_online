@@ -12,11 +12,11 @@ import shop.core.support.CurrentUserId;
 public abstract class CustomAcceptanceTest {
 
     protected final ApplicationContextSetup applicationContextSetup = new ApplicationContextSetup();
-    protected @Autowired ListShopItemsTester listShopItems;
-    protected @Autowired AddItemToCartTester addItemToCart;
-    protected @Autowired RemoveItemFromCartTester removeItemFromCart;
-    protected @Autowired ListCartItemsTester listCartItems;
-    protected @Autowired BuyTester buyCart;
+    protected @Autowired ListShopItemsTester listShopItemsTester;
+    protected @Autowired AddItemToCartTester addItemToCartTester;
+    protected @Autowired RemoveItemFromCartTester removeItemFromCartTester;
+    protected @Autowired ListCartItemsTester listCartItemsTester;
+    protected @Autowired BuyTester buyTester;
 
     private @Autowired UserService userService;
     private @Autowired CurrentUserId currentUserId;
