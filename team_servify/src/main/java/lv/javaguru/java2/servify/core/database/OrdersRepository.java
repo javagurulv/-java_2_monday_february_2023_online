@@ -8,6 +8,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -33,10 +34,13 @@ public class OrdersRepository {
                 return query.getResultList();
     }
 
-    public List<Order> getOrdersByUserId(Long id) {
+    public List<Order> getOrdersByUserId(Long userId) {
+        String hql = "SELECT o FROM Order o JOIN FETCH o.user u JOIN FETCH o.orderItems oi " +
+                     "JOIN FETCH oi.detail d JOIN FETCH oi.color c " +
+                     "WHERE u.id = :userId";
         Query<Order> query = sessionFactory.getCurrentSession()
-                .createQuery("SELECT o FROM Order o WHERE o.user_id = :userId", Order.class);
-        query.setParameter("userId", id);
+                .createQuery(hql, Order.class);
+        query.setParameter("userId", userId);
         return query.getResultList();
     }
 }
