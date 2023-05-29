@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-public interface ItemDatabase {
+public interface ItemRepository {
 
     Item save(Item item);
 
@@ -21,10 +21,6 @@ public interface ItemDatabase {
     void changeAvailableQuantity(Long id, Integer newAvailableQuantity);
 
     List<Item> getAllItems();
-
-    List<Item> searchByName(String itemName);
-
-    List<Item> searchByNameAndPrice(String itemName, BigDecimal price);
 
     List<Item> searchByName(String itemName, String ordering, String paging);
 

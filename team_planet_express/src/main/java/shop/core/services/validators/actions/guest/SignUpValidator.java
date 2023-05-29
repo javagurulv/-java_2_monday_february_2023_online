@@ -2,7 +2,7 @@ package shop.core.services.validators.actions.guest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.database.Database;
+import shop.core.database.Repository;
 import shop.core.requests.guest.SignUpRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
@@ -27,7 +27,7 @@ public class SignUpValidator {
     private static final String ERROR_PASSWORD_SHORT = "VDT-SUP-PTS";
 
     @Autowired
-    private Database database;
+    private Repository repository;
     @Autowired
     private CurrentUserIdValidator userIdValidator;
     @Autowired
@@ -36,7 +36,7 @@ public class SignUpValidator {
     private ErrorProcessor errorProcessor;
 
     public List<CoreError> validate(SignUpRequest request) {
-        userIdValidator.validateCurrentUserIdIsPresent(request.getUserId());
+        userIdValidator.validateCurrentUserIdIsPresent(request.getCurrentUserId());
         List<CoreError> errors = new ArrayList<>();
         validateName(request.getName(), errors);
         validateLoginName(request.getLoginName(), errors);
@@ -69,7 +69,7 @@ public class SignUpValidator {
 
     private Optional<CoreError> validateLoginNameDoesNotAlreadyExist(String loginName) {
         return (loginName != null && !loginName.isBlank() &&
-                database.accessUserDatabase().findByLoginName(loginName).isPresent())
+                repository.accessUserRepository().findByLoginName(loginName).isPresent())
                 ? Optional.of(errorProcessor.getCoreError(FIELD_LOGIN_NAME, ERROR_LOGIN_EXISTS))
                 : Optional.empty();
     }

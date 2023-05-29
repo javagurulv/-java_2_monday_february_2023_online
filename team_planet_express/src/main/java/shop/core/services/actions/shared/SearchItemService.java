@@ -2,7 +2,8 @@ package shop.core.services.actions.shared;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.database.Database;
+import org.springframework.transaction.annotation.Transactional;
+import shop.core.database.Repository;
 import shop.core.domain.item.Item;
 import shop.core.requests.shared.SearchItemRequest;
 import shop.core.responses.CoreError;
@@ -17,10 +18,11 @@ import java.math.RoundingMode;
 import java.util.List;
 
 @Component
+@Transactional
 public class SearchItemService {
 
     @Autowired
-    private Database database;
+    private Repository repository;
     @Autowired
     private SearchItemValidator validator;
     @Autowired
@@ -39,7 +41,7 @@ public class SearchItemService {
             List<Item> items = search(request);
             boolean nextPageAvailable = isExtraItemAvailable(request, items);
             response = new SearchItemResponse(items, nextPageAvailable,
-                    databaseAccessValidator.getUserById(request.getUserId().getValue()).getUserRole());
+                    databaseAccessValidator.getUserById(request.getCurrentUserId().getValue()).getUserRole());
         }
         return response;
     }
@@ -48,19 +50,19 @@ public class SearchItemService {
         List<Item> items;
         //TODO is blank actually ok in here ?
         if (request.getItemName() != null && !isPresent(request.getPrice())) {
-            items = database.accessItemDatabase().searchByName(
+            items = repository.accessItemRepository().searchByName(
                     request.getItemName().toLowerCase(),
                     orderingService.getSQLOrderBy(request.getOrderingRules()),
                     pagingService.getSQLLimitOffset(request.getPagingRule()));
         } else if (request.getItemName() != null && isPresent(request.getPrice())) {
             BigDecimal price = new BigDecimal(request.getPrice()).setScale(2, RoundingMode.HALF_UP);
-            items = database.accessItemDatabase().searchByNameAndPrice(
+            items = repository.accessItemRepository().searchByNameAndPrice(
                     request.getItemName().toLowerCase(),
                     price,
                     orderingService.getSQLOrderBy(request.getOrderingRules()),
                     pagingService.getSQLLimitOffset(request.getPagingRule()));
         } else {
-            items = database.accessItemDatabase().getAllItems();
+            items = repository.accessItemRepository().getAllItems();
         }
         return items;
     }

@@ -53,7 +53,7 @@ class SignUpServiceTest {
     void shouldReturnNoErrorsForValidRequest() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockUserService.createUser(any(UserCreationData.class))).thenReturn(mockUser);
-        when(mockRequest.getUserId()).thenReturn(mockCurrentUserId);
+        when(mockRequest.getCurrentUserId()).thenReturn(mockCurrentUserId);
         SignUpResponse response = service.execute(mockRequest);
         assertNull(response.getErrors());
     }
@@ -65,7 +65,7 @@ class SignUpServiceTest {
         when(mockRequest.getLoginName()).thenReturn("login");
         when(mockRequest.getPassword()).thenReturn("password");
         when(mockUserService.createUser(any(UserCreationData.class))).thenReturn(mockUser);
-        when(mockRequest.getUserId()).thenReturn(mockCurrentUserId);
+        when(mockRequest.getCurrentUserId()).thenReturn(mockCurrentUserId);
         service.execute(mockRequest);
         verify(mockUserService)
                 .createUser(argThat(new UserCreationDataMatcher("name", "login", "password", UserRole.CUSTOMER)));
@@ -76,7 +76,7 @@ class SignUpServiceTest {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockUserService.createUser(any(UserCreationData.class))).thenReturn(mockUser);
         when(mockUser.getId()).thenReturn(1L);
-        when(mockRequest.getUserId()).thenReturn(mockCurrentUserId);
+        when(mockRequest.getCurrentUserId()).thenReturn(mockCurrentUserId);
         service.execute(mockRequest);
         verify(mockCurrentUserId).setValue(1L);
     }

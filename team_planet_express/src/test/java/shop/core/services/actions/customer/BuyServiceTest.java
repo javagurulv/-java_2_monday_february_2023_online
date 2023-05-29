@@ -5,8 +5,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import shop.core.database.CartDatabase;
-import shop.core.database.Database;
+import shop.core.database.CartRepository;
+import shop.core.database.Repository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart.CartStatus;
 import shop.core.requests.customer.BuyRequest;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 class BuyServiceTest {
 
     @Mock
-    private Database mockDatabase;
+    private Repository mockRepository;
     @Mock
     private BuyValidator mockValidator;
     @Mock
@@ -30,7 +30,7 @@ class BuyServiceTest {
     @Mock
     private BuyRequest mockRequest;
     @Mock
-    private CartDatabase mockCartDatabase;
+    private CartRepository mockCartRepository;
     @Mock
     private CurrentUserId mockCurrentUserId;
     @Mock
@@ -41,13 +41,13 @@ class BuyServiceTest {
 
     @Test
     void shouldCloseCart() {
-        when(mockDatabase.accessCartDatabase()).thenReturn(mockCartDatabase);
+        when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
         when(mockValidator.validate(any())).thenReturn(List.of());
-        when(mockRequest.getUserId()).thenReturn(mockCurrentUserId);
+        when(mockRequest.getCurrentUserId()).thenReturn(mockCurrentUserId);
         when(mockDatabaseAccessValidator.getOpenCartByUserId(any())).thenReturn(mockCart);
         when(mockCart.getId()).thenReturn(1L);
         service.execute(mockRequest);
-        verify(mockCartDatabase).changeCartStatus(1L, CartStatus.CLOSED);
+        verify(mockCartRepository).changeCartStatus(1L, CartStatus.CLOSED);
     }
 
 }

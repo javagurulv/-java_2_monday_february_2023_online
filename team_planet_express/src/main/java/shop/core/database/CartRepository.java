@@ -6,7 +6,7 @@ import shop.core.domain.cart.CartStatus;
 import java.util.List;
 import java.util.Optional;
 
-public interface CartDatabase {
+public interface CartRepository {
 
     Cart save(Cart cart);
 
