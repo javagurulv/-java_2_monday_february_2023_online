@@ -1,4 +1,4 @@
-create table user(
+create table client(
     email varchar(255) primary key,
     user_name varchar(255) NOT NULL,
     password varchar(255) NOT NULL,
@@ -8,10 +8,10 @@ create table user(
 
 
 
-create table exercises(
-    id bigserial(255) primary key,
-    difficulty varchar(255),
-    equipment varchar(255),
-    muscle_group varchar(255),
-    type varchar(255),
-);
+--create table exercises(
+--    id bigserial(255) primary key,
+--    difficulty varchar(255),
+--    equipment varchar(255),
+--    muscle_group varchar(255),
+--    type varchar(255),
+--);
