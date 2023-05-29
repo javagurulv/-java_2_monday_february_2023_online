@@ -61,7 +61,7 @@ public class SearchItemService {
 
     private boolean isExtraItemAvailable(SearchItemRequest request, List<Item> items) {
         boolean extraItemPresent = request.getPagingRule() != null &&
-                items.size() > Integer.valueOf(request.getPagingRule().getPageSize());
+                items.size() > Integer.parseInt(request.getPagingRule().getPageSize());
         if (extraItemPresent) {
             items.remove(items.size() - 1);
         }

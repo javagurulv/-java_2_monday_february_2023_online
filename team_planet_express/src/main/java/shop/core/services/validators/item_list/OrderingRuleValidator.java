@@ -1,6 +1,5 @@
 package shop.core.services.validators.item_list;
 
-import jakarta.persistence.metamodel.SingularAttribute;
 import org.springframework.stereotype.Component;
 import shop.core.responses.CoreError;
 import shop.core.services.exception.InternalSystemCollapseException;
@@ -19,7 +18,7 @@ public class OrderingRuleValidator {
         return errors;
     }
 
-    private void validateOrderBy(SingularAttribute orderBy) {
+    private void validateOrderBy(String orderBy) {
         if (orderBy == null) {
             throw new InternalSystemCollapseException();
         }

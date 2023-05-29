@@ -38,7 +38,3 @@ CREATE TABLE IF NOT EXISTS cart_item (
   FOREIGN KEY (cart_id) REFERENCES cart(id),
   FOREIGN KEY (item_id) REFERENCES item(id)
 );
-
-CREATE TRIGGER cart_date_on_create AFTER INSERT ON cart
-FOR EACH ROW
-CALL "shop.acceptance_tests.CartDateOnCreateTrigger";

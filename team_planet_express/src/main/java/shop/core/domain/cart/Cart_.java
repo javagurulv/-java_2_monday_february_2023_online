@@ -11,13 +11,13 @@ import java.time.LocalDateTime;
 @StaticMetamodel(Cart.class)
 public abstract class Cart_ {
 
-    public static volatile SingularAttribute<Cart, User> user;
-    public static volatile SingularAttribute<Cart, CartStatus> status;
-    public static volatile SingularAttribute<Cart, LocalDateTime> lastUpdate;
-    public static volatile SingularAttribute<Cart, Long> id;
     public static final String USER = "user";
     public static final String STATUS = "status";
     public static final String LAST_UPDATE = "lastUpdate";
     public static final String ID = "id";
+    public static volatile SingularAttribute<Cart, User> user;
+    public static volatile SingularAttribute<Cart, CartStatus> status;
+    public static volatile SingularAttribute<Cart, LocalDateTime> lastUpdate;
+    public static volatile SingularAttribute<Cart, Long> id;
 
 }

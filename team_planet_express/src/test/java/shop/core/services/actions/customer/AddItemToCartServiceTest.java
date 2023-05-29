@@ -25,12 +25,6 @@ import static org.mockito.Mockito.*;
 class AddItemToCartServiceTest {
 
     @Mock
-    private Database mockDatabase;
-    @Mock
-    private AddItemToCartValidator mockValidator;
-    @Mock
-    private DatabaseAccessValidator mockDatabaseAccessValidator;
-    @Mock
     private final AddItemToCartRequest mockRequest = mock(AddItemToCartRequest.class);
     @Mock
     private final CurrentUserId mockUserId = mock(CurrentUserId.class);
@@ -42,7 +36,12 @@ class AddItemToCartServiceTest {
     private final Item mockItem = mock(Item.class);
     @Mock
     private final Cart mockCart = mock(Cart.class);
-
+    @Mock
+    private Database mockDatabase;
+    @Mock
+    private AddItemToCartValidator mockValidator;
+    @Mock
+    private DatabaseAccessValidator mockDatabaseAccessValidator;
     @InjectMocks
     private AddItemToCartService service;
 

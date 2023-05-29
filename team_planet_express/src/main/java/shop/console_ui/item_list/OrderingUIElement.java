@@ -1,6 +1,5 @@
 package shop.console_ui.item_list;
 
-import jakarta.persistence.metamodel.SingularAttribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import shop.console_ui.UserCommunication;
@@ -25,19 +24,19 @@ public class OrderingUIElement {
 
     public List<OrderingRule> getOrderingRules() {
         List<OrderingRule> orderingRules = new ArrayList<>();
-        getOrderingRule(PROMPT_TOPIC_ORDER_BY_NAME, Item_.name).ifPresent(orderingRules::add);
-        getOrderingRule(PROMPT_TOPIC_ORDER_BY_PRICE, Item_.price).ifPresent(orderingRules::add);
+        getOrderingRule(PROMPT_TOPIC_ORDER_BY_NAME, Item_.NAME).ifPresent(orderingRules::add);
+        getOrderingRule(PROMPT_TOPIC_ORDER_BY_PRICE, Item_.PRICE).ifPresent(orderingRules::add);
         return orderingRules;
     }
 
-    private Optional<OrderingRule> getOrderingRule(String promptOrderBy, SingularAttribute orderBy) {
+    private Optional<OrderingRule> getOrderingRule(String promptOrderBy, String orderBy) {
         return (userCommunication.requestInput(promptOrderBy)
                 .strip().equalsIgnoreCase(YES))
                 ? getOrderingRuleWithDirection(orderBy)
                 : Optional.empty();
     }
 
-    private Optional<OrderingRule> getOrderingRuleWithDirection(SingularAttribute orderBy) {
+    private Optional<OrderingRule> getOrderingRuleWithDirection(String orderBy) {
         return (userCommunication.requestInput(PROMPT_TOPIC_REVERSE_ORDERING_DIRECTION)
                 .strip().equalsIgnoreCase(YES))
                 ? Optional.of(new OrderingRule(orderBy, false))

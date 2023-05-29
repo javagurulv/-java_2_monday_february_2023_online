@@ -32,14 +32,14 @@ public class Cart {
     @NonNull
     private LocalDateTime lastUpdate;
 
-    public long getUserId() {
-        return user.getId();
-    }
-
     public Cart(long userId) {
         user = new User();
         user.setId(userId);
         status = CartStatus.OPEN;
         lastUpdate = LocalDateTime.now();
+    }
+
+    public long getUserId() {
+        return user.getId();
     }
 }

@@ -16,14 +16,6 @@ public enum UserRole {
         this.defaultName = defaultName;
     }
 
-    public int getRoleNumber() {
-        return role;
-    }
-
-    public String getDefaultName() {
-        return defaultName;
-    }
-
     public static int getAccessNumber(UserRole... roles) {
         int result = 0;
         for (UserRole role : roles) {
@@ -38,6 +30,14 @@ public enum UserRole {
             result -= role.getRoleNumber();
         }
         return result;
+    }
+
+    public int getRoleNumber() {
+        return role;
+    }
+
+    public String getDefaultName() {
+        return defaultName;
     }
 
     public boolean checkPermission(int permission) {

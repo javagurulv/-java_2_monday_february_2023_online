@@ -1,6 +1,5 @@
 package shop.core.support.ordering;
 
-import jakarta.persistence.metamodel.SingularAttribute;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -8,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class OrderingRule {
 
-    private SingularAttribute orderBy;
+    private String orderBy;
     private Boolean ascending;
 
     public Boolean isAscending() {

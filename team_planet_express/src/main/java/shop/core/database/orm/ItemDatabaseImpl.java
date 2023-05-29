@@ -118,8 +118,8 @@ public class ItemDatabaseImpl implements ItemDatabase {
 
         return entityManager
                 .createQuery(cr)
-                .setFirstResult((Integer.valueOf(pagingRule.getPageSize()) - 1) * pagingRule.getPageNumber())
-                .setMaxResults(Integer.valueOf(pagingRule.getPageSize()) + 1)
+                .setFirstResult((Integer.parseInt(pagingRule.getPageSize()) - 1) * pagingRule.getPageNumber())
+                .setMaxResults(Integer.parseInt(pagingRule.getPageSize()) + 1)
                 .getResultList();
     }
 
@@ -141,8 +141,8 @@ public class ItemDatabaseImpl implements ItemDatabase {
 
         return entityManager
                 .createQuery(cr)
-                .setFirstResult((pagingRule.getPageNumber() - 1) * Integer.valueOf(pagingRule.getPageSize()))
-                .setMaxResults(Integer.valueOf(pagingRule.getPageSize()) + 1)
+                .setFirstResult((pagingRule.getPageNumber() - 1) * Integer.parseInt(pagingRule.getPageSize()))
+                .setMaxResults(Integer.parseInt(pagingRule.getPageSize()) + 1)
                 .getResultList();
     }
 }

@@ -22,10 +22,8 @@ class PagingServiceTest {
     private static final Item item3 = new Item("UwU", new BigDecimal("420"), 69);
     private static final Item item4 = new Item("UwU", new BigDecimal("420"), 69);
     private static final Item item5 = new Item("UwU", new BigDecimal("420"), 69);
-
-    private List<Item> items;
-
     private final PagingService service = new PagingService();
+    private List<Item> items;
 
     @BeforeAll
     static void setupItemId() {
