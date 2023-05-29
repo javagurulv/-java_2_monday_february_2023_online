@@ -1,18 +1,33 @@
 package shop.core.domain.cart_item;
 
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import shop.core.domain.cart.Cart;
+import shop.core.domain.item.Item;
 
 @Data
+@NoArgsConstructor
+@Entity
+@Table(name = "cart_item")
 public class CartItem {
 
+    @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private final Long cartId;
-    private final Long itemId;
+    @ManyToOne
+    @JoinColumn(name = "cart_id", nullable = false)
+    private Cart cart;
+    @ManyToOne
+    @JoinColumn(name = "item_id", nullable = false)
+    private Item item;
+    @Column(name = "ordered_quantity", nullable = false)
     private Integer orderedQuantity;
 
-    public CartItem(Long cartId, Long itemId, Integer orderedQuantity) {
-        this.cartId = cartId;
-        this.itemId = itemId;
+    public CartItem(Cart cart, Item item, Integer orderedQuantity) {
+        this.cart = cart;
+        this.item = item;
         this.orderedQuantity = orderedQuantity;
     }
 

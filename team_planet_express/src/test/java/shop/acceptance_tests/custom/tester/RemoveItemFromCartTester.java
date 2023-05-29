@@ -1,22 +1,21 @@
 package shop.acceptance_tests.custom.tester;
 
-import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.core.requests.customer.RemoveItemFromCartRequest;
 import shop.core.services.actions.customer.RemoveItemFromCartService;
-import shop.core.support.CurrentUserId;
 
+@Component
 public class RemoveItemFromCartTester extends Tester {
+
+    @Autowired
+    private RemoveItemFromCartService removeItemFromCartService;
 
     private String itemName;
 
-    public RemoveItemFromCartTester(ApplicationContext applicationContext) {
-        super(applicationContext);
-    }
-
     public RemoveItemFromCartTester remove(String itemName) {
         this.itemName = itemName;
-        RemoveItemFromCartService removeItemFromCartService = applicationContext.getBean(RemoveItemFromCartService.class);
-        RemoveItemFromCartRequest removeItemFromCartRequest = new RemoveItemFromCartRequest(applicationContext.getBean(CurrentUserId.class), itemName);
+        RemoveItemFromCartRequest removeItemFromCartRequest = new RemoveItemFromCartRequest(currentUserId, itemName);
         removeItemFromCartService.execute(removeItemFromCartRequest);
         return this;
     }
@@ -26,6 +25,7 @@ public class RemoveItemFromCartTester extends Tester {
         return this;
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public RemoveItemFromCartTester checkItemInShop(String itemName, Integer quantity) {
         super.checkItemInShop(itemName, quantity);
         return this;

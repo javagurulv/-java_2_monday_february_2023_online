@@ -2,7 +2,7 @@ package shop.core.services.validators.cart;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.database.Database;
+import shop.core.database.Repository;
 import shop.core.responses.CoreError;
 import shop.core.support.error_code_processing.ErrorProcessor;
 
@@ -15,12 +15,12 @@ public class CartValidator {
     private static final String ERROR_NO_OPEN_CART = "VDT-CRT-NOC";
 
     @Autowired
-    private Database database;
+    private Repository repository;
     @Autowired
     private ErrorProcessor errorProcessor;
 
     public Optional<CoreError> validateOpenCartExistsForUserId(Long userId) {
-        return (database.accessCartDatabase().findOpenCartForUserId(userId).isEmpty())
+        return (repository.accessCartRepository().findOpenCartForUserId(userId).isEmpty())
                 ? Optional.of(errorProcessor.getCoreError(FIELD_BUTTON, ERROR_NO_OPEN_CART))
                 : Optional.empty();
     }

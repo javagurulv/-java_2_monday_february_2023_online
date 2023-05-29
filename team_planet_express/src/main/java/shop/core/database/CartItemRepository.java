@@ -5,7 +5,7 @@ import shop.core.domain.cart_item.CartItem;
 import java.util.List;
 import java.util.Optional;
 
-public interface CartItemDatabase {
+public interface CartItemRepository {
 
     CartItem save(CartItem cartItem);
 

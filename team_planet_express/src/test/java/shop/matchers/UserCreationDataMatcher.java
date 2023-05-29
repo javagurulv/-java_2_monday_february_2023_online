@@ -9,13 +9,13 @@ public class UserCreationDataMatcher implements ArgumentMatcher<UserCreationData
     private final String name;
     private final String loginName;
     private final String password;
-    private final UserRole userRol;
+    private final UserRole userRole;
 
-    public UserCreationDataMatcher(String name, String loginName, String password, UserRole userRol) {
+    public UserCreationDataMatcher(String name, String loginName, String password, UserRole userRole) {
         this.name = name;
         this.loginName = loginName;
         this.password = password;
-        this.userRol = userRol;
+        this.userRole = userRole;
     }
 
     @Override
@@ -23,7 +23,7 @@ public class UserCreationDataMatcher implements ArgumentMatcher<UserCreationData
         return name.equals(userCreationData.getName()) &&
                 loginName.equals(userCreationData.getLoginName()) &&
                 password.equals(userCreationData.getPassword()) &&
-                userRol.equals(userCreationData.getUserRole());
+                userRole.equals(userCreationData.getUserRole());
     }
 
 }

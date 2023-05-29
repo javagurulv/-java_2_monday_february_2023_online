@@ -4,3 +4,5 @@ userRole madness from Q&A (many roles for an action)
 check role permissions in actions
 additemtocart quantity commit db transaction?
 length to error message?
+yeet red warnings
+check paging sqls

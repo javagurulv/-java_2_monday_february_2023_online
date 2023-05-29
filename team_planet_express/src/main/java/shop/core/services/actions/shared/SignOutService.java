@@ -2,6 +2,7 @@ package shop.core.services.actions.shared;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
 import shop.core.requests.shared.SignOutRequest;
@@ -14,6 +15,7 @@ import shop.core.services.validators.actions.shared.SignOutValidator;
 import java.util.List;
 
 @Component
+@Transactional
 public class SignOutService {
 
     public static final String BLANK = "";
@@ -31,7 +33,7 @@ public class SignOutService {
         UserCreationData userCreationData = new UserCreationData(UserRole.GUEST.getDefaultName(), BLANK, BLANK, UserRole.GUEST);
         User newUser = userService.findGuestWithOpenCart().orElseGet(
                 () -> userService.createUser(userCreationData));
-        request.getUserId().setValue(newUser.getId());
+        request.getCurrentUserId().setValue(newUser.getId());
         return new SignOutResponse();
     }
 

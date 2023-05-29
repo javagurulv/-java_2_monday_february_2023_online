@@ -6,11 +6,11 @@ import shop.core.domain.user.User;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserDatabase {
+public interface UserRepository {
 
     User save(User user);
 
-    Optional<User> findById(Long itemId);
+    Optional<User> findById(Long userId);
 
     Optional<User> findByLoginName(String login);
 

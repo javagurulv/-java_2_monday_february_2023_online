@@ -7,7 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import shop.config.ShopConfiguration;
-import shop.core.database.Database;
+import shop.core.database.Repository;
 import shop.core.domain.item.Item;
 import shop.core.requests.manager.ChangeItemDataRequest;
 import shop.core.responses.CoreError;
@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ChangeItemDataAcceptanceTest {
 
     @Autowired
-    private Database database;
+    private Repository repository;
     @Autowired
     private ChangeItemDataService changeItemDataService;
 
@@ -34,7 +34,7 @@ public class ChangeItemDataAcceptanceTest {
         ChangeItemDataResponse changeItemDataResponse =
                 changeItemDataService.execute(new ChangeItemDataRequest("6", "Delivery-Boy Man", "", ""));
         assertFalse(changeItemDataResponse.hasErrors());
-        Item item = database.accessItemDatabase().findById(6L).orElseThrow();
+        Item item = repository.accessItemRepository().findById(6L).orElseThrow();
         assertCorrectItemChanges(item, "Delivery-Boy Man", new BigDecimal("24.99"), 70);
     }
 
@@ -44,7 +44,7 @@ public class ChangeItemDataAcceptanceTest {
         ChangeItemDataResponse changeItemDataResponse =
                 changeItemDataService.execute(new ChangeItemDataRequest("10", "", "1000.00", ""));
         assertFalse(changeItemDataResponse.hasErrors());
-        Item item = database.accessItemDatabase().findById(10L).orElseThrow();
+        Item item = repository.accessItemRepository().findById(10L).orElseThrow();
         assertCorrectItemChanges(item, "Popplers", new BigDecimal("1000.00"), 0);
     }
 
@@ -54,7 +54,7 @@ public class ChangeItemDataAcceptanceTest {
         ChangeItemDataResponse changeItemDataResponse =
                 changeItemDataService.execute(new ChangeItemDataRequest("1", "", "", "0"));
         assertFalse(changeItemDataResponse.hasErrors());
-        Item item = database.accessItemDatabase().findById(1L).orElseThrow();
+        Item item = repository.accessItemRepository().findById(1L).orElseThrow();
         assertCorrectItemChanges(item, "Stop-and-Drop Suicide Booth", new BigDecimal("1000.00"), 0);
     }
 
@@ -64,7 +64,7 @@ public class ChangeItemDataAcceptanceTest {
         ChangeItemDataResponse changeItemDataResponse =
                 changeItemDataService.execute(new ChangeItemDataRequest("2", "Good News Everyone", "7.77", "100"));
         assertFalse(changeItemDataResponse.hasErrors());
-        Item item = database.accessItemDatabase().findById(2L).orElseThrow();
+        Item item = repository.accessItemRepository().findById(2L).orElseThrow();
         assertCorrectItemChanges(item, "Good News Everyone", new BigDecimal("7.77"), 100);
     }
 
@@ -83,7 +83,7 @@ public class ChangeItemDataAcceptanceTest {
     @Test
     void shouldReturnErrorForDuplicate2() {
         Item item = new Item("Angry Norwegian Anchovies", new BigDecimal("249.99"), 1);
-        database.accessItemDatabase().save(item);
+        repository.accessItemRepository().save(item);
         ChangeItemDataResponse changeItemDataResponse =
                 changeItemDataService.execute(new ChangeItemDataRequest("11", "Lightspeed Briefs", "", ""));
         assertTrue(changeItemDataResponse.hasErrors());

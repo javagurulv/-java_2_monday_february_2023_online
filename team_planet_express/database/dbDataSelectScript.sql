@@ -47,6 +47,6 @@ FROM cart
 GROUP BY status;
 
 SELECT name
-FROM user
-JOIN cart ON user.id = cart.user_id
+FROM shop_user
+JOIN cart ON shop_user.id = cart.user_id
 WHERE cart.status = 'CLOSED';
