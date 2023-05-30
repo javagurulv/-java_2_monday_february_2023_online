@@ -27,7 +27,7 @@ class ListShopItemsValidatorTest {
 
     @Test
     void shouldValidateUserIdIsPresent() {
-        when(mockRequest.getUserId()).thenReturn(mockUserId);
+        when(mockRequest.getCurrentUserId()).thenReturn(mockUserId);
         validator.validate(mockRequest);
         verify(mockCurrentUserIdValidator).validateCurrentUserIdIsPresent(mockUserId);
     }

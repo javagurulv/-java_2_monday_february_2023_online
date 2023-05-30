@@ -2,7 +2,7 @@ package shop.core.services.validators.actions.shared;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.database.Database;
+import shop.core.database.Repository;
 import shop.core.requests.shared.SignInRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
@@ -26,7 +26,7 @@ public class SignInValidator {
     private static final String ERROR_PASSWORD_INCORRECT = "VDT-SIN-PII";
 
     @Autowired
-    private Database database;
+    private Repository repository;
     @Autowired
     private CurrentUserIdValidator userIdValidator;
     @Autowired
@@ -37,7 +37,7 @@ public class SignInValidator {
     private ErrorProcessor errorProcessor;
 
     public List<CoreError> validate(SignInRequest request) {
-        userIdValidator.validateCurrentUserIdIsPresent(request.getUserId());
+        userIdValidator.validateCurrentUserIdIsPresent(request.getCurrentUserId());
         List<CoreError> errors = new ArrayList<>();
         validateLoginName(request.getLoginName(), errors);
         validatePassword(request.getPassword(), errors);
@@ -69,7 +69,7 @@ public class SignInValidator {
 
     private Optional<CoreError> validateLoginNameExists(String loginName) {
         return (loginName != null && !loginName.isBlank() &&
-                database.accessUserDatabase().findByLoginName(loginName).isEmpty())
+                repository.accessUserRepository().findByLoginName(loginName).isEmpty())
                 ? Optional.of(errorProcessor.getCoreError(FIELD_LOGIN_NAME, ERROR_LOGIN_NOT_EXISTS))
                 : Optional.empty();
     }

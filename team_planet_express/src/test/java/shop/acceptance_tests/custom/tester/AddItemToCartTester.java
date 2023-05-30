@@ -1,24 +1,23 @@
 package shop.acceptance_tests.custom.tester;
 
-import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shop.core.requests.customer.AddItemToCartRequest;
 import shop.core.services.actions.customer.AddItemToCartService;
-import shop.core.support.CurrentUserId;
 
+@Component
 public class AddItemToCartTester extends Tester {
+
+    @Autowired
+    private AddItemToCartService addItemToCartService;
 
     private String itemName;
     private Integer quantity;
 
-    public AddItemToCartTester(ApplicationContext applicationContext) {
-        super(applicationContext);
-    }
-
     public AddItemToCartTester add(String itemName, Integer quantity) {
         this.itemName = itemName;
         this.quantity = quantity;
-        AddItemToCartService addItemToCartService = applicationContext.getBean(AddItemToCartService.class);
-        AddItemToCartRequest addItemToCartRequest = new AddItemToCartRequest(applicationContext.getBean(CurrentUserId.class), itemName, quantity.toString());
+        AddItemToCartRequest addItemToCartRequest = new AddItemToCartRequest(currentUserId, itemName, quantity.toString());
         addItemToCartService.execute(addItemToCartRequest);
         return this;
     }
@@ -28,6 +27,7 @@ public class AddItemToCartTester extends Tester {
         return this;
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public AddItemToCartTester checkItemInShop(int leftInShopQuantity) {
         super.checkItemInShop(itemName, leftInShopQuantity);
         return this;
