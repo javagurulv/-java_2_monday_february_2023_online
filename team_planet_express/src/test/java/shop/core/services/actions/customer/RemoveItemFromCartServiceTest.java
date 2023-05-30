@@ -8,7 +8,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.CartItemRepository;
 import shop.core.database.ItemRepository;
-import shop.core.database.Repository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
 import shop.core.domain.item.Item;
@@ -27,17 +26,15 @@ import static org.mockito.Mockito.when;
 class RemoveItemFromCartServiceTest {
 
     @Mock
-    private Repository mockRepository;
+    private ItemRepository mockItemRepository;
+    @Mock
+    private CartItemRepository mockCartItemRepository;
     @Mock
     private RemoveItemFromCartValidator mockValidator;
     @Mock
     private DatabaseAccessValidator mockDatabaseAccessValidator;
     @Mock
     private RemoveItemFromCartRequest mockRequest;
-    @Mock
-    private CartItemRepository mockCartItemRepository;
-    @Mock
-    private ItemRepository mockItemRepository;
     @Mock
     private CurrentUserId mockCurrentUserId;
     @Mock
@@ -52,8 +49,6 @@ class RemoveItemFromCartServiceTest {
 
     @BeforeEach
     void initMock() {
-        when(mockRepository.accessCartItemRepository()).thenReturn(mockCartItemRepository);
-        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         when(mockValidator.validate(any())).thenReturn(List.of());
         when(mockRequest.getCurrentUserId()).thenReturn(mockCurrentUserId);
     }

@@ -6,7 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.ItemRepository;
-import shop.core.database.Repository;
 import shop.core.requests.manager.AddItemToShopRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.manager.AddItemToShopResponse;
@@ -27,15 +26,13 @@ import static org.mockito.Mockito.when;
 class AddItemToShopServiceTest {
 
     @Mock
-    private Repository mockRepository;
+    private ItemRepository mockItemRepository;
     @Mock
     private AddItemToShopValidator mockValidator;
     @Mock
     private AddItemToShopRequest mockRequest;
     @Mock
     private CoreError mockCoreError;
-    @Mock
-    private ItemRepository mockItemRepository;
 
     @InjectMocks
     private AddItemToShopService service;
@@ -52,7 +49,6 @@ class AddItemToShopServiceTest {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockRequest.getPrice()).thenReturn("100.10");
         when(mockRequest.getAvailableQuantity()).thenReturn("10");
-        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         AddItemToShopResponse response = service.execute(mockRequest);
         assertNull(response.getErrors());
     }
@@ -63,7 +59,6 @@ class AddItemToShopServiceTest {
         when(mockRequest.getItemName()).thenReturn("name");
         when(mockRequest.getPrice()).thenReturn("100.10");
         when(mockRequest.getAvailableQuantity()).thenReturn("10");
-        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         service.execute(mockRequest);
         verify(mockItemRepository)
                 .save(argThat(new ItemMatcher("name", new BigDecimal("100.10"), 10)));
@@ -75,7 +70,6 @@ class AddItemToShopServiceTest {
         when(mockRequest.getItemName()).thenReturn("name");
         when(mockRequest.getPrice()).thenReturn("100.10755");
         when(mockRequest.getAvailableQuantity()).thenReturn("10");
-        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         service.execute(mockRequest);
         verify(mockItemRepository)
                 .save(argThat(new ItemMatcher("name", new BigDecimal("100.11"), 10)));
@@ -87,7 +81,6 @@ class AddItemToShopServiceTest {
         when(mockRequest.getItemName()).thenReturn("name");
         when(mockRequest.getPrice()).thenReturn("99.102234");
         when(mockRequest.getAvailableQuantity()).thenReturn("10");
-        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         service.execute(mockRequest);
         verify(mockItemRepository)
                 .save(argThat(new ItemMatcher("name", new BigDecimal("99.10"), 10)));

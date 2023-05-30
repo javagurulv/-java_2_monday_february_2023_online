@@ -1,7 +1,9 @@
 package shop.core.services.fake;
 
 import org.springframework.transaction.annotation.Transactional;
-import shop.core.database.Repository;
+import shop.core.database.CartRepository;
+import shop.core.database.ItemRepository;
+import shop.core.database.UserRepository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.item.Item;
 import shop.core.domain.user.User;
@@ -12,10 +14,16 @@ import java.util.List;
 @Transactional
 public class FakeDatabaseInitializer {
 
-    private final Repository repository;
+    private final UserRepository userRepository;
+    private final ItemRepository itemRepository;
+    private final CartRepository cartRepository;
 
-    public FakeDatabaseInitializer(Repository repository) {
-        this.repository = repository;
+    public FakeDatabaseInitializer(UserRepository userRepository,
+                                   ItemRepository itemRepository,
+                                   CartRepository cartRepository) {
+        this.userRepository = userRepository;
+        this.itemRepository = itemRepository;
+        this.cartRepository = cartRepository;
     }
 
     public void initialize() {
@@ -27,21 +35,21 @@ public class FakeDatabaseInitializer {
     private void createFakeUsers() {
         List<User> fakeUsers = new FakeUserGenerator().createUsers();
         for (User user : fakeUsers) {
-            repository.accessUserRepository().save(user);
+            userRepository.save(user);
         }
     }
 
     private void createFakeCartsForUsers() {
-        List<Cart> fakeCarts = new FakeCartGenerator().createCartsForUsers(repository.accessUserRepository().getAllUsers());
+        List<Cart> fakeCarts = new FakeCartGenerator().createCartsForUsers(userRepository.getAllUsers());
         for (Cart cart : fakeCarts) {
-            repository.accessCartRepository().save(cart);
+            cartRepository.save(cart);
         }
     }
 
     private void createFakeItems() {
         List<Item> fakeItems = new RandomItemGeneratorImpl().createItems();
         for (Item item : fakeItems) {
-            repository.accessItemRepository().save(item);
+            itemRepository.save(item);
         }
     }
 

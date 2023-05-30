@@ -6,7 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.CartRepository;
-import shop.core.database.Repository;
 import shop.core.database.UserRepository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart.CartStatus;
@@ -25,8 +24,6 @@ import static org.mockito.Mockito.*;
 class UserServiceTest {
 
     @Mock
-    private Repository mockRepository;
-    @Mock
     private UserRepository mockUserRepository;
     @Mock
     private CartRepository mockCartRepository;
@@ -40,8 +37,6 @@ class UserServiceTest {
 
     @Test
     void shouldSaveUserAndCart() {
-        when(mockRepository.accessUserRepository()).thenReturn(mockUserRepository);
-        when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
         when(mockUserRepository.save(any(User.class))).thenReturn(mockUser);
         UserCreationData userCreationData =
                 new UserCreationData("Name", "login name", "password", UserRole.GUEST);
@@ -54,8 +49,6 @@ class UserServiceTest {
 
     @Test
     void shouldReturnExistingGuest() {
-        when(mockRepository.accessUserRepository()).thenReturn(mockUserRepository);
-        when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
         when(mockUserRepository.getAllUsers()).thenReturn(List.of(mockUser));
         when(mockUser.getUserRole()).thenReturn(UserRole.GUEST);
         when(mockUser.getId()).thenReturn(1L);
@@ -65,7 +58,6 @@ class UserServiceTest {
 
     @Test
     void shouldReturnEmptyOptionalForNoGuest() {
-        when(mockRepository.accessUserRepository()).thenReturn(mockUserRepository);
         when(mockUserRepository.getAllUsers()).thenReturn(List.of(mockUser));
         when(mockUser.getUserRole()).thenReturn(UserRole.ADMIN);
         assertTrue(service.findGuestWithOpenCart().isEmpty());
@@ -73,8 +65,6 @@ class UserServiceTest {
 
     @Test
     void shouldReturnEmptyOptionalForNoOpenCart() {
-        when(mockRepository.accessUserRepository()).thenReturn(mockUserRepository);
-        when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
         when(mockUserRepository.getAllUsers()).thenReturn(List.of(mockUser));
         when(mockUser.getUserRole()).thenReturn(UserRole.GUEST);
         when(mockUser.getId()).thenReturn(1L);

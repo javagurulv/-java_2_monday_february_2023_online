@@ -3,7 +3,7 @@ package shop.core.services.actions.shared;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import shop.core.database.Repository;
+import shop.core.database.ItemRepository;
 import shop.core.domain.item.Item;
 import shop.core.requests.shared.SearchItemRequest;
 import shop.core.responses.CoreError;
@@ -22,7 +22,7 @@ import java.util.List;
 public class SearchItemService {
 
     @Autowired
-    private Repository repository;
+    private ItemRepository itemRepository;
     @Autowired
     private SearchItemValidator validator;
     @Autowired
@@ -50,19 +50,19 @@ public class SearchItemService {
         List<Item> items;
         //TODO is blank actually ok in here ?
         if (request.getItemName() != null && !isPresent(request.getPrice())) {
-            items = repository.accessItemRepository().searchByName(
+            items = itemRepository.searchByName(
                     request.getItemName().toLowerCase(),
                     orderingService.getSQLOrderBy(request.getOrderingRules()),
                     pagingService.getSQLLimitOffset(request.getPagingRule()));
         } else if (request.getItemName() != null && isPresent(request.getPrice())) {
             BigDecimal price = new BigDecimal(request.getPrice()).setScale(2, RoundingMode.HALF_UP);
-            items = repository.accessItemRepository().searchByNameAndPrice(
+            items = itemRepository.searchByNameAndPrice(
                     request.getItemName().toLowerCase(),
                     price,
                     orderingService.getSQLOrderBy(request.getOrderingRules()),
                     pagingService.getSQLLimitOffset(request.getPagingRule()));
         } else {
-            items = repository.accessItemRepository().getAllItems();
+            items = itemRepository.getAllItems();
         }
         return items;
     }

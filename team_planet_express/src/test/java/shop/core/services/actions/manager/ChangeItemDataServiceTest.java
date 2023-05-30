@@ -6,7 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.ItemRepository;
-import shop.core.database.Repository;
 import shop.core.requests.manager.ChangeItemDataRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.manager.ChangeItemDataResponse;
@@ -24,15 +23,13 @@ import static org.mockito.Mockito.*;
 class ChangeItemDataServiceTest {
 
     @Mock
-    private Repository mockRepository;
+    private ItemRepository mockItemRepository;
     @Mock
     private ChangeItemDataValidator mockValidator;
     @Mock
     private ChangeItemDataRequest mockRequest;
     @Mock
     private CoreError mockCoreError;
-    @Mock
-    private ItemRepository mockItemRepository;
 
     @InjectMocks
     private ChangeItemDataService service;
@@ -57,7 +54,6 @@ class ChangeItemDataServiceTest {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockRequest.getNewItemName()).thenReturn("name");
-        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         service.execute(mockRequest);
         verify(mockItemRepository).changeName(1L, "name");
     }
@@ -76,7 +72,6 @@ class ChangeItemDataServiceTest {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockRequest.getNewPrice()).thenReturn("10.10");
-        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         service.execute(mockRequest);
         verify(mockItemRepository).changePrice(1L, new BigDecimal("10.10"));
     }
@@ -95,7 +90,6 @@ class ChangeItemDataServiceTest {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockRequest.getNewAvailableQuantity()).thenReturn("10");
-        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         service.execute(mockRequest);
         verify(mockItemRepository).changeAvailableQuantity(1L, 10);
     }
@@ -114,7 +108,6 @@ class ChangeItemDataServiceTest {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockRequest.getNewPrice()).thenReturn("10.10776");
-        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         service.execute(mockRequest);
         verify(mockItemRepository).changePrice(1L, new BigDecimal("10.11"));
     }
@@ -124,7 +117,6 @@ class ChangeItemDataServiceTest {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockRequest.getNewPrice()).thenReturn("10.092234");
-        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         service.execute(mockRequest);
         verify(mockItemRepository).changePrice(1L, new BigDecimal("10.09"));
 

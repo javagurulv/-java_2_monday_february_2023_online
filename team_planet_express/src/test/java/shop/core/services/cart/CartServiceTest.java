@@ -6,7 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.CartItemRepository;
-import shop.core.database.Repository;
 import shop.core.domain.cart_item.CartItem;
 import shop.core.domain.item.Item;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
@@ -22,11 +21,9 @@ import static org.mockito.Mockito.when;
 class CartServiceTest {
 
     @Mock
-    private Repository mockRepository;
+    private CartItemRepository mockCartItemRepository;
     @Mock
     private DatabaseAccessValidator mockDatabaseAccessValidator;
-    @Mock
-    private CartItemRepository mockCartItemRepository;
     @Mock
     private CartItem mockCartItem;
     @Mock
@@ -37,7 +34,6 @@ class CartServiceTest {
 
     @Test
     void shouldReturnSum() {
-        when(mockRepository.accessCartItemRepository()).thenReturn(mockCartItemRepository);
         when(mockCartItemRepository.getAllCartItemsForCartId(1L)).thenReturn(List.of(mockCartItem, mockCartItem, mockCartItem));
         when(mockCartItem.getItem()).thenReturn(mockItem);
         when(mockDatabaseAccessValidator.getItemById(anyLong())).thenReturn(mockItem);

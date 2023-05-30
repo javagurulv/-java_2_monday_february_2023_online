@@ -3,7 +3,8 @@ package shop.core.services.actions.customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import shop.core.database.Repository;
+import shop.core.database.CartItemRepository;
+import shop.core.database.ItemRepository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
 import shop.core.domain.item.Item;
@@ -20,7 +21,9 @@ import java.util.List;
 public class RemoveItemFromCartService {
 
     @Autowired
-    private Repository repository;
+    private ItemRepository itemRepository;
+    @Autowired
+    private CartItemRepository cartItemRepository;
     @Autowired
     private RemoveItemFromCartValidator validator;
     @Autowired
@@ -36,8 +39,8 @@ public class RemoveItemFromCartService {
         Item item = databaseAccessValidator.getItemByName(request.getItemName());
         CartItem cartItem = databaseAccessValidator.getCartItemByCartIdAndItemId(cart.getId(), item.getId());
         Integer newAvailableQuantity = item.getAvailableQuantity() + cartItem.getOrderedQuantity();
-        repository.accessCartItemRepository().deleteByID(cartItem.getId());
-        repository.accessItemRepository().changeAvailableQuantity(item.getId(), newAvailableQuantity);
+        cartItemRepository.deleteByID(cartItem.getId());
+        itemRepository.changeAvailableQuantity(item.getId(), newAvailableQuantity);
         return new RemoveItemFromCartResponse();
     }
 

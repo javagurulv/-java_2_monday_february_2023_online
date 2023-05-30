@@ -6,7 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.CartRepository;
-import shop.core.database.Repository;
 import shop.core.domain.cart.Cart;
 import shop.core.responses.CoreError;
 import shop.core.support.error_code_processing.ErrorProcessor;
@@ -22,11 +21,9 @@ import static org.mockito.Mockito.when;
 class CartValidatorTest {
 
     @Mock
-    private Repository mockRepository;
+    private CartRepository mockCartRepository;
     @Mock
     private ErrorProcessor mockErrorProcessor;
-    @Mock
-    private CartRepository mockCartRepository;
     @Mock
     private Cart mockCart;
     @Mock
@@ -37,7 +34,6 @@ class CartValidatorTest {
 
     @Test
     void shouldReturnNoError() {
-        when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
         when(mockCartRepository.findOpenCartForUserId(1L)).thenReturn(Optional.of(mockCart));
         Optional<CoreError> error = validator.validateOpenCartExistsForUserId(1L);
         assertTrue(error.isEmpty());
@@ -45,7 +41,6 @@ class CartValidatorTest {
 
     @Test
     void shouldReturnError() {
-        when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
         when(mockCartRepository.findOpenCartForUserId(1L)).thenReturn(Optional.empty());
         when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
         validator.validateOpenCartExistsForUserId(1L);

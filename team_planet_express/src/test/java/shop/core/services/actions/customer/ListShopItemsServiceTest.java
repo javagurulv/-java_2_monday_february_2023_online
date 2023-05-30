@@ -6,7 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.ItemRepository;
-import shop.core.database.Repository;
 import shop.core.domain.user.User;
 import shop.core.requests.customer.ListShopItemsRequest;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
@@ -20,13 +19,11 @@ import static org.mockito.Mockito.when;
 class ListShopItemsServiceTest {
 
     @Mock
-    private Repository mockRepository;
+    private ItemRepository mockItemRepository;
     @Mock
     private DatabaseAccessValidator mockDatabaseAccessValidator;
     @Mock
     private ListShopItemsRequest mockRequest;
-    @Mock
-    private ItemRepository mockItemRepository;
     @Mock
     private User mockUser;
     @Mock
@@ -37,7 +34,6 @@ class ListShopItemsServiceTest {
 
     @Test
     void shouldGetItemsFromDatabase() {
-        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         when(mockDatabaseAccessValidator.getUserById(anyLong())).thenReturn(mockUser);
         when(mockRequest.getCurrentUserId()).thenReturn(mockCurrentUserId);
         service.execute(mockRequest);

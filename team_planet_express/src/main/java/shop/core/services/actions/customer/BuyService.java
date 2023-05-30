@@ -3,7 +3,7 @@ package shop.core.services.actions.customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import shop.core.database.Repository;
+import shop.core.database.CartRepository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart.CartStatus;
 import shop.core.requests.customer.BuyRequest;
@@ -19,7 +19,7 @@ import java.util.List;
 public class BuyService {
 
     @Autowired
-    private Repository repository;
+    private CartRepository cartRepository;
     @Autowired
     private BuyValidator validator;
     @Autowired
@@ -32,7 +32,7 @@ public class BuyService {
             return new BuyResponse(errors);
         }
         Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getCurrentUserId().getValue());
-        repository.accessCartRepository().changeCartStatus(cart.getId(), CartStatus.CLOSED);
+        cartRepository.changeCartStatus(cart.getId(), CartStatus.CLOSED);
         return new BuyResponse();
     }
 

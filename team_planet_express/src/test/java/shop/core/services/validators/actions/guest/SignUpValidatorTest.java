@@ -5,7 +5,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import shop.core.database.Repository;
 import shop.core.database.UserRepository;
 import shop.core.domain.user.User;
 import shop.core.requests.guest.SignUpRequest;
@@ -27,7 +26,7 @@ import static org.mockito.Mockito.*;
 class SignUpValidatorTest {
 
     @Mock
-    private Repository mockRepository;
+    private UserRepository mockUserRepository;
     @Mock
     private CurrentUserIdValidator mockCurrentUserIdValidator;
     @Mock
@@ -38,8 +37,6 @@ class SignUpValidatorTest {
     private SignUpRequest mockRequest;
     @Mock
     private CurrentUserId mockUserId;
-    @Mock
-    private UserRepository mockUserRepository;
     @Mock
     private User mockUser;
     @Mock
@@ -68,7 +65,6 @@ class SignUpValidatorTest {
     @Test
     void shouldValidateLoginName() {
         when(mockRequest.getLoginName()).thenReturn("login name");
-        when(mockRepository.accessUserRepository()).thenReturn(mockUserRepository);
         validator.validate(mockRequest);
         verify(mockInputStringValidator)
                 .validateIsPresent(argThat(new InputStringValidatorDataMatcher("login name", "login", "Login name")));
@@ -79,7 +75,6 @@ class SignUpValidatorTest {
     @Test
     void shouldReturnErrorForExistingLoginName() {
         when(mockRequest.getLoginName()).thenReturn("login");
-        when(mockRepository.accessUserRepository()).thenReturn(mockUserRepository);
         when(mockUserRepository.findByLoginName("login")).thenReturn(Optional.of(mockUser));
         when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
         validator.validate(mockRequest);

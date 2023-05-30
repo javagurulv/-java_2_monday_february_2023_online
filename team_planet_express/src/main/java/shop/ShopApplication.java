@@ -4,8 +4,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import shop.config.ShopConfiguration;
 import shop.console_ui.UIMenu;
-import shop.core.database.DatabaseCleaner;
-import shop.core.database.Repository;
+import shop.core.database.CartRepository;
+import shop.core.database.ItemRepository;
+import shop.core.database.UserRepository;
+import shop.core.database.orm.cleaner.DatabaseCleaner;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
 import shop.core.services.fake.FakeDatabaseInitializer;
@@ -22,7 +24,10 @@ public class ShopApplication {
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(ShopConfiguration.class);
 
         applicationContext.getBean(DatabaseCleaner.class).clean();
-        new FakeDatabaseInitializer(applicationContext.getBean(Repository.class)).initialize();
+        new FakeDatabaseInitializer(applicationContext.getBean(UserRepository.class),
+                applicationContext.getBean(ItemRepository.class),
+                applicationContext.getBean(CartRepository.class)
+        ).initialize();
 
         UserService userService = applicationContext.getBean(UserService.class);
         UserCreationData userCreationData = new UserCreationData(UserRole.GUEST.getDefaultName(), BLANK, BLANK, UserRole.GUEST);

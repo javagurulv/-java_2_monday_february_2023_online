@@ -6,7 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.CartRepository;
-import shop.core.database.Repository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart.CartStatus;
 import shop.core.requests.customer.BuyRequest;
@@ -22,15 +21,13 @@ import static org.mockito.Mockito.*;
 class BuyServiceTest {
 
     @Mock
-    private Repository mockRepository;
+    private CartRepository mockCartRepository;
     @Mock
     private BuyValidator mockValidator;
     @Mock
     private DatabaseAccessValidator mockDatabaseAccessValidator;
     @Mock
     private BuyRequest mockRequest;
-    @Mock
-    private CartRepository mockCartRepository;
     @Mock
     private CurrentUserId mockCurrentUserId;
     @Mock
@@ -41,7 +38,6 @@ class BuyServiceTest {
 
     @Test
     void shouldCloseCart() {
-        when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
         when(mockValidator.validate(any())).thenReturn(List.of());
         when(mockRequest.getCurrentUserId()).thenReturn(mockCurrentUserId);
         when(mockDatabaseAccessValidator.getOpenCartByUserId(any())).thenReturn(mockCart);

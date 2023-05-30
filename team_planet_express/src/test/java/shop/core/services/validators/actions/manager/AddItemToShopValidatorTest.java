@@ -6,7 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.ItemRepository;
-import shop.core.database.Repository;
 import shop.core.domain.item.Item;
 import shop.core.requests.manager.AddItemToShopRequest;
 import shop.core.responses.CoreError;
@@ -25,15 +24,13 @@ import static org.mockito.Mockito.*;
 class AddItemToShopValidatorTest {
 
     @Mock
-    private Repository mockRepository;
+    private ItemRepository mockItemRepository;
     @Mock
     private InputStringValidator mockInputStringValidator;
     @Mock
     private ErrorProcessor mockErrorProcessor;
     @Mock
     private AddItemToShopRequest mockRequest;
-    @Mock
-    private ItemRepository mockItemRepository;
     @Mock
     private Item mockItem;
     @Mock
@@ -45,7 +42,6 @@ class AddItemToShopValidatorTest {
     @Test
     void shouldValidateName() {
         when(mockRequest.getItemName()).thenReturn("name");
-        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         validator.validate(mockRequest);
         verify(mockInputStringValidator)
                 .validateIsPresent(argThat(new InputStringValidatorDataMatcher("name", "name", "Item name")));
@@ -56,7 +52,6 @@ class AddItemToShopValidatorTest {
     @Test
     void shouldReturnErrorForExistingName() {
         when(mockRequest.getItemName()).thenReturn("name");
-        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         when(mockItemRepository.findByName("name")).thenReturn(Optional.of(mockItem));
         when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
         validator.validate(mockRequest);
