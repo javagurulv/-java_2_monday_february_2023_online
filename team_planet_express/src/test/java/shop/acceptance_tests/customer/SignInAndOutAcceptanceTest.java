@@ -7,7 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import shop.config.ShopConfiguration;
-import shop.core.database.Repository;
+import shop.core.database.UserRepository;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
 import shop.core.requests.shared.SignInRequest;
@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 public class SignInAndOutAcceptanceTest {
 
     @Autowired
-    private Repository repository;
+    private UserRepository userRepository;
     @Autowired
     private CurrentUserId currentUserId;
     @Autowired
@@ -38,17 +38,17 @@ public class SignInAndOutAcceptanceTest {
     @Test
     void shouldSignInAsCustomerAndBecomeGuestAfterSignOut() {
         User customer = new User("Morbo", "theAnnihilator", "pathetichumans", UserRole.CUSTOMER);
-        repository.accessUserRepository().save(customer);
+        userRepository.save(customer);
         SignInResponse signInResponse =
                 signInService.execute(new SignInRequest(currentUserId, "theAnnihilator", "pathetichumans"));
         assertFalse(signInResponse.hasErrors());
-        assertEquals(currentUserId.getValue(), repository.accessUserRepository().findByLoginName("theAnnihilator").orElseThrow().getId());
+        assertEquals(currentUserId.getValue(), userRepository.findByLoginName("theAnnihilator").orElseThrow().getId());
         assertEquals(UserRole.CUSTOMER, signInResponse.getUser().getUserRole());
         assertEquals("Morbo", signInResponse.getUser().getName());
         SignOutResponse signOutResponse =
                 signOutService.execute(new SignOutRequest(currentUserId));
         assertFalse(signOutResponse.hasErrors());
-        assertEquals(UserRole.GUEST, repository.accessUserRepository().findById(currentUserId.getValue()).orElseThrow().getUserRole());
+        assertEquals(UserRole.GUEST, userRepository.findById(currentUserId.getValue()).orElseThrow().getUserRole());
     }
 
 }

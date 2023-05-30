@@ -7,7 +7,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.CartItemRepository;
 import shop.core.database.ItemRepository;
-import shop.core.database.Repository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.item.Item;
 import shop.core.requests.customer.AddItemToCartRequest;
@@ -25,7 +24,9 @@ import static org.mockito.Mockito.*;
 class AddItemToCartServiceTest {
 
     @Mock
-    private Repository mockRepository;
+    private ItemRepository mockItemRepository;
+    @Mock
+    private CartItemRepository mockCartItemRepository;
     @Mock
     private AddItemToCartValidator mockValidator;
     @Mock
@@ -34,10 +35,6 @@ class AddItemToCartServiceTest {
     private AddItemToCartRequest mockRequest;
     @Mock
     private CurrentUserId mockUserId;
-    @Mock
-    private ItemRepository mockItemRepository;
-    @Mock
-    private CartItemRepository mockCartItemRepository;
     @Mock
     private Item mockItem;
     @Mock
@@ -57,9 +54,7 @@ class AddItemToCartServiceTest {
         when(mockRequest.getOrderedQuantity()).thenReturn("10");
         when(mockCart.getId()).thenReturn(1L);
         when(mockItem.getId()).thenReturn(1L);
-        when(mockRepository.accessCartItemRepository()).thenReturn(mockCartItemRepository);
         when(mockCartItemRepository.findByCartIdAndItemId(1L, 1L)).thenReturn(Optional.empty());
-        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         service.execute(mockRequest);
         verify(mockCartItemRepository).save(argThat(new CartItemMatcher(mockCart, mockItem, 10)));
     }
@@ -73,9 +68,7 @@ class AddItemToCartServiceTest {
         when(mockRequest.getItemName()).thenReturn("item name");
         when(mockDatabaseAccessValidator.getItemByName("item name")).thenReturn(mockItem);
         when(mockRequest.getOrderedQuantity()).thenReturn("10");
-        when(mockRepository.accessCartItemRepository()).thenReturn(mockCartItemRepository);
         when(mockItem.getAvailableQuantity()).thenReturn(15);
-        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         when(mockItem.getId()).thenReturn(1L);
         service.execute(mockRequest);
         verify(mockItemRepository).changeAvailableQuantity(1L, 5);

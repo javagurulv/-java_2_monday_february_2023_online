@@ -2,7 +2,7 @@ package shop.core.services.validators.actions.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.database.Repository;
+import shop.core.database.CartItemRepository;
 import shop.core.domain.cart.Cart;
 import shop.core.requests.customer.BuyRequest;
 import shop.core.responses.CoreError;
@@ -22,7 +22,7 @@ public class BuyValidator {
     private static final String ERROR_CART_EMPTY = "VDT-BUY-CIE";
 
     @Autowired
-    private Repository repository;
+    private CartItemRepository cartItemRepository;
     @Autowired
     private CurrentUserIdValidator userIdValidator;
     @Autowired
@@ -44,7 +44,7 @@ public class BuyValidator {
 
     private Optional<CoreError> validateCartIsNotEmpty(Long userId) {
         Cart cart = databaseAccessValidator.getOpenCartByUserId(userId);
-        return (repository.accessCartItemRepository().getAllCartItemsForCartId(cart.getId()).size() == 0)
+        return (cartItemRepository.getAllCartItemsForCartId(cart.getId()).size() == 0)
                 ? Optional.of(errorProcessor.getCoreError(FIELD_NAME, ERROR_CART_EMPTY))
                 : Optional.empty();
     }

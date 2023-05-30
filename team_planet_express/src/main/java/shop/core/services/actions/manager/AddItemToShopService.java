@@ -3,7 +3,7 @@ package shop.core.services.actions.manager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import shop.core.database.Repository;
+import shop.core.database.ItemRepository;
 import shop.core.domain.item.Item;
 import shop.core.requests.manager.AddItemToShopRequest;
 import shop.core.responses.CoreError;
@@ -19,7 +19,7 @@ import java.util.List;
 public class AddItemToShopService {
 
     @Autowired
-    private Repository repository;
+    private ItemRepository itemRepository;
     @Autowired
     private AddItemToShopValidator validator;
 
@@ -32,7 +32,7 @@ public class AddItemToShopService {
         String itemName = request.getItemName();
         BigDecimal price = new BigDecimal(request.getPrice()).setScale(2, RoundingMode.HALF_UP);
         Integer availableQuantity = Integer.parseInt(request.getAvailableQuantity());
-        repository.accessItemRepository().save(new Item(itemName, price, availableQuantity));
+        itemRepository.save(new Item(itemName, price, availableQuantity));
         return new AddItemToShopResponse();
     }
 

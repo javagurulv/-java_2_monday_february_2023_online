@@ -7,7 +7,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.CartItemRepository;
-import shop.core.database.Repository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
 import shop.core.domain.item.Item;
@@ -30,19 +29,17 @@ import static org.mockito.Mockito.when;
 class ListCartItemsServiceTest {
 
     @Mock
-    private Repository mockRepository;
-    @Mock
     private CartItemRepository mockCartItemRepository;
-    @Mock
-    private ListCartItemsRequest mockRequest;
-    @Mock
-    private CurrentUserId mockCurrentUserId;
     @Mock
     private ListCartItemValidator mockValidator;
     @Mock
     private DatabaseAccessValidator mockDatabaseAccessValidator;
     @Mock
     private CartService mockCartService;
+    @Mock
+    private ListCartItemsRequest mockRequest;
+    @Mock
+    private CurrentUserId mockCurrentUserId;
     @Mock
     private Cart mockCart;
     @Mock
@@ -55,7 +52,6 @@ class ListCartItemsServiceTest {
 
     @BeforeEach
     void initMock() {
-        when(mockRepository.accessCartItemRepository()).thenReturn(mockCartItemRepository);
         when(mockRequest.getCurrentUserId()).thenReturn(mockCurrentUserId);
     }
 

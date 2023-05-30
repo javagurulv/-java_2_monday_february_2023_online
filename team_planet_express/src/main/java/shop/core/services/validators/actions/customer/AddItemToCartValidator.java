@@ -2,7 +2,7 @@ package shop.core.services.validators.actions.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.database.Repository;
+import shop.core.database.ItemRepository;
 import shop.core.requests.customer.AddItemToCartRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.cart.CartValidator;
@@ -27,7 +27,7 @@ public class AddItemToCartValidator {
     private static final String ERROR_NOT_ENOUGH_QUANTITY = "VDT-AIC-NEQ";
 
     @Autowired
-    private Repository repository;
+    private ItemRepository itemRepository;
     @Autowired
     private CurrentUserIdValidator userIdValidator;
     @Autowired
@@ -76,7 +76,7 @@ public class AddItemToCartValidator {
 
     private Optional<CoreError> validateItemNameExistsInShop(String itemName) {
         return (itemName == null ||
-                repository.accessItemRepository().findByName(itemName).isEmpty())
+                itemRepository.findByName(itemName).isEmpty())
                 ? Optional.of(errorProcessor.getCoreError(FIELD_NAME, ERROR_NO_SUCH_ITEM))
                 : Optional.empty();
     }

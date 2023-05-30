@@ -1,7 +1,9 @@
 package shop.acceptance_tests.custom.tester;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import shop.core.database.Repository;
+import shop.core.database.CartItemRepository;
+import shop.core.database.CartRepository;
+import shop.core.database.ItemRepository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
 import shop.core.support.CurrentUserId;
@@ -14,16 +16,20 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public abstract class Tester {
 
     @Autowired
-    protected Repository repository;
+    protected ItemRepository itemRepository;
+    @Autowired
+    protected CartRepository cartRepository;
+    @Autowired
+    protected CartItemRepository cartItemRepository;
     @Autowired
     protected CurrentUserId currentUserId;
 
     protected Tester checkItemInCart(String itemName, Integer quantity) {
-        Optional<Cart> cart = repository.accessCartRepository().findOpenCartForUserId(currentUserId.getValue());
+        Optional<Cart> cart = cartRepository.findOpenCartForUserId(currentUserId.getValue());
         assertTrue(cart.isPresent());
-        Optional<CartItem> cartItem = repository.accessCartItemRepository().findByCartIdAndItemId(
+        Optional<CartItem> cartItem = cartItemRepository.findByCartIdAndItemId(
                 cart.get().getId(),
-                repository.accessItemRepository().findByName(itemName).orElseThrow().getId()
+                itemRepository.findByName(itemName).orElseThrow().getId()
         );
         assertTrue(cartItem.isPresent());
         assertEquals(quantity, cartItem.get().getOrderedQuantity());
@@ -32,7 +38,7 @@ public abstract class Tester {
 
     @SuppressWarnings("UnusedReturnValue")
     protected Tester checkItemInShop(String itemName, int quantity) {
-        assertTrue(repository.accessItemRepository().getAllItems().stream()
+        assertTrue(itemRepository.getAllItems().stream()
                 .anyMatch(item -> item.getName().equals(itemName) && item.getAvailableQuantity() == quantity));
         return this;
 
@@ -40,11 +46,11 @@ public abstract class Tester {
 
     @SuppressWarnings("UnusedReturnValue")
     protected Tester notItemInCart(String itemName) {
-        Optional<Cart> cart = repository.accessCartRepository().findOpenCartForUserId(currentUserId.getValue());
+        Optional<Cart> cart = cartRepository.findOpenCartForUserId(currentUserId.getValue());
         if (cart.isPresent()) {
-            Optional<CartItem> cartItem = repository.accessCartItemRepository().findByCartIdAndItemId(
+            Optional<CartItem> cartItem = cartItemRepository.findByCartIdAndItemId(
                     cart.get().getId(),
-                    repository.accessItemRepository().findByName(itemName).orElseThrow().getId()
+                    itemRepository.findByName(itemName).orElseThrow().getId()
             );
             assertTrue(cartItem.isEmpty());
         }

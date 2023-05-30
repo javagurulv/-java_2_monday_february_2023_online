@@ -2,7 +2,8 @@ package shop.core.services.validators.actions.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.database.Repository;
+import shop.core.database.CartItemRepository;
+import shop.core.database.ItemRepository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.item.Item;
 import shop.core.requests.customer.RemoveItemFromCartRequest;
@@ -27,7 +28,9 @@ public class RemoveItemFromCartValidator {
     private static final String ERROR_NO_SUCH_ITEM_IN_SHOP = "VDT-RIC-NIS";
 
     @Autowired
-    private Repository repository;
+    private ItemRepository itemRepository;
+    @Autowired
+    private CartItemRepository cartItemRepository;
     @Autowired
     private CurrentUserIdValidator userIdValidator;
     @Autowired
@@ -60,7 +63,7 @@ public class RemoveItemFromCartValidator {
     }
 
     private Optional<CoreError> validateItemNameInShop(String itemName) {
-        return (repository.accessItemRepository().findByName(itemName).isEmpty())
+        return (itemRepository.findByName(itemName).isEmpty())
                 ? Optional.of(errorProcessor.getCoreError(FIELD_NAME, ERROR_NO_SUCH_ITEM_IN_SHOP))
                 : Optional.empty();
     }
@@ -68,7 +71,7 @@ public class RemoveItemFromCartValidator {
     private Optional<CoreError> validateItemNameInCart(RemoveItemFromCartRequest request) {
         Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getCurrentUserId().getValue());
         Item item = databaseAccessValidator.getItemByName(request.getItemName());
-        return (repository.accessCartItemRepository().findByCartIdAndItemId(cart.getId(), item.getId()).isEmpty())
+        return (cartItemRepository.findByCartIdAndItemId(cart.getId(), item.getId()).isEmpty())
                 ? Optional.of(errorProcessor.getCoreError(FIELD_NAME, ERROR_NO_SUCH_ITEM_IN_CART))
                 : Optional.empty();
     }

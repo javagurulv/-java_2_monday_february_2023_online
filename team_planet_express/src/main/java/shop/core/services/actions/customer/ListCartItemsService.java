@@ -3,7 +3,7 @@ package shop.core.services.actions.customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import shop.core.database.Repository;
+import shop.core.database.CartItemRepository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
 import shop.core.domain.item.Item;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class ListCartItemsService {
 
     @Autowired
-    private Repository repository;
+    private CartItemRepository cartItemRepository;
     @Autowired
     private ListCartItemValidator validator;
     @Autowired
@@ -38,7 +38,7 @@ public class ListCartItemsService {
             return new ListCartItemsResponse(errors);
         }
         Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getCurrentUserId().getValue());
-        List<CartItem> cartItems = repository.accessCartItemRepository().getAllCartItemsForCartId(cart.getId());
+        List<CartItem> cartItems = cartItemRepository.getAllCartItemsForCartId(cart.getId());
         List<CartItemForList> cartItemsForList = cartItems.stream()
                 .map(this::createCartItemForList)
                 .collect(Collectors.toList());

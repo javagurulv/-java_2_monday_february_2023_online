@@ -3,7 +3,8 @@ package shop.core.services.actions.customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import shop.core.database.Repository;
+import shop.core.database.CartItemRepository;
+import shop.core.database.ItemRepository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
 import shop.core.domain.item.Item;
@@ -21,7 +22,9 @@ import java.util.Optional;
 public class AddItemToCartService {
 
     @Autowired
-    private Repository repository;
+    private ItemRepository itemRepository;
+    @Autowired
+    private CartItemRepository cartItemRepository;
     @Autowired
     private AddItemToCartValidator validator;
     @Autowired
@@ -41,18 +44,18 @@ public class AddItemToCartService {
     }
 
     private void addItemToCart(Cart cart, Item item, Integer orderedQuantity) {
-        Optional<CartItem> cartItem = repository.accessCartItemRepository().findByCartIdAndItemId(cart.getId(), item.getId());
+        Optional<CartItem> cartItem = cartItemRepository.findByCartIdAndItemId(cart.getId(), item.getId());
         if (cartItem.isEmpty()) {
-            repository.accessCartItemRepository().save(new CartItem(cart, item, orderedQuantity));
+            cartItemRepository.save(new CartItem(cart, item, orderedQuantity));
         } else {
             Integer newCartItemQuantity = cartItem.get().getOrderedQuantity() + orderedQuantity;
-            repository.accessCartItemRepository().changeOrderedQuantity(cartItem.get().getId(), newCartItemQuantity);
+            cartItemRepository.changeOrderedQuantity(cartItem.get().getId(), newCartItemQuantity);
         }
     }
 
     private void changeItemAvailability(Item item, Integer orderedQuantity) {
         Integer newAvailableQuantity = item.getAvailableQuantity() - orderedQuantity;
-        repository.accessItemRepository().changeAvailableQuantity(item.getId(), newAvailableQuantity);
+        itemRepository.changeAvailableQuantity(item.getId(), newAvailableQuantity);
     }
 
 }
