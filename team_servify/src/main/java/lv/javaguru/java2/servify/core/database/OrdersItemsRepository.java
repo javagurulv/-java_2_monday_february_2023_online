@@ -1,9 +1,7 @@
 package lv.javaguru.java2.servify.core.database;
 
 import jakarta.transaction.Transactional;
-import lv.javaguru.java2.servify.core.domain.Order;
 import lv.javaguru.java2.servify.core.domain.OrderItems;
-import lv.javaguru.java2.servify.core.domain.UserEntity;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +23,8 @@ public class OrdersItemsRepository {
 
     public List<OrderItems> getOrdersItemsByUserId(Long userId) {
         String hql = "SELECT oi FROM OrderItems oi " +
-                     "JOIN FETCH oi.order o " +
-                     "JOIN FETCH o.user u " +
+                     "LEFT JOIN FETCH oi.order o " +
+                     "LEFT JOIN FETCH o.user u " +
                      "WHERE u.id = :userId";
         Query<OrderItems> query = sessionFactory.getCurrentSession()
                 .createQuery(hql, OrderItems.class);
