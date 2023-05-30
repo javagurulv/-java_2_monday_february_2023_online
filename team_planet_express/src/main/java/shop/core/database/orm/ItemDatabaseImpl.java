@@ -131,7 +131,7 @@ public class ItemDatabaseImpl implements ItemDatabase {
 
         cr.select(root).where(
                 cb.like(root.get(Item_.name), "%" + itemName.toLowerCase() + "%"),
-                cb.equal(root.get(Item_.price), price)
+                cb.lt(root.get(Item_.price), price)
         );
         for (OrderingRule orderingRule : orderingRules) {
             cr.orderBy(orderingRule.isAscending() ?
