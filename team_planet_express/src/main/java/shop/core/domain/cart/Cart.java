@@ -24,11 +24,24 @@ public class Cart {
     @Enumerated(EnumType.STRING)
     private CartStatus status;
     @Column(name = "last_update")
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime lastUpdate;
 
     public Cart(User user) {
         this.user = user;
         this.status = CartStatus.OPEN;
+    }
+
+    @SuppressWarnings("unused")
+    @PreUpdate
+    private void onUpdate() {
+        this.lastUpdate = LocalDateTime.now();
+    }
+
+    @SuppressWarnings("unused")
+    @PrePersist
+    private void onInsert() {
+        this.lastUpdate = LocalDateTime.now();
     }
 
 }
