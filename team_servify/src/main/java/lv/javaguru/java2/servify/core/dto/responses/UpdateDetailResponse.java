@@ -7,7 +7,7 @@ import lv.javaguru.java2.servify.core.domain.Detail;
 
 import java.util.List;
 
-@Data
+
 @NoArgsConstructor
 public class UpdateDetailResponse extends CoreResponse {
     private Detail updatedDetail;

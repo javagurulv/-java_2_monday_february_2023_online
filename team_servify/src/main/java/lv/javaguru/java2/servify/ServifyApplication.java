@@ -1,21 +1,19 @@
 package lv.javaguru.java2.servify;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import lv.javaguru.java2.servify.config.ServifyConfiguration;
-import lv.javaguru.java2.servify.console_ui.*;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+import org.springframework.context.ConfigurableApplicationContext;
 
 
-class ServifyApplication {
+import lv.javaguru.java2.servify.web_ui.config.SpringWebConfiguration;
 
-    @SuppressWarnings("InfiniteLoopStatement")
+@SpringBootApplication(exclude = HibernateJpaAutoConfiguration.class)
+public class ServifyApplication {
+
     public static void main(String[] args) {
-        try {
-            var context = new AnnotationConfigApplicationContext(ServifyConfiguration.class);
-            var uiMenu = context.getBean(UIMenu.class);
-            uiMenu.startUI();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ConfigurableApplicationContext context = SpringApplication.run(SpringWebConfiguration.class);
+
     }
 }
 

@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servify.core.database;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lv.javaguru.java2.servify.core.domain.Order;
 import lv.javaguru.java2.servify.core.domain.UserEntity;
 import org.hibernate.SessionFactory;

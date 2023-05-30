@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servify.core.services.users;
 
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import lv.javaguru.java2.servify.core.database.UserRepository;
 import lv.javaguru.java2.servify.core.domain.UserEntity;
 import lv.javaguru.java2.servify.core.dto.UserDTO;

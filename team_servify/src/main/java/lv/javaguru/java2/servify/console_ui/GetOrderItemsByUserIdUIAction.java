@@ -1,4 +1,4 @@
-package lv.javaguru.java2.servify.core.database;
+package lv.javaguru.java2.servify.console_ui;
 
 
 import lv.javaguru.java2.servify.console_ui.UIAction;

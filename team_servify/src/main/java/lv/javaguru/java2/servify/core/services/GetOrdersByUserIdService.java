@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servify.core.services;
 
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import lv.javaguru.java2.servify.core.database.OrdersRepository;
 import lv.javaguru.java2.servify.core.dto.responses.GetOrdersResponse;
 import org.springframework.beans.factory.annotation.Autowired;

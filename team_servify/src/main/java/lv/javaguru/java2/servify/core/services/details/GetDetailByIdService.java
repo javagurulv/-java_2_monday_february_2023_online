@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servify.core.services.details;
 
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import lv.javaguru.java2.servify.core.database.DetailRepository;
 import lv.javaguru.java2.servify.core.domain.Detail;
 import lv.javaguru.java2.servify.core.dto.DetailDTO;
