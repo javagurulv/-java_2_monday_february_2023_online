@@ -2,7 +2,10 @@ package shop.core.services.validators.universal.system;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.database.Repository;
+import shop.core.database.CartItemRepository;
+import shop.core.database.CartRepository;
+import shop.core.database.ItemRepository;
+import shop.core.database.UserRepository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
 import shop.core.domain.item.Item;
@@ -13,35 +16,41 @@ import shop.core.services.exception.ServiceMissingDataException;
 public class DatabaseAccessValidator {
 
     @Autowired
-    private Repository repository;
+    private UserRepository userRepository;
+    @Autowired
+    private ItemRepository itemRepository;
+    @Autowired
+    private CartRepository cartRepository;
+    @Autowired
+    private CartItemRepository cartItemRepository;
 
     public User getUserById(Long userId) {
-        return repository.accessUserRepository().findById(userId)
+        return userRepository.findById(userId)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 
     public User getUserByLoginName(String login) {
-        return repository.accessUserRepository().findByLoginName(login)
+        return userRepository.findByLoginName(login)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 
     public Item getItemById(Long itemId) {
-        return repository.accessItemRepository().findById(itemId)
+        return itemRepository.findById(itemId)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 
     public Item getItemByName(String itemName) {
-        return repository.accessItemRepository().findByName(itemName)
+        return itemRepository.findByName(itemName)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 
     public Cart getOpenCartByUserId(Long userId) {
-        return repository.accessCartRepository().findOpenCartForUserId(userId)
+        return cartRepository.findOpenCartForUserId(userId)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 
     public CartItem getCartItemByCartIdAndItemId(Long cartId, Long itemId) {
-        return repository.accessCartItemRepository().findByCartIdAndItemId(cartId, itemId)
+        return cartItemRepository.findByCartIdAndItemId(cartId, itemId)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 

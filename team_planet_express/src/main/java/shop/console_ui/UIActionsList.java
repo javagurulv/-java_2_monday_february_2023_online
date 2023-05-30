@@ -12,7 +12,7 @@ import shop.console_ui.actions.shared.ExitUIAction;
 import shop.console_ui.actions.shared.SearchItemUIAction;
 import shop.console_ui.actions.shared.SignInUIAction;
 import shop.console_ui.actions.shared.SignOutUIAction;
-import shop.core.database.Repository;
+import shop.core.database.UserRepository;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
 import shop.core.support.CurrentUserId;
@@ -24,11 +24,13 @@ import java.util.stream.Collectors;
 
 @Component
 public class UIActionsList {
+
     private final List<UIAction> uiActionsList;
+
     @Autowired
-    Repository repository;
+    private UserRepository userRepository;
     @Autowired
-    CurrentUserId currentUserId;
+    private CurrentUserId currentUserId;
 
     @Autowired
     public UIActionsList(List<UIAction> uiActionsList) {
@@ -36,7 +38,7 @@ public class UIActionsList {
     }
 
     public List<UIAction> getUIActionsListForUserRole() {
-        Optional<User> currentUser = repository.accessUserRepository().findById(currentUserId.getValue());
+        Optional<User> currentUser = userRepository.findById(currentUserId.getValue());
         UserRole filterRole = currentUser.isEmpty() ? UserRole.GUEST : currentUser.get().getUserRole();
         return uiActionsList.stream()
                 .filter(uiAction -> filterRole.checkPermission(uiAction.getAccessNumber()))

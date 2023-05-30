@@ -6,7 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.ItemRepository;
-import shop.core.database.Repository;
 import shop.core.domain.item.Item;
 import shop.core.requests.manager.ChangeItemDataRequest;
 import shop.core.responses.CoreError;
@@ -27,7 +26,7 @@ import static org.mockito.Mockito.*;
 class ChangeItemDataValidatorTest {
 
     @Mock
-    private Repository mockRepository;
+    private ItemRepository mockItemRepository;
     @Mock
     private InputStringValidator mockInputStringValidator;
     @Mock
@@ -36,8 +35,6 @@ class ChangeItemDataValidatorTest {
     private ErrorProcessor mockErrorProcessor;
     @Mock
     private ChangeItemDataRequest mockRequest;
-    @Mock
-    private ItemRepository mockItemRepository;
     @Mock
     private Item mockItem;
     @Mock
@@ -49,7 +46,6 @@ class ChangeItemDataValidatorTest {
     @Test
     void shouldValidateId() {
         when(mockRequest.getItemId()).thenReturn("1");
-        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         when(mockItemRepository.findById(1L)).thenReturn(Optional.of(mockItem));
         when(mockDatabaseAccessValidator.getItemById(1L)).thenReturn(mockItem);
         validator.validate(mockRequest);
@@ -62,7 +58,6 @@ class ChangeItemDataValidatorTest {
     @Test
     void shouldReturnErrorForNonexistentId() {
         when(mockRequest.getItemId()).thenReturn("1");
-        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         when(mockItemRepository.findById(1L)).thenReturn(Optional.empty());
         when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
         validator.validate(mockRequest);
@@ -74,10 +69,8 @@ class ChangeItemDataValidatorTest {
     void shouldValidateName() {
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockRequest.getNewItemName()).thenReturn("name");
-        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         when(mockItemRepository.findById(1L)).thenReturn(Optional.of(mockItem));
         when(mockDatabaseAccessValidator.getItemById(1L)).thenReturn(mockItem);
-        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         validator.validate(mockRequest);
         verify(mockInputStringValidator)
                 .validateLength(argThat(new InputStringValidatorDataMatcher("name", "name", "Item name")), anyInt());
@@ -87,7 +80,6 @@ class ChangeItemDataValidatorTest {
     void shouldValidatePrice() {
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockRequest.getNewPrice()).thenReturn("10.5");
-        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         when(mockItemRepository.findById(1L)).thenReturn(Optional.of(mockItem));
         when(mockDatabaseAccessValidator.getItemById(1L)).thenReturn(mockItem);
         validator.validate(mockRequest);
@@ -102,7 +94,6 @@ class ChangeItemDataValidatorTest {
     void shouldValidateQuantity() {
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockRequest.getNewAvailableQuantity()).thenReturn("5");
-        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         when(mockItemRepository.findById(1L)).thenReturn(Optional.of(mockItem));
         when(mockDatabaseAccessValidator.getItemById(1L)).thenReturn(mockItem);
         validator.validate(mockRequest);
@@ -117,7 +108,6 @@ class ChangeItemDataValidatorTest {
         when(mockRequest.getNewItemName()).thenReturn("name");
         when(mockRequest.getNewPrice()).thenReturn("10.10");
         when(mockRequest.getNewAvailableQuantity()).thenReturn("10");
-        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         when(mockItemRepository.findById(1L)).thenReturn(Optional.of(mockItem));
         when(mockDatabaseAccessValidator.getItemById(1L)).thenReturn(mockItem);
         when(mockItemRepository.getAllItems()).thenReturn(List.of(new Item("name", new BigDecimal("10.10"), 10)));
@@ -136,7 +126,6 @@ class ChangeItemDataValidatorTest {
     @Test
     void shouldReturnNoErrorsForValidInput() {
         when(mockRequest.getItemId()).thenReturn("1");
-        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         when(mockItemRepository.findById(1L)).thenReturn(Optional.of(mockItem));
         when(mockDatabaseAccessValidator.getItemById(1L)).thenReturn(mockItem);
         List<CoreError> errors = validator.validate(mockRequest);

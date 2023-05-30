@@ -8,7 +8,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import shop.config.ShopConfiguration;
-import shop.core.database.Repository;
+import shop.core.database.ItemRepository;
+import shop.core.database.UserRepository;
 import shop.core.domain.item.Item;
 import shop.core.domain.user.User;
 import shop.core.requests.shared.SearchItemRequest;
@@ -33,7 +34,9 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SearchForItemsAcceptanceTest {
 
     @Autowired
-    private Repository repository;
+    private UserRepository userRepository;
+    @Autowired
+    protected ItemRepository itemRepository;
     @Autowired
     private CurrentUserId currentUserId;
     @Autowired
@@ -41,7 +44,7 @@ public class SearchForItemsAcceptanceTest {
 
     @BeforeEach
     void setCurrentUser() {
-        User currentUser = repository.accessUserRepository().findById(1L).orElseThrow();
+        User currentUser = userRepository.findById(1L).orElseThrow();
         this.currentUserId.setValue(currentUser.getId());
     }
 
@@ -96,7 +99,7 @@ public class SearchForItemsAcceptanceTest {
     @Test
     void shouldReturnCorrectItemsInCorrectOrder() {
         Item newItem = new Item("Morbo on Management", new BigDecimal("4.99"), 1);
-        repository.accessItemRepository().save(newItem);
+        itemRepository.save(newItem);
         OrderingRule orderingRuleName = new OrderingRule(OrderBy.NAME, OrderDirection.DESCENDING);
         OrderingRule orderingRulePrice = new OrderingRule(OrderBy.PRICE, OrderDirection.ASCENDING);
         PagingRule pagingRule = new PagingRule(1, "4");

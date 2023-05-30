@@ -2,7 +2,7 @@ package shop.core.services.validators.actions.manager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.database.Repository;
+import shop.core.database.ItemRepository;
 import shop.core.domain.item.Item;
 import shop.core.requests.manager.ChangeItemDataRequest;
 import shop.core.responses.CoreError;
@@ -33,7 +33,7 @@ public class ChangeItemDataValidator {
     private static final String ERROR_ITEM_EXISTS = "VDT-CID-EIE";
 
     @Autowired
-    private Repository repository;
+    private ItemRepository itemRepository;
     @Autowired
     private InputStringValidator inputStringValidator;
     @Autowired
@@ -86,7 +86,7 @@ public class ChangeItemDataValidator {
         Item originalItem = databaseAccessValidator.getItemById(Long.parseLong(request.getItemId()));
         String newItemName = setNewItemName(request, originalItem);
         BigDecimal newPrice = setNewPrice(request, originalItem);
-        return (repository.accessItemRepository().getAllItems().stream()
+        return (itemRepository.getAllItems().stream()
                 .filter(item -> !originalItem.getId().equals(item.getId()))
                 .anyMatch(item -> newItemName.equals(item.getName()) && newPrice.compareTo(item.getPrice()) == 0))
                 ? Optional.of(errorProcessor.getCoreError(FIELD_BUTTON, ERROR_ITEM_EXISTS))
@@ -95,7 +95,7 @@ public class ChangeItemDataValidator {
 
     private Optional<CoreError> validateIdExistsInShop(String id) {
         return (id != null && !id.isBlank() &&
-                repository.accessItemRepository().findById(Long.parseLong(id)).isEmpty())
+                itemRepository.findById(Long.parseLong(id)).isEmpty())
                 ? Optional.of(errorProcessor.getCoreError(FIELD_ID, ERROR_ID_NOT_EXISTS))
                 : Optional.empty();
     }

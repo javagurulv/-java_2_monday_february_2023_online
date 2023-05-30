@@ -2,7 +2,7 @@ package shop.core.services.cart;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.database.Repository;
+import shop.core.database.CartItemRepository;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 
 import java.math.BigDecimal;
@@ -11,12 +11,12 @@ import java.math.BigDecimal;
 public class CartService {
 
     @Autowired
-    private Repository repository;
+    private CartItemRepository cartItemRepository;
     @Autowired
     private DatabaseAccessValidator databaseAccessValidator;
 
     public BigDecimal getSum(Long cartId) {
-        return repository.accessCartItemRepository().getAllCartItemsForCartId(cartId)
+        return cartItemRepository.getAllCartItemsForCartId(cartId)
                 .stream()
                 .map(cartItem -> databaseAccessValidator.getItemById(cartItem.getItem().getId()).getPrice()
                         .multiply(new BigDecimal(cartItem.getOrderedQuantity())))
