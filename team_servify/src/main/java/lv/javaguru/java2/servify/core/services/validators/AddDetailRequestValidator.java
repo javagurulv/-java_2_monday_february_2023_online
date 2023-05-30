@@ -15,6 +15,7 @@ public class AddDetailRequestValidator {
         List<CoreError> errors = new ArrayList<>();
         validateType(request).ifPresent(errors::add);
         validateSide(request).ifPresent(errors::add);
+        //TODO validator for price BigDecimal
         return errors;
     }
 

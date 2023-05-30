@@ -1,5 +1,6 @@
 package lv.javaguru.java2.servify.core.services.details;
 
+import jakarta.transaction.Transactional;
 import lv.javaguru.java2.servify.core.database.DetailRepository;
 import lv.javaguru.java2.servify.core.dto.requests.RemoveDetailRequest;
 import lv.javaguru.java2.servify.core.dto.responses.CoreError;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Transactional
 public class RemoveDetailService {
 
     @Autowired private DetailRepository detailRepository;

@@ -1,5 +1,6 @@
 package lv.javaguru.java2.servify.core.services.details;
 
+import jakarta.transaction.Transactional;
 import lv.javaguru.java2.servify.core.database.DetailRepository;
 import lv.javaguru.java2.servify.core.domain.Detail;
 import lv.javaguru.java2.servify.core.dto.DetailDTO;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 public class GetDetailByIdService {
     @Autowired
     private DetailRepository detailRepository;

@@ -1,5 +1,6 @@
 package lv.javaguru.java2.servify.core.services.details;
 
+import jakarta.transaction.Transactional;
 import lv.javaguru.java2.servify.core.database.DetailRepository;
 import lv.javaguru.java2.servify.core.domain.Detail;
 import lv.javaguru.java2.servify.core.dto.requests.SearchDetailRequest;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class SearchDetailService {
     @Autowired
     private DetailRepository detailRepository;

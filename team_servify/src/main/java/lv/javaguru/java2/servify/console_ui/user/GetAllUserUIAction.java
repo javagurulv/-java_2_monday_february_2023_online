@@ -18,6 +18,6 @@ public class GetAllUserUIAction implements UIAction {
 
     @Override
     public String getMenuItem() {
-        return "Get all users";
+        return "Show all users";
     }
 }

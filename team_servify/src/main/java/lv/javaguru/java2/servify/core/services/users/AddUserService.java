@@ -1,5 +1,6 @@
 package lv.javaguru.java2.servify.core.services.users;
 
+import jakarta.transaction.Transactional;
 import lv.javaguru.java2.servify.core.database.UserRepository;
 import lv.javaguru.java2.servify.core.domain.UserEntity;
 import lv.javaguru.java2.servify.core.dto.requests.AddUserRequest;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Transactional
 public class AddUserService {
 
     @Autowired private UserRepository userDB;
