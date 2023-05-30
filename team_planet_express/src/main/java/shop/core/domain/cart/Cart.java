@@ -32,15 +32,11 @@ public class Cart {
     }
 
     @SuppressWarnings("unused")
+    @PrePersist
     @PreUpdate
     private void onUpdate() {
         this.lastUpdate = LocalDateTime.now();
     }
 
-    @SuppressWarnings("unused")
-    @PrePersist
-    private void onInsert() {
-        this.lastUpdate = LocalDateTime.now();
-    }
 
 }

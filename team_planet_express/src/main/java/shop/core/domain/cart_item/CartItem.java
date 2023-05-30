@@ -34,14 +34,10 @@ public class CartItem {
     }
 
     @SuppressWarnings("unused")
-    @PreUpdate
-    private void onUpdate() {
-        this.cart.setLastUpdate(LocalDateTime.now());
-    }
-
-    @SuppressWarnings("unused")
-    @PrePersist
-    private void onInsert() {
+    @PostPersist
+    @PostUpdate
+    @PostRemove
+    private void onUpdateCart() {
         this.cart.setLastUpdate(LocalDateTime.now());
     }
 
