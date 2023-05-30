@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import lv.javaguru.java2.library.config.SpringCoreConfiguration;
 
-@Ignore
+//@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { SpringCoreConfiguration.class})
 public class SpringContextTest {
