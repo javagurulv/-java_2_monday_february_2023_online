@@ -24,7 +24,6 @@ public class Cart {
     @Enumerated(EnumType.STRING)
     private CartStatus status;
     @Column(name = "last_update")
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime lastUpdate;
 
     public Cart(User user) {
