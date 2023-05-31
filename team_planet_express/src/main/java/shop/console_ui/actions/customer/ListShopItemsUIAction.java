@@ -37,8 +37,6 @@ public class ListShopItemsUIAction extends UIAction {
         userCommunication.informUser(HEADER_TEXT);
         ListShopItemsRequest request = new ListShopItemsRequest(currentUserId);
         ListShopItemsResponse response = listShopItemsService.execute(request);
-        response.getShopItems()
-                .forEach(item -> userCommunication.informUser(itemStringProvider.get(item, response.getUserRole())));
     }
 
 }

@@ -1,18 +1,16 @@
 package shop.integration_tests;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import shop.config.ShopConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {ShopConfiguration.class})
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class SpringContextTest {
 
     @Autowired

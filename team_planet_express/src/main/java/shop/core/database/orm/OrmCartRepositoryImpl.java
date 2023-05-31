@@ -1,8 +1,8 @@
 package shop.core.database.orm;
 
-import org.hibernate.SessionFactory;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import shop.core.database.CartRepository;
@@ -16,18 +16,18 @@ import java.util.Optional;
 @Transactional
 public class OrmCartRepositoryImpl implements CartRepository {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public Cart save(Cart cart) {
-        sessionFactory.getCurrentSession().persist(cart);
+        entityManager.persist(cart);
         return cart;
     }
 
     @Override
     public Optional<Cart> findOpenCartForUserId(Long userId) {
-        Query<Cart> query = sessionFactory.getCurrentSession()
+        Query<Cart> query = (Query<Cart>) entityManager
                 .createQuery("SELECT c FROM Cart c WHERE user.id = :user_id AND status = 'OPEN'", Cart.class);
         query.setParameter("user_id", userId);
         return query.getResultStream().findFirst();
@@ -35,16 +35,16 @@ public class OrmCartRepositoryImpl implements CartRepository {
 
     @Override
     public void changeCartStatus(Long id, CartStatus cartStatus) {
-        Cart cart = sessionFactory.getCurrentSession().get(Cart.class, id);
+        Cart cart = entityManager.find(Cart.class, id);
         if (cart != null) {
             cart.setStatus(cartStatus);
-            sessionFactory.getCurrentSession().merge(cart);
+            entityManager.merge(cart);
         }
     }
 
     @Override
     public List<Cart> getAllCarts() {
-        return sessionFactory.getCurrentSession()
+        return entityManager
                 .createQuery("SELECT c FROM Cart c", Cart.class)
                 .getResultList();
     }
