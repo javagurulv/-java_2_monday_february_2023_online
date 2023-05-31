@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Servify demo project">
+    <meta name="author" content="DreamTeamDevelopers">
+    <title>Servify</title>
+  </head>
+
+<body>
+
+<h3>Show all details in the list</h3>
+
+<table>
+  <tr>
+    <td>Type:</td>
+    <td>Side:</td>
+    <td>Price:</td>
+  </tr>
+
+  <td th:if="${detail != null}">
+    <tr th:each="detail : ${detail}">
+      <td th:text="${detail.id}" />
+      <td th:text="${detail.type}" />
+      <td th:text="${detail.side}" />
+      <td th:text="${detail.price}" />
+    </tr>
+  </td>
+
+</table>
+
+<form action="/" method="get">
+  <input type="submit" value="Go to main page" name="Submit" />
+</form>
+
+</body>
+
+</html>

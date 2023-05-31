@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Servify demo project">
+  <meta name="author" content="DreamTeamDevelopers">
+  <title>Servify</title>
+</head>
+<body>
+
+<h3>Add detail to list</h3>
+
+<table>
+  <tr>
+    <td>Type:</td>
+    <td>Side:</td>
+    <td>Price:</td>
+  </tr>
+
+  <tr>
+    <form action="/addDetail" th:object="${request}" method="post">
+      <td><input type="text" th:field="${request.detailType}"/></td>
+      <td><input type="text" th:field="${request.detailSide}"/></td>
+      <td><input type="text" th:field="${request.detailPrice}"/></td>
+      <td>
+        <input type="submit" value="Add Detail"/>
+        <input type="reset" value="Clear"/>
+      </td>
+    </form>
+  </tr>
+
+</table>
+
+<td th:if="${errors != null}">
+  <tr th:each="error : ${errors}">
+    <td th:text="${error.field}" />
+    <td th:text="${error.message}" />
+  </tr>
+</td>
+
+</body>
+
+</html>
