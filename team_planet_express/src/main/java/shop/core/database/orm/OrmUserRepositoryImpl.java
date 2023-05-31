@@ -1,8 +1,8 @@
 package shop.core.database.orm;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import shop.core.database.UserRepository;
@@ -15,23 +15,23 @@ import java.util.Optional;
 @Transactional
 public class OrmUserRepositoryImpl implements UserRepository {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public User save(User user) {
-        sessionFactory.getCurrentSession().persist(user);
+        entityManager.persist(user);
         return user;
     }
 
     @Override
     public Optional<User> findById(Long userId) {
-        return Optional.ofNullable(sessionFactory.getCurrentSession().get(User.class, userId));
+        return Optional.ofNullable(entityManager.find(User.class, userId));
     }
 
     @Override
     public Optional<User> findByLoginName(String login) {
-        Query<User> query = sessionFactory.getCurrentSession()
+        TypedQuery<User> query = entityManager
                 .createQuery("SELECT u FROM User u WHERE login = :login", User.class);
         query.setParameter("login", login);
         return query.getResultStream().findFirst();
@@ -39,7 +39,7 @@ public class OrmUserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> getAllUsers() {
-        return sessionFactory.getCurrentSession()
+        return entityManager
                 .createQuery("SELECT u FROM User u", User.class)
                 .getResultList();
     }

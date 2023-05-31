@@ -1,37 +1,49 @@
-apply plugin: 'java'
-compileJava {
-    options.compilerArgs << '-parameters'
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.1.0'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'com.vaadin' version '24.0.5'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    set('vaadinVersion', "24.0.5")
 }
 
 dependencies {
-
-    compileOnly 'org.projectlombok:lombok:1.18.26'
-    annotationProcessor 'org.projectlombok:lombok:1.18.26'
-
     implementation 'com.mysql:mysql-connector-j:8.0.33'
     implementation 'org.apache.commons:commons-dbcp2:2.9.0'
-    implementation 'org.springframework:spring-jdbc:6.0.9'
 
-    implementation 'org.hibernate.orm:hibernate-core:6.2.3.Final'
-    implementation 'org.springframework:spring-orm:6.0.9'
-    implementation 'org.springframework:spring-tx:6.0.9'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'com.vaadin:vaadin-spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
-    implementation 'org.springframework:spring-context:6.0.9'
-
-    testCompileOnly 'org.projectlombok:lombok:1.18.26'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
-
-    testImplementation 'com.h2database:h2:2.1.214'
-
-    testImplementation 'org.springframework:spring-test:6.0.9'
-
+    testImplementation("com.h2database:h2")
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'junit:junit:4.13.1'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
-
     testImplementation 'org.mockito:mockito-core:5.2.0'
     testImplementation 'org.mockito:mockito-junit-jupiter:5.2.0'
-
-    test {
-        useJUnitPlatform()
-    }
-
 }
+
+dependencyManagement {
+    imports {
+        mavenBom "com.vaadin:vaadin-bom:${vaadinVersion}"
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+

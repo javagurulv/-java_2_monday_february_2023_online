@@ -18,8 +18,7 @@ public class ListShopItemsService {
     private DatabaseAccessValidator databaseAccessValidator;
 
     public ListShopItemsResponse execute(ListShopItemsRequest request) {
-        return new ListShopItemsResponse(itemRepository.getAllItems(),
-                databaseAccessValidator.getUserById(request.getCurrentUserId().getValue()).getUserRole());
+        return new ListShopItemsResponse(itemRepository.getAllItems());
     }
 
 }
