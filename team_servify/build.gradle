@@ -12,11 +12,10 @@ dependencies {
 	implementation('org.springframework:spring-orm:6.0.9')
 	implementation('org.springframework:spring-tx:6.0.9')
 
-
-
 	testImplementation('junit:junit:4.13.1')
 	testImplementation('org.mockito:mockito-core:3.6.0')
 	testImplementation('org.springframework:spring-test:6.0.9')
+	testImplementation('com.h2database:h2:1.4.200')
 }
 
 //dependencies {
