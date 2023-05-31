@@ -1,4 +1,14 @@
-apply plugin: 'war'
+//apply plugin: 'war'
+plugins {
+	id 'war'
+	id 'java'
+	id 'org.springframework.boot' version '3.0.0'
+	id 'io.spring.dependency-management' version '1.1.0'
+}
+
+repositories {
+	mavenCentral()
+}
 
 war.baseName = "java2-2023"
 jar.archiveName = "java2-2023.jar"
@@ -17,16 +27,11 @@ jar {
 dependencies {
 	implementation('mysql:mysql-connector-java:8.0.33')
 	implementation('org.apache.commons:commons-dbcp2:2.9.0')
-	//implementation('org.reflections:reflections:0.9.12')
-	//implementation('org.springframework:spring-context:6.0.9')
-	//implementation('org.springframework:spring-jdbc:6.0.9')
 
 	compileOnly('org.projectlombok:lombok:1.18.26')
 	annotationProcessor('org.projectlombok:lombok:1.18.26')
 
 	implementation('org.reflections:reflections:0.9.12')
-	//implementation('mysql:mysql-connector-java:8.0.22')
-	//implementation('org.apache.commons:commons-dbcp2:2.8.0')
 	implementation('org.hibernate:hibernate-core:5.4.25.Final')
 
 	implementation('org.springframework.boot:spring-boot-starter-data-jpa:2.7.5') {
@@ -42,6 +47,9 @@ dependencies {
 	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat:2.7.5') {
 		exclude (group: 'ch.qos.logback', module: 'logback-classic')
 	}
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
+	implementation 'org.springframework.security:spring-security-test'
 
 	testImplementation('junit:junit:4.13.1')
 	testImplementation('org.mockito:mockito-core:3.6.0')
