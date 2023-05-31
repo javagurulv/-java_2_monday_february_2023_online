@@ -9,8 +9,9 @@ import lv.javaguru.java2.servify.core.dto.responses.SetUserNotActiveResponse;
 import lv.javaguru.java2.servify.core.services.validators.SetUserNotActiveValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+//import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -32,7 +33,7 @@ public class SetUserNotActiveService {
     private UserEntity updateFields(UserEntity user, SetUserNotActiveRequest request) {
         var updatedUser = new UserEntity();
         updatedUser.setId(user.getId());
-        updatedUser.setUserType(user.getUserType());
+        updatedUser.setRole(user.getRole());
         updatedUser.setFirstName(user.getFirstName());
         updatedUser.setLastName(user.getLastName());
         updatedUser.setPhoneNumber(user.getPhoneNumber());
