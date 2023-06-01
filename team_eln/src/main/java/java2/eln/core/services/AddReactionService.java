@@ -39,6 +39,8 @@ public class AddReactionService {
         additionOfMaterials(filename, demoReactionLog); // The Materials added to the ReactionData from the file
         additionOfConditions(filename, demoReactionLog); // The Reaction Conditions added to the ReactionData from the file
 
+        demoReactionLog.calculateReactionYield();
+
         databaseIM.addReaction(demoReactionLog);
 
         return new AddReactionResponse(demoReactionLog);
