@@ -20,7 +20,7 @@ import lv.javaguru.java2.library.core.responses.SearchBooksResponse;
 import lv.javaguru.java2.library.core.services.AddBookService;
 import lv.javaguru.java2.library.core.services.SearchBooksService;
 
-@Ignore
+//@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {SpringCoreConfiguration.class})
 public class AcceptanceTest2 {

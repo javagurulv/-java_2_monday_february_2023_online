@@ -1,18 +1,18 @@
 package java2.eln.console_ui;
 
-import java2.eln.core.requests.DeleteReactionRequest;
+import java2.eln.core.requests.DeleteReactionByCodeRequest;
 import java2.eln.core.responses.DeleteReactionResponse;
-import java2.eln.core.services.DelReactionService;
+import java2.eln.core.services.DelReactionByCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
 @Component
-public class DelReactionUIAction implements UIAction{
+public class DelReactionByCodeUIAction implements UIAction{
 
     @Autowired
-    DelReactionService delReactionService;
+    DelReactionByCodeService delReactionByCodeService;
 
 //    public DelReactionUIAction(DelReactionService delReactionService) {
 //        this.delReactionService = delReactionService;
@@ -24,8 +24,8 @@ public class DelReactionUIAction implements UIAction{
         System.out.println("Enter Reaction Code to delete: ");
         String  reactionCode = scanner.nextLine();
 
-        DeleteReactionRequest deleteReactionRequest = new DeleteReactionRequest(reactionCode);
-        DeleteReactionResponse deleteReactionResponse = delReactionService.execute(deleteReactionRequest);
+        DeleteReactionByCodeRequest deleteReactionByCodeRequest = new DeleteReactionByCodeRequest(reactionCode);
+        DeleteReactionResponse deleteReactionResponse = delReactionByCodeService.execute(deleteReactionByCodeRequest);
 
         if (deleteReactionResponse.hasErrors()) {
             deleteReactionResponse.getErrors().forEach(coreError ->
