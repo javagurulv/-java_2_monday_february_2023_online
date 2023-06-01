@@ -1,4 +1,4 @@
-package java2.eln.core.database;
+package java2.eln.core.domain;
 
 public class User {
     private int userId = 0;

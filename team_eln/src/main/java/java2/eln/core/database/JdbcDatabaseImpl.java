@@ -23,7 +23,7 @@ class JdbcDatabaseImpl implements DatabaseIM {
     public void addReaction(ReactionData reaction) {
         String reactionQuery = "INSERT INTO ReactionData (code, name, reactionYield) VALUES (?, ?, ?)";
 
-        reaction.calculateReactionYield();
+
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(con -> {

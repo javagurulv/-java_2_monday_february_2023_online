@@ -26,10 +26,12 @@ public class AddReactionResponse extends CoreResponse {
 
     /**
      * Creates a new AddReactionResponse object with the specified reaction data.
+     * Calculate the reaction yield based on the reaction data.
      *
      * @param reactionData the reaction data to include in the response
      */
     public AddReactionResponse(ReactionData reactionData) {
+        reactionData.calculateReactionYield();
         this.reactionData = reactionData;
     }
 

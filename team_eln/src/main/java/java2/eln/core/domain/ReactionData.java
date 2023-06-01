@@ -1,7 +1,5 @@
 package java2.eln.core.domain;
 
-import java2.eln.core.database.User;
-
 import java.io.File;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
