@@ -1,15 +1,11 @@
 package lv.javaguru.java2.servify.console_ui.user;
 
 import lv.javaguru.java2.servify.console_ui.UIAction;
-import lv.javaguru.java2.servify.core.requests.user.SetUserNotActiveRequest;
-import lv.javaguru.java2.servify.core.responses.user.SetUserNotActiveResponse;
-import lv.javaguru.java2.servify.core.services.user.SetUserNotActiveService;
-import lv.javaguru.java2.servify.domain.UserType;
+import lv.javaguru.java2.servify.core.dto.requests.SetUserNotActiveRequest;
+import lv.javaguru.java2.servify.core.dto.responses.SetUserNotActiveResponse;
+import lv.javaguru.java2.servify.core.services.users.SetUserNotActiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 @Component
@@ -38,12 +34,5 @@ public class SetUserNotActiveUIAction implements UIAction {
     @Override
     public String getMenuItem() {
         return "Remove user";
-    }
-
-    @Override
-    public List<UserType> getAccessUserByType() {
-        return new ArrayList<>(List.of(
-                UserType.MANAGER
-        ));
     }
 }

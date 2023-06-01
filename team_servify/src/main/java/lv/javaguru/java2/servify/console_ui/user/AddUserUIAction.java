@@ -1,15 +1,11 @@
 package lv.javaguru.java2.servify.console_ui.user;
 
 import lv.javaguru.java2.servify.console_ui.UIAction;
-import lv.javaguru.java2.servify.core.requests.user.AddUserRequest;
-import lv.javaguru.java2.servify.core.responses.user.AddUserResponse;
-import lv.javaguru.java2.servify.core.services.user.AddUserService;
-import lv.javaguru.java2.servify.domain.UserType;
+import lv.javaguru.java2.servify.core.dto.requests.AddUserRequest;
+import lv.javaguru.java2.servify.core.dto.responses.AddUserResponse;
+import lv.javaguru.java2.servify.core.services.users.AddUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 @Component
@@ -46,12 +42,4 @@ public class AddUserUIAction implements UIAction {
         return "Add new User";
     }
 
-    @Override
-    public List<UserType> getAccessUserByType() {
-        return new ArrayList<>(List.of(
-                UserType.CUSTOMER,
-                UserType.MANAGER,
-                UserType.ANONYMOUS
-        ));
-    }
 }
