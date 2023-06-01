@@ -13,6 +13,13 @@ public class WebBookListApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringWebConfiguration.class);
+
+//		ProgramMenu programMenu = context.getBean(ProgramMenu.class);
+//		while (true) {
+//			programMenu.print();
+//			int menuNumber = programMenu.getMenuNumberFromUser();
+//			programMenu.executeSelectedMenuItem(menuNumber);
+//		}
 	}
 
 }
