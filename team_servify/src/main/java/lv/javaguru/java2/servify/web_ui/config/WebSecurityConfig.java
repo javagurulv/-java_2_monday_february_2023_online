@@ -14,13 +14,14 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class WebSecurityConfig {
     @Bean
     @Order(1)
-    public SecurityFilterChain addDetailSecurityChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChainMain(HttpSecurity http) throws Exception {
         return http
-                .securityMatcher(AntPathRequestMatcher.antMatcher("/addDetail/**"))
+                .securityMatcher(AntPathRequestMatcher.antMatcher("/**"))
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers(AntPathRequestMatcher.antMatcher("/addDetail/**")).permitAll();
+                    auth.requestMatchers(AntPathRequestMatcher.antMatcher("/**")).permitAll();
                 })
-                .csrf(csrf -> csrf.ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/addDetail/**")))
+                .csrf(csrf -> csrf.ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/**")))
+                .formLogin(withDefaults())
                 .build();
     }
     @Bean

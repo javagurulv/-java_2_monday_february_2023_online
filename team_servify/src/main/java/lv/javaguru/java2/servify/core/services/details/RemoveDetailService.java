@@ -24,7 +24,7 @@ public class RemoveDetailService {
         if (!errors.isEmpty()) {
             return new RemoveDetailResponse(errors);
         }
-        boolean isDetailRemoved =  detailRepository.deleteById(request.getId());
+        boolean isDetailRemoved =  detailRepository.deleteById(request.getDetailId());
         return new RemoveDetailResponse(isDetailRemoved);
     }
 

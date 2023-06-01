@@ -26,7 +26,7 @@ public class AddDetailController {
             modelMap.addAttribute("errors", response.getErrors());
             return "addDetail";
         } else {
-            return "redirect:/";
+            return "redirect:/showAllDetails";
         }
     }
 }
