@@ -1,7 +1,7 @@
 package java2.eln.core.services.validators;
 
 import java2.eln.core.database.DatabaseIM;
-import java2.eln.core.requests.DeleteReactionRequest;
+import java2.eln.core.requests.DeleteReactionByCodeRequest;
 import java2.eln.core.responses.errorPattern.CoreError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class DelReactionValidator {
+public class DelReactionByCodeValidator {
     @Autowired
     DatabaseIM databaseIM;
 
@@ -19,18 +19,18 @@ public class DelReactionValidator {
 //        this.databaseIM = databaseIM;
 //    }
 
-    private Optional<CoreError> codeValidate (DeleteReactionRequest deleteReactionRequest){
-        return (deleteReactionRequest.getCode() == null || deleteReactionRequest.getCode().isBlank())
+    private Optional<CoreError> codeValidate (DeleteReactionByCodeRequest deleteReactionByCodeRequest){
+        return (deleteReactionByCodeRequest.getCode() == null || deleteReactionByCodeRequest.getCode().isBlank())
                 ? Optional.of(new CoreError("Reaction Code", "Must not be empty!"))
                 : Optional.empty();
     }
-    private Optional<CoreError> reactionIsPresentValidate (DeleteReactionRequest deleteReactionRequest){
-        return (databaseIM.hasReactionWithCode(deleteReactionRequest.getCode()))
+    private Optional<CoreError> reactionIsPresentValidate (DeleteReactionByCodeRequest deleteReactionByCodeRequest){
+        return (databaseIM.hasReactionWithCode(deleteReactionByCodeRequest.getCode()))
                 ? Optional.empty()
                 : Optional.of(new CoreError("Reaction code not found", "enter the code of the reaction existing in the database"));
     }
 
-    public List<CoreError> validate(DeleteReactionRequest request) {
+    public List<CoreError> validate(DeleteReactionByCodeRequest request) {
         List<CoreError> errors = new ArrayList<>();
         codeValidate(request).ifPresent(errors::add);
         reactionIsPresentValidate(request).ifPresent(errors::add);
