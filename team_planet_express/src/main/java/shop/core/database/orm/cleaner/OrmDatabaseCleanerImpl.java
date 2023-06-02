@@ -1,6 +1,7 @@
 package shop.core.database.orm.cleaner;
 
-import org.hibernate.SessionFactory;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +20,9 @@ import java.util.List;
 @Transactional
 public class OrmDatabaseCleanerImpl implements DatabaseCleaner {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    @PersistenceContext
+    private EntityManager entityManager;
+
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -43,7 +45,7 @@ public class OrmDatabaseCleanerImpl implements DatabaseCleaner {
     }
 
     private void clearTable(List<?> tableData) {
-        tableData.forEach(record -> sessionFactory.getCurrentSession().remove(record));
+        tableData.forEach(record -> entityManager.remove(record));
     }
 
 }

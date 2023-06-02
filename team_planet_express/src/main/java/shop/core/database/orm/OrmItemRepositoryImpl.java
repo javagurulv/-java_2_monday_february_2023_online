@@ -1,8 +1,8 @@
 package shop.core.database.orm;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import shop.core.database.ItemRepository;
@@ -16,83 +16,80 @@ import java.util.Optional;
 @Transactional
 public class OrmItemRepositoryImpl implements ItemRepository {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public Item save(Item item) {
-        sessionFactory.getCurrentSession().persist(item);
+        entityManager.persist(item);
         return item;
     }
 
     @Override
     public Optional<Item> findById(Long itemId) {
-        return Optional.ofNullable(sessionFactory.getCurrentSession().get(Item.class, itemId));
+        return Optional.ofNullable(entityManager.find(Item.class, itemId));
     }
 
     @Override
     public Optional<Item> findByName(String name) {
-        Query<Item> query = sessionFactory.getCurrentSession()
-                .createQuery("SELECT i FROM Item i WHERE name = :name", Item.class);
-        query.setParameter("name", name);
-        return query.getResultStream().findFirst();
+        return entityManager
+                .createQuery("SELECT i FROM Item i WHERE name = :name", Item.class)
+                .setParameter("name", name)
+                .getResultStream()
+                .findFirst();
     }
 
-    //TODO all 3 needed ???
     @Override
     public void changeName(Long id, String newName) {
-        Item item = sessionFactory.getCurrentSession().get(Item.class, id);
+        Item item = entityManager.find(Item.class, id);
         if (item != null) {
             item.setName(newName);
-            sessionFactory.getCurrentSession().merge(item);
         }
     }
 
     @Override
     public void changePrice(Long id, BigDecimal newPrice) {
-        Item item = sessionFactory.getCurrentSession().get(Item.class, id);
+        Item item = entityManager.find(Item.class, id);
         if (item != null) {
             item.setPrice(newPrice);
-            sessionFactory.getCurrentSession().merge(item);
         }
     }
 
     @Override
     public void changeAvailableQuantity(Long id, Integer newAvailableQuantity) {
-        Item item = sessionFactory.getCurrentSession().get(Item.class, id);
+        Item item = entityManager.find(Item.class, id);
         if (item != null) {
             item.setAvailableQuantity(newAvailableQuantity);
-            sessionFactory.getCurrentSession().merge(item);
         }
     }
 
     @Override
     public List<Item> getAllItems() {
-        return sessionFactory.getCurrentSession()
+        return entityManager
                 .createQuery("SELECT i FROM Item i", Item.class)
                 .getResultList();
     }
 
     @Override
     public List<Item> searchByName(String itemName, String ordering, String paging) {
-        Query<Item> query = sessionFactory.getCurrentSession()
-                .createQuery("SELECT i FROM Item i WHERE LOWER(name) LIKE :name " + ordering, Item.class);
-        query.setParameter("name", "%" + itemName + "%");
+        TypedQuery<Item> query = entityManager
+                .createQuery("SELECT i FROM Item i WHERE LOWER(name) LIKE :name " + ordering, Item.class)
+                .setParameter("name", "%" + itemName + "%");
         addPaging(query, paging);
         return query.getResultList();
     }
 
     @Override
     public List<Item> searchByNameAndPrice(String itemName, BigDecimal price, String ordering, String paging) {
-        Query<Item> query = sessionFactory.getCurrentSession()
-                .createQuery("SELECT i FROM Item i WHERE LOWER(name) LIKE :name AND price <= :price " + ordering, Item.class);
-        query.setParameter("name", "%" + itemName + "%");
-        query.setParameter("price", price);
+        TypedQuery<Item> query = entityManager
+                .createQuery("SELECT i FROM Item i WHERE LOWER(name) LIKE :name AND price <= :price " + ordering, Item.class)
+                .setParameter("name", "%" + itemName + "%")
+                .setParameter("price", price);
         addPaging(query, paging);
         return query.getResultList();
     }
 
-    private void addPaging(Query<Item> query, String paging) {
+    private void addPaging(TypedQuery<Item> query, String paging) {
         //TODO (╯°□°)╯︵ ┻━┻
         if (!paging.isBlank()) {
             query.setMaxResults(Integer.parseInt(paging.split(" ")[1]));

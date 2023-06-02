@@ -31,12 +31,4 @@ public class Cart {
         this.status = CartStatus.OPEN;
     }
 
-    @SuppressWarnings("unused")
-    @PrePersist
-    @PreUpdate
-    private void onUpdate() {
-        this.lastUpdate = LocalDateTime.now();
-    }
-
-
 }

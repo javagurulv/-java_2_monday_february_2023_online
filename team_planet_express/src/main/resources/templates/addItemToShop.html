@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="e-Shop">
+    <meta name="author" content="Planet Express">
+    <title>Planet Express e-Shop</title>
+</head>
+
+<body>
+<h2>Add item to shop</h2>
+<table>
+    <tr>
+        <td>Name:</td>
+        <td>Price:</td>
+        <td>Quantity:</td>
+    </tr>
+    <tr>
+        <form action="/addItemToShop" th:object="${request}" method="post">
+            <td><input type="text" th:field="${request.itemName}"/></td>
+            <td><input type="text" th:field="${request.price}"/></td>
+            <td><input type="text" th:field="${request.availableQuantity}"/></td>
+            <td>
+                <input type="submit" value="Add item"/>
+                <input type="reset" value="Clear"/>
+            </td>
+        </form>
+    </tr>
+</table>
+<table th:if="${errors != null}">
+    <tr th:each="error : ${errors}">
+        <td th:text="${error.field}"></td>
+        <td th:text="${error.errorCode}"></td>
+        <td th:text="${error.message}"></td>
+    </tr>
+</table>
+</body>
+
+</html>

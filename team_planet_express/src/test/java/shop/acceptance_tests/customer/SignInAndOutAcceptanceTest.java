@@ -1,12 +1,9 @@
 package shop.acceptance_tests.customer;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import shop.config.ShopConfiguration;
 import shop.core.database.UserRepository;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
@@ -21,8 +18,7 @@ import shop.core.support.CurrentUserId;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {ShopConfiguration.class})
+@SpringBootTest
 public class SignInAndOutAcceptanceTest {
 
     @Autowired

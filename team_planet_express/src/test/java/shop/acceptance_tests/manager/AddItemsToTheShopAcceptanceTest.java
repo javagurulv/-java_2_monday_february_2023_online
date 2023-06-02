@@ -1,12 +1,9 @@
 package shop.acceptance_tests.manager;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import shop.config.ShopConfiguration;
 import shop.core.database.ItemRepository;
 import shop.core.domain.item.Item;
 import shop.core.requests.manager.AddItemToShopRequest;
@@ -18,8 +15,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {ShopConfiguration.class})
+@SpringBootTest
 public class AddItemsToTheShopAcceptanceTest {
 
     @Autowired

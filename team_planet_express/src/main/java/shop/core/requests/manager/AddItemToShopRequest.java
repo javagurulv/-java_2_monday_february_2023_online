@@ -1,12 +1,16 @@
 package shop.core.requests.manager;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class AddItemToShopRequest {
 
-    String itemName;
-    String price;
-    String availableQuantity;
+    private String itemName;
+    private String price;
+    private String availableQuantity;
 
 }

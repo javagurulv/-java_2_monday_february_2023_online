@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.item.Item;
 
-import java.time.LocalDateTime;
-
 @Data
 @NoArgsConstructor
 @Entity
@@ -31,14 +29,6 @@ public class CartItem {
         this.cart = cart;
         this.item = item;
         this.orderedQuantity = orderedQuantity;
-    }
-
-    @SuppressWarnings("unused")
-    @PostPersist
-    @PostUpdate
-    @PostRemove
-    private void onUpdateCart() {
-        this.cart.setLastUpdate(LocalDateTime.now());
     }
 
 }
