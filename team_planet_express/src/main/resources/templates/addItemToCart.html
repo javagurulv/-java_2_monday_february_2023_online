@@ -9,18 +9,16 @@
 </head>
 
 <body>
-<h2>Add item to shop</h2>
+<h2>Add item to cart</h2>
 <table>
     <tr>
         <td>Name:</td>
-        <td>Price:</td>
         <td>Quantity:</td>
     </tr>
     <tr>
-        <form action="/addItemToShop" th:object="${request}" method="post">
+        <form action="/addItemToCart" th:object="${request}" method="post">
             <td><input type="text" th:field="${request.itemName}"/></td>
-            <td><input type="text" th:field="${request.price}"/></td>
-            <td><input type="text" th:field="${request.availableQuantity}"/></td>
+            <td><input type="text" th:field="${request.orderedQuantity}"/></td>
             <td>
                 <input type="submit" value="Add item"/>
                 <input type="reset" value="Clear"/>

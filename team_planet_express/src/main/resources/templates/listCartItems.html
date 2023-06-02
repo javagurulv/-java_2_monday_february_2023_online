@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="e-Shop">
+    <meta name="author" content="Planet Express">
+    <title>Planet Express e-Shop</title>
+</head>
+
+<body>
+<h2>Cart items</h2>
+<div th:if="${items != null and items.empty}">
+    Your cart is empty.
+</div>
+<div th:if="${items != null and !items.empty}">
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td>Price:</td>
+            <td>Quantity:</td>
+        </tr>
+        <tr th:each="item : ${items}">
+            <td th:text="${item.itemName}"></td>
+            <td th:text="${item.price}"></td>
+            <td th:text="${item.orderedQuantity}"></td>
+        </tr>
+        <tr>
+            <td>Total:</td>
+            <td th:text="${total}"></td>
+        </tr>
+    </table>
+</div>
+<form action="/" method="get">
+    <input type="submit" value="Back" name="Submit"/>
+</form>
+</body>
+
+</html>
