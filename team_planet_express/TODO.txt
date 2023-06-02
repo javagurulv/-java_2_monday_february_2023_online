@@ -5,6 +5,6 @@ check role permissions in actions
 length to error message?
 check paging sqls
 
+current session user ?
 clear button borked
-list cart message part
 td/tr/table ?

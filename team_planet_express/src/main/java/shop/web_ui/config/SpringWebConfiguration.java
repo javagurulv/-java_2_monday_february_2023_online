@@ -12,8 +12,6 @@ import org.thymeleaf.templatemode.TemplateMode;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "shop")
-//@PropertySource(value = "classpath:application.properties")
-//@EnableTransactionManagement
 public class SpringWebConfiguration implements WebMvcConfigurer {
 
     @Override

@@ -1,13 +1,17 @@
 package shop.core.requests.manager;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Value
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ChangeItemDataRequest {
 
-    String itemId;
-    String newItemName;
-    String newPrice;
-    String newAvailableQuantity;
+    private String itemId;
+    private String newItemName;
+    private String newPrice;
+    private String newAvailableQuantity;
 
 }

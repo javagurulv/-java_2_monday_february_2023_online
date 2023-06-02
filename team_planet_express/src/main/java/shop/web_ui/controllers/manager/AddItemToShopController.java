@@ -1,4 +1,4 @@
-package shop.web_ui.controllers;
+package shop.web_ui.controllers.manager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ public class AddItemToShopController {
     @GetMapping(value = "/addItemToShop")
     public String showAddItemToShopPage(ModelMap modelMap) {
         modelMap.addAttribute("request", new AddItemToShopRequest());
-        return "addItemToShop";
+        return "manager/addItemToShop";
     }
 
     @PostMapping(value = "/addItemToShop")
@@ -28,7 +28,7 @@ public class AddItemToShopController {
         AddItemToShopResponse response = addItemToShopService.execute(request);
         if (response.hasErrors()) {
             modelMap.addAttribute("errors", response.getErrors());
-            return "addItemToShop";
+            return "manager/addItemToShop";
         } else {
             return "redirect:/";
         }

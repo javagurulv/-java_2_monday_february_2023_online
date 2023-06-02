@@ -1,4 +1,4 @@
-package shop.web_ui.controllers;
+package shop.web_ui.controllers.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,7 @@ public class ListShopItemsController {
         ListShopItemsRequest request = new ListShopItemsRequest(currentUserId);
         ListShopItemsResponse response = listShopItemsService.execute(request);
         modelMap.addAttribute("items", response.getShopItems());
-        return "listShopItems";
+        return "customer/listShopItems";
     }
 
 }

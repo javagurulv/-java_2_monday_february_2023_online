@@ -59,7 +59,9 @@ public class RemoveItemFromCartValidator {
         InputStringValidatorData inputStringValidatorData =
                 new InputStringValidatorData(itemName, FIELD_NAME, VALUE_NAME_ITEM);
         inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
-        validateItemNameInShop(itemName).ifPresent(errors::add);
+        if (errors.isEmpty()) {
+            validateItemNameInShop(itemName).ifPresent(errors::add);
+        }
     }
 
     private Optional<CoreError> validateItemNameInShop(String itemName) {

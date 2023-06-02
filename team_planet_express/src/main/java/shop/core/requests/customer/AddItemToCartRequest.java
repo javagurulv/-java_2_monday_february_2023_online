@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 import shop.core.support.CurrentUserId;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class AddItemToCartRequest {
 
     private CurrentUserId currentUserId;

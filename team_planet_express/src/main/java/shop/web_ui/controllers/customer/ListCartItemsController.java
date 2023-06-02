@@ -1,4 +1,4 @@
-package shop.web_ui.controllers;
+package shop.web_ui.controllers.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +23,7 @@ public class ListCartItemsController {
         ListCartItemsResponse response = listCartItemsService.execute(request);
         modelMap.addAttribute("items", response.getCartItemsForList());
         modelMap.addAttribute("total", response.getCartTotal());
-        return "listCartItems";
+        return "customer/listCartItems";
     }
 
 }

@@ -1,4 +1,4 @@
-package shop.web_ui.controllers;
+package shop.web_ui.controllers.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,13 +19,13 @@ public class AddItemToCartController {
     @Autowired
     private CurrentUserId currentUserId;
 
-    @GetMapping(value = "addItemToCart")
+    @GetMapping(value = "/addItemToCart")
     public String showAddItemToCartPage(ModelMap modelMap) {
         modelMap.addAttribute("request", new AddItemToCartRequest());
-        return "addItemToCart";
+        return "customer/addItemToCart";
     }
 
-    @PostMapping(value = "addItemToCart")
+    @PostMapping(value = "/addItemToCart")
     public String processAddItemToCartRequest(
             @ModelAttribute(value = "request") AddItemToCartRequest request, ModelMap modelMap) {
         //TODO shame
@@ -33,7 +33,7 @@ public class AddItemToCartController {
         AddItemToCartResponse response = addItemToCartService.execute(request);
         if (response.hasErrors()) {
             modelMap.addAttribute("errors", response.getErrors());
-            return "addItemToCart";
+            return "customer/addItemToCart";
         } else {
             return "redirect:/";
         }
