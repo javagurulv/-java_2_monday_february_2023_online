@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="e-Shop">
+    <meta name="author" content="Planet Express">
+    <title>Planet Express e-Shop</title>
+</head>
+
+<body>
+<h2>Search item</h2>
+<table>
+    <tr>
+        <td>Name:</td>
+        <td>Max price:</td>
+        <td>Sort by name:</td>
+        <td>Asc:</td>
+        <td>Sort by price:</td>
+        <td>Asc:</td>
+        <td>Max per page:</td>
+        <td>Page:</td>
+    </tr>
+    <tr>
+        <form action="/searchItem" th:object="${request}" method="post">
+            <td><input type="text" th:field="${request.itemName}"/></td>
+            <td><input type="text" th:field="${request.price}"/></td>
+            <!--            ordering/paging-->
+            <td>
+                <input type="submit" value="Search item"/>
+                <input type="reset" value="Clear"/>
+            </td>
+        </form>
+    </tr>
+</table>
+<table th:if="${errors != null}">
+    <tr th:each="error : ${errors}">
+        <td th:text="${error.field}"></td>
+        <td th:text="${error.errorCode}"></td>
+        <td th:text="${error.message}"></td>
+    </tr>
+</table>
+<h2>Results</h2>
+<div th:if="${items != null and items.empty}">
+    No results.
+</div>
+<div th:if="${items != null and !items.empty}">
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td>Price:</td>
+            <td>Quantity:</td>
+        </tr>
+        <tr th:each="item : ${items}">
+            <td th:text="${item.name}"></td>
+            <td th:text="${item.price}"></td>
+            <td th:text="${item.availableQuantity}"></td>
+        </tr>
+    </table>
+</div>
+<form action="/" method="get">
+    <input type="submit" value="Back" name="Submit"/>
+</form>
+</body>
+
+</html>

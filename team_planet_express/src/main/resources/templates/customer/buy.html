@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="e-Shop">
+    <meta name="author" content="Planet Express">
+    <title>Planet Express e-Shop</title>
+</head>
+
+<body>
+<h2>Buy</h2>
+<table>
+    <tr>
+        <form action="/buy" th:object="${request}" method="post">
+            <td>
+                <input type="submit" value="Buy"/>
+            </td>
+        </form>
+    </tr>
+</table>
+<table th:if="${errors != null}">
+    <tr th:each="error : ${errors}">
+        <td th:text="${error.field}"></td>
+        <td th:text="${error.errorCode}"></td>
+        <td th:text="${error.message}"></td>
+    </tr>
+</table>
+<form action="/" method="get">
+    <input type="submit" value="Back" name="Submit"/>
+</form>
+</body>
+
+</html>

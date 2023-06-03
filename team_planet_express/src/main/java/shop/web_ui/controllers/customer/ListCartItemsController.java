@@ -21,8 +21,12 @@ public class ListCartItemsController {
     public String showListCartItemsPage(ModelMap modelMap) {
         ListCartItemsRequest request = new ListCartItemsRequest(currentUserId);
         ListCartItemsResponse response = listCartItemsService.execute(request);
-        modelMap.addAttribute("items", response.getCartItemsForList());
-        modelMap.addAttribute("total", response.getCartTotal());
+        if (response.hasErrors()) {
+            modelMap.addAttribute("errors", response.getErrors());
+        } else {
+            modelMap.addAttribute("items", response.getCartItemsForList());
+            modelMap.addAttribute("total", response.getCartTotal());
+        }
         return "customer/listCartItems";
     }
 

@@ -1,14 +1,18 @@
 package shop.core.requests.guest;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import shop.core.support.CurrentUserId;
 
-@Value
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class SignUpRequest {
 
-    CurrentUserId currentUserId;
-    String name;
-    String loginName;
-    String password;
+    private CurrentUserId currentUserId;
+    private String name;
+    private String loginName;
+    private String password;
 
 }

@@ -31,6 +31,13 @@
         </tr>
     </table>
 </div>
+<table th:if="${errors != null}">
+    <tr th:each="error : ${errors}">
+        <td th:text="${error.field}"></td>
+        <td th:text="${error.errorCode}"></td>
+        <td th:text="${error.message}"></td>
+    </tr>
+</table>
 <form action="/" method="get">
     <input type="submit" value="Back" name="Submit"/>
 </form>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -10,8 +10,17 @@
 
 <body>
 <h2>Program menu</h2>
+<h3>You are:
+    <text th:text="${user.value}"></text>
+</h3>
+<h3>Your cart is:
+    <text th:text="${cartStatus}"></text>
+    , it has
+    <text th:text="${cartItemQuantity}"></text>
+    items
+</h3>
 <a href="/listShopItems">List shop items</a> <br>
-<a href="/searchItems">Search</a> <br>
+<a href="/searchItem">Search</a> <br>
 <a href="/addItemToCart">Add item to cart</a> <br>
 <a href="/removeItemFromCart">Remove item from cart</a> <br>
 <a href="/listCartItems">List cart items</a> <br>
@@ -22,7 +31,6 @@
 <a href="/signIn">Sign in</a> <br>
 <a href="/signUp">Sign up</a> <br>
 <a href="/signOut">Sign out</a> <br>
-<a href="/exit">Exit</a> <br>
 </body>
 
 </html>
