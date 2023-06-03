@@ -40,8 +40,7 @@ public class SearchItemService {
         } else {
             List<Item> items = search(request);
             boolean nextPageAvailable = isExtraItemAvailable(request, items);
-            response = new SearchItemResponse(items, nextPageAvailable,
-                    databaseAccessValidator.getUserById(request.getCurrentUserId().getValue()).getUserRole());
+            response = new SearchItemResponse(items, nextPageAvailable);
         }
         return response;
     }

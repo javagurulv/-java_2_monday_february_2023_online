@@ -5,8 +5,6 @@ import org.springframework.stereotype.Component;
 import shop.console_ui.UserCommunication;
 import shop.console_ui.actions.UIAction;
 import shop.core.domain.user.UserRole;
-import shop.core.requests.customer.AddItemToCartRequest;
-import shop.core.responses.customer.AddItemToCartResponse;
 import shop.core.services.actions.customer.AddItemToCartService;
 import shop.core.support.CurrentUserId;
 
@@ -33,16 +31,16 @@ public class AddItemToCartUIAction extends UIAction {
 
     @Override
     public void execute() {
-        String itemName = userCommunication.requestInput(PROMPT_TOPIC_ITEM);
-        String orderedQuantity = userCommunication.requestInput(PROMPT_TOPIC_QUANTITY);
-        AddItemToCartRequest request =
-                new AddItemToCartRequest(currentUserId, itemName, orderedQuantity);
-        AddItemToCartResponse response = addItemToCartService.execute(request);
-        if (response.hasErrors()) {
-            response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));
-        } else {
-            userCommunication.informUser(MESSAGE_ITEM_ADDED);
-        }
+//        String itemName = userCommunication.requestInput(PROMPT_TOPIC_ITEM);
+//        String orderedQuantity = userCommunication.requestInput(PROMPT_TOPIC_QUANTITY);
+//        AddItemToCartRequest request =
+//                new AddItemToCartRequest(user, itemName, orderedQuantity);
+//        AddItemToCartResponse response = addItemToCartService.execute(request);
+//        if (response.hasErrors()) {
+//            response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));
+//        } else {
+//            userCommunication.informUser(MESSAGE_ITEM_ADDED);
+//        }
     }
 
 }

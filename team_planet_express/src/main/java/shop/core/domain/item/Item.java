@@ -22,6 +22,10 @@ public class Item {
     private BigDecimal price;
     @Column(name = "available_quantity", nullable = false)
     private Integer availableQuantity;
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "item_picture", nullable = true)
+    private byte[] itemPicture;
 
     public Item(String name, BigDecimal price, Integer availableQuantity) {
         this.name = name;

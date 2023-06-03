@@ -30,7 +30,7 @@ public class ListCartItemsTester extends Tester {
         Optional<Item> itemOptional = itemRepository.getAllItems().stream()
                 .filter(item -> item.getName().equals(itemName)).findFirst();
         assertTrue(itemOptional.isPresent());
-        assertTrue(listCartItemsResponse.getCartItemsForList().stream()
+        assertTrue(listCartItemsResponse.getCartItems().stream()
                 .anyMatch(item -> item.getItemName().equals(itemName) && item.getOrderedQuantity().equals(quantity)));
         return this;
     }

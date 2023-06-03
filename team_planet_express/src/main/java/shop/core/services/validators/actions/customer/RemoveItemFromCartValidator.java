@@ -43,9 +43,9 @@ public class RemoveItemFromCartValidator {
     private ErrorProcessor errorProcessor;
 
     public List<CoreError> validate(RemoveItemFromCartRequest request) {
-        userIdValidator.validateCurrentUserIdIsPresent(request.getCurrentUserId());
+        userIdValidator.validateCurrentUserIdIsPresent(request.getUser().getId());
         List<CoreError> errors = new ArrayList<>();
-        cartValidator.validateOpenCartExistsForUserId(request.getCurrentUserId().getValue()).ifPresent(errors::add);
+        cartValidator.validateOpenCartExistsForUserId(request.getUser().getId()).ifPresent(errors::add);
         if (errors.isEmpty()) {
             validateItemName(request.getItemName(), errors);
             if (errors.isEmpty()) {
@@ -69,7 +69,7 @@ public class RemoveItemFromCartValidator {
     }
 
     private Optional<CoreError> validateItemNameInCart(RemoveItemFromCartRequest request) {
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getCurrentUserId().getValue());
+        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getUser().getId());
         Item item = databaseAccessValidator.getItemByName(request.getItemName());
         return (cartItemRepository.findByCartIdAndItemId(cart.getId(), item.getId()).isEmpty())
                 ? Optional.of(errorProcessor.getCoreError(FIELD_NAME, ERROR_NO_SUCH_ITEM_IN_CART))

@@ -5,8 +5,6 @@ import org.springframework.stereotype.Component;
 import shop.console_ui.UserCommunication;
 import shop.console_ui.actions.UIAction;
 import shop.core.domain.user.UserRole;
-import shop.core.requests.customer.RemoveItemFromCartRequest;
-import shop.core.responses.customer.RemoveItemFromCartResponse;
 import shop.core.services.actions.customer.RemoveItemFromCartService;
 import shop.core.support.CurrentUserId;
 
@@ -33,15 +31,15 @@ public class RemoveItemFromCartUIAction extends UIAction {
 
     @Override
     public void execute() {
-        String itemName = userCommunication.requestInput(PROMPT_TOPIC_ITEM);
-        RemoveItemFromCartRequest request =
-                new RemoveItemFromCartRequest(currentUserId, itemName);
-        RemoveItemFromCartResponse response = removeItemFromCartService.execute(request);
-        if (response.hasErrors()) {
-            response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));
-        } else {
-            userCommunication.informUser(MESSAGE_ITEM_REMOVED);
-        }
+//        String itemName = userCommunication.requestInput(PROMPT_TOPIC_ITEM);
+//        RemoveItemFromCartRequest request =
+//                new RemoveItemFromCartRequest(currentUserId, itemName);
+//        RemoveItemFromCartResponse response = removeItemFromCartService.execute(request);
+//        if (response.hasErrors()) {
+//            response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));
+//        } else {
+//            userCommunication.informUser(MESSAGE_ITEM_REMOVED);
+//        }
     }
 
 }
