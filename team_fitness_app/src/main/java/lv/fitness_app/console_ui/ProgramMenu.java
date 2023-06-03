@@ -12,6 +12,8 @@ import java.util.Scanner;
 public class ProgramMenu {
 
 	private Map<Integer, UIAction> menuNumberToUIActionMap;
+	@Autowired
+	UserMenu userMenu;
 
 	@Autowired
 	public ProgramMenu(List<UIAction> uiActions) {
@@ -51,4 +53,11 @@ public class ProgramMenu {
 		menuNumberToUIActionMap.get(selectedMenu).execute();
 	}
 
+	public void runUserMenu() {
+		while (true) {
+			userMenu.printUserMenu();
+			int selectedMenu = getMenuNumberFromUser();
+			userMenu.executeSelectedMenuItem(selectedMenu);
+		}
+	}
 }

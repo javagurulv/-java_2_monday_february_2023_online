@@ -19,11 +19,3 @@ create table exercise(
     gif varchar
 );
 
-
---create table exercises(
---    id bigserial(255) primary key,
---    difficulty varchar(255),
---    equipment varchar(255),
---    muscle_group varchar(255),
---    type varchar(255),
---);

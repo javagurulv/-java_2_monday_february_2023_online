@@ -11,7 +11,10 @@ import java.util.Scanner;
 @Component
 public class LoginUserUIAction implements UIAction {
 
-    @Autowired private LoginUserService loginUserService;
+    @Autowired
+    private LoginUserService loginUserService;
+    @Autowired
+    private  ProgramMenu programMenu;
 
 
     @Override
@@ -29,6 +32,7 @@ public class LoginUserUIAction implements UIAction {
         } else {
             if (response.isUserLogged()) {
                 System.out.println("Login Successful!");
+                programMenu.runUserMenu();
             } else {
                 System.out.println("Id or Password is Incorrect!");
             }
