@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lv.javaguru.java2.servify.core.domain.Address;
-import lv.javaguru.java2.servify.core.domain.UserType;
+//import lv.javaguru.java2.servify.core.domain.UserType;
 
 @Data
 @AllArgsConstructor
@@ -18,5 +18,5 @@ public class UserDTO {
     private Address address;
     private boolean isInactive;
     //private UserType userType;
-    private String userType;
+    //private String userType;
 }

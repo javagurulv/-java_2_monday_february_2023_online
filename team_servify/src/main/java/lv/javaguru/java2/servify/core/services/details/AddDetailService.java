@@ -1,6 +1,7 @@
 package lv.javaguru.java2.servify.core.services.details;
 
 
+import lv.javaguru.java2.servify.core.database.jpa.JpaDetailRepository;
 import lv.javaguru.java2.servify.core.dto.requests.AddDetailRequest;
 import lv.javaguru.java2.servify.core.dto.responses.CoreError;
 import lv.javaguru.java2.servify.core.dto.responses.AddDetailResponse;
@@ -18,7 +19,7 @@ import java.util.List;
 @Transactional
 public class AddDetailService {
     @Autowired
-    private DetailRepository detailRepository;
+    private JpaDetailRepository detailRepository;
     @Autowired
     private AddDetailRequestValidator validator;
 

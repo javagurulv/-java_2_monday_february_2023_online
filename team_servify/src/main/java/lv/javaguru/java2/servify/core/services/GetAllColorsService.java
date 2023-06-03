@@ -1,7 +1,6 @@
 package lv.javaguru.java2.servify.core.services;
 
-//import javax.transaction.Transactional;
-import lv.javaguru.java2.servify.core.database.ColorRepository;
+import lv.javaguru.java2.servify.core.database.jpa.JpaColorRepository;
 import lv.javaguru.java2.servify.core.dto.responses.GetAllColorsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class GetAllColorsService {
     @Autowired
-    private ColorRepository colorRepository;
+    private JpaColorRepository colorRepository;
 
     public GetAllColorsResponse getAll() {
-        var colors = colorRepository.getAll();
+        var colors = colorRepository.findAll();
         return new GetAllColorsResponse(colors);
     }
 }

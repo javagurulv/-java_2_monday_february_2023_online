@@ -1,9 +1,9 @@
 package lv.javaguru.java2.servify.core.services.users;
 
-//import javax.transaction.Transactional;
 import lv.javaguru.java2.servify.core.database.UserRepository;
+import lv.javaguru.java2.servify.core.database.jpa.JpaUserRepository;
 import lv.javaguru.java2.servify.core.domain.UserEntity;
-import lv.javaguru.java2.servify.core.domain.UserType;
+//import lv.javaguru.java2.servify.core.domain.UserType;
 import lv.javaguru.java2.servify.core.dto.requests.AddUserRequest;
 import lv.javaguru.java2.servify.core.dto.responses.AddUserResponse;
 import lv.javaguru.java2.servify.core.dto.responses.CoreError;
@@ -20,7 +20,7 @@ import java.util.Set;
 @Transactional
 public class AddUserService {
 
-    @Autowired private UserRepository userDB;
+    @Autowired private JpaUserRepository userDB;
     @Autowired private AddUserValidator validator;
 
     public AddUserResponse execute(AddUserRequest request) {
@@ -29,14 +29,14 @@ public class AddUserService {
             return new AddUserResponse(errors);
         }
 
-        Set<UserType> roles = new HashSet<>();
-        roles.add(new UserType(2L, "CUSTOMER"));
+//        Set<UserType> roles = new HashSet<>();
+//        roles.add(new UserType(2L, "CUSTOMER"));
 
         UserEntity user = new UserEntity(request.getFirstName(),
                                         request.getLastName(),
                                         request.getEmail(),
-                                        request.getPhoneNumber(),
-                                        roles);
+                                        request.getPhoneNumber()
+                                        );
         userDB.save(user);
 
         return new AddUserResponse(user);

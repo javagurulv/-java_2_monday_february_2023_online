@@ -1,8 +1,8 @@
 package lv.javaguru.java2.servify.core.domain;
 
-//import javax.persistence.*;
+import javax.persistence.*;
 
-import jakarta.persistence.*;
+//import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,23 +30,24 @@ public class UserEntity {
     @Column(name = "phone_number")
     private String phoneNumber;
     @OneToOne
-    @JoinTable(name = "user_address", joinColumns = @JoinColumn(name = "address_id"))
+    @JoinTable(name = "user_address")
+    @JoinColumn(name = "address_id")
     private Address address;
     @Column(name = "password")
     private String password;
     @Column(name = "active")
     private boolean isActive;
-    @Column
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<UserType> roles;
+//    @Column
+//    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "role_id"))
+//    private Set<UserType> roles;
 
-    public UserEntity(String firstName, String lastName, String email, String phoneNumber, Set<UserType> roles) {
+    public UserEntity(String firstName, String lastName, String email, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.setActive(true);
-        this.roles = roles;
+        //this.roles = roles;
     }
 }

@@ -1,6 +1,7 @@
 package lv.javaguru.java2.servify.core.services.details;
 
 //import javax.transaction.Transactional;
+import lv.javaguru.java2.servify.core.database.jpa.JpaDetailRepository;
 import lv.javaguru.java2.servify.core.domain.Detail;
 import lv.javaguru.java2.servify.core.database.DetailRepository;
 import lv.javaguru.java2.servify.core.dto.DetailDTO;
@@ -14,10 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class GetAllDetailsService {
 
-    @Autowired private DetailRepository detailRepository;
+    @Autowired private JpaDetailRepository detailRepository;
 
     public GetAllDetailResponse getAll(GetAllDetailsRequest request) {
-        var dtos = detailRepository.getAllDetails().stream()
+        var dtos = detailRepository.findAll().stream()
                 .map(this::convert)
                 .toList();
         return new GetAllDetailResponse(dtos);
