@@ -1,9 +1,12 @@
 package lv.javaguru.java2.servify.core.domain;
 
-import javax.persistence.*;
+//import javax.persistence.*;
+
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 
 import java.util.Set;
@@ -33,12 +36,12 @@ public class UserEntity {
     private String password;
     @Column(name = "is_inactive")
     private boolean isInactive;
-    @Column(name = "user_type")
-    private String userType;
-//    @ElementCollection(targetClass = UserType.class, fetch = FetchType.EAGER)
-//    @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "id"))
-//    @Enumerated(EnumType.STRING)
-//    private Set<UserType> userType;
+//    @Column(name = "user_type")
+//    private String userType;
+    @ElementCollection(targetClass = UserType.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "id"))
+    @Enumerated(EnumType.STRING)
+    private Set<UserType> role;
 
     public UserEntity(String firstName, String lastName, String email, String phoneNumber) {
         this.firstName = firstName;
@@ -46,6 +49,7 @@ public class UserEntity {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.isInactive = false;
-        this.userType = "ANONYMOUS";
+        //this.userType = "ANONYMOUS";
+        this.role.add(UserType.ANONYMOUS);
     }
 }
