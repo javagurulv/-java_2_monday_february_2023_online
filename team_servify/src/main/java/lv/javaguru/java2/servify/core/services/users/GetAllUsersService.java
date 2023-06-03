@@ -30,7 +30,7 @@ public class GetAllUsersService {
                 entity.getEmail(),
                 entity.getPhoneNumber(),
                 entity.getAddress(),
-                entity.isInactive(),
-                entity.getRole().toString());
+                entity.isActive(),
+                entity.getRoles().toString());
     }
 }

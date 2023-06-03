@@ -33,14 +33,14 @@ public class SetUserNotActiveService {
     private UserEntity updateFields(UserEntity user, SetUserNotActiveRequest request) {
         var updatedUser = new UserEntity();
         updatedUser.setId(user.getId());
-        updatedUser.setRole(user.getRole());
+        updatedUser.setRoles(user.getRoles());
         updatedUser.setFirstName(user.getFirstName());
         updatedUser.setLastName(user.getLastName());
         updatedUser.setPhoneNumber(user.getPhoneNumber());
         updatedUser.setEmail(user.getEmail());
         updatedUser.setAddress(user.getAddress());
         updatedUser.setPassword(user.getPassword());
-        updatedUser.setInactive(true);
+        updatedUser.setActive(false);
         return updatedUser;
     }
 }
