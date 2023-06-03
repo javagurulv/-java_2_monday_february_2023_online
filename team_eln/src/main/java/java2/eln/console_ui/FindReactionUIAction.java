@@ -16,9 +16,8 @@ public class FindReactionUIAction implements UIAction{
     @Autowired
     FindReactionService findReactionService;
 
-//    public FindReactionUIAction(FindReactionService findReactionService) {
-//        this.findReactionService = findReactionService;
-//    }
+    @Autowired
+    GetStructureFromSMILE getStructureFromSMILE;
 
     @Override
     public void execute() {
@@ -40,8 +39,7 @@ public class FindReactionUIAction implements UIAction{
             yield = Double.parseDouble(yieldStr);
         }
 
-        GetStructureFromSMILE getStructureFromSMILE = new GetStructureFromSMILE(smile);
-        StructureData searchedStructure = getStructureFromSMILE.execute();
+        StructureData searchedStructure = getStructureFromSMILE.execute(smile);
 
         FindReactionRequest findReactionRequest =
                 new FindReactionRequest(code, name, searchedStructure,yield);

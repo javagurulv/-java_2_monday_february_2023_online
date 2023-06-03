@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -48,6 +49,7 @@ class JdbcDatabaseImpl implements DatabaseIM {
     }
 
     @Override
+    @Transactional
     public boolean delReactionByID(int id) {
         String reactionQuery1 = "DELETE FROM ReactionStartingMaterial WHERE reaction_id = ?";
         String reactionQuery2 = "DELETE FROM ConditionData WHERE reaction_id = ?";

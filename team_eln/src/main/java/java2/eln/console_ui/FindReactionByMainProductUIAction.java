@@ -16,9 +16,8 @@ public class FindReactionByMainProductUIAction implements UIAction{
     @Autowired
     FindReactionsByMainProductService findReactionByMainProductService;
 
-//    public FindReactionByMainProductUIAction(FindReactionsByMainProductService findReactionByMainProductService) {
-//        this.findReactionByMainProductService = findReactionByMainProductService;
-//    }
+    @Autowired
+    GetStructureFromSMILE getStructureFromSMILE;
 
     @Override
     public void execute() {
@@ -26,8 +25,7 @@ public class FindReactionByMainProductUIAction implements UIAction{
         System.out.println("Enter Main Product SMILE to search: ");
         String  smile = scanner.nextLine();
 
-        GetStructureFromSMILE getStructureFromSMILE = new GetStructureFromSMILE(smile);
-        StructureData searchedStructure = getStructureFromSMILE.execute();
+        StructureData searchedStructure = getStructureFromSMILE.execute(smile);
 
         FindReactionsByMainProductRequest findReactionsByMainProductRequest =
                 new FindReactionsByMainProductRequest(searchedStructure);
