@@ -62,7 +62,7 @@ class ListCartItemsServiceTest {
         when(mockCartItem.getItem()).thenReturn(mockItem);
         when(mockDatabaseAccessValidator.getItemById(anyLong())).thenReturn(mockItem);
         ListCartItemsResponse response = service.execute(mockRequest);
-        assertEquals(response.getCartItemsForList().size(), 2);
+        assertEquals(response.getCartItems().size(), 2);
     }
 
     @Test

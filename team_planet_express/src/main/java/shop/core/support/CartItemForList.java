@@ -5,6 +5,7 @@ import lombok.Value;
 import java.math.BigDecimal;
 
 @Value
+@Deprecated
 public class CartItemForList {
 
     String itemName;

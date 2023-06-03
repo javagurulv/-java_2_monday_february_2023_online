@@ -17,7 +17,6 @@ import shop.core.support.CartItemForList;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @Transactional
@@ -37,13 +36,10 @@ public class ListCartItemsService {
         if (!errors.isEmpty()) {
             return new ListCartItemsResponse(errors);
         }
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getCurrentUserId().getValue());
+        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getUser().get().getId());
         List<CartItem> cartItems = cartItemRepository.getAllCartItemsForCartId(cart.getId());
-        List<CartItemForList> cartItemsForList = cartItems.stream()
-                .map(this::createCartItemForList)
-                .collect(Collectors.toList());
         BigDecimal cartTotal = cartService.getSum(cart.getId());
-        return new ListCartItemsResponse(cartItemsForList, cartTotal);
+        return new ListCartItemsResponse(cartItems, cartTotal);
     }
 
     private CartItemForList createCartItemForList(CartItem cartItem) {

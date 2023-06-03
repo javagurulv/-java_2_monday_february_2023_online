@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Transactional
+@Deprecated
 public class ExitService {
 
     public void execute() {

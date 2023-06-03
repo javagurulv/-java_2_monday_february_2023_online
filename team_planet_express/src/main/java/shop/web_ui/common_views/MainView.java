@@ -1,7 +1,7 @@
 package shop.web_ui.common_views;
 
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.html.Main;
 import com.vaadin.flow.data.renderer.LitRenderer;
 import com.vaadin.flow.data.renderer.NumberRenderer;
 import com.vaadin.flow.data.renderer.Renderer;
@@ -17,9 +17,9 @@ import java.util.List;
 import java.util.Locale;
 
 @PageTitle("Main")
-@Route(value = "items")
+@Route(value = "main")
 @AnonymousAllowed
-public class MainView extends HorizontalLayout {
+public class MainView extends Main {
 
 
     public MainView(@Autowired ListShopItemsService listShopItemsService) {
@@ -53,7 +53,7 @@ public class MainView extends HorizontalLayout {
 
         List<Item> items = response.getShopItems();
         grid.setItems(items);
-        add(grid);
+        //add(grid);
     }
 
     private Renderer createBuyItemRenderer() {

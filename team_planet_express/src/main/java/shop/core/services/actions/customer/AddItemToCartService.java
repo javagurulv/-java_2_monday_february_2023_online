@@ -35,7 +35,7 @@ public class AddItemToCartService {
         if (!errors.isEmpty()) {
             return new AddItemToCartResponse(errors);
         }
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getCurrentUserId().getValue());
+        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getUser().getId());
         Item item = databaseAccessValidator.getItemByName(request.getItemName());
         Integer orderedQuantity = Integer.parseInt(request.getOrderedQuantity());
         addItemToCart(cart, item, orderedQuantity);

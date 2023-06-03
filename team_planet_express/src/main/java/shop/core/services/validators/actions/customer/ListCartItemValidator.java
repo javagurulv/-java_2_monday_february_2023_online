@@ -23,9 +23,9 @@ public class ListCartItemValidator {
 
 
     public List<CoreError> validate(ListCartItemsRequest request) {
-        userIdValidator.validateCurrentUserIdIsPresent(request.getCurrentUserId());
+        userIdValidator.validateCurrentUserIdIsPresent(request.getUser().get().getId());
         List<CoreError> errors = new ArrayList<>();
-        cartValidator.validateOpenCartExistsForUserId(request.getCurrentUserId().getValue()).ifPresent(errors::add);
+        cartValidator.validateOpenCartExistsForUserId(request.getUser().get().getId()).ifPresent(errors::add);
         return errors;
     }
 

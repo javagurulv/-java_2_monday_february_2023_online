@@ -5,13 +5,10 @@ import org.springframework.stereotype.Component;
 import shop.console_ui.UserCommunication;
 import shop.console_ui.actions.UIAction;
 import shop.core.domain.user.UserRole;
-import shop.core.requests.customer.ListCartItemsRequest;
 import shop.core.responses.customer.ListCartItemsResponse;
 import shop.core.services.actions.customer.ListCartItemsService;
 import shop.core.support.CartItemForList;
 import shop.core.support.CurrentUserId;
-
-import java.math.BigDecimal;
 
 @Component
 public class ListCartItemsUIAction extends UIAction {
@@ -36,25 +33,25 @@ public class ListCartItemsUIAction extends UIAction {
 
     @Override
     public void execute() {
-        userCommunication.informUser(HEADER_TEXT);
-        ListCartItemsRequest request = new ListCartItemsRequest(currentUserId);
-        ListCartItemsResponse response = listCartItemsService.execute(request);
-        if (response.hasErrors()) {
-            response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));
-        } else {
-            printCartItems(response);
-        }
+//        userCommunication.informUser(HEADER_TEXT);
+//        ListCartItemsRequest request = new ListCartItemsRequest(currentUserId);
+//        ListCartItemsResponse response = listCartItemsService.execute(request);
+//        if (response.hasErrors()) {
+//            response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));
+//        } else {
+//            printCartItems(response);
+//        }
     }
 
     private void printCartItems(ListCartItemsResponse response) {
-        if (response.getCartItemsForList().isEmpty()) {
-            userCommunication.informUser(MESSAGE_CART_IS_EMPTY);
-        } else {
-            response.getCartItemsForList()
-                    .forEach(cartItemForList -> userCommunication.informUser(getCartItemString(cartItemForList)));
-            BigDecimal cartTotal = response.getCartTotal();
-            userCommunication.informUser(MESSAGE_CART_TOTAL + cartTotal);
-        }
+//        if (response.getCartItems().isEmpty()) {
+//            userCommunication.informUser(MESSAGE_CART_IS_EMPTY);
+//        } else {
+//            response.getCartItems()
+//                    .forEach(cartItemForList -> userCommunication.informUser(getCartItemString(cartItemForList)));
+//            BigDecimal cartTotal = response.getCartTotal();
+//            userCommunication.informUser(MESSAGE_CART_TOTAL + cartTotal);
+//        }
     }
 
     private String getCartItemString(CartItemForList cartItemForList) {

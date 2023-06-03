@@ -1,12 +1,12 @@
 package shop.core.requests.customer;
 
 import lombok.Value;
-import shop.core.support.CurrentUserId;
+import shop.core.domain.user.User;
 
 @Value
 public class RemoveItemFromCartRequest {
 
-    CurrentUserId currentUserId;
+    User user;
     String itemName;
 
 }
