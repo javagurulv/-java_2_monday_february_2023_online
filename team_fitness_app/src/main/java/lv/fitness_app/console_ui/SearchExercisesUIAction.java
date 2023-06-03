@@ -4,10 +4,9 @@ import lv.fitness_app.core.domain.Difficulty;
 import lv.fitness_app.core.domain.Type;
 import lv.fitness_app.core.requests.Ordering;
 import lv.fitness_app.core.requests.Paging;
-import lv.fitness_app.core.requests.SearchExercisesRequest;
+import lv.fitness_app.core.requests.SearchExerciseRequest;
 import lv.fitness_app.core.services.SearchExercisesService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
@@ -36,11 +35,7 @@ public class SearchExercisesUIAction implements UIAction {
         String equipment = scanner.nextLine();
         System.out.println("Enter exercise difficulty: ");
         Difficulty difficulty = Difficulty.valueOf(scanner.nextLine());
-        System.out.println("Enter exercise description: ");
-        String description = scanner.nextLine();
-        System.out.println("Enter exercise gif: ");
-        String gif = scanner.nextLine();
-
+        SearchExerciseRequest request = new SearchExerciseRequest(name, muscleGroup, detailedMuscleGroup, otherMuscleGroup, type, mechanics, equipment, difficulty);
 
         System.out.println("Enter orderBy (name||muscle group): ");
         String orderBy = scanner.nextLine();

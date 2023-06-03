@@ -6,8 +6,8 @@ public class Exercise {
 
     private String name;
     private String muscleGroup;
-    private String DetailedMuscleGroup;
-    private String OtherMuscleGroup;
+    private String detailedMuscleGroup;
+    private String otherMuscleGroup;
     private Type type;
     private String mechanics;
     private String equipment;
@@ -15,13 +15,14 @@ public class Exercise {
     private String description;
     private String gif;
 
-    public Exercise() { }
+    public Exercise() {
+    }
 
     public Exercise(String name, String muscleGroup, String detailedMuscleGroup, String otherMuscleGroup, Type type, String mechanics, String equipment, Difficulty difficulty, String description, String gif) {
         this.name = name;
         this.muscleGroup = muscleGroup;
-        DetailedMuscleGroup = detailedMuscleGroup;
-        OtherMuscleGroup = otherMuscleGroup;
+        detailedMuscleGroup = detailedMuscleGroup;
+        otherMuscleGroup = otherMuscleGroup;
         this.type = type;
         this.mechanics = mechanics;
         this.equipment = equipment;
@@ -47,27 +48,27 @@ public class Exercise {
     }
 
     public String getDetailedMuscleGroup() {
-        return DetailedMuscleGroup;
+        return detailedMuscleGroup;
     }
 
     public void setDetailedMuscleGroup(String detailedMuscleGroup) {
-        DetailedMuscleGroup = detailedMuscleGroup;
+        detailedMuscleGroup = detailedMuscleGroup;
     }
 
     public String getOtherMuscleGroup() {
-        return OtherMuscleGroup;
+        return otherMuscleGroup;
     }
 
     public void setOtherMuscleGroup(String otherMuscleGroup) {
-        OtherMuscleGroup = otherMuscleGroup;
+        otherMuscleGroup = otherMuscleGroup;
     }
 
-    public Type getType() {
-        return type;
+    public String getType() {
+        return type.name().toUpperCase();
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    public void setType(String type) {
+        this.type = Type.valueOf(type.toUpperCase());
     }
 
     public String getMechanics() {
@@ -86,12 +87,12 @@ public class Exercise {
         this.equipment = equipment;
     }
 
-    public Difficulty getDifficulty() {
-        return difficulty;
+    public String getDifficulty() {
+        return difficulty.name().toUpperCase();
     }
 
-    public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
+    public void setDifficulty(String difficulty) {
+        this.difficulty = Difficulty.valueOf(difficulty.toUpperCase());
     }
 
     public String getDescription() {
@@ -102,20 +103,25 @@ public class Exercise {
         this.description = description;
     }
 
-    public String getGif(){return gif;}
-    public void setGif(String gif) {this.gif = gif;}
+    public String getGif() {
+        return gif;
+    }
+
+    public void setGif(String gif) {
+        this.gif = gif;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Exercise exercise = (Exercise) o;
-        return Objects.equals(name, exercise.name) && Objects.equals(muscleGroup, exercise.muscleGroup) && Objects.equals(DetailedMuscleGroup, exercise.DetailedMuscleGroup) && Objects.equals(OtherMuscleGroup, exercise.OtherMuscleGroup) && type == exercise.type && Objects.equals(mechanics, exercise.mechanics) && Objects.equals(equipment, exercise.equipment) && difficulty == exercise.difficulty && Objects.equals(description, exercise.description) && Objects.equals(gif, exercise.gif);
+        return Objects.equals(name, exercise.name) && Objects.equals(muscleGroup, exercise.muscleGroup) && Objects.equals(detailedMuscleGroup, exercise.detailedMuscleGroup) && Objects.equals(otherMuscleGroup, exercise.otherMuscleGroup) && type == exercise.type && Objects.equals(mechanics, exercise.mechanics) && Objects.equals(equipment, exercise.equipment) && difficulty == exercise.difficulty && Objects.equals(description, exercise.description) && Objects.equals(gif, exercise.gif);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, muscleGroup, DetailedMuscleGroup, OtherMuscleGroup, type, mechanics, equipment, difficulty, description, gif);
+        return Objects.hash(name, muscleGroup, detailedMuscleGroup, otherMuscleGroup, type, mechanics, equipment, difficulty, description, gif);
     }
 
     @Override
@@ -123,14 +129,14 @@ public class Exercise {
         return "Exercise{" +
                 "name='" + name + '\'' +
                 ", muscleGroup='" + muscleGroup + '\'' +
-                ", DetailedMuscleGroup='" + DetailedMuscleGroup + '\'' +
-                ", OtherMuscleGroup='" + OtherMuscleGroup + '\'' +
+                ", DetailedMuscleGroup='" + detailedMuscleGroup + '\'' +
+                ", OtherMuscleGroup='" + otherMuscleGroup + '\'' +
                 ", type=" + type +
                 ", mechanics='" + mechanics + '\'' +
                 ", equipment='" + equipment + '\'' +
                 ", difficulty=" + difficulty +
                 ", description='" + description + '\'' +
-                ", gif='"+gif+'\''+
+                ", gif='" + gif + '\'' +
                 '}';
     }
 }

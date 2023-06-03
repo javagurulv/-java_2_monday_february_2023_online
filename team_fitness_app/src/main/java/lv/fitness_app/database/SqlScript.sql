@@ -6,6 +6,18 @@ create table client(
     subscription_ends date NOT NULL
 );
 
+create table exercise(
+    name varchar(255) primary key,
+    muscleGroup varchar(255),
+    DetailedMuscleGroup varchar(255),
+    OtherMuscleGroup varchar(255),
+    type varchar(255),
+    mechanics varchar(255),
+    equipment varchar(255),
+    difficulty varchar(255),
+    description varchar,
+    gif varchar
+);
 
 
 --create table exercises(
