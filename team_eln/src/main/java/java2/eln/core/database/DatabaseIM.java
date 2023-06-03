@@ -26,6 +26,13 @@ public interface DatabaseIM {
     boolean delReactionByCode(String code);
 
     /**
+     * Deletes the reaction with the specified ID from the database.
+     * @param id the ID of the reaction to delete
+     * @return true if the reaction was deleted successfully, false otherwise
+     */
+    boolean delReactionByID(int id);
+
+    /**
      * Returns a list of all reactions stored in the database.
      *
      * @return a list of all reactions stored in the database
@@ -41,5 +48,6 @@ public interface DatabaseIM {
     boolean hasReactionWithCode(String reactionCode);
 
 
+    boolean hasReactionWithId(int reactionId);
 }
 

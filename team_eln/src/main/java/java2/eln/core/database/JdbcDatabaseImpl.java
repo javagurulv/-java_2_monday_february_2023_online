@@ -23,6 +23,8 @@ class JdbcDatabaseImpl implements DatabaseIM {
     public void addReaction(ReactionData reaction) {
         String reactionQuery = "INSERT INTO ReactionData (code, name, reactionYield) VALUES (?, ?, ?)";
 
+
+
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(con -> {
             PreparedStatement ps = con.prepareStatement(reactionQuery, Statement.RETURN_GENERATED_KEYS);
@@ -77,12 +79,38 @@ class JdbcDatabaseImpl implements DatabaseIM {
     }
 
     @Override
+    public boolean delReactionByID(int id) {
+        String reactionQuery1 = "DELETE FROM ReactionStartingMaterial WHERE reaction_id = ?";
+        String reactionQuery2 = "DELETE FROM ConditionData WHERE reaction_id = ?";
+        String reactionQuery3 = "DELETE FROM ReactionData WHERE id = ?";
+
+        int affectedRows1 = jdbcTemplate.update(reactionQuery1, id);
+        int affectedRows2 = jdbcTemplate.update(reactionQuery2, id);
+        int affectedRows3 = jdbcTemplate.update(reactionQuery3, id);
+
+        System.out.println(affectedRows1 );
+        System.out.println(affectedRows2);
+        System.out.println(affectedRows3);
+
+        return affectedRows1 > 0 && affectedRows2 > 0 && affectedRows3 > 0;
+    }
+
+    @Override
     public List<ReactionData> getAllReactions() {
         return null;
     }
 
     @Override
     public boolean hasReactionWithCode(String reactionCode) {
-        return false;
+        String query = "SELECT COUNT(*) FROM ReactionData WHERE code = ?";
+        Integer count = jdbcTemplate.queryForObject(query, Integer.class, reactionCode);
+        return count != null && count > 0;
+    }
+
+    @Override
+    public boolean hasReactionWithId(int reactionId) {
+        String query = "SELECT COUNT(*) FROM ReactionData WHERE id = ?";
+        Integer count = jdbcTemplate.queryForObject(query, Integer.class, reactionId);
+        return count != null && count > 0;
     }
 }
