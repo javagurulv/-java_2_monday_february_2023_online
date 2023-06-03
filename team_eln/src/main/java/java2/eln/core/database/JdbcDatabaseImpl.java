@@ -23,8 +23,6 @@ class JdbcDatabaseImpl implements DatabaseIM {
     public void addReaction(ReactionData reaction) {
         String reactionQuery = "INSERT INTO ReactionData (code, name, reactionYield) VALUES (?, ?, ?)";
 
-
-
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(con -> {
             PreparedStatement ps = con.prepareStatement(reactionQuery, Statement.RETURN_GENERATED_KEYS);
@@ -43,35 +41,6 @@ class JdbcDatabaseImpl implements DatabaseIM {
                 .map(this::saveStructureData)
                 .forEach(structureId -> saveReactionStartingMaterial(reactionId, structureId));
     }
-
-    private int saveStructureData(StructureData structureData) {
-        String structureQuery = "INSERT INTO `StructureData` (smiles, casNumber, name, internalCode, mass) VALUES (?, ?, ?, ?, ?)";
-
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(con -> {
-            PreparedStatement ps = con.prepareStatement(structureQuery, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, structureData.getSmiles());
-            ps.setString(2, structureData.getCasNumber());
-            ps.setString(3, structureData.getName());
-            ps.setString(4, structureData.getInternalCode());
-            ps.setDouble(5, structureData.getMass());
-            return ps;
-        }, keyHolder);
-
-        return Objects.requireNonNull(keyHolder.getKey()).intValue();
-    }
-
-    private void updateReactionMainProduct(int reactionId, int mainProductId) {
-        String updateQuery = "UPDATE `ReactionData` SET `structure_mainProduct_id` = ? WHERE `id` = ?";
-        jdbcTemplate.update(updateQuery, mainProductId, reactionId);
-    }
-
-    private void saveReactionStartingMaterial(int reactionId, int structureId) {
-        String reactionStartingMaterialQuery = "INSERT INTO `ReactionStartingMaterial` (reaction_id, structure_id) VALUES (?, ?)";
-        jdbcTemplate.update(reactionStartingMaterialQuery, reactionId, structureId);
-    }
-
-
 
     @Override
     public boolean delReactionByCode(String code) {
@@ -112,5 +81,32 @@ class JdbcDatabaseImpl implements DatabaseIM {
         String query = "SELECT COUNT(*) FROM ReactionData WHERE id = ?";
         Integer count = jdbcTemplate.queryForObject(query, Integer.class, reactionId);
         return count != null && count > 0;
+    }
+
+    private int saveStructureData(StructureData structureData) {
+        String structureQuery = "INSERT INTO `StructureData` (smiles, casNumber, name, internalCode, mass) VALUES (?, ?, ?, ?, ?)";
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(con -> {
+            PreparedStatement ps = con.prepareStatement(structureQuery, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, structureData.getSmiles());
+            ps.setString(2, structureData.getCasNumber());
+            ps.setString(3, structureData.getName());
+            ps.setString(4, structureData.getInternalCode());
+            ps.setDouble(5, structureData.getMass());
+            return ps;
+        }, keyHolder);
+
+        return Objects.requireNonNull(keyHolder.getKey()).intValue();
+    }
+
+    private void updateReactionMainProduct(int reactionId, int mainProductId) {
+        String updateQuery = "UPDATE `ReactionData` SET `structure_mainProduct_id` = ? WHERE `id` = ?";
+        jdbcTemplate.update(updateQuery, mainProductId, reactionId);
+    }
+
+    private void saveReactionStartingMaterial(int reactionId, int structureId) {
+        String reactionStartingMaterialQuery = "INSERT INTO `ReactionStartingMaterial` (reaction_id, structure_id) VALUES (?, ?)";
+        jdbcTemplate.update(reactionStartingMaterialQuery, reactionId, structureId);
     }
 }
