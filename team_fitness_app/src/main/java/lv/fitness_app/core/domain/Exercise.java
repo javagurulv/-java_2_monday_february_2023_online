@@ -1,28 +1,45 @@
 package lv.fitness_app.core.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 
+@Entity
+@Table(name = "exercise")
 public class Exercise {
 
+    @Id
+    @Column(name = "name")
     private String name;
+    @Column(name = "musclegroup")
     private String muscleGroup;
+    @Column(name = "detailedMuscleGroup")
     private String detailedMuscleGroup;
+    @Column(name = "otherMuscleGroup")
     private String otherMuscleGroup;
-    private Type type;
+    @Column(name = "type")
+    private String type;
+    @Column(name = "mechanics")
     private String mechanics;
+    @Column(name = "equipment")
     private String equipment;
-    private Difficulty difficulty;
+    @Column(name = "difficulty")
+    private String difficulty;
+    @Column(name = "description")
     private String description;
+    @Column(name = "gif")
     private String gif;
 
     public Exercise() {
     }
 
-    public Exercise(String name, String muscleGroup, String detailedMuscleGroup, String otherMuscleGroup, Type type, String mechanics, String equipment, Difficulty difficulty, String description, String gif) {
+    public Exercise(String name, String muscleGroup, String detailedMuscleGroup, String otherMuscleGroup, String type, String mechanics, String equipment, String difficulty, String description, String gif) {
         this.name = name;
         this.muscleGroup = muscleGroup;
-        detailedMuscleGroup = detailedMuscleGroup;
-        otherMuscleGroup = otherMuscleGroup;
+        this.detailedMuscleGroup = detailedMuscleGroup;
+        this.otherMuscleGroup = otherMuscleGroup;
         this.type = type;
         this.mechanics = mechanics;
         this.equipment = equipment;
@@ -64,11 +81,11 @@ public class Exercise {
     }
 
     public String getType() {
-        return type.name().toUpperCase();
+        return type;
     }
 
     public void setType(String type) {
-        this.type = Type.valueOf(type.toUpperCase());
+        this.type = type;
     }
 
     public String getMechanics() {
@@ -88,11 +105,11 @@ public class Exercise {
     }
 
     public String getDifficulty() {
-        return difficulty.name().toUpperCase();
+        return difficulty;
     }
 
     public void setDifficulty(String difficulty) {
-        this.difficulty = Difficulty.valueOf(difficulty.toUpperCase());
+        this.difficulty = difficulty;
     }
 
     public String getDescription() {

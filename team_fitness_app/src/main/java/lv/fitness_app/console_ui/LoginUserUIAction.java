@@ -1,11 +1,13 @@
 package lv.fitness_app.console_ui;
 
+import com.opencsv.exceptions.CsvException;
 import lv.fitness_app.core.requests.LoginUserRequest;
 import lv.fitness_app.core.responses.LoginUserResponse;
 import lv.fitness_app.core.services.LoginUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 @Component
@@ -18,7 +20,7 @@ public class LoginUserUIAction implements UIAction {
 
 
     @Override
-    public void execute() {
+    public void execute() throws IOException, CsvException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your email: ");
         String email = scanner.nextLine();

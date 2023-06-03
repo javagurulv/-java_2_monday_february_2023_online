@@ -11,4 +11,6 @@ dependencies {
 	implementation('org.springframework:spring-orm:5.3.23')
 	implementation('org.springframework:spring-tx:5.3.23')
 	testImplementation('com.h2database:h2:1.4.200')
+	implementation('com.opencsv:opencsv:5.7.1')
+	implementation('one.util:streamex:0.8.1')
 }
