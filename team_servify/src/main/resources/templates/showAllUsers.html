@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Servify demo project">
+  <meta name="author" content="DreamTeamDevelopment">
+  <title>Servify</title>
+</head>
+
+<body>
+
+<h3>Show all users</h3>
+
+<table>
+  <tr>
+    <td>ID:</td>
+    <td>First Name:</td>
+    <td>Last Name:</td>
+    <td>e-mail:</td>
+    <td>Phone number:</td>
+    <td>Role:</td>
+    <td>Is inactive:</td>
+  </tr>
+
+  <td th:if="${users != null}">
+    <tr th:each="userEntity : ${users}">
+      <td th:text="${userEntity.id}" />
+      <td th:text="${userEntity.firstName}" />
+      <td th:text="${userEntity.lastName}" />
+      <td th:text="${userEntity.email}" />
+      <td th:text="${userEntity.phoneNumber}" />
+      <td th:text="${userEntity.role}" />
+      <td th:text="${userEntity.isInactive}" />
+    </tr>
+  </td>
+
+</table>
+
+<form action="/" method="get">
+  <input type="submit" value="Go to main page" name="Submit" />
+</form>
+
+</body>
+
+</html>

@@ -1,6 +1,7 @@
 package lv.javaguru.java2.servify.console_ui.detail;
 
 import lv.javaguru.java2.servify.console_ui.UIAction;
+import lv.javaguru.java2.servify.core.dto.requests.GetAllDetailsRequest;
 import lv.javaguru.java2.servify.core.dto.requests.RemoveDetailRequest;
 import lv.javaguru.java2.servify.core.dto.responses.RemoveDetailResponse;
 import lv.javaguru.java2.servify.core.services.details.GetAllDetailsService;
@@ -19,7 +20,7 @@ public class RemoveDetailUIAction implements UIAction {
     @Override
     public void execute() {
         Scanner scanner = new Scanner(System.in);
-        getAllDetailsService.getAll().getDetails().forEach(System.out::println);
+        getAllDetailsService.getAll(new GetAllDetailsRequest()).getDetails().forEach(System.out::println);
         System.out.println("Enter detail id to remove (only use id that is visible in the list!): ");
         Long detailId = Long.parseLong(scanner.nextLine());
         RemoveDetailRequest request = new RemoveDetailRequest(detailId);
