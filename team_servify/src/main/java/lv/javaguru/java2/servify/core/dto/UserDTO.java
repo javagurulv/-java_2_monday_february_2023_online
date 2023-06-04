@@ -16,7 +16,7 @@ public class UserDTO {
     private String email;
     private String phoneNumber;
     private Address address;
-    private boolean isInactive;
+    private boolean active;
     //private UserType userType;
-    //private String userType;
+    private String userType;
 }

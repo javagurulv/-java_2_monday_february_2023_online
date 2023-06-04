@@ -23,8 +23,10 @@ public class AddUserUIAction implements UIAction {
         String email = input.nextLine();
         System.out.println("Enter your phone number");
         String phoneNumber = input.nextLine();
+        System.out.println("Enter your password");
+        String password = input.nextLine();
 
-        AddUserRequest request = new AddUserRequest(firstName, lastName, email, phoneNumber);
+        AddUserRequest request = new AddUserRequest(firstName, lastName, email, phoneNumber, password);
         AddUserResponse response = addUserService.execute(request);
 
         if (response.hasErrors()) {

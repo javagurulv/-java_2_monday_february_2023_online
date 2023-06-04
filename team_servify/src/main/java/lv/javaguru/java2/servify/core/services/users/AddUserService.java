@@ -35,6 +35,7 @@ public class AddUserService {
                                         request.getLastName(),
                                         request.getEmail(),
                                         request.getPhoneNumber(),
+                                        request.getPassword(),
                                         roles);
         userDB.save(user);
 

@@ -17,7 +17,7 @@ public class GetAllUsersService {
     @Autowired
     private JpaUserRepository userRepository;
 
-    public GetAllUsersResponse getAll(GetAllUsersRequest request) {
+    public GetAllUsersResponse execute(GetAllUsersRequest request) {
         var dtos = userRepository.findAll().stream()
                 .map(this::convert)
                 .toList();
@@ -31,9 +31,8 @@ public class GetAllUsersService {
                 entity.getEmail(),
                 entity.getPhoneNumber(),
                 entity.getAddress(),
-                //entity.getRoles().toString(),
-                entity.isActive()
-
+                entity.isActive(),
+                entity.getAuthorities().toString()
         );
     }
 }
