@@ -12,13 +12,10 @@ import java.util.Scanner;
 
 @Component
 public class FindReactionByMainProductUIAction implements UIAction{
-
     @Autowired
     FindReactionsByMainProductService findReactionByMainProductService;
-
     @Autowired
     GetStructureFromSMILE getStructureFromSMILE;
-
     @Override
     public void execute() {
         Scanner scanner = new Scanner(System.in);

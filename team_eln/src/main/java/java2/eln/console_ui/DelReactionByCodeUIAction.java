@@ -10,13 +10,8 @@ import java.util.Scanner;
 
 @Component
 public class DelReactionByCodeUIAction implements UIAction{
-
     @Autowired
     DelReactionByCodeService delReactionByCodeService;
-
-//    public DelReactionUIAction(DelReactionService delReactionService) {
-//        this.delReactionService = delReactionService;
-//    }
 
     @Override
     public void execute() {
@@ -34,6 +29,5 @@ public class DelReactionByCodeUIAction implements UIAction{
         } else {
             System.out.printf("Reaction %s has been deleted -> %s", reactionCode, deleteReactionResponse.getDelResult());
         }
-
     }
 }

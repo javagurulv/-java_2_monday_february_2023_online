@@ -12,7 +12,6 @@ import java.util.Scanner;
 
 @Component
 public class DelReactionByIdUIAction implements UIAction{
-
     @Autowired
     DelReactionByIDService delReactionByIDService;
 
@@ -32,6 +31,5 @@ public class DelReactionByIdUIAction implements UIAction{
         } else {
             System.out.printf("Reaction %s has been deleted -> %s", reactionId, deleteReactionResponse.getDelResult());
         }
-
     }
 }

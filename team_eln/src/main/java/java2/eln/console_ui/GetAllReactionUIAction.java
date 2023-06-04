@@ -8,10 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class GetAllReactionUIAction implements UIAction{
-
     @Autowired
     GetAllReactionsService getAllReactionsService;
-
     @Override
     public void execute() {
         System.out.println("Reaction IMDataBase :");
@@ -24,6 +22,5 @@ public class GetAllReactionUIAction implements UIAction{
         System.out.println("Search results");
         getAllReactionsResponse.getReactionsList().forEach(System.out::println);
         System.out.println("Reactions log end.");
-
     }
 }

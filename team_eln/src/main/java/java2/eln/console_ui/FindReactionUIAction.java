@@ -12,13 +12,10 @@ import java.util.Scanner;
 
 @Component
 public class FindReactionUIAction implements UIAction{
-
     @Autowired
     FindReactionService findReactionService;
-
     @Autowired
     GetStructureFromSMILE getStructureFromSMILE;
-
     @Override
     public void execute() {
         Scanner scanner = new Scanner(System.in);
@@ -34,19 +31,16 @@ public class FindReactionUIAction implements UIAction{
 
         System.out.println("Enter reaction Yield to search: ");
         String  yieldStr = scanner.nextLine();
+
         Double yield = 0d;
         if (!yieldStr.isBlank()){
             yield = Double.parseDouble(yieldStr);
         }
-
         StructureData searchedStructure = getStructureFromSMILE.execute(smile);
-
         FindReactionRequest findReactionRequest =
                 new FindReactionRequest(code, name, searchedStructure,yield);
-
         FindReactionResponse findReactionResponse =
                 findReactionService.execute(findReactionRequest);
-
         if (findReactionResponse.hasErrors()) {
             findReactionResponse.getErrors().forEach(coreError ->
                     System.out.println("InputError: " + coreError.getField() + " " + coreError.getMessage())
@@ -56,7 +50,5 @@ public class FindReactionUIAction implements UIAction{
             findReactionResponse.getSearchingResults().forEach(System.out::println);
             System.out.println("Reactions log end.");
         }
-
-
     }
 }

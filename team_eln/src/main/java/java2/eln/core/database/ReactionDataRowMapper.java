@@ -1,6 +1,5 @@
 package java2.eln.core.database;
 
-
 import java2.eln.core.domain.ConditionData;
 import java2.eln.core.domain.ReactionData;
 import java2.eln.core.domain.StructureData;
@@ -15,8 +14,10 @@ import java.util.List;
 // TODO: Refactor to optimize database requests
 // Currently, the mapper uses two separate requests to fetch the starting materials and the main product.
 // Consider optimizing the code to retrieve all necessary data in a single database request for improved performance.
-public class ReactionDataRowMapper implements RowMapper<ReactionData> {
+// Additionally, since it is mentioned starting ORM learning,
+// higher-level abstractions for interacting with the database and can simplify the data access code.
 
+public class ReactionDataRowMapper implements RowMapper<ReactionData> {
     private final JdbcTemplate jdbcTemplate;
 
     public ReactionDataRowMapper(JdbcTemplate jdbcTemplate) {
