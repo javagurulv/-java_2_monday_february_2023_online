@@ -1,9 +1,8 @@
 package lv.javaguru.java2.servify.core.services.users;
 
-import lv.javaguru.java2.servify.core.database.UserRepository;
 import lv.javaguru.java2.servify.core.database.jpa.JpaUserRepository;
 import lv.javaguru.java2.servify.core.domain.UserEntity;
-//import lv.javaguru.java2.servify.core.domain.UserType;
+import lv.javaguru.java2.servify.core.domain.UserType;
 import lv.javaguru.java2.servify.core.dto.requests.AddUserRequest;
 import lv.javaguru.java2.servify.core.dto.responses.AddUserResponse;
 import lv.javaguru.java2.servify.core.dto.responses.CoreError;
@@ -29,14 +28,14 @@ public class AddUserService {
             return new AddUserResponse(errors);
         }
 
-//        Set<UserType> roles = new HashSet<>();
-//        roles.add(new UserType(2L, "CUSTOMER"));
+        Set<UserType> roles = new HashSet<>();
+        roles.add(new UserType(2L, "CUSTOMER"));
 
         UserEntity user = new UserEntity(request.getFirstName(),
                                         request.getLastName(),
                                         request.getEmail(),
-                                        request.getPhoneNumber()
-                                        );
+                                        request.getPhoneNumber(),
+                                        roles);
         userDB.save(user);
 
         return new AddUserResponse(user);

@@ -37,17 +37,17 @@ public class UserEntity {
     private String password;
     @Column(name = "active")
     private boolean isActive;
-//    @Column
-//    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "role_id"))
-//    private Set<UserType> roles;
+    @ManyToMany
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<UserType> roles;
 
-    public UserEntity(String firstName, String lastName, String email, String phoneNumber) {
+    public UserEntity(String firstName, String lastName, String email, String phoneNumber, Set<UserType> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.setActive(true);
-        //this.roles = roles;
+        this.roles = roles;
     }
 }
