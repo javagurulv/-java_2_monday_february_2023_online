@@ -12,7 +12,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+// TODO: Refactor to optimize database requests
+// Currently, the mapper uses two separate requests to fetch the starting materials and the main product.
+// Consider optimizing the code to retrieve all necessary data in a single database request for improved performance.
 public class ReactionDataRowMapper implements RowMapper<ReactionData> {
 
     private final JdbcTemplate jdbcTemplate;
