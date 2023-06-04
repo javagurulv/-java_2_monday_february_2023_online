@@ -21,6 +21,7 @@ class JdbcDatabaseImpl implements DatabaseIM {
     private JdbcTemplate jdbcTemplate;
 
     @Override
+    @Transactional
     public void addReaction(ReactionData reaction) {
         String reactionQuery = "INSERT INTO ReactionData (code, name, reactionYield) VALUES (?, ?, ?)";
 
@@ -67,8 +68,15 @@ class JdbcDatabaseImpl implements DatabaseIM {
     }
 
     @Override
+    @Transactional
     public List<ReactionData> getAllReactions() {
-        return null;
+        String sql = """
+                SELECT * FROM ReactionData AS reactions
+                LEFT JOIN ConditionData\s
+                ON reaction_id = reactions.id
+                """;
+        List<ReactionData> reactions = jdbcTemplate.query(sql, new ReactionDataRowMapper(jdbcTemplate));
+        return reactions;
     }
 
     @Override

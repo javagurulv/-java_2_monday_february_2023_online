@@ -12,10 +12,6 @@ public class GetAllReactionUIAction implements UIAction{
     @Autowired
     GetAllReactionsService getAllReactionsService;
 
-//    public GetAllReactionUIAction(GetAllReactionsService getAllReactionsService) {
-//        this.getAllReactionsService = getAllReactionsService;
-//    }
-
     @Override
     public void execute() {
         System.out.println("Reaction IMDataBase :");

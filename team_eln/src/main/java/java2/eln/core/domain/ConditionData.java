@@ -51,6 +51,7 @@ public class ConditionData {
 
     @Override
     public String toString() {
+        if (reactionTime == null) {reactionTime = Duration.ZERO;}
         double hours = (double)reactionTime.toMinutes() / 60;
         return "** baseClasses.ConditionData {" +
                 "\n solvent = " + solvent +

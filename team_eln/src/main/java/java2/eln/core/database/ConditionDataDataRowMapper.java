@@ -9,14 +9,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Duration;
 
+// TODO: This class is not yet ready. Work in progress. need to add solvent as StructureData
 public class ConditionDataDataRowMapper implements RowMapper<ConditionData> {
     @Override
     public ConditionData mapRow(ResultSet rs, int rowNum) throws SQLException {
         StructureData solvent = null;
-//        if (rs.getInt("structure_solvent_id") != 0) {
-//            solvent = new StructureData("");
-//            solvent.setId(rs.getInt("structure_solvent_id"));
-//        }
 
         int temperature = rs.getInt("temperature");
         String environment = rs.getString("environment");
