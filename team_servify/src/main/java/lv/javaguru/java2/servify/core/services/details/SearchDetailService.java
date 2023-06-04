@@ -34,21 +34,21 @@ public class SearchDetailService {
 
     private List<Detail> search(SearchDetailRequest request) {
         List<Detail> details = new ArrayList<>();
-        if (request.isTypeProvided() && !request.isSideProvided() && !request.isPriceProvided()) {
-            details = detailRepository.findByDetailType(request.getDetailType());
-        }
-        if (!request.isTypeProvided() && request.isSideProvided() && !request.isPriceProvided()) {
-            details = detailRepository.findByDetailSide(request.getDetailSide());
-        }
-        if (!request.isTypeProvided() && !request.isSideProvided() && request.isPriceProvided()) {
-            details = detailRepository.findByDetailPrice(request.getDetailPrice());
-        }
-        if (request.isTypeProvided() && request.isSideProvided() && !request.isPriceProvided()) {
-            details = detailRepository.findByDetailTypeSide(request.getDetailType(), request.getDetailSide());
-        }
-        if (request.isTypeProvided() && !request.isSideProvided() && request.isPriceProvided()) {
-            details = detailRepository.findByDetailTypePrice(request.getDetailType(), request.getDetailPrice());
-        }
+//        if (request.isTypeProvided() && !request.isSideProvided() && !request.isPriceProvided()) {
+//            details = detailRepository.findByDetailType(request.getDetailType());
+//        }
+//        if (!request.isTypeProvided() && request.isSideProvided() && !request.isPriceProvided()) {
+//            details = detailRepository.findByDetailSide(request.getDetailSide());
+//        }
+//        if (!request.isTypeProvided() && !request.isSideProvided() && request.isPriceProvided()) {
+//            details = detailRepository.findByDetailPrice(request.getDetailPrice());
+//        }
+//        if (request.isTypeProvided() && request.isSideProvided() && !request.isPriceProvided()) {
+//            details = detailRepository.findByDetailTypeSide(request.getDetailType(), request.getDetailSide());
+//        }
+//        if (request.isTypeProvided() && !request.isSideProvided() && request.isPriceProvided()) {
+//            details = detailRepository.findByDetailTypePrice(request.getDetailType(), request.getDetailPrice());
+//        }
 
         return details;
     }

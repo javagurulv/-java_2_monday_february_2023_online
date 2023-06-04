@@ -3,10 +3,11 @@ package lv.javaguru.java2.servify.core.services;
 import lv.javaguru.java2.servify.core.database.jpa.JpaColorRepository;
 import lv.javaguru.java2.servify.core.dto.responses.GetAllColorsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
+@Component
 @Transactional
 public class GetAllColorsService {
     @Autowired

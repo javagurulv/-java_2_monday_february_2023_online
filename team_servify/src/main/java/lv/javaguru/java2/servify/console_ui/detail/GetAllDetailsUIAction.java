@@ -6,7 +6,7 @@ import lv.javaguru.java2.servify.core.services.details.GetAllDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class GetAllDetailsUIAction implements UIAction {
 
     @Autowired private GetAllDetailsService getAllDetailsService;

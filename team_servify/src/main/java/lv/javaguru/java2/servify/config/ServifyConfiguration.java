@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @PropertySource(value = "classpath:application.properties")
 @EnableTransactionManagement
 @EntityScan(basePackages = "lv.javaguru.java2.servify.core.domain")
-@EnableJpaRepositories(value = "lv.javaguru.java2.servifycore.database.jpa")
+@EnableJpaRepositories(value = "lv.javaguru.java2.servify.core.database.jpa")
 public class ServifyConfiguration {
 
 }

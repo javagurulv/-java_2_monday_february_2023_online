@@ -9,9 +9,9 @@ import java.util.List;
 
 @Repository
 public interface JpaDetailRepository extends JpaRepository<Detail, Long> {
-    List<Detail> findByDetailType(String detailType);
-    List<Detail> findByDetailSide(String detailSide);
-    List<Detail> findByDetailTypeSide(String detailType, String detailSide);
-    List<Detail> findByDetailPrice(BigDecimal detailPrice);
-    List<Detail> findByDetailTypePrice(String detailType, BigDecimal detailPrice);
+//    List<Detail> findByDetailType(String detailType);
+//    List<Detail> findByDetailSide(String detailSide);
+//    List<Detail> findByDetailTypeSide(String detailType, String detailSide);
+    //List<Detail> findByDetailPrice(BigDecimal detailPrice);
+    //List<Detail> findByDetailTypePrice(String detailType, BigDecimal detailPrice);
 }

@@ -5,7 +5,7 @@ import lv.javaguru.java2.servify.core.services.GetAllOrdersItemsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class GetAllOrdersItemsUIAction implements UIAction {
     @Autowired
     private GetAllOrdersItemsService getAllOrdersItemsService;
