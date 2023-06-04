@@ -27,6 +27,8 @@ public class UserEntity {
     private String lastName;
     @Column(name = "email")
     private String email;
+    @Column(name = "user_name")
+    private String userName;
     @Column(name = "phone_number")
     private String phoneNumber;
     @OneToOne
@@ -46,6 +48,7 @@ public class UserEntity {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.userName = email;
         this.phoneNumber = phoneNumber;
         this.setActive(true);
         this.roles = roles;
