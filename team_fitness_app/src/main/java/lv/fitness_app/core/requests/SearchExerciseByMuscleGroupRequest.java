@@ -10,11 +10,21 @@ public class SearchExerciseByMuscleGroupRequest {
         this.muscleGroup = (muscleGroup == null || muscleGroup.length() == 0) ? "%" : muscleGroup;
         this.ordering = ordering;
         this.paging = paging;
-
+    }
+    public SearchExerciseByMuscleGroupRequest(String muscleGroup, Ordering ordering) {
+        this.muscleGroup = (muscleGroup == null || muscleGroup.length() == 0) ? "%" : muscleGroup;
+        this.ordering = ordering;
+    }
+    public SearchExerciseByMuscleGroupRequest(String muscleGroup, Paging paging) {
+        this.muscleGroup = (muscleGroup == null || muscleGroup.length() == 0) ? "%" : muscleGroup;
+        this.paging = paging;
     }
 
     public String getMuscleGroup() {
         return muscleGroup;
+    }
+    public boolean isMuscleGroupProvided() {
+        return this.muscleGroup != null && !this.muscleGroup.isEmpty();
     }
     public Ordering getOrdering() {
         return this.ordering;
