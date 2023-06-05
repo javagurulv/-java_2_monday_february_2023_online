@@ -1,5 +1,6 @@
 package lv.javaguru.java2.servify.acceptancetests;
 
+import lv.javaguru.java2.servify.core.dto.requests.GetAllDetailsRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class AcceptanceTest1 {
         AddDetailRequest request2 = new AddDetailRequest("Type2", "Side2", BigDecimal.TEN);
         addDetailService.execute(request2);
 
-        GetAllDetailResponse response = getAllDetailsService.getAll();
+        GetAllDetailResponse response = getAllDetailsService.getAll(new GetAllDetailsRequest());
         assertEquals(2, response.getDetails().size());
     }
 }

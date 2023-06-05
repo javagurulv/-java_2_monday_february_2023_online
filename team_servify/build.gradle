@@ -1,9 +1,23 @@
 plugins {
+	id 'war'
 	id 'java'
 	id 'org.springframework.boot' version '3.0.1'
 	id 'io.spring.dependency-management' version '1.1.0'
 }
+war.baseName = "java2-2023-spring"
+jar.archiveName = "java2-2023-spring.jar"
 
+jar {
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+	manifest {
+		attributes "Main-Class": "lv.javaguru.java2.servify.ServifyApplication"
+	}
+
+	from {
+		configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+	}
+}
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
@@ -49,7 +63,3 @@ dependencies {
 	testImplementation('org.springframework:spring-test:5.3.23')
 	testImplementation('com.h2database:h2:1.4.200')
 }
-
-//tasks.named('test') {
-//	useJUnitPlatform()
-//}

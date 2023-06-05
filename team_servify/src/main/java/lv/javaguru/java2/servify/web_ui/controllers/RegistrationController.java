@@ -1,6 +1,5 @@
 package lv.javaguru.java2.servify.web_ui.controllers;
 
-import lv.javaguru.java2.servify.core.domain.UserEntity;
 import lv.javaguru.java2.servify.core.dto.RegistrationDTO;
 import lv.javaguru.java2.servify.core.services.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;

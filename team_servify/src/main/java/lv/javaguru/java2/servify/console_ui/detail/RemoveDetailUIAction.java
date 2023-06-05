@@ -20,7 +20,7 @@ public class RemoveDetailUIAction implements UIAction {
     @Override
     public void execute() {
         Scanner scanner = new Scanner(System.in);
-        getAllDetailsService.getAll().getDetails().forEach(System.out::println);
+        getAllDetailsService.getAll(new GetAllDetailsRequest()).getDetails().forEach(System.out::println);
         System.out.println("Enter detail id to remove (only use id that is visible in the list!): ");
         Long detailId = Long.parseLong(scanner.nextLine());
         RemoveDetailRequest request = new RemoveDetailRequest(detailId);
