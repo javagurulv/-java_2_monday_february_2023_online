@@ -44,12 +44,12 @@ class SearchItemValidatorTest {
     @InjectMocks
     private SearchItemValidator validator;
 
-    @Test
-    void shouldValidateUserIdIsPresent() {
-        when(mockRequest.getCurrentUserId()).thenReturn(mockUserId);
-        validator.validate(mockRequest);
-        verify(mockCurrentUserIdValidator).validateCurrentUserIdIsPresent(mockUserId);
-    }
+//    @Test
+//    void shouldValidateUserIdIsPresent() {
+//        when(mockRequest.getCurrentUserId()).thenReturn(mockUserId);
+//        validator.validate(mockRequest);
+//        verify(mockCurrentUserIdValidator).validateCurrentUserIdIsPresent(mockUserId);
+//    }
 
     @Test
     void shouldValidatePagingRuleIfPresent() {

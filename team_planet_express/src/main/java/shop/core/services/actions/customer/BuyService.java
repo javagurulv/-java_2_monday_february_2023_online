@@ -6,9 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 import shop.core.database.CartRepository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart.CartStatus;
+import shop.core.domain.user.User;
 import shop.core.requests.customer.BuyRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.customer.BuyResponse;
+import shop.core.services.actions.shared.SecurityService;
 import shop.core.services.validators.actions.customer.BuyValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 
@@ -24,6 +26,8 @@ public class BuyService {
     private BuyValidator validator;
     @Autowired
     private DatabaseAccessValidator databaseAccessValidator;
+    @Autowired
+    private SecurityService securityService;
 
 
     public BuyResponse execute(BuyRequest request) {
@@ -31,8 +35,10 @@ public class BuyService {
         if (!errors.isEmpty()) {
             return new BuyResponse(errors);
         }
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getCurrentUserId().getValue());
+        User user = securityService.getAuthenticatedUserFromDB().get();
+        Cart cart = databaseAccessValidator.getOpenCartByUserId(user.getId());
         cartRepository.changeCartStatus(cart.getId(), CartStatus.CLOSED);
+        cartRepository.save(new Cart(user));
         return new BuyResponse();
     }
 

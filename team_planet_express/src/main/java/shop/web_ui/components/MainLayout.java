@@ -57,12 +57,17 @@ public class MainLayout extends AppLayout {
                 e -> getUI().ifPresent(ui -> ui.navigate(SearchItemsListView.class, textField.getValue())
                 ));
         textField.setSuffixComponent(searchButton);
+        textField.setSuffixComponent(searchButton);
 
 
         Icon iconCart = new Icon(VaadinIcon.CART);
         Button cartButton = new Button(iconCart, e -> getUI().ifPresent(ui -> ui.navigate("cart")));
-        var header = new HorizontalLayout(new DrawerToggle(), logo, textField, cartButton, logout);
-        header.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.CENTER);
+        DrawerToggle drawerToggle = new DrawerToggle();
+        var header = new HorizontalLayout(drawerToggle, logo, textField, cartButton, logout);
+        //header.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.END);
+        header.setAlignSelf(FlexComponent.Alignment.CENTER, textField);
+        header.setAlignSelf(FlexComponent.Alignment.START, logo, drawerToggle);
+        header.setAlignSelf(FlexComponent.Alignment.END, cartButton, logout);
         header.expand(logo);
         header.setWidthFull();
         header.addClassNames(

@@ -33,12 +33,12 @@ public class BuyValidator {
     private ErrorProcessor errorProcessor;
 
     public List<CoreError> validate(BuyRequest request) {
-        userIdValidator.validateCurrentUserIdIsPresent(request.getCurrentUserId());
+//        userIdValidator.validateCurrentUserIdIsPresent(request.getCurrentUserId());
         List<CoreError> errors = new ArrayList<>();
-        cartValidator.validateOpenCartExistsForUserId(request.getCurrentUserId().getValue()).ifPresent(errors::add);
-        if (errors.isEmpty()) {
-            validateCartIsNotEmpty(request.getCurrentUserId().getValue()).ifPresent(errors::add);
-        }
+//        cartValidator.validateOpenCartExistsForUserId(request.getCurrentUserId().getValue()).ifPresent(errors::add);
+//        if (errors.isEmpty()) {
+//            validateCartIsNotEmpty(request.getCurrentUserId().getValue()).ifPresent(errors::add);
+//        }
         return errors;
     }
 

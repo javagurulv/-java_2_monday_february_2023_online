@@ -22,7 +22,7 @@ class CurrentUserIdValidatorTest {
 
     @Test
     void shouldThrowMissingDataException() {
-        assertThrows(ServiceMissingDataException.class, () -> validator.validateCurrentUserIdIsPresent(null));
+        assertThrows(ServiceMissingDataException.class, () -> validator.validateCurrentUserIdIsPresent((CurrentUserId) null));
     }
 
     @Test
