@@ -1,4 +1,4 @@
-package lv.javaguru.java2.servify.core.services.matchers;
+package lv.javaguru.java2.servify.matchers;
 
 import lv.javaguru.java2.servify.core.domain.Detail;
 import org.mockito.ArgumentMatcher;

@@ -5,7 +5,7 @@ import lv.javaguru.java2.servify.core.domain.FieldTitle;
 import lv.javaguru.java2.servify.core.dto.requests.AddDetailRequest;
 import lv.javaguru.java2.servify.core.dto.responses.AddDetailResponse;
 import lv.javaguru.java2.servify.core.dto.responses.CoreError;
-import lv.javaguru.java2.servify.core.services.matchers.DetailMatcher;
+import lv.javaguru.java2.servify.matchers.DetailMatcher;
 import lv.javaguru.java2.servify.core.services.validators.AddDetailRequestValidator;
 import org.junit.Test;
 import org.junit.runner.RunWith;

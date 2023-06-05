@@ -72,4 +72,9 @@ public class JdbcRepositoryImpl implements DetailRepository {
         return null;
     }
 
+    @Override
+    public List<Detail> findByDetailSidePrice(String detailSide, BigDecimal detailPrice) {
+        return null;
+    }
+
 }
