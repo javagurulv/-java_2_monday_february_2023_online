@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servify.core.database;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lv.javaguru.java2.servify.core.domain.Color;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

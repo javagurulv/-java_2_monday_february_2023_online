@@ -6,6 +6,6 @@ import shop.core.support.CurrentUserId;
 @Value
 public class SignOutRequest {
 
-    CurrentUserId userId;
+    CurrentUserId currentUserId;
 
 }

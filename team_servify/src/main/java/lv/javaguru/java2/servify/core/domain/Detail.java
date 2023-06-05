@@ -1,11 +1,11 @@
 package lv.javaguru.java2.servify.core.domain;
 
+//import javax.persistence.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-//import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Data

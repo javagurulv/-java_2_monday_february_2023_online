@@ -2,7 +2,8 @@ package shop.core.services.actions.manager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.database.Database;
+import org.springframework.transaction.annotation.Transactional;
+import shop.core.database.Repository;
 import shop.core.requests.manager.ChangeItemDataRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.manager.ChangeItemDataResponse;
@@ -13,10 +14,11 @@ import java.math.RoundingMode;
 import java.util.List;
 
 @Component
+@Transactional
 public class ChangeItemDataService {
 
     @Autowired
-    private Database database;
+    private Repository repository;
     @Autowired
     private ChangeItemDataValidator validator;
 
@@ -34,21 +36,21 @@ public class ChangeItemDataService {
 
     private void changeItemName(Long itemId, String newItemName) {
         if (newItemName != null && !newItemName.isBlank()) {
-            database.accessItemDatabase().changeName(itemId, newItemName);
+            repository.accessItemRepository().changeName(itemId, newItemName);
         }
     }
 
     private void changePrice(Long itemId, String newPriceString) {
         if (newPriceString != null && !newPriceString.isBlank()) {
             BigDecimal newPrice = new BigDecimal(newPriceString).setScale(2, RoundingMode.HALF_UP);
-            database.accessItemDatabase().changePrice(itemId, newPrice);
+            repository.accessItemRepository().changePrice(itemId, newPrice);
         }
     }
 
     private void changeAvailableQuantity(Long itemId, String newAvailableQuantityString) {
         if (newAvailableQuantityString != null && !newAvailableQuantityString.isBlank()) {
             Integer newAvailableQuantity = Integer.parseInt(newAvailableQuantityString);
-            database.accessItemDatabase().changeAvailableQuantity(itemId, newAvailableQuantity);
+            repository.accessItemRepository().changeAvailableQuantity(itemId, newAvailableQuantity);
         }
     }
 

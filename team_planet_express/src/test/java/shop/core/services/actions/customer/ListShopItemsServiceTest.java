@@ -5,8 +5,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import shop.core.database.Database;
-import shop.core.database.ItemDatabase;
+import shop.core.database.ItemRepository;
+import shop.core.database.Repository;
 import shop.core.domain.user.User;
 import shop.core.requests.customer.ListShopItemsRequest;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
@@ -20,13 +20,13 @@ import static org.mockito.Mockito.when;
 class ListShopItemsServiceTest {
 
     @Mock
-    private Database mockDatabase;
+    private Repository mockRepository;
     @Mock
     private DatabaseAccessValidator mockDatabaseAccessValidator;
     @Mock
-    private ItemDatabase mockItemDatabase;
-    @Mock
     private ListShopItemsRequest mockRequest;
+    @Mock
+    private ItemRepository mockItemRepository;
     @Mock
     private User mockUser;
     @Mock
@@ -37,11 +37,11 @@ class ListShopItemsServiceTest {
 
     @Test
     void shouldGetItemsFromDatabase() {
-        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
+        when(mockRepository.accessItemRepository()).thenReturn(mockItemRepository);
         when(mockDatabaseAccessValidator.getUserById(anyLong())).thenReturn(mockUser);
-        when(mockRequest.getUserId()).thenReturn(mockCurrentUserId);
+        when(mockRequest.getCurrentUserId()).thenReturn(mockCurrentUserId);
         service.execute(mockRequest);
-        verify(mockItemDatabase).getAllItems();
+        verify(mockItemRepository).getAllItems();
     }
 
 }

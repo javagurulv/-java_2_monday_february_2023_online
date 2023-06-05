@@ -6,7 +6,7 @@ import shop.core.support.CurrentUserId;
 @Value
 public class SignInRequest {
 
-    CurrentUserId userId;
+    CurrentUserId currentUserId;
     String loginName;
     String password;
 

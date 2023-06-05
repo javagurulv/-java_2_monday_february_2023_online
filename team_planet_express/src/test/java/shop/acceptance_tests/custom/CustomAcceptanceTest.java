@@ -1,32 +1,35 @@
 package shop.acceptance_tests.custom;
 
-import org.springframework.context.ApplicationContext;
-import shop.acceptance_tests.ApplicationContextSetup;
+import org.springframework.beans.factory.annotation.Autowired;
 import shop.acceptance_tests.custom.tester.*;
+import shop.core.domain.user.User;
+import shop.core.domain.user.UserRole;
+import shop.core.services.user.UserCreationData;
+import shop.core.services.user.UserService;
+import shop.core.support.CurrentUserId;
 
 public abstract class CustomAcceptanceTest {
 
-    private final ApplicationContextSetup applicationContextSetup = new ApplicationContextSetup();
-    private final ApplicationContext applicationContext = applicationContextSetup.setupApplicationContext();
+    @Autowired
+    protected AddItemToCartTester addItemToCartTester;
+    @Autowired
+    protected ListShopItemsTester listShopItemsTester;
+    @Autowired
+    protected RemoveItemFromCartTester removeItemFromCartTester;
+    @Autowired
+    protected ListCartItemsTester listCartItemsTester;
+    @Autowired
+    protected BuyTester buyCartTester;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private CurrentUserId currentUserId;
 
-    protected AddItemToCartTester addItemToCart() {
-        return new AddItemToCartTester(applicationContext);
-    }
-
-    protected ListShopItemsTester listShopItems() {
-        return new ListShopItemsTester(applicationContext);
-    }
-
-    protected RemoveItemFromCartTester removeItemFromCart() {
-        return new RemoveItemFromCartTester(applicationContext);
-    }
-
-    protected ListCartItemsTester listCartItems() {
-        return new ListCartItemsTester(applicationContext);
-    }
-
-    protected BuyTester buyCart() {
-        return new BuyTester(applicationContext);
+    protected void setupDefaultUser() {
+        UserCreationData userCreationData = new UserCreationData(UserRole.GUEST.getDefaultName(), "", "", UserRole.GUEST);
+        User currentUser = userService.findGuestWithOpenCart().orElseGet(
+                () -> userService.createUser(userCreationData));
+        currentUserId.setValue(currentUser.getId());
     }
 
 }

@@ -6,19 +6,19 @@ import shop.core.support.CurrentUserId;
 
 public class SignInRequestMatcher implements ArgumentMatcher<SignInRequest> {
 
-    private final CurrentUserId userId;
+    private final CurrentUserId currentUserId;
     private final String loginName;
     private final String password;
 
-    public SignInRequestMatcher(CurrentUserId userId, String loginName, String password) {
-        this.userId = userId;
+    public SignInRequestMatcher(CurrentUserId currentUserId, String loginName, String password) {
+        this.currentUserId = currentUserId;
         this.loginName = loginName;
         this.password = password;
     }
 
     @Override
     public boolean matches(SignInRequest request) {
-        return userId.equals(request.getUserId()) &&
+        return currentUserId.equals(request.getCurrentUserId()) &&
                 loginName.equals(request.getLoginName()) &&
                 password.equals(request.getPassword());
     }

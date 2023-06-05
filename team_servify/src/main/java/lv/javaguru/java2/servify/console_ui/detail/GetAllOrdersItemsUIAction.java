@@ -20,6 +20,6 @@ public class GetAllOrdersItemsUIAction implements UIAction {
 
     @Override
     public String getMenuItem() {
-        return "Get all OrderItems";
+        return "Show all OrderItems";
     }
 }

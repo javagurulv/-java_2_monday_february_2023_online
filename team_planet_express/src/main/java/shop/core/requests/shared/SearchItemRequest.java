@@ -10,7 +10,7 @@ import java.util.List;
 @Value
 public class SearchItemRequest {
 
-    CurrentUserId userId;
+    CurrentUserId currentUserId;
     String itemName;
     String price;
     List<OrderingRule> orderingRules;

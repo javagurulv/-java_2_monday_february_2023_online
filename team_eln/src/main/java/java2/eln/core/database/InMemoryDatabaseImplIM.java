@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
-@Component
+//@Component
 public class InMemoryDatabaseImplIM implements DatabaseIM {
 
     public List<ReactionData> reactions = new ArrayList<>();
@@ -21,6 +21,11 @@ public class InMemoryDatabaseImplIM implements DatabaseIM {
     }
 
     @Override
+    public boolean delReactionByID(int code) {
+        return false;
+    }
+
+    @Override
     public List<ReactionData> getAllReactions() {
         return reactions;
     }
@@ -29,6 +34,11 @@ public class InMemoryDatabaseImplIM implements DatabaseIM {
     public boolean hasReactionWithCode(String reactionCode) {
         return reactions.stream()
                 .anyMatch(reaction -> reaction.getCode().equals(reactionCode));
+    }
+
+    @Override
+    public boolean hasReactionWithId(int reactionId) {
+        return false;
     }
 
     /**

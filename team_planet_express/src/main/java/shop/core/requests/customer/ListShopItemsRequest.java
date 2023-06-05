@@ -6,6 +6,6 @@ import shop.core.support.CurrentUserId;
 @Value
 public class ListShopItemsRequest {
 
-    CurrentUserId userId;
+    CurrentUserId currentUserId;
 
 }
