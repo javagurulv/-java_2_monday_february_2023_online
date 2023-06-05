@@ -48,6 +48,9 @@ public class SearchDetailService {
         if (request.isTypeProvided() && !request.isSideProvided() && request.isPriceProvided()) {
             details = detailRepository.findByDetailTypePrice(request.getDetailType(), request.getDetailPrice());
         }
+        if (!request.isTypeProvided() && request.isSideProvided() && request.isPriceProvided()) {
+            details = detailRepository.findByDetailSidePrice(request.getDetailSide(), request.getDetailPrice());
+        }
 
         return details;
     }
