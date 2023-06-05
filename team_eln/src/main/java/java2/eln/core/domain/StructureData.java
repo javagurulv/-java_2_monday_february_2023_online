@@ -20,10 +20,6 @@ public class StructureData {
     private double mass;
     private Integer id;
 
-    private void setSmiles(String smiles) {
-        this.smiles = smiles;
-    }
-
     private IAtomContainer mol;
     private IMolecularFormula formula;
     private double mw;
@@ -31,8 +27,6 @@ public class StructureData {
     public String getSmiles() {
         return smiles;
     }
-
-
 
     public String getName() {
         return name;
@@ -85,22 +79,6 @@ public class StructureData {
         }
     }
 
-    private void setCarbonAsStructure() {
-        mol = new AtomContainer();
-        mol.addAtom(new Atom("C"));
-    }
-
-    private void setMethaneAsStructure() {
-        mol = new AtomContainer();
-        Atom carbon = new Atom("C");
-        mol.addAtom(carbon);
-        for (int i = 0; i < 4; i++) {
-            Atom hydrogen = new Atom("H");
-            mol.addAtom(hydrogen);
-            mol.addBond(new Bond(carbon, hydrogen, Bond.Order.SINGLE));
-        }
-    }
-
     public IAtomContainer parseSmiles(String smiles) {
         try {
             SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
@@ -112,9 +90,7 @@ public class StructureData {
             return container;
         }
     }
-    private void calculateBruttoFormula(){
-        formula = MolecularFormulaManipulator.getMolecularFormula(mol);
-    }
+
     public String getBruttoFormula(){
         return MolecularFormulaManipulator.getString(formula);
     }
@@ -123,9 +99,7 @@ public class StructureData {
         String formulaString = MolecularFormulaManipulator.getString(formula);
         System.out.println(formulaString);
     }
-    private void calculateMW(){
-        mw = MolecularFormulaManipulator.getMass(formula);
-    }
+
     public void printMW(){
         String message = String.format("MW = [%.2f]", mw);
         System.out.println(message);
@@ -179,4 +153,31 @@ public class StructureData {
     public Integer getId() {
         return id;
     }
+
+    private void setCarbonAsStructure() {
+        mol = new AtomContainer();
+        mol.addAtom(new Atom("C"));
+    }
+
+    private void setMethaneAsStructure() {
+        mol = new AtomContainer();
+        Atom carbon = new Atom("C");
+        mol.addAtom(carbon);
+        for (int i = 0; i < 4; i++) {
+            Atom hydrogen = new Atom("H");
+            mol.addAtom(hydrogen);
+            mol.addBond(new Bond(carbon, hydrogen, Bond.Order.SINGLE));
+        }
+    }
+
+    private void setSmiles(String smiles) {
+        this.smiles = smiles;
+    }
+    private void calculateBruttoFormula(){
+        formula = MolecularFormulaManipulator.getMolecularFormula(mol);
+    }
+    private void calculateMW(){
+        mw = MolecularFormulaManipulator.getMass(formula);
+    }
+
 }

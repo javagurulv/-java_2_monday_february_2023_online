@@ -13,24 +13,16 @@ import java.util.List;
 
 @Component
 public class AddReactionService {
-
     @Autowired
-    DatabaseIM databaseIM;
-
+    private DatabaseIM databaseIM;
     @Autowired
-    AddReactionValidator validator;
-
-//    public AddReactionService(DatabaseIM databaseIM, AddReactionValidator validator) {
-//        this.databaseIM = databaseIM;
-//        this.validator = validator;
-//    }
+    private AddReactionValidator validator;
 
      public AddReactionResponse execute(AddReactionRequest addReactionRequest) {
         List<CoreError> errors = validator.validate(addReactionRequest);
          if (!errors.isEmpty()) {
              return new AddReactionResponse(errors);
          }
-
         String code = addReactionRequest.getCode();
         String name = addReactionRequest.getName();
         String filename = addReactionRequest.getFilename();
@@ -42,7 +34,6 @@ public class AddReactionService {
         demoReactionLog.calculateReactionYield();
 
         databaseIM.addReaction(demoReactionLog);
-
         return new AddReactionResponse(demoReactionLog);
     }
 

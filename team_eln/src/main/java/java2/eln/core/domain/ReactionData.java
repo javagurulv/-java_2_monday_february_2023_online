@@ -9,7 +9,7 @@ import java.util.List;
 public class ReactionData {
     private final String code;
     private final String name;
-    private final List<StructureData> startingMaterials;
+    private List<StructureData> startingMaterials;
     private ConditionData conditions;
     private List<StructureData> products;
     private StructureData mainProduct;
@@ -80,7 +80,7 @@ public class ReactionData {
 
     @Override
     public String toString() {
-        calculateReactionYield();
+        //calculateReactionYield();
         return "*** baseClasses.ReactionData{" +
                 "\n code='" + code + '\'' +
                 "\n name='" + name + '\'' +
@@ -91,4 +91,9 @@ public class ReactionData {
                 "\n reaction yield: " + String.format("%.2f", reactionYield*100) + "%" +
                 "} ***";
     }
+
+    public void setStartingMaterials(List<StructureData> startingMaterials) {
+        this.startingMaterials = startingMaterials;
+    }
 }
+

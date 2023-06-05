@@ -7,12 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-
 @Component
 public class ProgramMenu {
-
     private Map<Integer, UIAction> menuNumberToUIActionMap;
-
     @Autowired
     public ProgramMenu(List<UIAction> uiActions) {
         menuNumberToUIActionMap = new HashMap<>();
@@ -23,7 +20,6 @@ public class ProgramMenu {
         menuNumberToUIActionMap.put(4, findUIAction(uiActions, FindReactionByMainProductUIAction.class));
         menuNumberToUIActionMap.put(5, findUIAction(uiActions, FindReactionUIAction.class));
         menuNumberToUIActionMap.put(6, findUIAction(uiActions, ExitUIAction.class));
-
     }
 
     private UIAction findUIAction(List<UIAction> uiActions, Class uiActionClass) {

@@ -4,12 +4,10 @@ import java2.eln.core.domain.ReactionData;
 
 import java.util.*;
 
-
 /**
  * This interface represents a database that stores reaction data.
  */
 public interface DatabaseIM {
-
     /**
      * Adds the specified reaction to the database.
      *
@@ -46,7 +44,6 @@ public interface DatabaseIM {
      * @return true if a reaction with the specified code is stored in the database, false otherwise
      */
     boolean hasReactionWithCode(String reactionCode);
-
 
     boolean hasReactionWithId(int reactionId);
 }
