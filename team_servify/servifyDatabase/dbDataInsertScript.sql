@@ -36,10 +36,10 @@ VALUES
 
 INSERT INTO users (`first_name`, `last_name`, `email`, `phone_number`, `active`, `password`, `user_name`)
 VALUES
-("Alex", "Lee", "myemail@gmail.com", "28555777",  true, "777555", "myemail@gmail.com"),
-("John", "Dou", "joundou@gmail.com", "28999888",  true, "777", "joundou@gmail.com"),
-("Janis", "Ozols", "j_ozols@gmail.com", "28111111",  true, "111", "j_ozols@gmail.com"),
-("Iam", "Boss", "iamboss@gmail.com", "28777777",  true, "000", "iamboss@gmail.com");
+("Alex", "Lee", "myemail@gmail.com", "28555777",  true, "$2a$12$yRlsy8AdTxyu6TdskFRqkOAzvSTIKXewt/o/DaQflZQG3KDoIb.D.", "myemail@gmail.com"),
+("John", "Dou", "joundou@gmail.com", "28999888",  true, "$2a$12$ZBImhFfkfbAHGQwKRtX8G.EO6nWbyHBfnM11OxPzP7ZacOPJYaFmG", "joundou@gmail.com"),
+("Janis", "Ozols", "j_ozols@gmail.com", "28111111",  true, "$2a$12$14FjqRFXiALspL0NqGBHCuiTNE2boc5HNxfbWebq9olApJDaJKs8.", "j_ozols@gmail.com"),
+("Iam", "Boss", "iamboss@gmail.com", "28777777",  true, "$2a$12$EH/5Sybsh6LYVRwgXwVT7.hP0A36c7Pfa8SZzdMp9gjnzTzh4Qc8i", "iamboss@gmail.com");
 
 INSERT INTO orders (`user_id`, `order_date`, `order_close_date`, `order_status`, `total_price`)
 VALUES
