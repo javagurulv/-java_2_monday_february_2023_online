@@ -15,9 +15,12 @@ public class DelReactionByCodeValidator {
     @Autowired
     DatabaseIM databaseIM;
 
-//    public DelReactionValidator(DatabaseIM databaseIM) {
-//        this.databaseIM = databaseIM;
-//    }
+    public List<CoreError> validate(DeleteReactionByCodeRequest request) {
+        List<CoreError> errors = new ArrayList<>();
+        codeValidate(request).ifPresent(errors::add);
+        reactionIsPresentValidate(request).ifPresent(errors::add);
+        return errors;
+    }
 
     private Optional<CoreError> codeValidate (DeleteReactionByCodeRequest deleteReactionByCodeRequest){
         return (deleteReactionByCodeRequest.getCode() == null || deleteReactionByCodeRequest.getCode().isBlank())
@@ -28,12 +31,5 @@ public class DelReactionByCodeValidator {
         return (databaseIM.hasReactionWithCode(deleteReactionByCodeRequest.getCode()))
                 ? Optional.empty()
                 : Optional.of(new CoreError("Reaction code not found", "enter the code of the reaction existing in the database"));
-    }
-
-    public List<CoreError> validate(DeleteReactionByCodeRequest request) {
-        List<CoreError> errors = new ArrayList<>();
-        codeValidate(request).ifPresent(errors::add);
-        reactionIsPresentValidate(request).ifPresent(errors::add);
-        return errors;
     }
 }

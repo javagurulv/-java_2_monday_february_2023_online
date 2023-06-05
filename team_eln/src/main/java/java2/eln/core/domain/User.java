@@ -1,11 +1,10 @@
-package java2.eln.core.database;
+package java2.eln.core.domain;
 
 public class User {
     private int userId = 0;
     private String username;
     private String email;
     private String password;
-
 
     public User(int userId, String username, String email, String password) {
         this.userId = userId;
