@@ -14,10 +14,14 @@ import shop.core.database.ItemRepository;
 import shop.core.domain.item.Item;
 import shop.core.domain.user.User;
 import shop.core.requests.customer.AddItemToCartRequest;
+import shop.core.responses.CoreError;
+import shop.core.responses.customer.AddItemToCartResponse;
 import shop.core.services.actions.customer.AddItemToCartService;
 import shop.core.services.actions.shared.SecurityService;
-import shop.web_ui.components.ItemCard;
 import shop.web_ui.components.MainLayout;
+import shop.web_ui.components.item_card.ItemCard;
+import shop.web_ui.components.item_card.ItemCardBuilder;
+import shop.web_ui.components.notification.ErrorMessage;
 
 import java.util.Optional;
 
@@ -25,26 +29,25 @@ import java.util.Optional;
 @Route(value = "item", layout = MainLayout.class)
 @AnonymousAllowed
 public class ItemView extends Main implements HasUrlParameter<Long> {
-    private Item item;
     @Autowired
     ItemRepository itemRepository;
     @Autowired
     SecurityService securityService;
     @Autowired
     AddItemToCartService addItemToCartService;
-    private ItemCard itemCard;
+    private Item item;
 
     @Override
     public void setParameter(BeforeEvent event, Long id) {
         Optional<Item> byId = itemRepository.findById(id);
         item = byId.get();
-        itemCard = new ItemCard(item);
+        ItemCard itemCard = new ItemCardBuilder().setItemIfoContent(item).setClickable(false).build();
         add(itemCard);
-        add(createBuyDiv());
+        add(createBuyDiv(itemCard));
     }
 
 
-    private Div createBuyDiv() {
+    private Div createBuyDiv(ItemCard itemCard) {
         Div div = new Div();
         IntegerField quantity = new IntegerField();
         quantity.setValue(0);
@@ -59,12 +62,18 @@ public class ItemView extends Main implements HasUrlParameter<Long> {
                         item.getName(),
                         quantity.getValue().toString()
                 );
-                addItemToCartService.execute(addItemToCartRequest);
-                Optional<Item> byId = itemRepository.findById(item.getId());
-                item = byId.get();
-                quantity.setMax(item.getAvailableQuantity());
-                quantity.setValue(0);
-                itemCard.updateQuantity(item.getAvailableQuantity().toString());
+                AddItemToCartResponse response = addItemToCartService.execute(addItemToCartRequest);
+                if (response.hasErrors()) {
+                    for (CoreError error : response.getErrors()) {
+                        add(new ErrorMessage(error.getMessage()));
+                    }
+                } else {
+                    Optional<Item> byId = itemRepository.findById(item.getId());
+                    item = byId.get();
+                    quantity.setMax(item.getAvailableQuantity());
+                    quantity.setValue(0);
+                    itemCard.getItemInfoCard().updateQuantity(item.getAvailableQuantity().toString());
+                }
             }
         });
         div.add(quantity);
