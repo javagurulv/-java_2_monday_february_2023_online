@@ -29,6 +29,8 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-thymeleaf') {
 		exclude (group: 'ch.qos.logback', module: 'logback-classic')
 	}
+	implementation('org.springframework.boot:spring-boot-starter-oauth2-resource-server')
+
 
 	testImplementation('junit:junit:4.13.1')
 	testImplementation('org.mockito:mockito-core')

@@ -4,6 +4,7 @@ import lv.javaguru.java2.servify.core.database.jpa.JpaUserRepository;
 import lv.javaguru.java2.servify.core.database.jpa.JpaUserTypeRepository;
 import lv.javaguru.java2.servify.core.domain.UserEntity;
 import lv.javaguru.java2.servify.core.domain.UserType;
+import lv.javaguru.java2.servify.core.dto.RegistrationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import java.util.Set;
 
 @Service
 @Transactional
-public class AuthenticationService {
+public class RegistrationService {
     @Autowired
     private JpaUserRepository userRepository;
     @Autowired
@@ -23,10 +24,18 @@ public class AuthenticationService {
     @Autowired
     private PasswordEncoder encoder;
 
-    public UserEntity registerUser(String userName, String password) {
-        String ensodedPassword = encoder.encode(password);
+    public UserEntity registerUser(RegistrationDTO registrDTO) {
+        String ensodedPassword = encoder.encode(registrDTO.getPassword());
         UserType userRole = roleRepository.findByAuthority("CUSTOMER").get();
         Set<UserType> authorities = new HashSet<>();
-        return userRepository.save(new UserEntity(userName, ensodedPassword, authorities));
+        authorities.add(userRole);
+        UserEntity newUser = new UserEntity(
+                registrDTO.getFirstName(),
+                registrDTO.getLastName(),
+                registrDTO.getEmail(),
+                registrDTO.getPhoneNumber(),
+                ensodedPassword,
+                authorities);
+        return userRepository.save(newUser);
     }
 }

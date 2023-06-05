@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Servify demo project">
+    <meta name="author" content="DreamTeamDevelopers">
+    <title>Servify</title>
+</head>
+<body>
+
+<h3>Registration:</h3>
+
+<table>
+    <tr>
+        <td>First Name:</td>
+        <td>Last Name:</td>
+        <td>Phone number:</td>
+        <td>email:</td>
+        <td>Password:</td>
+    </tr>
+
+    <tr>
+        <form action="/registr" th:object="${regUser}" method="post">
+            <td><input type="text" th:field="${regUser.firstName}"/></td>
+            <td><input type="text" th:field="${regUser.lastName}"/></td>
+            <td><input type="text" th:field="${regUser.phoneNumber}"/></td>
+            <td><input type="text" th:field="${regUser.email}"/></td>
+            <td><input type="text" th:field="${regUser.password}"/></td>
+            <td>
+                <input type="submit" value="Registr"/>
+                <input type="reset" value="Clear"/>
+            </td>
+        </form>
+    </tr>
+
+</table>
+
+<!--<td th:if="${errors != null}">-->
+<!--    <tr th:each="error : ${errors}">-->
+<!--        <td th:text="${error.field}" />-->
+<!--        <td th:text="${error.message}" />-->
+<!--    </tr>-->
+<!--</td>-->
+
+<form action="/" method="get">
+    <input type="submit" value="Go to main page" name="Submit" />
+</form>
+
+</body>
