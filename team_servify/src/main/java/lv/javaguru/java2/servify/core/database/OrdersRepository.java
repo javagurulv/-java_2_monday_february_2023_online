@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servify.core.database;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lv.javaguru.java2.servify.core.domain.Order;
 import lv.javaguru.java2.servify.core.domain.UserEntity;
 import org.hibernate.SessionFactory;
@@ -35,9 +35,8 @@ public class OrdersRepository {
     }
 
     public List<Order> getOrdersByUserId(Long userId) {
-        String hql = "SELECT o FROM Order o JOIN FETCH o.user u JOIN FETCH o.orderItems oi " +
-                     "JOIN FETCH oi.detail d JOIN FETCH oi.color c " +
-                     "WHERE u.id = :userId";
+        String hql = "SELECT o FROM Order o JOIN FETCH o.user u " +
+                     " WHERE u.id = :userId";
         Query<Order> query = sessionFactory.getCurrentSession()
                 .createQuery(hql, Order.class);
         query.setParameter("userId", userId);

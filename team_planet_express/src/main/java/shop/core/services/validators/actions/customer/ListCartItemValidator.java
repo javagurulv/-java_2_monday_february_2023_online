@@ -6,6 +6,7 @@ import shop.core.requests.customer.ListCartItemsRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.cart.CartValidator;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
+import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +18,14 @@ public class ListCartItemValidator {
     private CurrentUserIdValidator userIdValidator;
     @Autowired
     private CartValidator cartValidator;
+    @Autowired
+    private DatabaseAccessValidator databaseAccessValidator;
 
 
     public List<CoreError> validate(ListCartItemsRequest request) {
-        userIdValidator.validateCurrentUserIdIsPresent(request.getUserId());
+        userIdValidator.validateCurrentUserIdIsPresent(request.getCurrentUserId());
         List<CoreError> errors = new ArrayList<>();
-        cartValidator.validateOpenCartExistsForUserId(request.getUserId().getValue()).ifPresent(errors::add);
+        cartValidator.validateOpenCartExistsForUserId(request.getCurrentUserId().getValue()).ifPresent(errors::add);
         return errors;
     }
 

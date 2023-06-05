@@ -1,5 +1,6 @@
 package lv.javaguru.java2.servify.core.services.details;
 
+//import javax.transaction.Transactional;
 import lv.javaguru.java2.servify.core.database.DetailRepository;
 import lv.javaguru.java2.servify.core.dto.requests.RemoveDetailRequest;
 import lv.javaguru.java2.servify.core.dto.responses.CoreError;
@@ -7,10 +8,12 @@ import lv.javaguru.java2.servify.core.dto.responses.RemoveDetailResponse;
 import lv.javaguru.java2.servify.core.services.validators.RemoveDetailRequestValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class RemoveDetailService {
 
     @Autowired private DetailRepository detailRepository;
@@ -21,7 +24,7 @@ public class RemoveDetailService {
         if (!errors.isEmpty()) {
             return new RemoveDetailResponse(errors);
         }
-        boolean isDetailRemoved =  detailRepository.deleteById(request.getId());
+        boolean isDetailRemoved =  detailRepository.deleteById(request.getDetailId());
         return new RemoveDetailResponse(isDetailRemoved);
     }
 

@@ -2,6 +2,7 @@ package shop.core.services.actions.guest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
 import shop.core.requests.guest.SignUpRequest;
@@ -14,6 +15,7 @@ import shop.core.services.validators.actions.guest.SignUpValidator;
 import java.util.List;
 
 @Component
+@Transactional
 public class SignUpService {
 
     @Autowired
@@ -31,7 +33,7 @@ public class SignUpService {
         String password = request.getPassword();
         UserCreationData userCreationData = new UserCreationData(name, loginName, password, UserRole.CUSTOMER);
         User createdUser = userService.createUser(userCreationData);
-        request.getUserId().setValue(createdUser.getId());
+        request.getCurrentUserId().setValue(createdUser.getId());
         return new SignUpResponse(createdUser);
     }
 

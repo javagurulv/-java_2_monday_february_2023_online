@@ -2,7 +2,8 @@ package shop.core.services.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.database.Database;
+import org.springframework.transaction.annotation.Transactional;
+import shop.core.database.Repository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
@@ -10,22 +11,23 @@ import shop.core.domain.user.UserRole;
 import java.util.Optional;
 
 @Component
+@Transactional
 public class UserService {
 
     @Autowired
-    private Database database;
+    private Repository repository;
 
     public User createUser(UserCreationData userCreationData) {
-        User createdUser = database.accessUserDatabase()
+        User createdUser = repository.accessUserRepository()
                 .save(new User(userCreationData.getName(), userCreationData.getLoginName(), userCreationData.getPassword(), userCreationData.getUserRole()));
-        database.accessCartDatabase().save(new Cart(createdUser.getId()));
+        repository.accessCartRepository().save(new Cart(createdUser));
         return createdUser;
     }
 
     public Optional<User> findGuestWithOpenCart() {
-        return database.accessUserDatabase().getAllUsers().stream()
+        return repository.accessUserRepository().getAllUsers().stream()
                 .filter(user -> UserRole.GUEST.equals(user.getUserRole()))
-                .filter(user -> database.accessCartDatabase().findOpenCartForUserId(user.getId()).isPresent())
+                .filter(user -> repository.accessCartRepository().findOpenCartForUserId(user.getId()).isPresent())
                 .findFirst();
     }
 

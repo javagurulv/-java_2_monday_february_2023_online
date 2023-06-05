@@ -5,8 +5,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import shop.core.database.CartDatabase;
-import shop.core.database.Database;
+import shop.core.database.CartRepository;
+import shop.core.database.Repository;
 import shop.core.domain.cart.Cart;
 import shop.core.responses.CoreError;
 import shop.core.support.error_code_processing.ErrorProcessor;
@@ -22,11 +22,11 @@ import static org.mockito.Mockito.when;
 class CartValidatorTest {
 
     @Mock
-    private Database mockDatabase;
+    private Repository mockRepository;
     @Mock
     private ErrorProcessor mockErrorProcessor;
     @Mock
-    private CartDatabase mockCartDatabase;
+    private CartRepository mockCartRepository;
     @Mock
     private Cart mockCart;
     @Mock
@@ -37,16 +37,16 @@ class CartValidatorTest {
 
     @Test
     void shouldReturnNoError() {
-        when(mockDatabase.accessCartDatabase()).thenReturn(mockCartDatabase);
-        when(mockCartDatabase.findOpenCartForUserId(1L)).thenReturn(Optional.of(mockCart));
+        when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
+        when(mockCartRepository.findOpenCartForUserId(1L)).thenReturn(Optional.of(mockCart));
         Optional<CoreError> error = validator.validateOpenCartExistsForUserId(1L);
         assertTrue(error.isEmpty());
     }
 
     @Test
     void shouldReturnError() {
-        when(mockDatabase.accessCartDatabase()).thenReturn(mockCartDatabase);
-        when(mockCartDatabase.findOpenCartForUserId(1L)).thenReturn(Optional.empty());
+        when(mockRepository.accessCartRepository()).thenReturn(mockCartRepository);
+        when(mockCartRepository.findOpenCartForUserId(1L)).thenReturn(Optional.empty());
         when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
         validator.validateOpenCartExistsForUserId(1L);
         verify(mockErrorProcessor).getCoreError("button", "VDT-CRT-NOC");

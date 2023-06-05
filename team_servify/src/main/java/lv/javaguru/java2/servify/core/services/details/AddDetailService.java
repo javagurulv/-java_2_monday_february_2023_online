@@ -1,5 +1,6 @@
 package lv.javaguru.java2.servify.core.services.details;
 
+
 import lv.javaguru.java2.servify.core.dto.requests.AddDetailRequest;
 import lv.javaguru.java2.servify.core.dto.responses.CoreError;
 import lv.javaguru.java2.servify.core.dto.responses.AddDetailResponse;
@@ -8,10 +9,13 @@ import lv.javaguru.java2.servify.core.domain.Detail;
 import lv.javaguru.java2.servify.core.database.DetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+//import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class AddDetailService {
     @Autowired
     private DetailRepository detailRepository;

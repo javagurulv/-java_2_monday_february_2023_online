@@ -20,9 +20,7 @@ public class ELN_application {
 
     @NotNull
     private static ApplicationContext getApplicationContext() {
-        ApplicationContext applicationContext =
-                new AnnotationConfigApplicationContext(ELNconfiguration.class);
-        return applicationContext;
+        return new AnnotationConfigApplicationContext(ELNconfiguration.class);
     }
 
 }

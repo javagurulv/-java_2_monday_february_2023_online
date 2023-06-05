@@ -18,7 +18,7 @@ public class RemoveDetailRequestValidator {
     }
 
     public Optional<CoreError> validateDetailId(RemoveDetailRequest request) {
-        return (request.getId() == null)
+        return (request.getDetailId()== null)
                 ? Optional.of(new CoreError(FieldTitle.ID, "Must not be empty"))
                 : Optional.empty();
     }

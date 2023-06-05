@@ -7,7 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import shop.config.ShopConfiguration;
-import shop.core.database.Database;
+import shop.core.database.Repository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
 import shop.core.domain.item.Item;
@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SignUpAndOrderAnItemAcceptanceTest {
 
     @Autowired
-    private Database database;
+    private Repository repository;
     @Autowired
     private CurrentUserId currentUserId;
     @Autowired
@@ -46,16 +46,16 @@ public class SignUpAndOrderAnItemAcceptanceTest {
         assertFalse(signUpResponse.hasErrors());
         User newUser = signUpResponse.getUser();
         assertEquals(UserRole.CUSTOMER, newUser.getUserRole());
-        assertTrue(database.accessCartDatabase().findOpenCartForUserId(newUser.getId()).isPresent());
-        Item orderedItem = database.accessItemDatabase().findByName("Lightspeed Briefs").orElseThrow();
+        assertTrue(repository.accessCartRepository().findOpenCartForUserId(newUser.getId()).isPresent());
+        Item orderedItem = repository.accessItemRepository().findByName("Lightspeed Briefs").orElseThrow();
         AddItemToCartResponse addItemToCartResponse =
                 addItemToCartService.execute(new AddItemToCartRequest(currentUserId, orderedItem.getName(), "1"));
         assertFalse(addItemToCartResponse.hasErrors());
-        Cart userCart = database.accessCartDatabase().findOpenCartForUserId(newUser.getId()).get();
-        List<CartItem> cartItems = database.accessCartItemDatabase().getAllCartItemsForCartId(userCart.getId());
+        Cart userCart = repository.accessCartRepository().findOpenCartForUserId(newUser.getId()).get();
+        List<CartItem> cartItems = repository.accessCartItemRepository().getAllCartItemsForCartId(userCart.getId());
         assertEquals(1, cartItems.size());
         CartItem cartItem = cartItems.get(0);
-        Item originalItem = database.accessItemDatabase().findById(cartItem.getItemId()).orElseThrow();
+        Item originalItem = repository.accessItemRepository().findById(cartItem.getItem().getId()).orElseThrow();
         assertEquals("Lightspeed Briefs", originalItem.getName());
         assertEquals(1, cartItem.getOrderedQuantity());
         assertEquals(2, originalItem.getAvailableQuantity());

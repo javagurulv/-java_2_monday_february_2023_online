@@ -2,6 +2,7 @@ package shop.core.services.actions.shared;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import shop.core.domain.user.User;
 import shop.core.requests.shared.SignInRequest;
 import shop.core.responses.CoreError;
@@ -12,6 +13,7 @@ import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import java.util.List;
 
 @Component
+@Transactional
 public class SignInService {
 
     @Autowired
@@ -25,7 +27,7 @@ public class SignInService {
             return new SignInResponse(errors);
         }
         User newUser = databaseAccessValidator.getUserByLoginName(request.getLoginName());
-        request.getUserId().setValue(newUser.getId());
+        request.getCurrentUserId().setValue(newUser.getId());
         return new SignInResponse(newUser);
     }
 
