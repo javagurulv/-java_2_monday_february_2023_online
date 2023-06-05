@@ -17,8 +17,8 @@ import java.util.Objects;
 @Component
 class JdbcDatabaseImpl implements DatabaseIM {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    @Autowired private JdbcTemplate jdbcTemplate;
+    @Autowired private ReactionDataRowMapper reactionDataRowMapper;
 
     @Override
     @Transactional
@@ -75,8 +75,7 @@ class JdbcDatabaseImpl implements DatabaseIM {
                 LEFT JOIN ConditionData\s
                 ON reaction_id = reactions.id
                 """;
-        List<ReactionData> reactions = jdbcTemplate.query(sql, new ReactionDataRowMapper(jdbcTemplate));
-        return reactions;
+        return jdbcTemplate.query(sql, reactionDataRowMapper);
     }
 
     @Override
