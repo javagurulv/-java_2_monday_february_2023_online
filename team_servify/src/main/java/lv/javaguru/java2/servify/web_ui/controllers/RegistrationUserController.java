@@ -13,13 +13,13 @@ public class RegistrationUserController {
     @Autowired
     private RegistrationUserService registrationService;
 
-    @GetMapping("/registr")
+    @GetMapping("/register")
     public String registrationPage(ModelMap modelMap) {
         modelMap.addAttribute("regUser", new RegistrationDTO());
-        return "registr";
+        return "register";
     }
 
-    @PostMapping("/registr")
+    @PostMapping("/register")
     public String registerUser(@ModelAttribute("regUser") RegistrationDTO registrationDTO){
          registrationService.registerUser(registrationDTO);
         return "redirect:registration?success";

@@ -10,16 +10,17 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
-    private UserService userService;
     @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
+    private UserService userService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -36,20 +37,24 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-         http
+        http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/").permitAll();
-                    auth.requestMatchers("/registr/**").permitAll();
+                    auth.requestMatchers("/", "/home").permitAll();
+                    auth.requestMatchers("/register/**").permitAll();
+                    auth.requestMatchers("/login/**", "/error").permitAll();
                     auth.requestMatchers("/index/**").hasAuthority("MANAGER");
                     auth.requestMatchers("/admin/**", "/error").hasAuthority("MANAGER");
                     auth.requestMatchers("/user/**").hasAnyAuthority("CUSTOMER", "MANAGER");
                     auth.anyRequest().authenticated();
-                })
-                //.httpBasic(withDefaults())
-                .formLogin(withDefaults());
-         http
-                 .logout().logoutSuccessUrl("/");
+                });
+        http
+                .formLogin()
+                .loginPage("/login");
+        http
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/home");
         return http.build();
     }
 }
