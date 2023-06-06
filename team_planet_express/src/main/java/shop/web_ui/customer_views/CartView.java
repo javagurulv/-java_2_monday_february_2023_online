@@ -32,7 +32,7 @@ import java.util.List;
 public class CartView extends Main {
     public CartView(@Autowired ListCartItemsService listCartItemsService, @Autowired SecurityService securityService,
                     @Autowired RemoveItemFromCartService removeItemFromCartService, @Autowired BuyService buyService) {
-        ListCartItemsRequest request = new ListCartItemsRequest(securityService.getAuthenticatedUserFromDB());
+        ListCartItemsRequest request = new ListCartItemsRequest();
         ListCartItemsResponse response = listCartItemsService.execute(request);
 
         if (response.hasErrors()) {

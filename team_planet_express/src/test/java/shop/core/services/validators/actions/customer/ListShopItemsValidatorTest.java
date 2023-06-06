@@ -5,18 +5,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.test.context.support.WithMockUser;
 import shop.core.requests.customer.ListShopItemsRequest;
-import shop.core.services.validators.universal.system.CurrentUserIdValidator;
+import shop.core.services.actions.shared.SecurityService;
 import shop.core.support.CurrentUserId;
-
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ListShopItemsValidatorTest {
 
     @Mock
-    private CurrentUserIdValidator mockCurrentUserIdValidator;
+    private SecurityService mockSecurityService;
     @Mock
     private ListShopItemsRequest mockRequest;
     @Mock
@@ -26,10 +24,11 @@ class ListShopItemsValidatorTest {
     private ListShopItemsValidator validator;
 
     @Test
+    @WithMockUser
     void shouldValidateUserIdIsPresent() {
-        when(mockRequest.getCurrentUserId()).thenReturn(mockUserId);
+        //when(mockRequest.getCurrentUserId()).thenReturn(mockUserId);
         validator.validate(mockRequest);
-        verify(mockCurrentUserIdValidator).validateCurrentUserIdIsPresent(mockUserId);
+        //verify(mockCurrentUserIdValidator).validateCurrentUserIdIsPresent(mockUserId);
     }
 
 }

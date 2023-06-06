@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Deprecated
 public class OrderingRuleValidator {
 
     public List<CoreError> validate(OrderingRule orderingRule) {

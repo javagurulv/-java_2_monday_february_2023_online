@@ -7,9 +7,11 @@ import shop.core.database.CartItemRepository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
 import shop.core.domain.item.Item;
+import shop.core.domain.user.User;
 import shop.core.requests.customer.ListCartItemsRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.customer.ListCartItemsResponse;
+import shop.core.services.actions.shared.SecurityService;
 import shop.core.services.cart.CartService;
 import shop.core.services.validators.actions.customer.ListCartItemValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
@@ -17,6 +19,7 @@ import shop.core.support.CartItemForList;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @Transactional
@@ -30,13 +33,16 @@ public class ListCartItemsService {
     private DatabaseAccessValidator databaseAccessValidator;
     @Autowired
     private CartService cartService;
+    @Autowired
+    private SecurityService securityService;
 
     public ListCartItemsResponse execute(ListCartItemsRequest request) {
         List<CoreError> errors = validator.validate(request);
         if (!errors.isEmpty()) {
             return new ListCartItemsResponse(errors);
         }
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getUser().get().getId());
+        Optional<User> user = securityService.getAuthenticatedUserFromDB();
+        Cart cart = databaseAccessValidator.getOpenCartByUserId(user.get().getId());
         List<CartItem> cartItems = cartItemRepository.getAllCartItemsForCartId(cart.getId());
         BigDecimal cartTotal = cartService.getSum(cart.getId());
         return new ListCartItemsResponse(cartItems, cartTotal);

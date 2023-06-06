@@ -6,10 +6,11 @@ import shop.core.database.CartItemRepository;
 import shop.core.database.ItemRepository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.item.Item;
+import shop.core.domain.user.User;
 import shop.core.requests.customer.RemoveItemFromCartRequest;
 import shop.core.responses.CoreError;
+import shop.core.services.actions.shared.SecurityService;
 import shop.core.services.validators.cart.CartValidator;
-import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
@@ -32,8 +33,6 @@ public class RemoveItemFromCartValidator {
     @Autowired
     private CartItemRepository cartItemRepository;
     @Autowired
-    private CurrentUserIdValidator userIdValidator;
-    @Autowired
     private CartValidator cartValidator;
     @Autowired
     private InputStringValidator inputStringValidator;
@@ -41,11 +40,15 @@ public class RemoveItemFromCartValidator {
     private DatabaseAccessValidator databaseAccessValidator;
     @Autowired
     private ErrorProcessor errorProcessor;
+    @Autowired
+    private SecurityService securityService;
 
     public List<CoreError> validate(RemoveItemFromCartRequest request) {
-        userIdValidator.validateCurrentUserIdIsPresent(request.getUser().getId());
         List<CoreError> errors = new ArrayList<>();
-        cartValidator.validateOpenCartExistsForUserId(request.getUser().getId()).ifPresent(errors::add);
+        Optional<User> user = securityService.getAuthenticatedUserFromDB();
+        if(user.isEmpty())
+            errors.add(new CoreError("","", ""));
+        cartValidator.validateOpenCartExistsForUserId(user.get().getId()).ifPresent(errors::add);
         if (errors.isEmpty()) {
             validateItemName(request.getItemName(), errors);
             if (errors.isEmpty()) {
@@ -69,7 +72,7 @@ public class RemoveItemFromCartValidator {
     }
 
     private Optional<CoreError> validateItemNameInCart(RemoveItemFromCartRequest request) {
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getUser().getId());
+        Cart cart = databaseAccessValidator.getOpenCartByUserId(securityService.getAuthenticatedUserFromDB().get().getId());
         Item item = databaseAccessValidator.getItemByName(request.getItemName());
         return (cartItemRepository.findByCartIdAndItemId(cart.getId(), item.getId()).isEmpty())
                 ? Optional.of(errorProcessor.getCoreError(FIELD_NAME, ERROR_NO_SUCH_ITEM_IN_CART))

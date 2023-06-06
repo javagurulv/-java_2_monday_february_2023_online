@@ -4,15 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import shop.core.database.CartItemRepository;
+import shop.core.database.CartRepository;
 import shop.core.database.ItemRepository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
 import shop.core.domain.item.Item;
+import shop.core.domain.user.User;
 import shop.core.requests.customer.AddItemToCartRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.customer.AddItemToCartResponse;
+import shop.core.services.actions.shared.SecurityService;
 import shop.core.services.validators.actions.customer.AddItemToCartValidator;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,20 +28,25 @@ public class AddItemToCartService {
     @Autowired
     private CartItemRepository cartItemRepository;
     @Autowired
+    private CartRepository cartRepository;
+    @Autowired
     private AddItemToCartValidator validator;
     @Autowired
-    private DatabaseAccessValidator databaseAccessValidator;
+    private SecurityService securityService;
 
     public AddItemToCartResponse execute(AddItemToCartRequest request) {
         List<CoreError> errors = validator.validate(request);
         if (!errors.isEmpty()) {
             return new AddItemToCartResponse(errors);
         }
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getUser().getId());
-        Item item = databaseAccessValidator.getItemByName(request.getItemName());
-        Integer orderedQuantity = Integer.parseInt(request.getOrderedQuantity());
-        addItemToCart(cart, item, orderedQuantity);
-        changeItemAvailability(item, orderedQuantity);
+        Optional<User> user = securityService.getAuthenticatedUserFromDB();
+        if(user.isPresent()) {
+            Cart cart = cartRepository.findOpenCartForUserId(user.get().getId()).get();
+            Item item = itemRepository.findByName(request.getItemName()).get();
+            Integer orderedQuantity = Integer.parseInt(request.getOrderedQuantity());
+            addItemToCart(cart, item, orderedQuantity);
+            changeItemAvailability(item, orderedQuantity);
+        }
         return new AddItemToCartResponse();
     }
 
