@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-//@Component
+import java.util.List;
+
+@Component
 @Transactional
 public class ExerciseRepository {
 
@@ -19,6 +21,10 @@ public class ExerciseRepository {
     }
 
     public Exercise findByName(String name) {
+        return sessionFactory.getCurrentSession().get(Exercise.class, name);
+    }
+
+    public Exercise findByMuscleGroup(String name) {
         return sessionFactory.getCurrentSession().get(Exercise.class, name);
     }
 }
