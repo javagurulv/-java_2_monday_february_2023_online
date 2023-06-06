@@ -28,15 +28,12 @@ public class SignInController {
     @PostMapping(value = "/signIn")
     public String processSignInRequest(
             @ModelAttribute(value = "request") SignInRequest request, ModelMap modelMap) {
-        //TODO shame
         request.setCurrentUserId(currentUserId);
         SignInResponse response = signInService.execute(request);
         if (response.hasErrors()) {
-            modelMap.addAttribute("errors", response.getErrors());
-            return "shared/signIn";
-        } else {
-            return "redirect:/";
+            modelMap.addAttribute("signInErrors", response.getErrors());
         }
+        return "redirect:/";
     }
 
 }

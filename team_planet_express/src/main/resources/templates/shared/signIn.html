@@ -26,8 +26,8 @@
         </form>
     </tr>
 </table>
-<table th:if="${errors != null}">
-    <tr th:each="error : ${errors}">
+<table th:if="${signInErrors != null}">
+    <tr th:each="error : ${signInErrors}">
         <td th:text="${error.field}"></td>
         <td th:text="${error.errorCode}"></td>
         <td th:text="${error.message}"></td>

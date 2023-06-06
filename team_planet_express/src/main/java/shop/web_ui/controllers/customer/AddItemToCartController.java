@@ -28,7 +28,6 @@ public class AddItemToCartController {
     @PostMapping(value = "/addItemToCart")
     public String processAddItemToCartRequest(
             @ModelAttribute(value = "request") AddItemToCartRequest request, ModelMap modelMap) {
-        //TODO shame
         request.setCurrentUserId(currentUserId);
         AddItemToCartResponse response = addItemToCartService.execute(request);
         if (response.hasErrors()) {

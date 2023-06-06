@@ -9,6 +9,52 @@
 </head>
 
 <body>
+<h2>Sign in</h2>
+<table>
+    <tr>
+        <td>Login:</td>
+        <td>Password:</td>
+    </tr>
+    <tr>
+        <form action="/signIn" th:object="${signInRequest}" method="post">
+            <td><input type="text" th:field="${signInRequest.loginName}"/></td>
+            <td><input type="text" th:field="${signInRequest.password}"/></td>
+            <td>
+                <input type="submit" value="Sign in"/>
+            </td>
+        </form>
+    </tr>
+</table>
+<table th:if="${signInErrors != null}">
+    <tr th:each="error : ${signInErrors}">
+        <td th:text="${error.field}"></td>
+        <td th:text="${error.errorCode}"></td>
+        <td th:text="${error.message}"></td>
+    </tr>
+</table>
+<h2>Items</h2>
+<table>
+    <tr>
+        <td>Name:</td>
+        <td>Price:</td>
+        <td>Quantity:</td>
+        <td>Order amount:</td>
+    </tr>
+    <td th:if="${items != null}">
+        <tr th:each="item : ${items}">
+            <form action="/addItemToCart" th:object="${addItemToCartRequest}" method="post">
+                <td th:text="${item.name}"></td>
+                <td><input type="hidden" th:value="${item.name}" th:attr="name=itemName"/></td>
+                <td th:text="${item.price}"></td>
+                <td th:text="${item.availableQuantity}"></td>
+                <td><input type="text" th:field="${addItemToCartRequest.orderedQuantity}"/></td>
+                <td>
+                    <input type="submit" value="Add item">
+                </td>
+            </form>
+        </tr>
+    </td>
+</table>
 <h2>Program menu</h2>
 <h3>You are:
     <text th:text="${user.value}"></text>
@@ -28,7 +74,6 @@
 <a href="/addItemToShop">Add item to shop</a> <br>
 <a href="/changeItemData">Change item data</a> <br>
 <a href="/changeUserData">Change user data</a> <br>
-<a href="/signIn">Sign in</a> <br>
 <a href="/signUp">Sign up</a> <br>
 <a href="/signOut">Sign out</a> <br>
 </body>
