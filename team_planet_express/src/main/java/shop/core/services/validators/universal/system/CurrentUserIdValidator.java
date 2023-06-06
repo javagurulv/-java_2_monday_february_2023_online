@@ -5,6 +5,7 @@ import shop.core.services.exception.ServiceMissingDataException;
 import shop.core.support.CurrentUserId;
 
 @Component
+@Deprecated
 public class CurrentUserIdValidator {
 
     public boolean validateCurrentUserIdIsPresent(Long userId) {

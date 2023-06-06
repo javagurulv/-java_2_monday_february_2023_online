@@ -28,7 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         shop.core.domain.user.User user = userRepository.findByLoginName(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
         return User.builder()
-                .username(user.getName())
+                .username(user.getLogin())
                 .password(passwordEncoder.encode(user.getPassword()))
                 .roles(user.getUserRole().toString())
                 .build();

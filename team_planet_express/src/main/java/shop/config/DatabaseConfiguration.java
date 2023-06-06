@@ -2,7 +2,6 @@ package shop.config;
 
 import jakarta.persistence.EntityManagerFactory;
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -14,10 +13,6 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import shop.core.database.CartRepository;
-import shop.core.database.ItemRepository;
-import shop.core.database.UserRepository;
-import shop.core.services.fake.FakeDatabaseInitializer;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -27,7 +22,7 @@ import java.util.Properties;
 @PropertySource(value = "classpath:application.properties")
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "shop.core.database")
-public class ShopConfiguration {
+public class DatabaseConfiguration {
 
     @Value("${jdbc.url}")
     private String jdbcUrl;
@@ -82,12 +77,12 @@ public class ShopConfiguration {
         return transactionManager;
     }
 
-    @Bean
-    @Autowired
-    public FakeDatabaseInitializer initiliazeDB(UserRepository userRepository, ItemRepository itemRepository, CartRepository cartRepository) {
-        FakeDatabaseInitializer fakeDatabaseInitializer = new FakeDatabaseInitializer(userRepository, itemRepository, cartRepository);
-        fakeDatabaseInitializer.initialize();
-        return fakeDatabaseInitializer;
-    }
+//    @Bean
+//    @Autowired
+//    public FakeDatabaseInitializer initiliazeDB(UserRepository userRepository, ItemRepository itemRepository, CartRepository cartRepository) {
+//        FakeDatabaseInitializer fakeDatabaseInitializer = new FakeDatabaseInitializer(userRepository, itemRepository, cartRepository);
+//        fakeDatabaseInitializer.initialize();
+//        return fakeDatabaseInitializer;
+//    }
 
 }

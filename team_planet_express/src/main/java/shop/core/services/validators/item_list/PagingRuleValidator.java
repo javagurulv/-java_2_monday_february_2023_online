@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Deprecated
 public class PagingRuleValidator {
 
     private static final String FIELD_PAGE_SIZE = "page_size";

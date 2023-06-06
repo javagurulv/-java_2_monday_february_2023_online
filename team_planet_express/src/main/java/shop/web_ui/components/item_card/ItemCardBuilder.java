@@ -72,7 +72,6 @@ public class ItemCardBuilder {
         deleteButton = new Button(new Icon(VaadinIcon.TRASH));
         deleteButton.addClickListener(e -> {
             RemoveItemFromCartRequest request = new RemoveItemFromCartRequest(
-                    securityService.getAuthenticatedUserFromDB().get(),
                     item.getName()
             );
             removeItemFromCartService.execute(request);

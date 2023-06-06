@@ -58,7 +58,6 @@ public class ItemView extends Main implements HasUrlParameter<Long> {
             Optional<User> authenticatedUserFromDB = securityService.getAuthenticatedUserFromDB();
             if (authenticatedUserFromDB.isPresent()) {
                 AddItemToCartRequest addItemToCartRequest = new AddItemToCartRequest(
-                        authenticatedUserFromDB.get(),
                         item.getName(),
                         quantity.getValue().toString()
                 );
