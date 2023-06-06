@@ -16,7 +16,7 @@ public class GetAllDetailsService {
 
     @Autowired private DetailRepository detailRepository;
 
-    public GetAllDetailResponse getAll(GetAllDetailsRequest request) {
+    public GetAllDetailResponse getAll() {
         var dtos = detailRepository.getAllDetails().stream()
                 .map(this::convert)
                 .toList();

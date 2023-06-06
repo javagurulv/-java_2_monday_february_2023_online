@@ -18,4 +18,5 @@ public interface DetailRepository {
     List<Detail> findByDetailTypeSide(String detailType, String detailSide);
     List<Detail> findByDetailPrice(BigDecimal detailPrice);
     List<Detail> findByDetailTypePrice(String detailType, BigDecimal detailPrice);
+    List<Detail> findByDetailSidePrice(String detailSide, BigDecimal detailPrice);
 }
