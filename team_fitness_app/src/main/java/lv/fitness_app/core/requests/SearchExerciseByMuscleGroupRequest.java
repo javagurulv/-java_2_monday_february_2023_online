@@ -1,5 +1,5 @@
 package lv.fitness_app.core.requests;
-public class SearchExerciseByMuscleGroupRequest {
+public class    SearchExerciseByMuscleGroupRequest {
 
     private String muscleGroup;
 
