@@ -25,6 +25,5 @@ public class AddUserRequest {
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.active = true;
-        //this.userType = "ANONYMOUS";
     }
 }

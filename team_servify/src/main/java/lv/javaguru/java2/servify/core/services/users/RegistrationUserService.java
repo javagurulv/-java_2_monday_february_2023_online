@@ -1,30 +1,40 @@
-package lv.javaguru.java2.servify.core.services;
+package lv.javaguru.java2.servify.core.services.users;
 
 import lv.javaguru.java2.servify.core.database.jpa.JpaUserRepository;
 import lv.javaguru.java2.servify.core.database.jpa.JpaUserTypeRepository;
 import lv.javaguru.java2.servify.core.domain.UserEntity;
 import lv.javaguru.java2.servify.core.domain.UserType;
 import lv.javaguru.java2.servify.core.dto.RegistrationDTO;
+import lv.javaguru.java2.servify.core.dto.responses.AddUserResponse;
+import lv.javaguru.java2.servify.core.dto.responses.CoreError;
+import lv.javaguru.java2.servify.core.services.validators.RegistrationUserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
 @Transactional
-public class RegistrationService {
+public class RegistrationUserService {
     @Autowired
     private JpaUserRepository userRepository;
     @Autowired
     private JpaUserTypeRepository roleRepository;
-
+    @Autowired
+    private RegistrationUserValidator validator;
     @Autowired
     private PasswordEncoder encoder;
 
-    public UserEntity registerUser(RegistrationDTO registrDTO) {
+
+    public AddUserResponse registerUser(RegistrationDTO registrDTO) {
+        List<CoreError> errors = validator.validate(registrDTO);
+        if (!errors.isEmpty()) {
+            return new AddUserResponse(errors);
+        }
         String ensodedPassword = encoder.encode(registrDTO.getPassword());
         UserType userRole = roleRepository.findByAuthority("CUSTOMER").get();
         Set<UserType> authorities = new HashSet<>();
@@ -36,6 +46,7 @@ public class RegistrationService {
                 registrDTO.getPhoneNumber(),
                 ensodedPassword,
                 authorities);
-        return userRepository.save(newUser);
+        userRepository.save(newUser);
+        return new AddUserResponse(newUser);
     }
 }

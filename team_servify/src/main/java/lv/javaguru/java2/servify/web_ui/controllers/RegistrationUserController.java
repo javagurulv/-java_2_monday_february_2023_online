@@ -1,7 +1,7 @@
 package lv.javaguru.java2.servify.web_ui.controllers;
 
 import lv.javaguru.java2.servify.core.dto.RegistrationDTO;
-import lv.javaguru.java2.servify.core.services.RegistrationService;
+import lv.javaguru.java2.servify.core.services.users.RegistrationUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @CrossOrigin("*")
-public class RegistrationController {
+public class RegistrationUserController {
     @Autowired
-    private RegistrationService registrationService;
+    private RegistrationUserService registrationService;
 
     @GetMapping("/registr")
     public String registrationPage(ModelMap modelMap) {

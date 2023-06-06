@@ -17,6 +17,5 @@ public class UserDTO {
     private String phoneNumber;
     private Address address;
     private boolean active;
-    //private UserType userType;
     private String userType;
 }
