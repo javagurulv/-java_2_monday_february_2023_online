@@ -47,7 +47,7 @@ public class SearchExerciseByNameService {
     private List<Exercise> search(SearchExerciseByNameRequest request) {
         List<Exercise> exercises = new ArrayList<>();
         if (request.isNameProvided()) {
-            exercises = (List<Exercise>) exerciseRepository.findByName(request.getName());
+            exercises = exerciseRepository.findByName(request.getName());
         }
         return exercises;
     }
