@@ -13,7 +13,7 @@ public class ShowAllDetailsController {
 
     @GetMapping(value = "/showAllDetails")
     public String showAllDetails(ModelMap modelMap) {
-        GetAllDetailResponse response = getAllDetailsService.getAll();
+        GetAllDetailResponse response = getAllDetailsService.getAll(new GetAllDetailsRequest());
         modelMap.addAttribute("detail", response.getDetails());
         return "/showAllDetails";
     }

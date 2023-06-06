@@ -1,43 +1,23 @@
-//dependencies {
-//	implementation('mysql:mysql-connector-java:8.0.33')
-//	implementation('org.apache.commons:commons-dbcp2:2.9.0')
-//
-//	compileOnly('org.projectlombok:lombok:1.18.26')
-//	annotationProcessor('org.projectlombok:lombok:1.18.26')
-//
-//	implementation('org.reflections:reflections:0.9.12')
-//	implementation('org.hibernate:hibernate-core:5.4.25.Final')
-//
-//	implementation('org.springframework.boot:spring-boot-starter-data-jpa:2.7.5') {
-//		exclude (group: 'ch.qos.logback', module: 'logback-classic')
-//	}
-//	implementation('org.springframework.boot:spring-boot-starter-web:2.7.5') {
-//		exclude (group: 'ch.qos.logback', module: 'logback-classic')
-//	}
-//	implementation('org.springframework.boot:spring-boot-starter-thymeleaf:2.7.5') {
-//		exclude (group: 'ch.qos.logback', module: 'logback-classic')
-//	}
-//
-//	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat:2.7.5') {
-//		exclude (group: 'ch.qos.logback', module: 'logback-classic')
-//	}
-//	implementation 'org.springframework.boot:spring-boot-starter-security'
-//	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
-//	implementation 'org.springframework.security:spring-security-test'
-//
-//
-//	testImplementation('junit:junit:4.13.1')
-//	testImplementation('org.mockito:mockito-core:3.6.0')
-//	testImplementation('org.springframework:spring-test:5.3.23')
-//	testImplementation('com.h2database:h2:1.4.200')
-//}
 plugins {
+	id 'war'
 	id 'java'
-	id 'org.springframework.boot' version '3.1.0'
+	id 'org.springframework.boot' version '3.0.1'
 	id 'io.spring.dependency-management' version '1.1.0'
 }
+war.baseName = "java2-2023-spring"
+jar.archiveName = "java2-2023-spring.jar"
 
-group = 'com.example'
+jar {
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+	manifest {
+		attributes "Main-Class": "lv.javaguru.java2.servify.ServifyApplication"
+	}
+
+	from {
+		configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+	}
+}
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
@@ -46,32 +26,40 @@ repositories {
 }
 
 dependencies {
-	compileOnly('org.projectlombok:lombok:1.18.26')
-	annotationProcessor('org.projectlombok:lombok:1.18.26')
+	compileOnly('org.projectlombok:lombok')
+	annotationProcessor('org.projectlombok:lombok')
 
-	implementation('org.hibernate:hibernate-core:6.2.3.Final')
-	implementation('mysql:mysql-connector-java:8.0.33')
-	implementation('org.apache.commons:commons-dbcp2:2.9.0')
-	implementation('org.springframework:spring-orm:6.0.9')
-	implementation('org.reflections:reflections:0.9.12')
+	//implementation('org.reflections:reflections')
+	implementation('mysql:mysql-connector-java')
+	implementation('org.apache.commons:commons-dbcp2')
+	implementation('org.hibernate:hibernate-core:6.2.4.Final')
 
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'com.h2database:h2:2.1.214'
+	implementation('org.springframework.boot:spring-boot-starter-data-jpa') {
+		exclude (group: 'ch.qos.logback', module: 'logback-classic')
+	}
+	implementation('org.springframework.boot:spring-boot-starter-web') {
+		exclude (group: 'ch.qos.logback', module: 'logback-classic')
+	}
+	implementation('org.springframework.boot:spring-boot-starter-thymeleaf') {
+		exclude (group: 'ch.qos.logback', module: 'logback-classic')
+	}
+	implementation('org.springframework.boot:spring-boot-starter-oauth2-resource-server')
+
+
+	testImplementation('junit:junit:4.13.1')
+	testImplementation('org.mockito:mockito-core')
+	testImplementation('org.springframework:spring-test')
+	testImplementation('com.h2database:h2')
+
+	implementation 'org.springframework.boot:spring-boot-devtools'
 
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 	implementation 'org.springframework.security:spring-security-test'
 
-  testImplementation('junit:junit:4.13.1')
+	testImplementation 'org.springframework.boot:spring-boot-starter-test:3.0.1'
+	testImplementation('junit:junit:4.13.1')
 	testImplementation('org.mockito:mockito-core:3.6.0')
-	testImplementation('org.springframework:spring-test:6.0.9')
+	testImplementation('org.springframework:spring-test:5.3.23')
 	testImplementation('com.h2database:h2:1.4.200')
-
-}
-
-tasks.named('test') {
-	useJUnitPlatform()
 }

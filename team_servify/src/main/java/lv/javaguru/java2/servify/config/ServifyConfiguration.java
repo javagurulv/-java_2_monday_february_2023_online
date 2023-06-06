@@ -1,77 +1,30 @@
 package lv.javaguru.java2.servify.config;
 
-import org.apache.commons.dbcp2.BasicDataSource;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Value;
+import lv.javaguru.java2.servify.core.database.jpa.JpaUserRepository;
+import lv.javaguru.java2.servify.core.database.jpa.JpaUserTypeRepository;
+import lv.javaguru.java2.servify.core.domain.UserEntity;
+import lv.javaguru.java2.servify.core.domain.UserType;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.util.Properties;
+import java.util.HashSet;
+import java.util.Set;
 
 @Configuration
-@ComponentScan(basePackages = "lv.javaguru.java2.servify.core")
+@EnableAutoConfiguration
+@ComponentScan(basePackages = "lv.javaguru.java2.servify")
 @PropertySource(value = "classpath:application.properties")
 @EnableTransactionManagement
+@EntityScan(basePackages = "lv.javaguru.java2.servify.core.domain")
+@EnableJpaRepositories(value = "lv.javaguru.java2.servify.core.database.jpa")
 public class ServifyConfiguration {
-    @Value("${database.url}")
-    private String databaseUrl;
-    @Value("${database.user}")
-    private String databaseUser;
-    @Value("${database.password}")
-    private String databasePassword;
-    @Value("${database.driver}")
-    private String databaseDriver;
 
-    @Bean
-    public DataSource dataSource() {
-        var datasource = new BasicDataSource();
-        datasource.setUrl(databaseUrl);
-        datasource.setUsername(databaseUser);
-        datasource.setPassword(databasePassword);
-        datasource.setDriverClassName(databaseDriver);
-        return datasource;
-    }
-
-//    @Bean
-//    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
-//        return new JdbcTemplate(dataSource);
-//    }
-
-    @Bean
-    public Properties hibernateProperties(
-            @Value("${hibernate.show_sql}") Boolean showSql,
-            @Value("${hibernate.hbm2ddl.auto}") String hbm2ddl,
-            @Value("${hibernate.dialect}") String dialect) {
-        Properties properties = new Properties();
-        properties.put("hibernate.show_sql", showSql);
-        properties.put("hibernate.hbm2ddl.auto", hbm2ddl);
-        properties.put("hibernate.dialect", dialect);
-        return properties;
-    }
-
-    @Bean
-    public SessionFactory sessionFactory(DataSource dataSource,
-                                         @Value("${hibernate.packagesToScan}") String packagesToScan,
-                                         Properties hibernateProperties
-    ) throws IOException {
-        LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
-        sessionFactoryBean.setPackagesToScan(packagesToScan);
-        sessionFactoryBean.setDataSource(dataSource);
-        sessionFactoryBean.setHibernateProperties(hibernateProperties);
-        sessionFactoryBean.afterPropertiesSet();
-        return sessionFactoryBean.getObject();
-    }
-
-    @Bean
-    public PlatformTransactionManager transactionManager(SessionFactory sessionFactory) {
-        return new HibernateTransactionManager(sessionFactory);
-    }
 }

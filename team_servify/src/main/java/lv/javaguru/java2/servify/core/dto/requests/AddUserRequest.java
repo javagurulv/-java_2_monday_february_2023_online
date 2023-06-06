@@ -13,16 +13,17 @@ public class AddUserRequest {
     private String lastName;
     private String email;
     private String phoneNumber;
+    private String password;
     private Address address;
-    private boolean isInactive;
+    private boolean active;
     private String userType;
 
-    public AddUserRequest(String firstName, String lastName, String email, String phoneNumber) {
+    public AddUserRequest(String firstName, String lastName, String email, String phoneNumber, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.isInactive = false;
-        this.userType = "ANONYMOUS";
+        this.password = password;
+        this.active = true;
     }
 }

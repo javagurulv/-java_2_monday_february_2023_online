@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Repository
-@Transactional
+//@Repository
+//@Transactional
 public class AddressRepository {
     @Autowired
     private SessionFactory sessionFactory;

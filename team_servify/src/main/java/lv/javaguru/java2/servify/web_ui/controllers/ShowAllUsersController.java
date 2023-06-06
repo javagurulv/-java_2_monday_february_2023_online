@@ -15,7 +15,7 @@ public class ShowAllUsersController {
 
     @GetMapping(value = "/showAllUsers")
     public String showAllUsers(ModelMap modelMap) {
-        GetAllUsersResponse response = getAllUsersService.getAll(
+        GetAllUsersResponse response = getAllUsersService.execute(
                 new GetAllUsersRequest()
         );
         modelMap.addAttribute("users", response.getUsers());

@@ -5,8 +5,7 @@ import java.util.List;
 public class RemoveDetailResponse extends CoreResponse {
     private boolean detailRemoved;
 
-    public RemoveDetailResponse(boolean detailRemoved) {
-        this.detailRemoved = detailRemoved;
+    public RemoveDetailResponse() {
     }
 
     public RemoveDetailResponse(List<CoreError> errors) {

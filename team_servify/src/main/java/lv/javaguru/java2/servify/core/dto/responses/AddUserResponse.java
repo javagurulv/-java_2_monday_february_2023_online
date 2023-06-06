@@ -1,8 +1,6 @@
 package lv.javaguru.java2.servify.core.dto.responses;
 
-
 import lv.javaguru.java2.servify.core.domain.UserEntity;
-
 import java.util.List;
 
 public class AddUserResponse extends CoreResponse {
