@@ -40,7 +40,6 @@ public class SearchExercisesUIAction implements UIAction {
         String equipment = scanner.nextLine();
         System.out.println("Enter exercise difficulty: ");
         Difficulty difficulty = Difficulty.valueOf(scanner.nextLine());
-        SearchExerciseRequest request = new SearchExerciseRequest(name, muscleGroup, detailedMuscleGroup, otherMuscleGroup, type, mechanics, equipment, difficulty);
 
         System.out.println("Enter orderBy (name||muscle group): ");
         String orderBy = scanner.nextLine();
@@ -60,11 +59,10 @@ public class SearchExercisesUIAction implements UIAction {
         SearchExerciseByNameRequest byNameRequest = new SearchExerciseByNameRequest(name, ordering, paging);
         SearchExerciseResponse responce = searchExerciseByNameService.execute(byNameRequest);
 
-      /*  if (response.hasErrors()) {
+        if (response.hasErrors()) {
             response.getErrors().forEach(coreError -> System.out.println("Error: " + coreError.getField() + " " + coreError.getMessage()));
         } else {
             response.getExercises().forEach(Exercise::toString);
         }
-    }*/
     }
-}
+    }

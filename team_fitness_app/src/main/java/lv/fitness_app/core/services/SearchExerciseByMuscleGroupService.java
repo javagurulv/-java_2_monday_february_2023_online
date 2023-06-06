@@ -48,7 +48,7 @@ public class SearchExerciseByMuscleGroupService {
     private List<Exercise> search(SearchExerciseByMuscleGroupRequest request) {
         List<Exercise> exercises = new ArrayList<>();
         if (request.isMuscleGroupProvided()) {
-            exercises = (List<Exercise>) exerciseRepository.findByMuscleGroup(request.getMuscleGroup());
+            exercises = exerciseRepository.findByMuscleGroup(request.getMuscleGroup());
         }
         return exercises;
     }
