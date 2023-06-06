@@ -2,6 +2,7 @@ package lv.javaguru.java2.servify.core.services.details;
 
 //import javax.transaction.Transactional;
 import lv.javaguru.java2.servify.core.database.DetailRepository;
+import lv.javaguru.java2.servify.core.database.jpa.JpaDetailRepository;
 import lv.javaguru.java2.servify.core.domain.Detail;
 import lv.javaguru.java2.servify.core.domain.FieldTitle;
 import lv.javaguru.java2.servify.core.dto.requests.UpdateDetailRequest;
@@ -19,7 +20,7 @@ import java.util.List;
 @Transactional
 public class UpdateDetailService {
     @Autowired
-    private DetailRepository detailRepository;
+    private JpaDetailRepository detailRepository;
     @Autowired private UpdateDetailRequestValidator validator;
 
     public UpdateDetailResponse update(UpdateDetailRequest request) {

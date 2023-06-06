@@ -2,6 +2,7 @@ package lv.javaguru.java2.servify.core.services.details;
 
 //import javax.transaction.Transactional;
 import lv.javaguru.java2.servify.core.database.DetailRepository;
+import lv.javaguru.java2.servify.core.database.jpa.JpaDetailRepository;
 import lv.javaguru.java2.servify.core.domain.Detail;
 import lv.javaguru.java2.servify.core.dto.DetailDTO;
 import lv.javaguru.java2.servify.core.dto.responses.GetDetailByIdResponse;
@@ -13,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class GetDetailByIdService {
     @Autowired
-    private DetailRepository detailRepository;
+    private JpaDetailRepository detailRepository;
 
     public GetDetailByIdResponse getById(Long id) {
         return detailRepository.findById(id)

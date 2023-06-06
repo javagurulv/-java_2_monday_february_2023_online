@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
-@Transactional
+//@Repository
+//@Transactional
 public class UserRepository {
     @Autowired
     private SessionFactory sessionFactory;

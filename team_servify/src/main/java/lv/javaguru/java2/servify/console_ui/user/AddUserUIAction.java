@@ -1,16 +1,16 @@
 package lv.javaguru.java2.servify.console_ui.user;
 
 import lv.javaguru.java2.servify.console_ui.UIAction;
-import lv.javaguru.java2.servify.core.dto.requests.AddUserRequest;
+import lv.javaguru.java2.servify.core.dto.RegistrationDTO;
 import lv.javaguru.java2.servify.core.dto.responses.AddUserResponse;
-import lv.javaguru.java2.servify.core.services.users.AddUserService;
+import lv.javaguru.java2.servify.core.services.users.RegistrationUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.Scanner;
 
 @Component
 public class AddUserUIAction implements UIAction {
-    @Autowired private AddUserService addUserService;
+    @Autowired private RegistrationUserService addUserService;
 
     @Override
     public void execute() {
@@ -23,9 +23,11 @@ public class AddUserUIAction implements UIAction {
         String email = input.nextLine();
         System.out.println("Enter your phone number");
         String phoneNumber = input.nextLine();
+        System.out.println("Enter your password");
+        String password = input.nextLine();
 
-        AddUserRequest request = new AddUserRequest(firstName, lastName, email, phoneNumber);
-        AddUserResponse response = addUserService.execute(request);
+        RegistrationDTO request = new RegistrationDTO(firstName, lastName, email, phoneNumber, password);
+        AddUserResponse response = addUserService.registerUser(request);
 
         if (response.hasErrors()) {
             response.getErrors().forEach(coreError ->

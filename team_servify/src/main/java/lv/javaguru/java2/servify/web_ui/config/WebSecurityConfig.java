@@ -1,42 +1,55 @@
 package lv.javaguru.java2.servify.web_ui.config;
 
+import lv.javaguru.java2.servify.core.services.users.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
-    @Bean
-    @Order(1)
-    public SecurityFilterChain securityFilterChainMain(HttpSecurity http) throws Exception {
-        return http
-                .securityMatcher(AntPathRequestMatcher.antMatcher("/**"))
-                .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers(AntPathRequestMatcher.antMatcher("/**")).permitAll();
-                })
-                .csrf(csrf -> csrf.ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/**")))
-                .formLogin(withDefaults())
-                .build();
-    }
-    @Bean
-    @Order(2)
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .authorizeHttpRequests(auth -> {
-                            auth.requestMatchers("/").permitAll();
-                            auth.requestMatchers("/errors").permitAll();
-                            auth.anyRequest().authenticated();
-                        }
-                )
-                .formLogin(withDefaults())
-                .logout((logout) -> logout.permitAll())
-                .build();
+    private UserService userService;
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
+        DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
+        daoProvider.setPasswordEncoder(passwordEncoder());
+        daoProvider.setUserDetailsService(userService);
+        return daoProvider;
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+         http
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers("/").permitAll();
+                    auth.requestMatchers("/registr/**").permitAll();
+                    auth.requestMatchers("/index/**").hasAuthority("MANAGER");
+                    auth.requestMatchers("/admin/**", "/error").hasAuthority("MANAGER");
+                    auth.requestMatchers("/user/**").hasAnyAuthority("CUSTOMER", "MANAGER");
+                    auth.anyRequest().authenticated();
+                })
+                //.httpBasic(withDefaults())
+                .formLogin(withDefaults());
+         http
+                 .logout().logoutSuccessUrl("/");
+        return http.build();
+    }
 }

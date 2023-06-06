@@ -2,6 +2,7 @@ package lv.javaguru.java2.servify.core.services.users;
 
 //import javax.transaction.Transactional;
 import lv.javaguru.java2.servify.core.database.UserRepository;
+import lv.javaguru.java2.servify.core.database.jpa.JpaUserRepository;
 import lv.javaguru.java2.servify.core.domain.UserEntity;
 import lv.javaguru.java2.servify.core.dto.UserDTO;
 import lv.javaguru.java2.servify.core.dto.requests.GetAllUsersRequest;
@@ -14,10 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class GetAllUsersService {
     @Autowired
-    private UserRepository userRepository;
+    private JpaUserRepository userRepository;
 
-    public GetAllUsersResponse getAll(GetAllUsersRequest request) {
-        var dtos = userRepository.getAllUsers().stream()
+    public GetAllUsersResponse execute(GetAllUsersRequest request) {
+        var dtos = userRepository.findAll().stream()
                 .map(this::convert)
                 .toList();
         return new GetAllUsersResponse(dtos);
@@ -30,7 +31,8 @@ public class GetAllUsersService {
                 entity.getEmail(),
                 entity.getPhoneNumber(),
                 entity.getAddress(),
-                entity.isInactive(),
-                entity.getRole().toString());
+                entity.isActive(),
+                entity.getAuthorities().toString()
+        );
     }
 }

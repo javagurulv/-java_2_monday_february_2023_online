@@ -14,8 +14,8 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 
-@Repository
-@Transactional
+//@Repository
+//@Transactional
 public class OrmDetailRepositoryImpl implements DetailRepository {
     @Autowired
     private SessionFactory sessionFactory;

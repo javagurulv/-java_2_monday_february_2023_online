@@ -6,9 +6,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 
-
+import java.util.Collection;
 import java.util.Set;
 
 @Data
@@ -16,7 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class UserEntity {
+public class UserEntity implements UserDetails {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,31 +27,70 @@ public class UserEntity {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
-    @Column(name = "phone_number")
+    @Column(name = "user_name", unique = true)
+    private String userName;
+    @Column(name = "phone_number", unique = true)
     private String phoneNumber;
     @OneToOne
+    @JoinTable(name = "user_address")
     @JoinColumn(name = "address_id")
     private Address address;
     @Column(name = "password")
     private String password;
-    @Column(name = "is_inactive")
-    private boolean isInactive;
-//    @Column(name = "user_type")
-//    private String userType;
-    @ElementCollection(targetClass = UserType.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "id"))
-    @Enumerated(EnumType.STRING)
-    private Set<UserType> role;
+    @Column(name = "active")
+    private boolean isActive;
+    @ManyToMany
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<UserType> authorities;
 
-    public UserEntity(String firstName, String lastName, String email, String phoneNumber) {
+    public UserEntity(String firstName, String lastName, String email, String phoneNumber, String password, Set<UserType> authorities) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.userName = email;
         this.phoneNumber = phoneNumber;
-        this.isInactive = false;
-        //this.userType = "ANONYMOUS";
-        this.role.add(UserType.ANONYMOUS);
+        this.password = password;
+        this.isActive = true;
+        this.authorities = authorities;
+    }
+    public UserEntity(String email, String password, Set<UserType> authorities) {
+        this.email = email;
+        this.userName = email;
+        this.password = password;
+        this.authorities = authorities;
+        this.isActive = true;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.authorities;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.userName;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
