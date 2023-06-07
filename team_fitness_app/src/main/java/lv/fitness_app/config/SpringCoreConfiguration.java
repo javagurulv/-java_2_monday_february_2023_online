@@ -21,7 +21,7 @@ import java.util.Properties;
 @ComponentScan(basePackages = "lv.fitness_app")
 @PropertySource(value = "classpath:application.properties")
 @EnableTransactionManagement
-public class UserListConfiguration {
+public class SpringCoreConfiguration {
 
     @Value("${jdbc.url}")
     private String jdbcUrl;
