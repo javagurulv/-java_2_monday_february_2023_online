@@ -4,12 +4,12 @@ import lv.fitness_app.core.domain.Exercise;
 
 import java.util.List;
 
-public class SearchExerciseResponse {
+public class SearchExerciseResponse extends CoreResponse {
 
     private List<Exercise> exercises;
 
     public SearchExerciseResponse(List<Exercise> exercises, List<CoreError> errors) {
-        super();
+        super(errors);
         this.exercises = exercises;}
 
 

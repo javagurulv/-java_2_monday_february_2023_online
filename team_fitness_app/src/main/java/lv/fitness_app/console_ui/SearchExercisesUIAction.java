@@ -1,20 +1,25 @@
 package lv.fitness_app.console_ui;
 
 import lv.fitness_app.core.domain.Difficulty;
+import lv.fitness_app.core.domain.Exercise;
 import lv.fitness_app.core.domain.Type;
-import lv.fitness_app.core.requests.Ordering;
-import lv.fitness_app.core.requests.Paging;
-import lv.fitness_app.core.requests.SearchExerciseRequest;
-import lv.fitness_app.core.services.SearchExercisesService;
+import lv.fitness_app.core.requests.*;
+import lv.fitness_app.core.responses.SearchExerciseResponse;
+import lv.fitness_app.core.services.SearchExerciseByMuscleGroupService;
+import lv.fitness_app.core.services.SearchExerciseByNameService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
-//@Component
+@Component
 public class SearchExercisesUIAction implements UIAction {
 
     @Autowired
-    private SearchExercisesService searchExercisesService;
+    private SearchExerciseByMuscleGroupService searchExerciseByMuscleGroupService;
+
+    @Autowired
+    private SearchExerciseByNameService searchExerciseByNameService;
 
     @Override
     public void execute() {
@@ -35,7 +40,6 @@ public class SearchExercisesUIAction implements UIAction {
         String equipment = scanner.nextLine();
         System.out.println("Enter exercise difficulty: ");
         Difficulty difficulty = Difficulty.valueOf(scanner.nextLine());
-        SearchExerciseRequest request = new SearchExerciseRequest(name, muscleGroup, detailedMuscleGroup, otherMuscleGroup, type, mechanics, equipment, difficulty);
 
         System.out.println("Enter orderBy (name||muscle group): ");
         String orderBy = scanner.nextLine();
@@ -48,16 +52,17 @@ public class SearchExercisesUIAction implements UIAction {
         System.out.println("Enter pageSize: ");
         Integer pageSize = Integer.parseInt(scanner.nextLine());
         Paging paging = new Paging(pageNumber, pageSize);
-/*
-        SearchExercisesRequest request = new SearchExercisesRequest(name, muscleGroup, detailedMuscleGroup, otherMuscleGroup,
-          type, mechanics, equipment, difficulty, description, gif, ordering, paging);
-        SearchExercisesResponse response = searchExercisesService.execute(request);
+
+        SearchExerciseByMuscleGroupRequest byMuscleGroupRequest = new SearchExerciseByMuscleGroupRequest(muscleGroup, ordering, paging);
+        SearchExerciseResponse response = searchExerciseByMuscleGroupService.execute(byMuscleGroupRequest);
+
+        SearchExerciseByNameRequest byNameRequest = new SearchExerciseByNameRequest(name, ordering, paging);
+        SearchExerciseResponse responce = searchExerciseByNameService.execute(byNameRequest);
 
         if (response.hasErrors()) {
             response.getErrors().forEach(coreError -> System.out.println("Error: " + coreError.getField() + " " + coreError.getMessage()));
         } else {
             response.getExercises().forEach(Exercise::toString);
         }
-    } */
     }
-}
+    }
