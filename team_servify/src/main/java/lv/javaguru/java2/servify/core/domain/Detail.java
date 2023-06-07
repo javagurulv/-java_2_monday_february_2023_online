@@ -25,8 +25,6 @@ public class Detail {
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
-    //public Detail() {}
-
     public Detail(String type, String side, BigDecimal price) {
         this.type = type;
         this.side = side;

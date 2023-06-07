@@ -7,11 +7,10 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class AddDetailRequest {
 
-    private Long id;
+    //private Long id;
     private String detailType;
     private String detailSide;
     private BigDecimal detailPrice;

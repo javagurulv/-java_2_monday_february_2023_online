@@ -16,8 +16,8 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 public class WebSecurityConfig {
     @Autowired
     private UserService userService;
