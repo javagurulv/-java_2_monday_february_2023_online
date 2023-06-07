@@ -4,6 +4,7 @@ import lombok.Value;
 import shop.core.domain.user.UserRole;
 
 @Value
+@Deprecated
 public class UserCreationData {
 
     String name;

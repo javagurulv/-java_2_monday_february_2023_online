@@ -7,13 +7,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
-import shop.core.requests.guest.SignUpRequest;
-import shop.core.responses.CoreError;
-import shop.core.responses.guest.SignUpResponse;
 import shop.core.services.user.UserCreationData;
 import shop.core.services.user.UserService;
 import shop.core.services.validators.actions.guest.SignUpValidator;
 import shop.core.support.CurrentUserId;
+import shop.core_api.requests.guest.SignUpRequest;
+import shop.core_api.responses.CoreError;
+import shop.core_api.responses.guest.SignUpResponse;
 import shop.matchers.UserCreationDataMatcher;
 
 import java.util.Collections;

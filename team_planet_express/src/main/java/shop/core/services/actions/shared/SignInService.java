@@ -1,18 +1,18 @@
 package shop.core.services.actions.shared;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.core.domain.user.User;
-import shop.core.requests.shared.SignInRequest;
-import shop.core.responses.CoreError;
-import shop.core.responses.shared.SignInResponse;
 import shop.core.services.validators.actions.shared.SignInValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core_api.requests.shared.SignInRequest;
+import shop.core_api.responses.CoreError;
+import shop.core_api.responses.shared.SignInResponse;
 
 import java.util.List;
 
-@Component
+@Service
 @Transactional
 public class SignInService {
 

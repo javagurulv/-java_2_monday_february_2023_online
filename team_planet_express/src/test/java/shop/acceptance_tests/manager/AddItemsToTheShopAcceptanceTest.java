@@ -9,9 +9,9 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import shop.core.database.ItemRepository;
 import shop.core.domain.item.Item;
-import shop.core.requests.manager.AddItemToShopRequest;
-import shop.core.responses.manager.AddItemToShopResponse;
-import shop.core.services.actions.manager.AddItemToShopService;
+import shop.core.services.actions.manager.AddItemToShopServiceImpl;
+import shop.core_api.requests.manager.AddItemToShopRequest;
+import shop.core_api.responses.manager.AddItemToShopResponse;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -25,7 +25,7 @@ public class AddItemsToTheShopAcceptanceTest {
     @Autowired
     private ItemRepository itemRepository;
     @Autowired
-    private AddItemToShopService addItemToShopService;
+    private AddItemToShopServiceImpl addItemToShopService;
 
     @Sql({"/testDatabaseTableCreation.sql", "/testDatabaseDataInsertion.sql"})
     @Test

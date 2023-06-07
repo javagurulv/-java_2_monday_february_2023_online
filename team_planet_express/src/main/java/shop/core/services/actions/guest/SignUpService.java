@@ -1,20 +1,20 @@
 package shop.core.services.actions.guest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
-import shop.core.requests.guest.SignUpRequest;
-import shop.core.responses.CoreError;
-import shop.core.responses.guest.SignUpResponse;
 import shop.core.services.user.UserCreationData;
 import shop.core.services.user.UserService;
 import shop.core.services.validators.actions.guest.SignUpValidator;
+import shop.core_api.requests.guest.SignUpRequest;
+import shop.core_api.responses.CoreError;
+import shop.core_api.responses.guest.SignUpResponse;
 
 import java.util.List;
 
-@Component
+@Service
 @Transactional
 public class SignUpService {
 

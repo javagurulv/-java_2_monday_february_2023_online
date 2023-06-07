@@ -5,14 +5,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import shop.core.requests.shared.SearchItemRequest;
-import shop.core.responses.CoreError;
 import shop.core.services.validators.item_list.OrderingRuleValidator;
 import shop.core.services.validators.item_list.PagingRuleValidator;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.support.CurrentUserId;
 import shop.core.support.paging.PagingRule;
+import shop.core_api.requests.shared.SearchItemRequest;
+import shop.core_api.responses.CoreError;
 
 import java.util.Collections;
 import java.util.List;

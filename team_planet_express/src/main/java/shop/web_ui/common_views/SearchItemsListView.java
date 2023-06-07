@@ -12,10 +12,10 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import shop.core.domain.item.Item;
-import shop.core.requests.shared.SearchItemRequest;
-import shop.core.responses.shared.SearchItemResponse;
-import shop.core.services.actions.shared.SearchItemService;
+import shop.core.services.actions.shared.SearchItemServiceImpl;
 import shop.core.support.paging.PagingRule;
+import shop.core_api.requests.shared.SearchItemRequest;
+import shop.core_api.responses.shared.SearchItemResponse;
 import shop.web_ui.components.MainLayout;
 import shop.web_ui.components.item_card.ItemCardBuilder;
 
@@ -27,7 +27,7 @@ import java.util.List;
 public class SearchItemsListView extends Main implements HasUrlParameter<String> {
 
     @Autowired
-    SearchItemService searchItemService;
+    SearchItemServiceImpl searchItemService;
 
     @Override
     public void setParameter(BeforeEvent event, String parameter) {

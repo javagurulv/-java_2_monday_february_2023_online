@@ -3,8 +3,8 @@ package shop.acceptance_tests.custom.tester;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import shop.core.domain.cart.Cart;
-import shop.core.requests.customer.BuyRequest;
-import shop.core.services.actions.customer.BuyService;
+import shop.core.services.actions.customer.BuyServiceImpl;
+import shop.core_api.requests.customer.BuyRequest;
 
 import java.util.Optional;
 
@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 public class BuyTester extends Tester {
 
     @Autowired
-    private BuyService buyService;
+    private BuyServiceImpl buyService;
 
     public BuyTester buy() {
         BuyRequest buyRequest = new BuyRequest();

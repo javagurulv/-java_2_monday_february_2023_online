@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import shop.core.database.CartItemRepository;
 import shop.core.domain.cart.Cart;
-import shop.core.requests.customer.BuyRequest;
-import shop.core.responses.CoreError;
 import shop.core.services.validators.cart.CartValidator;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.support.error_code_processing.ErrorProcessor;
+import shop.core_api.requests.customer.BuyRequest;
+import shop.core_api.responses.CoreError;
 
 import java.util.ArrayList;
 import java.util.List;

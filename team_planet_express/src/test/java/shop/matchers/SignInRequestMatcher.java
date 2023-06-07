@@ -1,8 +1,8 @@
 package shop.matchers;
 
 import org.mockito.ArgumentMatcher;
-import shop.core.requests.shared.SignInRequest;
 import shop.core.support.CurrentUserId;
+import shop.core_api.requests.shared.SignInRequest;
 
 public class SignInRequestMatcher implements ArgumentMatcher<SignInRequest> {
 

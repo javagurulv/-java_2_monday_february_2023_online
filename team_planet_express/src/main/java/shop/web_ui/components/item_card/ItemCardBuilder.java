@@ -7,9 +7,9 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import shop.core.domain.cart_item.CartItem;
 import shop.core.domain.item.Item;
-import shop.core.requests.customer.RemoveItemFromCartRequest;
-import shop.core.services.actions.customer.RemoveItemFromCartService;
-import shop.core.services.actions.shared.SecurityService;
+import shop.core.services.actions.customer.RemoveItemFromCartServiceImpl;
+import shop.core.services.actions.shared.SecurityServiceImpl;
+import shop.core_api.requests.customer.RemoveItemFromCartRequest;
 import shop.web_ui.customer_views.ItemView;
 
 public class ItemCardBuilder {
@@ -68,7 +68,7 @@ public class ItemCardBuilder {
         return this;
     }
 
-    public ItemCardBuilder setDelButton(SecurityService securityService, RemoveItemFromCartService removeItemFromCartService) {
+    public ItemCardBuilder setDelButton(SecurityServiceImpl securityService, RemoveItemFromCartServiceImpl removeItemFromCartService) {
         deleteButton = new Button(new Icon(VaadinIcon.TRASH));
         deleteButton.addClickListener(e -> {
             RemoveItemFromCartRequest request = new RemoveItemFromCartRequest(

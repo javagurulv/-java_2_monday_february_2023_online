@@ -14,8 +14,8 @@ import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import shop.core.services.actions.shared.SearchItemService;
-import shop.core.services.actions.shared.SecurityService;
+import shop.core.services.actions.shared.SearchItemServiceImpl;
+import shop.core.services.actions.shared.SecurityServiceImpl;
 import shop.web_ui.common_views.ItemListView;
 import shop.web_ui.common_views.SearchItemsListView;
 
@@ -23,11 +23,11 @@ import java.util.Optional;
 
 public class MainLayout extends AppLayout {
 
-    private final SecurityService securityService;
-    private final SearchItemService searchItemService;
+    private final SecurityServiceImpl securityService;
+    private final SearchItemServiceImpl searchItemService;
 
     @Autowired
-    public MainLayout(SecurityService securityService, SearchItemService searchItemService) {
+    public MainLayout(SecurityServiceImpl securityService, SearchItemServiceImpl searchItemService) {
         this.securityService = securityService;
         this.searchItemService = searchItemService;
         setDrawerOpened(false);

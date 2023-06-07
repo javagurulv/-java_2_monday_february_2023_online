@@ -7,14 +7,14 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.UserRepository;
 import shop.core.domain.user.User;
-import shop.core.requests.shared.SignInRequest;
-import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 import shop.core.support.CurrentUserId;
 import shop.core.support.error_code_processing.ErrorProcessor;
+import shop.core_api.requests.shared.SignInRequest;
+import shop.core_api.responses.CoreError;
 import shop.matchers.InputStringValidatorDataMatcher;
 
 import java.util.List;

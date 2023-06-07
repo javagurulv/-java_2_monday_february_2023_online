@@ -9,10 +9,10 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import shop.core.database.ItemRepository;
 import shop.core.domain.item.Item;
-import shop.core.requests.manager.ChangeItemDataRequest;
-import shop.core.responses.CoreError;
-import shop.core.responses.manager.ChangeItemDataResponse;
-import shop.core.services.actions.manager.ChangeItemDataService;
+import shop.core.services.actions.manager.ChangeItemDataServiceImpl;
+import shop.core_api.requests.manager.ChangeItemDataRequest;
+import shop.core_api.responses.CoreError;
+import shop.core_api.responses.manager.ChangeItemDataResponse;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -26,7 +26,7 @@ public class ChangeItemDataAcceptanceTest {
     @Autowired
     private ItemRepository itemRepository;
     @Autowired
-    private ChangeItemDataService changeItemDataService;
+    private ChangeItemDataServiceImpl changeItemDataService;
 
     @Sql({"/testDatabaseTableCreation.sql", "/testDatabaseDataInsertion.sql"})
     @Test

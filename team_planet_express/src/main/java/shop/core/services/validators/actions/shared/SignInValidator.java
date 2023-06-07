@@ -3,13 +3,13 @@ package shop.core.services.validators.actions.shared;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import shop.core.database.UserRepository;
-import shop.core.requests.shared.SignInRequest;
-import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 import shop.core.support.error_code_processing.ErrorProcessor;
+import shop.core_api.requests.shared.SignInRequest;
+import shop.core_api.responses.CoreError;
 
 import java.util.ArrayList;
 import java.util.List;

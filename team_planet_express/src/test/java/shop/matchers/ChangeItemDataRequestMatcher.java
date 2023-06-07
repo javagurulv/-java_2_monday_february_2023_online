@@ -1,7 +1,7 @@
 package shop.matchers;
 
 import org.mockito.ArgumentMatcher;
-import shop.core.requests.manager.ChangeItemDataRequest;
+import shop.core_api.requests.manager.ChangeItemDataRequest;
 
 public class ChangeItemDataRequestMatcher implements ArgumentMatcher<ChangeItemDataRequest> {
 

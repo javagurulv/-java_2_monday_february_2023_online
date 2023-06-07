@@ -4,14 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import shop.core.database.ItemRepository;
 import shop.core.domain.user.User;
-import shop.core.requests.customer.AddItemToCartRequest;
-import shop.core.responses.CoreError;
-import shop.core.services.actions.shared.SecurityService;
+import shop.core.services.actions.shared.SecurityServiceImpl;
 import shop.core.services.validators.cart.CartValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 import shop.core.support.error_code_processing.ErrorProcessor;
+import shop.core_api.requests.customer.AddItemToCartRequest;
+import shop.core_api.responses.CoreError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,7 @@ public class AddItemToCartValidator {
     @Autowired
     private ErrorProcessor errorProcessor;
     @Autowired
-    private SecurityService securityService;
+    private SecurityServiceImpl securityService;
 
     public List<CoreError> validate(AddItemToCartRequest request) {
         List<CoreError> errors = new ArrayList<>();

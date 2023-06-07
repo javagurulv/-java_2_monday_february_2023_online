@@ -7,8 +7,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.CartRepository;
 import shop.core.domain.cart.Cart;
-import shop.core.responses.CoreError;
 import shop.core.support.error_code_processing.ErrorProcessor;
+import shop.core_api.responses.CoreError;
 
 import java.util.Optional;
 

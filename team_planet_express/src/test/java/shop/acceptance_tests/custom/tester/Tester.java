@@ -7,7 +7,7 @@ import shop.core.database.ItemRepository;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
 import shop.core.domain.user.User;
-import shop.core.services.actions.shared.SecurityService;
+import shop.core.services.actions.shared.SecurityServiceImpl;
 
 import java.util.Optional;
 
@@ -23,7 +23,7 @@ public abstract class Tester {
     @Autowired
     protected CartItemRepository cartItemRepository;
     @Autowired
-    protected SecurityService securityService;
+    protected SecurityServiceImpl securityService;
 
     protected Tester checkItemInCart(String itemName, Integer quantity) {
         Optional<User> user = securityService.getAuthenticatedUserFromDB();

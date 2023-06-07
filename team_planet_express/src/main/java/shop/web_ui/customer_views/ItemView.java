@@ -13,11 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import shop.core.database.ItemRepository;
 import shop.core.domain.item.Item;
 import shop.core.domain.user.User;
-import shop.core.requests.customer.AddItemToCartRequest;
-import shop.core.responses.CoreError;
-import shop.core.responses.customer.AddItemToCartResponse;
-import shop.core.services.actions.customer.AddItemToCartService;
-import shop.core.services.actions.shared.SecurityService;
+import shop.core.services.actions.customer.AddItemToCartServiceImpl;
+import shop.core.services.actions.shared.SecurityServiceImpl;
+import shop.core_api.requests.customer.AddItemToCartRequest;
+import shop.core_api.responses.CoreError;
+import shop.core_api.responses.customer.AddItemToCartResponse;
 import shop.web_ui.components.MainLayout;
 import shop.web_ui.components.item_card.ItemCard;
 import shop.web_ui.components.item_card.ItemCardBuilder;
@@ -32,9 +32,9 @@ public class ItemView extends Main implements HasUrlParameter<Long> {
     @Autowired
     ItemRepository itemRepository;
     @Autowired
-    SecurityService securityService;
+    SecurityServiceImpl securityService;
     @Autowired
-    AddItemToCartService addItemToCartService;
+    AddItemToCartServiceImpl addItemToCartService;
     private Item item;
 
     @Override

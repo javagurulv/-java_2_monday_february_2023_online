@@ -1,7 +1,7 @@
 package shop.matchers;
 
 import org.mockito.ArgumentMatcher;
-import shop.core.requests.manager.AddItemToShopRequest;
+import shop.core_api.requests.manager.AddItemToShopRequest;
 
 public class AddItemToShopRequestMatcher implements ArgumentMatcher<AddItemToShopRequest> {
 

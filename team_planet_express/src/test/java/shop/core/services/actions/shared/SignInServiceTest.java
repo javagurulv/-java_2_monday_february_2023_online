@@ -6,12 +6,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.domain.user.User;
-import shop.core.requests.shared.SignInRequest;
-import shop.core.responses.CoreError;
-import shop.core.responses.shared.SignInResponse;
 import shop.core.services.validators.actions.shared.SignInValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.support.CurrentUserId;
+import shop.core_api.requests.shared.SignInRequest;
+import shop.core_api.responses.CoreError;
+import shop.core_api.responses.shared.SignInResponse;
 
 import java.util.Collections;
 import java.util.List;
