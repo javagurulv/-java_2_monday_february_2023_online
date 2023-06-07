@@ -5,9 +5,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import shop.core.responses.CoreError;
 import shop.core.support.error_code_processing.ErrorProcessor;
 import shop.core.support.error_code_processing.TextReplacementData;
+import shop.core_api.responses.CoreError;
 import shop.matchers.TextReplacementDataMatcher;
 
 import java.util.Optional;

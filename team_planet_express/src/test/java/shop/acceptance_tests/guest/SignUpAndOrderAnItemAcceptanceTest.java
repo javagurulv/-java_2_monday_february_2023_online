@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import shop.core.database.CartItemRepository;
 import shop.core.database.CartRepository;
 import shop.core.database.ItemRepository;
-import shop.core.services.actions.customer.AddItemToCartService;
+import shop.core.services.actions.customer.AddItemToCartServiceImpl;
 import shop.core.services.actions.guest.SignUpService;
 import shop.core.support.CurrentUserId;
 
@@ -26,7 +26,7 @@ public class SignUpAndOrderAnItemAcceptanceTest {
     @Autowired
     private SignUpService signUpService;
     @Autowired
-    private AddItemToCartService addItemToCartService;
+    private AddItemToCartServiceImpl addItemToCartService;
 
 //  Use security service to login logout
 

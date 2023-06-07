@@ -6,13 +6,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.domain.user.User;
-import shop.core.requests.shared.SignOutRequest;
-import shop.core.responses.CoreError;
-import shop.core.responses.shared.SignOutResponse;
 import shop.core.services.user.UserCreationData;
 import shop.core.services.user.UserService;
 import shop.core.services.validators.actions.shared.SignOutValidator;
 import shop.core.support.CurrentUserId;
+import shop.core_api.requests.shared.SignOutRequest;
+import shop.core_api.responses.CoreError;
+import shop.core_api.responses.shared.SignOutResponse;
 
 import java.util.Collections;
 import java.util.List;

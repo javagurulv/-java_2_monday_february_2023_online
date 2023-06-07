@@ -2,14 +2,14 @@ package shop.acceptance_tests.custom.tester;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.requests.customer.AddItemToCartRequest;
-import shop.core.services.actions.customer.AddItemToCartService;
+import shop.core.services.actions.customer.AddItemToCartServiceImpl;
+import shop.core_api.requests.customer.AddItemToCartRequest;
 
 @Component
 public class AddItemToCartTester extends Tester {
 
     @Autowired
-    private AddItemToCartService addItemToCartService;
+    private AddItemToCartServiceImpl addItemToCartService;
 
     private String itemName;
     private Integer quantity;

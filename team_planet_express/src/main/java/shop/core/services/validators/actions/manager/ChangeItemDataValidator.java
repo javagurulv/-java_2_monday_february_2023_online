@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import shop.core.database.ItemRepository;
 import shop.core.domain.item.Item;
-import shop.core.requests.manager.ChangeItemDataRequest;
-import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 import shop.core.support.error_code_processing.ErrorProcessor;
+import shop.core_api.requests.manager.ChangeItemDataRequest;
+import shop.core_api.responses.CoreError;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

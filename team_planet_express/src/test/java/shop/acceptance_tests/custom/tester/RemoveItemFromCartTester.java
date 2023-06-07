@@ -2,14 +2,14 @@ package shop.acceptance_tests.custom.tester;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.requests.customer.RemoveItemFromCartRequest;
-import shop.core.services.actions.customer.RemoveItemFromCartService;
+import shop.core.services.actions.customer.RemoveItemFromCartServiceImpl;
+import shop.core_api.requests.customer.RemoveItemFromCartRequest;
 
 @Component
 public class RemoveItemFromCartTester extends Tester {
 
     @Autowired
-    private RemoveItemFromCartService removeItemFromCartService;
+    private RemoveItemFromCartServiceImpl removeItemFromCartService;
 
     private String itemName;
 

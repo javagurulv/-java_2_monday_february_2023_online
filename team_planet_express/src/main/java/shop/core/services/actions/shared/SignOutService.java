@@ -1,20 +1,20 @@
 package shop.core.services.actions.shared;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
-import shop.core.requests.shared.SignOutRequest;
-import shop.core.responses.CoreError;
-import shop.core.responses.shared.SignOutResponse;
 import shop.core.services.user.UserCreationData;
 import shop.core.services.user.UserService;
 import shop.core.services.validators.actions.shared.SignOutValidator;
+import shop.core_api.requests.shared.SignOutRequest;
+import shop.core_api.responses.CoreError;
+import shop.core_api.responses.shared.SignOutResponse;
 
 import java.util.List;
 
-@Component
+@Service
 @Transactional
 public class SignOutService {
 

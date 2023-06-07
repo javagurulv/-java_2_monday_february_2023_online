@@ -3,9 +3,9 @@ package shop.acceptance_tests.custom.tester;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import shop.core.domain.item.Item;
-import shop.core.requests.customer.ListCartItemsRequest;
-import shop.core.responses.customer.ListCartItemsResponse;
-import shop.core.services.actions.customer.ListCartItemsService;
+import shop.core.services.actions.customer.ListCartItemsServiceImpl;
+import shop.core_api.requests.customer.ListCartItemsRequest;
+import shop.core_api.responses.customer.ListCartItemsResponse;
 
 import java.util.Optional;
 
@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ListCartItemsTester extends Tester {
 
     @Autowired
-    private ListCartItemsService listCartItemsService;
+    private ListCartItemsServiceImpl listCartItemsService;
 
     private ListCartItemsResponse listCartItemsResponse;
 

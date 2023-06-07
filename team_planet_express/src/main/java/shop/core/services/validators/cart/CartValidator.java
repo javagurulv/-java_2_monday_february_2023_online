@@ -3,8 +3,8 @@ package shop.core.services.validators.cart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import shop.core.database.CartRepository;
-import shop.core.responses.CoreError;
 import shop.core.support.error_code_processing.ErrorProcessor;
+import shop.core_api.responses.CoreError;
 
 import java.util.Optional;
 

@@ -1,7 +1,7 @@
 package shop.core.support.error_code_processing;
 
 import org.springframework.stereotype.Component;
-import shop.core.responses.CoreError;
+import shop.core_api.responses.CoreError;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;

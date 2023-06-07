@@ -1,13 +1,13 @@
 package shop.core.services.cart;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import shop.core.database.CartItemRepository;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 
 import java.math.BigDecimal;
 
-@Component
+@Service
 public class CartService {
 
     @Autowired

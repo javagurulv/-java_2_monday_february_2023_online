@@ -9,13 +9,13 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import shop.core.database.ItemRepository;
 import shop.core.domain.item.Item;
-import shop.core.requests.shared.SearchItemRequest;
-import shop.core.responses.shared.SearchItemResponse;
-import shop.core.services.actions.shared.SearchItemService;
+import shop.core.services.actions.shared.SearchItemServiceImpl;
 import shop.core.support.ordering.OrderBy;
 import shop.core.support.ordering.OrderDirection;
 import shop.core.support.ordering.OrderingRule;
 import shop.core.support.paging.PagingRule;
+import shop.core_api.requests.shared.SearchItemRequest;
+import shop.core_api.responses.shared.SearchItemResponse;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -32,7 +32,7 @@ public class SearchForItemsAcceptanceTest {
     @Autowired
     protected ItemRepository itemRepository;
     @Autowired
-    private SearchItemService searchItemService;
+    private SearchItemServiceImpl searchItemService;
 
     @Sql({"/testDatabaseTableCreation.sql", "/testDatabaseDataInsertion.sql"})
     @Test

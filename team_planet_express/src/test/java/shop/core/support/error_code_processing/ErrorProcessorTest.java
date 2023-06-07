@@ -1,7 +1,7 @@
 package shop.core.support.error_code_processing;
 
 import org.junit.jupiter.api.Test;
-import shop.core.responses.CoreError;
+import shop.core_api.responses.CoreError;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
