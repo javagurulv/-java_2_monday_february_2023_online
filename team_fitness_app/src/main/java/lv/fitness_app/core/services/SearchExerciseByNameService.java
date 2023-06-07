@@ -6,7 +6,6 @@ import lv.fitness_app.core.requests.Paging;
 import lv.fitness_app.core.requests.SearchExerciseByNameRequest;
 import lv.fitness_app.core.responses.CoreError;
 import lv.fitness_app.core.responses.SearchExerciseResponse;
-import lv.fitness_app.core.services.validators.SearchExerciseByNameRequestValidator;
 import lv.fitness_app.database.ExerciseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
