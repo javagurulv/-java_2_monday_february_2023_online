@@ -3,7 +3,6 @@ package lv.fitness_app.core.services;
 import lv.fitness_app.core.domain.Exercise;
 import lv.fitness_app.core.requests.Ordering;
 import lv.fitness_app.core.requests.Paging;
-import lv.fitness_app.core.requests.SearchExerciseByMuscleGroupRequest;
 import lv.fitness_app.core.responses.CoreError;
 import lv.fitness_app.core.responses.SearchExerciseResponse;
 import lv.fitness_app.database.ExerciseRepository;
