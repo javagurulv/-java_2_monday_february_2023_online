@@ -5,8 +5,7 @@ import lv.fitness_app.core.domain.Exercise;
 import lv.fitness_app.core.domain.Type;
 import lv.fitness_app.core.requests.*;
 import lv.fitness_app.core.responses.SearchExerciseResponse;
-import lv.fitness_app.core.services.SearchExerciseByMuscleGroupService;
-import lv.fitness_app.core.services.SearchExerciseByNameService;
+import lv.fitness_app.core.services.SearchExerciseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,10 +15,7 @@ import java.util.Scanner;
 public class SearchExercisesUIAction implements UIAction {
 
     @Autowired
-    private SearchExerciseByMuscleGroupService searchExerciseByMuscleGroupService;
-
-    @Autowired
-    private SearchExerciseByNameService searchExerciseByNameService;
+    private SearchExerciseService searchExerciseService;
 
     @Override
     public void execute() {
@@ -53,11 +49,8 @@ public class SearchExercisesUIAction implements UIAction {
         Integer pageSize = Integer.parseInt(scanner.nextLine());
         Paging paging = new Paging(pageNumber, pageSize);
 
-        SearchExerciseByMuscleGroupRequest byMuscleGroupRequest = new SearchExerciseByMuscleGroupRequest(muscleGroup, ordering, paging);
-        SearchExerciseResponse response = searchExerciseByMuscleGroupService.execute(byMuscleGroupRequest);
-
-        SearchExerciseByNameRequest byNameRequest = new SearchExerciseByNameRequest(name, ordering, paging);
-        SearchExerciseResponse responce = searchExerciseByNameService.execute(byNameRequest);
+        SearchExerciseRequest request = new SearchExerciseRequest(name, muscleGroup, ordering, paging);
+        SearchExerciseResponse response = searchExerciseService.execute(request);
 
         if (response.hasErrors()) {
             response.getErrors().forEach(coreError -> System.out.println("Error: " + coreError.getField() + " " + coreError.getMessage()));
