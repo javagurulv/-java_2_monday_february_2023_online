@@ -1,6 +1,5 @@
 package lv.javaguru.java2.servify.console_ui;
 
-import lv.javaguru.java2.servify.domain.UserType;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -18,15 +17,5 @@ public class ExitUIAction implements UIAction {
     public String getMenuItem() {
         return "Exit";
     }
-
-    @Override
-    public List<UserType> getAccessUserByType() {
-        return new ArrayList<>(List.of(
-                UserType.CUSTOMER,
-                UserType.MANAGER,
-                UserType.ANONYMOUS
-        ));
-    }
-
 
 }

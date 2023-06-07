@@ -2,8 +2,6 @@
 воспользуйтесь классом DatabaseCleaner для очистки базы данных
 перед выполнением каждого теста следующим образом:
 
-public class AcceptanceTest1 {
-
 	private ApplicationContext appContext;
 
 	@Before
@@ -15,6 +13,4 @@ public class AcceptanceTest1 {
 	private DatabaseCleaner getDatabaseCleaner() {
 		return appContext.getBean(DatabaseCleaner.class);
 	}
-
-}
 и

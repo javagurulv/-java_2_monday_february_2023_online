@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -20,6 +21,7 @@ class JdbcDatabaseImpl implements DatabaseIM {
     private JdbcTemplate jdbcTemplate;
 
     @Override
+    @Transactional
     public void addReaction(ReactionData reaction) {
         String reactionQuery = "INSERT INTO ReactionData (code, name, reactionYield) VALUES (?, ?, ?)";
 
@@ -40,6 +42,55 @@ class JdbcDatabaseImpl implements DatabaseIM {
         reaction.getStartingMaterials().stream()
                 .map(this::saveStructureData)
                 .forEach(structureId -> saveReactionStartingMaterial(reactionId, structureId));
+    }
+
+    @Override
+    public boolean delReactionByCode(String code) {
+        return false;
+    }
+
+    @Override
+    @Transactional
+    public boolean delReactionByID(int id) {
+        String reactionQuery1 = "DELETE FROM ReactionStartingMaterial WHERE reaction_id = ?";
+        String reactionQuery2 = "DELETE FROM ConditionData WHERE reaction_id = ?";
+        String reactionQuery3 = "DELETE FROM ReactionData WHERE id = ?";
+
+        int affectedRows1 = jdbcTemplate.update(reactionQuery1, id);
+        int affectedRows2 = jdbcTemplate.update(reactionQuery2, id);
+        int affectedRows3 = jdbcTemplate.update(reactionQuery3, id);
+
+        System.out.println(affectedRows1 );
+        System.out.println(affectedRows2);
+        System.out.println(affectedRows3);
+
+        return affectedRows1 > 0 && affectedRows2 > 0 && affectedRows3 > 0;
+    }
+
+    @Override
+    @Transactional
+    public List<ReactionData> getAllReactions() {
+        String sql = """
+                SELECT * FROM ReactionData AS reactions
+                LEFT JOIN ConditionData\s
+                ON reaction_id = reactions.id
+                """;
+        List<ReactionData> reactions = jdbcTemplate.query(sql, new ReactionDataRowMapper(jdbcTemplate));
+        return reactions;
+    }
+
+    @Override
+    public boolean hasReactionWithCode(String reactionCode) {
+        String query = "SELECT COUNT(*) FROM ReactionData WHERE code = ?";
+        Integer count = jdbcTemplate.queryForObject(query, Integer.class, reactionCode);
+        return count != null && count > 0;
+    }
+
+    @Override
+    public boolean hasReactionWithId(int reactionId) {
+        String query = "SELECT COUNT(*) FROM ReactionData WHERE id = ?";
+        Integer count = jdbcTemplate.queryForObject(query, Integer.class, reactionId);
+        return count != null && count > 0;
     }
 
     private int saveStructureData(StructureData structureData) {
@@ -67,22 +118,5 @@ class JdbcDatabaseImpl implements DatabaseIM {
     private void saveReactionStartingMaterial(int reactionId, int structureId) {
         String reactionStartingMaterialQuery = "INSERT INTO `ReactionStartingMaterial` (reaction_id, structure_id) VALUES (?, ?)";
         jdbcTemplate.update(reactionStartingMaterialQuery, reactionId, structureId);
-    }
-
-
-
-    @Override
-    public boolean delReactionByCode(String code) {
-        return false;
-    }
-
-    @Override
-    public List<ReactionData> getAllReactions() {
-        return null;
-    }
-
-    @Override
-    public boolean hasReactionWithCode(String reactionCode) {
-        return false;
     }
 }

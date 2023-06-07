@@ -10,13 +10,8 @@ import java.util.Scanner;
 
 @Component
 public class AddReactionUIAction implements UIAction{
-
     @Autowired
     AddReactionService addReactionService;
-
-//    public AddReactionUIAction(AddReactionService addReactionService) {
-//        this.addReactionService = addReactionService;
-//    }
 
     @Override
     public void execute() {

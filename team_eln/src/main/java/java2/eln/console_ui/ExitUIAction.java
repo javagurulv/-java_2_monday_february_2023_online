@@ -8,13 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ExitUIAction implements UIAction{
-
     @Autowired
     ExitUIService exitUIService;
-
-//    public ExitUIAction(ExitUIService exitUIService) {
-//        this.exitUIService = exitUIService;
-//    }
 
     @Override
     public void execute() {

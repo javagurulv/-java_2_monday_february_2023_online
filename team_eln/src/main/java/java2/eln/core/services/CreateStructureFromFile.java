@@ -1,16 +1,17 @@
 package java2.eln.core.services;
 
 import java2.eln.core.domain.StructureData;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class CreateStructureFromFile {
-    String filename = "team_eln/src/data/demoReaction1.txt";
+    private static String filename;
 
     public CreateStructureFromFile(String filename) {
-        this.filename = filename;
+        CreateStructureFromFile.filename = filename;
     }
 
     public StructureData readFromFile (String identifier) {
