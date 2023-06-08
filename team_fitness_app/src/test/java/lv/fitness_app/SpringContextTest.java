@@ -1,5 +1,6 @@
 package lv.fitness_app;
 
+import lv.fitness_app.config.SpringCoreConfiguration;
 import lv.fitness_app.web_ui.config.SpringWebConfiguration;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -13,7 +14,7 @@ import static org.junit.Assert.assertNotNull;
 
 @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {SpringWebConfiguration.class})
+@ContextConfiguration(classes = {SpringCoreConfiguration.class})
 public class SpringContextTest {
 
 	@Autowired private ApplicationContext appContext;
