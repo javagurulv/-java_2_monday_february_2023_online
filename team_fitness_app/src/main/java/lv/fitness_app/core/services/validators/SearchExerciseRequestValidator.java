@@ -1,20 +1,26 @@
 package lv.fitness_app.core.services.validators;
 
-import lv.fitness_app.core.requests.SearchExerciseByMuscleGroupRequest;
-import lv.fitness_app.core.responses.CoreError;
-import lv.fitness_app.core.requests.Ordering;
-import lv.fitness_app.core.requests.Paging;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class SearchExerciseByMuscleGroupRequestValidator {
-    public List<CoreError> validate(SearchExerciseByMuscleGroupRequest request) {
+import lv.fitness_app.core.requests.SearchExerciseRequest;
+import lv.fitness_app.core.requests.Paging;
+import lv.fitness_app.core.requests.Ordering;
+import lv.fitness_app.core.responses.CoreError;
+import org.springframework.stereotype.Component;
+
+
+@Component
+public class SearchExerciseRequestValidator {
+
+    public List<CoreError> validate(SearchExerciseRequest request) {
         List<CoreError> errors = new ArrayList<>();
         errors.addAll(validateSearchFields(request));
         if (request.getOrdering() != null) {
+            validateOrderBy(request.getOrdering()).ifPresent(errors::add);
             validateOrderDirection(request.getOrdering()).ifPresent(errors::add);
+            validateMandatoryOrderBy(request.getOrdering()).ifPresent(errors::add);
             validateMandatoryOrderDirection(request.getOrdering()).ifPresent(errors::add);
         }
         if (request.getPaging() != null) {
@@ -26,17 +32,26 @@ public class SearchExerciseByMuscleGroupRequestValidator {
 
         return errors;
     }
-    private List<CoreError> validateSearchFields(SearchExerciseByMuscleGroupRequest request) {
+
+    private List<CoreError> validateSearchFields(SearchExerciseRequest request) {
         List<CoreError> errors = new ArrayList<>();
-        if (isEmpty(request.getMuscleGroup())) {
+        if (isEmpty(request.getName()) && isEmpty(request.getMuscleGroup())) {
+            errors.add(new CoreError("name", "Must not be empty!"));
             errors.add(new CoreError("muscleGroup", "Must not be empty!"));
         }
         return errors;
     }
+
     private boolean isEmpty(String str) {
         return str == null || str.isEmpty();
     }
 
+    private Optional<CoreError> validateOrderBy(Ordering ordering) {
+        return (ordering.getOrderBy() != null
+                && !(ordering.getOrderBy().equals("name") || ordering.getOrderBy().equals("muscleGroup")))
+                ? Optional.of(new CoreError("orderBy", "Must contain 'author' or 'title' only!"))
+                : Optional.empty();
+    }
 
     private Optional<CoreError> validateOrderDirection(Ordering ordering) {
         return (ordering.getOrderDirection() != null
@@ -45,6 +60,11 @@ public class SearchExerciseByMuscleGroupRequestValidator {
                 : Optional.empty();
     }
 
+    private Optional<CoreError> validateMandatoryOrderBy(Ordering ordering) {
+        return (ordering.getOrderDirection() != null && ordering.getOrderBy() == null)
+                ? Optional.of(new CoreError("orderBy", "Must not be empty!"))
+                : Optional.empty();
+    }
 
     private Optional<CoreError> validateMandatoryOrderDirection(Ordering ordering) {
         return (ordering.getOrderBy() != null && ordering.getOrderDirection() == null)
@@ -77,4 +97,5 @@ public class SearchExerciseByMuscleGroupRequestValidator {
                 ? Optional.of(new CoreError("pageSize", "Must not be empty!"))
                 : Optional.empty();
     }
+
 }

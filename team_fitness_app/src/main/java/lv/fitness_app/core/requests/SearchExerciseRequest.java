@@ -1,30 +1,40 @@
 package lv.fitness_app.core.requests;
 
-import lv.fitness_app.core.domain.Difficulty;
-import lv.fitness_app.core.domain.Type;
-
 public class SearchExerciseRequest {
 
     private String name;
     private String muscleGroup;
-    private String detailedMuscleGroup;
-    private String otherMuscleGroup;
-    private Type type;
-    private String mechanics;
-    private String equipment;
-    private Difficulty difficulty;
     private Ordering ordering;
     private Paging paging;
 
-    public SearchExerciseRequest(String name, String muscleGroup, String detailedMuscleGroup, String otherMuscleGroup, Type type, String mechanics, String equipment, Difficulty difficulty) {
+    public SearchExerciseRequest(String name, String muscleGroup) {
         this.name = (name == null || name.length() == 0) ? "%" : name;
         this.muscleGroup = (muscleGroup == null || muscleGroup.length() == 0) ? "%" : muscleGroup;
-        this.detailedMuscleGroup = (detailedMuscleGroup == null || detailedMuscleGroup.length() == 0) ? "%" : detailedMuscleGroup;
-        this.otherMuscleGroup = (otherMuscleGroup == null || otherMuscleGroup.length() == 0) ? "%" : otherMuscleGroup;
-        this.type = type;
-        this.mechanics = (mechanics == null || mechanics.length() == 0) ? "%" : mechanics;
-        this.equipment = (equipment == null || equipment.length() == 0) ? "%" : equipment;
-        this.difficulty = difficulty;
+    }
+    public SearchExerciseRequest(String name,
+                              String muscleGroup,
+                              Ordering ordering) {
+        this.name = name;
+        this.muscleGroup = muscleGroup;
+        this.ordering = ordering;
+    }
+
+    public SearchExerciseRequest(String name,
+                              String muscleGroup,
+                              Paging paging) {
+        this.name = name;
+        this.muscleGroup = muscleGroup;
+        this.paging = paging;
+    }
+
+    public SearchExerciseRequest(String name,
+                              String muscleGroup,
+                              Ordering ordering,
+                              Paging paging) {
+        this.name = name;
+        this.muscleGroup = muscleGroup;
+        this.ordering = ordering;
+        this.paging = paging;
     }
 
     public String getName() {
@@ -35,27 +45,20 @@ public class SearchExerciseRequest {
         return muscleGroup;
     }
 
-    public String getDetailedMuscleGroup() {
-        return detailedMuscleGroup;
+    public boolean isNameProvided() {
+        return this.name != null && !this.name.isEmpty();
     }
 
-    public String getOtherMuscleGroup() {
-        return otherMuscleGroup;
+    public boolean isMuscleGroupProvided() {
+        return this.muscleGroup != null && !this.muscleGroup.isEmpty();
     }
 
-    public Type getType() {
-        return type;
+    public Ordering getOrdering() {
+        return this.ordering;
     }
 
-    public String getMechanics() {
-        return mechanics;
+    public Paging getPaging() {
+        return this.paging;
     }
 
-    public String getEquipment() {
-        return equipment;
-    }
-
-    public Difficulty getDifficulty() {
-        return difficulty;
-    }
 }
