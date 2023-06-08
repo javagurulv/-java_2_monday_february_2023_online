@@ -1,21 +1,20 @@
 package shop.core.domain.item;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import shop.core.domain.BaseEntity;
 
 import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "item")
-public class Item {
+public class Item extends BaseEntity {
 
-    @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     @Column(name = "name", nullable = false)
     private String name;
     @Column(name = "price", nullable = false)

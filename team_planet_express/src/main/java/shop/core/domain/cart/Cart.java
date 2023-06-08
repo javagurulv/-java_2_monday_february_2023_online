@@ -3,6 +3,7 @@ package shop.core.domain.cart;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import shop.core.domain.BaseEntity;
 import shop.core.domain.user.User;
 
 import java.time.LocalDateTime;
@@ -11,12 +12,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "cart")
-public class Cart {
+public class Cart extends BaseEntity {
 
-    @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
