@@ -21,11 +21,16 @@
       <li class="nav-item" th:if="${loggedIn}">
         <a class="nav-link" href="/logout">Logout</a>
       </li>
+      </li>
+      <li class="nav-item" th:if="${loggedIn}">
+        <a class="nav-link" href="/orders">Orders</a>
+      </li>
     </ul>
   </div>
 </nav>
 
 <div class="container mt-4">
+  <h4>Hello, <span th:text="${userName}"></span></h4>
   <h2>Welcome to Servify App!</h2>
   <p>This is the home page of Servify App. here you can paint your car or parts of it.</p>
 </div>

@@ -22,5 +22,4 @@ public class Color {
     private String description;
     @Column(name = "is_metalic")
     private boolean isMetalic;
-
 }

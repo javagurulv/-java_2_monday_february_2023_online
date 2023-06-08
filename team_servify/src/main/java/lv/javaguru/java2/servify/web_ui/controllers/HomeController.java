@@ -13,6 +13,7 @@ public class HomeController {
     public String rootPage(Model model, Principal principal) {
         boolean loggedIn = (principal != null);
         model.addAttribute("loggedIn", loggedIn);
+        model.addAttribute("userName", principal.getName());
         if (principal != null) {
             System.out.println(((Authentication)principal).getAuthorities() + " "
                     + principal.getName() + " "
