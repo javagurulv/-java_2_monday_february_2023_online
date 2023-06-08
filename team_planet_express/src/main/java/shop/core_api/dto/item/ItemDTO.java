@@ -1,11 +1,14 @@
 package shop.core_api.dto.item;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import shop.core.domain.item.Item;
 import shop.web_ui.components.Money;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class ItemDTO {
 
     private Long id;
@@ -14,10 +17,28 @@ public class ItemDTO {
     private Integer availableQuantity;
     private byte[] itemPicture;
 
-    public ItemDTO(String name, Money price, Integer availableQuantity) {
-        this.name = name;
-        this.price = price;
-        this.availableQuantity = availableQuantity;
+    public Item toItem() {
+        return ItemDTO.toItem(this);
     }
 
+    public static Item toItem(ItemDTO itemDTO) {
+        Item item = new Item();
+        item.setId(itemDTO.getId());
+        item.setName(itemDTO.getName());
+        item.setPrice(itemDTO.getPrice().getAmount());
+        item.setAvailableQuantity(itemDTO.getAvailableQuantity());
+        item.setItemPicture(itemDTO.getItemPicture());
+        return item;
+    }
+
+    public static ItemDTO of(Item item) {
+        ItemDTO itemDTO = new ItemDTO(
+                item.getId(),
+                item.getName(),
+                Money.dollars(item.getPrice()),
+                item.getAvailableQuantity(),
+                item.getItemPicture()
+        );
+        return itemDTO;
+    }
 }

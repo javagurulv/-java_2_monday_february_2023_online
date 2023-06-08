@@ -1,19 +1,18 @@
 package shop.core.domain.user;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import shop.core.domain.BaseEntity;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "shop_user")
-public class User {
+public class User extends BaseEntity {
 
-    @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     @Column(name = "name", nullable = false)
     private String name;
     @Column(name = "login", nullable = false)
@@ -23,12 +22,5 @@ public class User {
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-
-    public User(String name, String login, String password, UserRole userRole) {
-        this.name = name;
-        this.login = login;
-        this.password = password;
-        this.userRole = userRole;
-    }
 
 }
