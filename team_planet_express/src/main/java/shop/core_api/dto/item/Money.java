@@ -1,4 +1,4 @@
-package shop.web_ui.components;
+package shop.core_api.dto.item;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

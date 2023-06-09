@@ -9,8 +9,8 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
-import shop.core.domain.item.Item;
 import shop.core.services.actions.customer.ListShopItemsServiceImpl;
+import shop.core_api.dto.item.ItemDTO;
 import shop.core_api.responses.CoreError;
 import shop.core_api.responses.customer.ListShopItemsResponse;
 import shop.web_ui.components.MainLayout;
@@ -32,12 +32,12 @@ public class ItemListView extends Main {
                 add(new ErrorMessage(error.getMessage()));
             }
         } else {
-            List<Item> items = response.getShopItems();
+            List<ItemDTO> items = response.getShopItemsDTO();
             add(createList(items, 4));
         }
     }
 
-    private VerticalLayout createList(List<Item> items, int column) {
+    private VerticalLayout createList(List<ItemDTO> items, int column) {
         VerticalLayout itemList = new VerticalLayout();
         ItemCardBuilder builder = new ItemCardBuilder();
         builder.setWidth(100 / column + "%");
@@ -46,7 +46,7 @@ public class ItemListView extends Main {
         HorizontalLayout row = new HorizontalLayout();
         row.setAlignItems(FlexComponent.Alignment.CENTER);
         row.setWidthFull();
-        for (Item item : items) {
+        for (ItemDTO item : items) {
             Component itemCard = builder.setItemIfoContent(item).build();
             row.add(itemCard);
             counter++;

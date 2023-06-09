@@ -15,6 +15,7 @@ import shop.core.domain.item.Item;
 import shop.core.domain.user.User;
 import shop.core.services.actions.customer.AddItemToCartServiceImpl;
 import shop.core.services.actions.shared.SecurityServiceImpl;
+import shop.core_api.dto.item.ItemDTO;
 import shop.core_api.requests.customer.AddItemToCartRequest;
 import shop.core_api.responses.CoreError;
 import shop.core_api.responses.customer.AddItemToCartResponse;
@@ -41,7 +42,7 @@ public class ItemView extends Main implements HasUrlParameter<Long> {
     public void setParameter(BeforeEvent event, Long id) {
         Optional<Item> byId = itemRepository.findById(id);
         item = byId.get();
-        ItemCard itemCard = new ItemCardBuilder().setItemIfoContent(item).setClickable(false).build();
+        ItemCard itemCard = new ItemCardBuilder().setItemIfoContent(ItemDTO.of(item)).setClickable(false).build();
         add(itemCard);
         add(createBuyDiv(itemCard));
     }
@@ -73,6 +74,8 @@ public class ItemView extends Main implements HasUrlParameter<Long> {
                     quantity.setValue(0);
                     itemCard.getItemInfoCard().updateQuantity(item.getAvailableQuantity().toString());
                 }
+            } else {
+                //LocalStorage
             }
         });
         div.add(quantity);

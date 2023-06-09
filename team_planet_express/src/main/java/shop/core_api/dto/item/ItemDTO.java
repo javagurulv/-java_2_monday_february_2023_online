@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import shop.core.domain.item.Item;
-import shop.web_ui.components.Money;
 
 @Data
 @NoArgsConstructor

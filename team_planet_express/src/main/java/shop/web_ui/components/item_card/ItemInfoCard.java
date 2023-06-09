@@ -3,11 +3,9 @@ package shop.web_ui.components.item_card;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import shop.core.domain.cart_item.CartItem;
-import shop.core.domain.item.Item;
-import shop.web_ui.components.Money;
-
-import java.math.BigDecimal;
+import shop.core_api.dto.cart_item.CartItemDTO;
+import shop.core_api.dto.item.ItemDTO;
+import shop.core_api.dto.item.Money;
 
 public class ItemInfoCard extends VerticalLayout {
     private Div name;
@@ -15,7 +13,7 @@ public class ItemInfoCard extends VerticalLayout {
     private Div quantity;
     private Text quantityText;
 
-    public ItemInfoCard(Item item) {
+    public ItemInfoCard(ItemDTO item) {
         add(createTextField(item.getName()));
         add(createPriceField(item.getPrice()));
         quantity = new Div();
@@ -24,8 +22,8 @@ public class ItemInfoCard extends VerticalLayout {
         add(quantity);
     }
 
-    public ItemInfoCard(CartItem cartItem) {
-        Item item = cartItem.getItem();
+    public ItemInfoCard(CartItemDTO cartItem) {
+        ItemDTO item = cartItem.getItemDTO();
         add(createTextField(item.getName()));
         add(createPriceField(item.getPrice()));
         quantity = new Div();
@@ -41,9 +39,9 @@ public class ItemInfoCard extends VerticalLayout {
         return container;
     }
 
-    private Div createPriceField(BigDecimal price) {
+    private Div createPriceField(Money price) {
         Div container = new Div();
-        Text text = new Text(Money.dollars(price).toString());
+        Text text = new Text(price.toString());
         container.add(text);
         return container;
     }

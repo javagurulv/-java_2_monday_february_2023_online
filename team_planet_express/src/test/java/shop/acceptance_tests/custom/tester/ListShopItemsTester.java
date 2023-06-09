@@ -23,7 +23,7 @@ public class ListShopItemsTester extends Tester {
     }
 
     public ListShopItemsTester checkItemInListShopResponse(String itemName, int quantity) {
-        assertTrue(listShopItemsResponse.getShopItems().stream()
+        assertTrue(listShopItemsResponse.getShopItemsDTO().stream()
                 .anyMatch(item -> item.getName().equals(itemName) && item.getAvailableQuantity() == quantity));
         return this;
     }

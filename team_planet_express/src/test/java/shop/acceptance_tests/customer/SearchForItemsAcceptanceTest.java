@@ -14,6 +14,7 @@ import shop.core.support.ordering.OrderBy;
 import shop.core.support.ordering.OrderDirection;
 import shop.core.support.ordering.OrderingRule;
 import shop.core.support.paging.PagingRule;
+import shop.core_api.dto.item.ItemDTO;
 import shop.core_api.requests.shared.SearchItemRequest;
 import shop.core_api.responses.shared.SearchItemResponse;
 
@@ -42,8 +43,8 @@ public class SearchForItemsAcceptanceTest {
                 searchItemService.execute(new SearchItemRequest("robot", "", Collections.emptyList(), null));
         assertFalse(searchItemResponse.hasErrors());
         assertFalse(searchItemResponse.isNextPageAvailable());
-        assertEquals("Moms Old-Fashioned Robot Oil", searchItemResponse.getItems().get(0).getName());
-        assertEquals("Blank Robot", searchItemResponse.getItems().get(1).getName());
+        assertEquals("Moms Old-Fashioned Robot Oil", searchItemResponse.getItemsDTO().get(0).getName());
+        assertEquals("Blank Robot", searchItemResponse.getItemsDTO().get(1).getName());
     }
 
     @Sql({"/testDatabaseTableCreation.sql", "/testDatabaseDataInsertion.sql"})
@@ -54,8 +55,8 @@ public class SearchForItemsAcceptanceTest {
                 searchItemService.execute(new SearchItemRequest("", "10", Collections.emptyList(), null));
         assertFalse(searchItemResponse.hasErrors());
         assertFalse(searchItemResponse.isNextPageAvailable());
-        Optional<Item> wrongItem = searchItemResponse.getItems().stream()
-                .filter(item -> new BigDecimal("10").compareTo(item.getPrice()) < 0)
+        Optional<ItemDTO> wrongItem = searchItemResponse.getItemsDTO().stream()
+                .filter(item -> new BigDecimal("10").compareTo(item.getPrice().getAmount()) < 0)
                 .findAny();
         assertTrue(wrongItem.isEmpty());
     }
@@ -69,7 +70,7 @@ public class SearchForItemsAcceptanceTest {
                 searchItemService.execute(new SearchItemRequest( "robot", "", List.of(orderingRule), null));
         assertFalse(searchItemResponse.hasErrors());
         assertFalse(searchItemResponse.isNextPageAvailable());
-        assertTrue(isOrderedCorrectly(searchItemResponse.getItems(), 7L, 4L));
+        assertTrue(isOrderedCorrectly(searchItemResponse.getItemsDTO().stream().map(itemDTO -> itemDTO.toItem()).toList(), 7L, 4L));
     }
 
     @Sql({"/testDatabaseTableCreation.sql", "/testDatabaseDataInsertion.sql"})
@@ -80,9 +81,9 @@ public class SearchForItemsAcceptanceTest {
         SearchItemResponse searchItemResponse =
                 searchItemService.execute(new SearchItemRequest( "", "", Collections.emptyList(), pagingRule));
         assertFalse(searchItemResponse.hasErrors());
-        assertEquals(3, searchItemResponse.getItems().size());
+        assertEquals(3, searchItemResponse.getItemsDTO().size());
         assertTrue(searchItemResponse.isNextPageAvailable());
-        assertTrue(isPageContainingCorrectItems(searchItemResponse.getItems(), 4L, 5L, 6L));
+        assertTrue(isPageContainingCorrectItems(searchItemResponse.getItemsDTO().stream().map(itemDTO -> itemDTO.toItem()).toList(), 4L, 5L, 6L));
     }
 
     @Sql({"/testDatabaseTableCreation.sql", "/testDatabaseDataInsertion.sql"})
@@ -95,20 +96,20 @@ public class SearchForItemsAcceptanceTest {
         OrderingRule orderingRulePrice = new OrderingRule(OrderBy.PRICE, OrderDirection.ASCENDING);
         PagingRule pagingRule = new PagingRule(1, "4");
         SearchItemResponse searchItemResponse =
-                searchItemService.execute(new SearchItemRequest( "T", "25", List.of(orderingRuleName, orderingRulePrice), pagingRule));
+                searchItemService.execute(new SearchItemRequest("T", "25", List.of(orderingRuleName, orderingRulePrice), pagingRule));
         assertFalse(searchItemResponse.hasErrors());
         assertTrue(searchItemResponse.isNextPageAvailable());
-        Optional<Item> wrongItem = searchItemResponse.getItems().stream()
-                .filter(item -> new BigDecimal("25").compareTo(item.getPrice()) < 0)
+        Optional<ItemDTO> wrongItem = searchItemResponse.getItemsDTO().stream()
+                .filter(item -> new BigDecimal("25").compareTo(item.getPrice().getAmount()) < 0)
                 .findAny();
         assertTrue(wrongItem.isEmpty());
-        assertTrue(isOrderedCorrectly(searchItemResponse.getItems(), 11L, 6L, 4L, 9L));
-        assertEquals(4, searchItemResponse.getItems().size());
+        assertTrue(isOrderedCorrectly(searchItemResponse.getItemsDTO().stream().map(itemDTO -> itemDTO.toItem()).toList(), 11L, 6L, 4L, 9L));
+        assertEquals(4, searchItemResponse.getItemsDTO().size());
         pagingRule = new PagingRule(2, "4");
         searchItemResponse =
-                searchItemService.execute(new SearchItemRequest( "T", "25", List.of(orderingRuleName, orderingRulePrice), pagingRule));
-        assertEquals(1, searchItemResponse.getItems().size());
-        assertTrue(isPageContainingCorrectItems(searchItemResponse.getItems(), 7L));
+                searchItemService.execute(new SearchItemRequest("T", "25", List.of(orderingRuleName, orderingRulePrice), pagingRule));
+        assertEquals(1, searchItemResponse.getItemsDTO().size());
+        assertTrue(isPageContainingCorrectItems(searchItemResponse.getItemsDTO().stream().map(itemDTO -> itemDTO.toItem()).toList(), 7L));
     }
 
     private boolean isOrderedCorrectly(List<Item> items, Long... ids) {

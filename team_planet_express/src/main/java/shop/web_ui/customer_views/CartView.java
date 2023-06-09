@@ -9,11 +9,11 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 import org.springframework.beans.factory.annotation.Autowired;
-import shop.core.domain.cart_item.CartItem;
 import shop.core.services.actions.customer.BuyServiceImpl;
 import shop.core.services.actions.customer.ListCartItemsServiceImpl;
 import shop.core.services.actions.customer.RemoveItemFromCartServiceImpl;
 import shop.core.services.actions.shared.SecurityServiceImpl;
+import shop.core_api.dto.cart_item.CartItemDTO;
 import shop.core_api.requests.customer.BuyRequest;
 import shop.core_api.requests.customer.ListCartItemsRequest;
 import shop.core_api.responses.CoreError;
@@ -40,7 +40,7 @@ public class CartView extends Main {
                 add(new ErrorMessage(error.getMessage()));
             }
         } else {
-            List<CartItem> cartItems = response.getCartItems();
+            List<CartItemDTO> cartItems = response.getCartItemsDTO();
             VerticalLayout list;
             if (cartItems != null) {
                 ItemCardBuilder itemCardBuilder = new ItemCardBuilder();
@@ -65,10 +65,10 @@ public class CartView extends Main {
         }
     }
 
-    private VerticalLayout createList(List<CartItem> cartItems, ItemCardBuilder itemCardBuilder) {
+    private VerticalLayout createList(List<CartItemDTO> cartItems, ItemCardBuilder itemCardBuilder) {
         VerticalLayout itemList = new VerticalLayout();
         itemList.setAlignItems(FlexComponent.Alignment.CENTER);
-        for (CartItem cartItem : cartItems) {
+        for (CartItemDTO cartItem : cartItems) {
             itemCardBuilder.setItemIfoContent(cartItem);
             itemList.add(itemCardBuilder.build());
         }
