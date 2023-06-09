@@ -15,7 +15,7 @@ public class LoginUserUIAction implements UIAction {
 
     @Autowired
     private LoginUserService loginUserService;
-    @Autowired
+    //@Autowired
     private  ProgramMenu programMenu;
 
 
@@ -34,7 +34,7 @@ public class LoginUserUIAction implements UIAction {
         } else {
             if (response.isUserLogged()) {
                 System.out.println("Login Successful!");
-                programMenu.runUserMenu();
+               // programMenu.runUserMenu();
             } else {
                 System.out.println("Id or Password is Incorrect!");
             }

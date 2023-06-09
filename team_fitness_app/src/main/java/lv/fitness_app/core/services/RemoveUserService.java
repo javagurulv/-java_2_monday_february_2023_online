@@ -2,7 +2,7 @@ package lv.fitness_app.core.services;
 
 import lv.fitness_app.core.domain.User;
 import lv.fitness_app.core.services.validators.RemoveUserRequestValidator;
-import lv.fitness_app.database.UserRepository;
+import lv.fitness_app.core.database.UserRepository;
 import lv.fitness_app.core.responses.CoreError;
 import lv.fitness_app.core.responses.RemoveUserResponse;
 import lv.fitness_app.core.requests.RemoveUserRequest;

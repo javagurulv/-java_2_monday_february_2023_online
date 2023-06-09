@@ -1,4 +1,4 @@
-package lv.fitness_app.database;
+package lv.fitness_app.core.database;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(basePackages = "lv.fitness_app")
+@ComponentScan(basePackages = "lv.fitness_app.core")
 @PropertySource(value = "classpath:application.properties")
 @EnableTransactionManagement
 public class SpringCoreConfiguration {
