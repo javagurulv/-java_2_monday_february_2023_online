@@ -8,10 +8,12 @@ import lv.fitness_app.core.responses.RemoveUserResponse;
 import lv.fitness_app.core.requests.RemoveUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Component
+@Transactional
 public class RemoveUserService {
 
     @Autowired

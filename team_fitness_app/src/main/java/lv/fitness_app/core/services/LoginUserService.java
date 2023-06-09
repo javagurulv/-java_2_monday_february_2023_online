@@ -8,10 +8,12 @@ import lv.fitness_app.core.responses.CoreError;
 import lv.fitness_app.core.responses.LoginUserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Component
+@Transactional
 public class LoginUserService {
 
     @Autowired
