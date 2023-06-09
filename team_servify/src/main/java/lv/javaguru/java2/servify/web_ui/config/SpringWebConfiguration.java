@@ -3,6 +3,8 @@ package lv.javaguru.java2.servify.web_ui.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;;
@@ -19,10 +21,7 @@ public class SpringWebConfiguration implements WebMvcConfigurer{
         registry.addResourceHandler("/resources/**")
                 .addResourceLocations("/resources/");
     }
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
+
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver resourceViewResolver = new SpringResourceTemplateResolver();
