@@ -14,6 +14,7 @@ import shop.core.domain.item.Item;
 import shop.core.domain.user.User;
 import shop.core.services.actions.shared.SecurityServiceImpl;
 import shop.core.services.cart.CartService;
+import shop.core.services.validators.actions.customer.ListCartItemValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core_api.requests.customer.ListCartItemsRequest;
 import shop.core_api.responses.customer.ListCartItemsResponse;
@@ -36,6 +37,8 @@ class ListCartItemsServiceImplTest {
     private CartItemRepository mockCartItemRepository;
     @Mock
     private DatabaseAccessValidator mockDatabaseAccessValidator;
+    @Mock
+    private ListCartItemValidator mockListCartItemValidator;
     @Mock
     private CartService mockCartService;
     @Mock
@@ -65,6 +68,7 @@ class ListCartItemsServiceImplTest {
     @Test
     void shouldReturnListCartItem() {
         when(mockDatabaseAccessValidator.getOpenCartByUserId(any())).thenReturn(mockCart);
+        when(mockListCartItemValidator.validate(any())).thenReturn(List.of());
         when(mockCartItemRepository.getAllCartItemsForCartId(anyLong())).thenReturn(List.of(mockCartItem, mockCartItem));
         ListCartItemsResponse response = service.execute(mockRequest);
         assertEquals(response.getCartItemsDTO().size(), 2);
@@ -72,6 +76,7 @@ class ListCartItemsServiceImplTest {
 
     @Test
     void shouldReturnSum() {
+        when(mockListCartItemValidator.validate(any())).thenReturn(List.of());
         when(mockDatabaseAccessValidator.getOpenCartByUserId(any())).thenReturn(mockCart);
         when(mockCartItemRepository.getAllCartItemsForCartId(anyLong())).thenReturn(List.of(mockCartItem, mockCartItem));
         when(mockCartService.getSum(1L)).thenReturn(BigDecimal.valueOf(1));
