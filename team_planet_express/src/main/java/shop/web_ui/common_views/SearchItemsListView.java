@@ -11,9 +11,9 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
-import shop.core.domain.item.Item;
 import shop.core.services.actions.shared.SearchItemServiceImpl;
 import shop.core.support.paging.PagingRule;
+import shop.core_api.dto.item.ItemDTO;
 import shop.core_api.requests.shared.SearchItemRequest;
 import shop.core_api.responses.shared.SearchItemResponse;
 import shop.web_ui.components.MainLayout;
@@ -33,11 +33,11 @@ public class SearchItemsListView extends Main implements HasUrlParameter<String>
     public void setParameter(BeforeEvent event, String parameter) {
         SearchItemRequest searchItemRequest = new SearchItemRequest(parameter, "", List.of(), new PagingRule(1, "10"));
         SearchItemResponse response = searchItemService.execute(searchItemRequest);
-        List<Item> items = response.getItems();
+        List<ItemDTO> items = response.getItemsDTO();
         add(createList(items, 4));
     }
 
-    private VerticalLayout createList(List<Item> items, int column) {
+    private VerticalLayout createList(List<ItemDTO> items, int column) {
         VerticalLayout itemList = new VerticalLayout();
         ItemCardBuilder builder = new ItemCardBuilder();
 
@@ -45,7 +45,7 @@ public class SearchItemsListView extends Main implements HasUrlParameter<String>
         HorizontalLayout row = new HorizontalLayout();
         row.setAlignItems(FlexComponent.Alignment.CENTER);
         row.setWidthFull();
-        for (Item item : items) {
+        for (ItemDTO item : items) {
             Component itemCard = builder.setItemIfoContent(item).setWidth(100 / column + "%").build();
             row.add(itemCard);
             counter++;

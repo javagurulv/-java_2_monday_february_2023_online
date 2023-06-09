@@ -5,10 +5,10 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.theme.lumo.LumoUtility;
-import shop.core.domain.cart_item.CartItem;
-import shop.core.domain.item.Item;
 import shop.core.services.actions.customer.RemoveItemFromCartServiceImpl;
 import shop.core.services.actions.shared.SecurityServiceImpl;
+import shop.core_api.dto.cart_item.CartItemDTO;
+import shop.core_api.dto.item.ItemDTO;
 import shop.core_api.requests.customer.RemoveItemFromCartRequest;
 import shop.web_ui.customer_views.ItemView;
 
@@ -19,7 +19,7 @@ public class ItemCardBuilder {
 
     private ImageItemCard image;
     private Text quantity;
-    private Item item;
+    private ItemDTO item;
 
     private String width;
 
@@ -51,14 +51,14 @@ public class ItemCardBuilder {
         return itemCard;
     }
 
-    public ItemCardBuilder setItemIfoContent(Item item) {
+    public ItemCardBuilder setItemIfoContent(ItemDTO item) {
         this.item = item;
         itemInfoCard = new ItemInfoCard(item);
         return this;
     }
 
-    public ItemCardBuilder setItemIfoContent(CartItem cartItem) {
-        this.item = cartItem.getItem();
+    public ItemCardBuilder setItemIfoContent(CartItemDTO cartItem) {
+        this.item = cartItem.getItemDTO();
         itemInfoCard = new ItemInfoCard(cartItem);
         return this;
     }
