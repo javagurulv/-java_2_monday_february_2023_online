@@ -1,7 +1,8 @@
 package lv.fitness_app.core.services;
 
 import lv.fitness_app.core.domain.User;
-import lv.fitness_app.database.UserRepository;
+import lv.fitness_app.core.services.validators.AddUserRequestValidator;
+import lv.fitness_app.core.database.UserRepository;
 import lv.fitness_app.core.requests.AddUserRequest;
 import lv.fitness_app.core.responses.AddUserResponse;
 import lv.fitness_app.core.responses.CoreError;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Component
+@Transactional
 public class AddUserService {
 
     @Autowired

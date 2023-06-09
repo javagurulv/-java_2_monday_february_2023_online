@@ -13,7 +13,6 @@ public class RemoveUserUIAction implements UIAction {
 
     @Autowired private RemoveUserService removeUserService;
 
-
     @Override
     public void execute() {
         Scanner scanner = new Scanner(System.in);

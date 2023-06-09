@@ -18,23 +18,19 @@ import java.io.IOException;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(basePackages = "lv.fitness_app")
+@ComponentScan(basePackages = "lv.fitness_app.core")
 @PropertySource(value = "classpath:application.properties")
 @EnableTransactionManagement
-public class UserListConfiguration {
+public class SpringCoreConfiguration {
 
     @Value("${jdbc.url}")
     private String jdbcUrl;
-
     @Value("${driverClass}")
     private String driverClass;
-
     @Value("${fitness_app.user.name}")
     private String userName;
-
     @Value("${fitness_app.user.password}")
     private String password;
-
     @Bean
     public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();

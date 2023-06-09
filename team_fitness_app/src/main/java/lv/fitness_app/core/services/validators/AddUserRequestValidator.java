@@ -1,4 +1,4 @@
-package lv.fitness_app.core.services;
+package lv.fitness_app.core.services.validators;
 
 import lv.fitness_app.core.requests.AddUserRequest;
 import lv.fitness_app.core.responses.CoreError;
