@@ -10,28 +10,28 @@ import shop.core.database.ItemRepository;
 import shop.core.domain.user.User;
 import shop.core.services.actions.shared.SecurityServiceImpl;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
-import shop.core_api.requests.customer.ListShopItemsRequest;
+import shop.core_api.requests.customer.GetListShopItemsRequest;
 
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 
 @Ignore
-class ListShopItemsServiceImplTest {
+class GetListShopItemsServiceImplTest {
 
     @Mock
     private ItemRepository mockItemRepository;
     @Mock
     private DatabaseAccessValidator mockDatabaseAccessValidator;
     @Mock
-    private ListShopItemsRequest mockRequest;
+    private GetListShopItemsRequest mockRequest;
     @Mock
     private User mockUser;
     @Mock
     private SecurityServiceImpl mockSecurityService;
 
     @InjectMocks
-    private ListShopItemsServiceImpl service;
+    private GetListShopItemsServiceImpl service;
 
     @Test
     void shouldGetItemsFromDatabase() {

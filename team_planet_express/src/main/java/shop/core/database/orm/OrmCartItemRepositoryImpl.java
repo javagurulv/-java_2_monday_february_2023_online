@@ -3,16 +3,14 @@ package shop.core.database.orm;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Repository;
 import shop.core.database.CartItemRepository;
 import shop.core.domain.cart_item.CartItem;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
-@Transactional
+@Repository
 public class OrmCartItemRepositoryImpl implements CartItemRepository {
 
     @PersistenceContext

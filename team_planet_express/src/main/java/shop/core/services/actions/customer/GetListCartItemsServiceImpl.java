@@ -13,10 +13,10 @@ import shop.core.services.cart.CartService;
 import shop.core.services.validators.actions.customer.ListCartItemValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.support.CartItemForList;
-import shop.core_api.entry_point.customer.ListCartItemsService;
-import shop.core_api.requests.customer.ListCartItemsRequest;
+import shop.core_api.entry_point.customer.GetListCartItemsService;
+import shop.core_api.requests.customer.GetListCartItemsRequest;
 import shop.core_api.responses.CoreError;
-import shop.core_api.responses.customer.ListCartItemsResponse;
+import shop.core_api.responses.customer.GetListCartItemsResponse;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -24,7 +24,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class ListCartItemsServiceImpl implements ListCartItemsService {
+public class GetListCartItemsServiceImpl implements GetListCartItemsService {
 
     @Autowired
     private CartItemRepository cartItemRepository;
@@ -37,16 +37,16 @@ public class ListCartItemsServiceImpl implements ListCartItemsService {
     @Autowired
     private SecurityServiceImpl securityService;
 
-    public ListCartItemsResponse execute(ListCartItemsRequest request) {
+    public GetListCartItemsResponse execute(GetListCartItemsRequest request) {
         List<CoreError> errors = validator.validate(request);
         if (!errors.isEmpty()) {
-            return new ListCartItemsResponse(errors);
+            return new GetListCartItemsResponse(errors);
         }
         Optional<User> user = securityService.getAuthenticatedUserFromDB();
         Cart cart = databaseAccessValidator.getOpenCartByUserId(user.get().getId());
         List<CartItem> cartItems = cartItemRepository.getAllCartItemsForCartId(cart.getId());
         BigDecimal cartTotal = cartService.getSum(cart.getId());
-        return new ListCartItemsResponse(cartItems, cartTotal);
+        return new GetListCartItemsResponse(cartItems, cartTotal);
     }
 
     private CartItemForList createCartItemForList(CartItem cartItem) {

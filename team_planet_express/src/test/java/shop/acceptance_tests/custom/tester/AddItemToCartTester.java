@@ -2,14 +2,16 @@ package shop.acceptance_tests.custom.tester;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.services.actions.customer.AddItemToCartServiceImpl;
+import org.springframework.transaction.annotation.Transactional;
+import shop.core_api.entry_point.customer.AddItemToCartService;
 import shop.core_api.requests.customer.AddItemToCartRequest;
 
 @Component
+@Transactional
 public class AddItemToCartTester extends Tester {
 
     @Autowired
-    private AddItemToCartServiceImpl addItemToCartService;
+    private AddItemToCartService addItemToCartService;
 
     private String itemName;
     private Integer quantity;

@@ -9,16 +9,16 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 import org.springframework.beans.factory.annotation.Autowired;
-import shop.core.services.actions.customer.BuyServiceImpl;
-import shop.core.services.actions.customer.ListCartItemsServiceImpl;
-import shop.core.services.actions.customer.RemoveItemFromCartServiceImpl;
-import shop.core.services.actions.shared.SecurityServiceImpl;
 import shop.core_api.dto.cart_item.CartItemDTO;
+import shop.core_api.entry_point.customer.BuyService;
+import shop.core_api.entry_point.customer.GetListCartItemsService;
+import shop.core_api.entry_point.customer.RemoveItemFromCartService;
+import shop.core_api.entry_point.shared.SecurityService;
 import shop.core_api.requests.customer.BuyRequest;
-import shop.core_api.requests.customer.ListCartItemsRequest;
+import shop.core_api.requests.customer.GetListCartItemsRequest;
 import shop.core_api.responses.CoreError;
 import shop.core_api.responses.customer.BuyResponse;
-import shop.core_api.responses.customer.ListCartItemsResponse;
+import shop.core_api.responses.customer.GetListCartItemsResponse;
 import shop.web_ui.components.MainLayout;
 import shop.web_ui.components.item_card.ItemCardBuilder;
 import shop.web_ui.components.notification.ErrorMessage;
@@ -30,10 +30,10 @@ import java.util.List;
 @Route(value = "cart", layout = MainLayout.class)
 @PermitAll
 public class CartView extends Main {
-    public CartView(@Autowired ListCartItemsServiceImpl listCartItemsService, @Autowired SecurityServiceImpl securityService,
-                    @Autowired RemoveItemFromCartServiceImpl removeItemFromCartService, @Autowired BuyServiceImpl buyService) {
-        ListCartItemsRequest request = new ListCartItemsRequest();
-        ListCartItemsResponse response = listCartItemsService.execute(request);
+    public CartView(@Autowired GetListCartItemsService getListCartItemsService, @Autowired SecurityService securityService,
+                    @Autowired RemoveItemFromCartService removeItemFromCartService, @Autowired BuyService buyService) {
+        GetListCartItemsRequest request = new GetListCartItemsRequest();
+        GetListCartItemsResponse response = getListCartItemsService.execute(request);
 
         if (response.hasErrors()) {
             for (CoreError error : response.getErrors()) {

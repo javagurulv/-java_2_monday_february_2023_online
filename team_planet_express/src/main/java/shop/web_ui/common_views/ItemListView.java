@@ -9,10 +9,10 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
-import shop.core.services.actions.customer.ListShopItemsServiceImpl;
 import shop.core_api.dto.item.ItemDTO;
+import shop.core_api.entry_point.customer.GetListShopItemsService;
 import shop.core_api.responses.CoreError;
-import shop.core_api.responses.customer.ListShopItemsResponse;
+import shop.core_api.responses.customer.GetListShopItemsResponse;
 import shop.web_ui.components.MainLayout;
 import shop.web_ui.components.item_card.ItemCardBuilder;
 import shop.web_ui.components.notification.ErrorMessage;
@@ -25,8 +25,8 @@ import java.util.List;
 public class ItemListView extends Main {
 
 
-    public ItemListView(@Autowired ListShopItemsServiceImpl listShopItemsService) {
-        ListShopItemsResponse response = listShopItemsService.execute(null);
+    public ItemListView(@Autowired GetListShopItemsService getListShopItemsService) {
+        GetListShopItemsResponse response = getListShopItemsService.execute(null);
         if (response.hasErrors()) {
             for (CoreError error : response.getErrors()) {
                 add(new ErrorMessage(error.getMessage()));

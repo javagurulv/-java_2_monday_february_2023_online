@@ -7,8 +7,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 import shop.core.database.ItemRepository;
 import shop.core.domain.item.Item;
+import shop.core.domain.item.ItemConverter;
 import shop.core.services.actions.shared.SearchItemServiceImpl;
 import shop.core.support.ordering.OrderBy;
 import shop.core.support.ordering.OrderDirection;
@@ -28,6 +30,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 public class SearchForItemsAcceptanceTest {
 
     @Autowired
@@ -67,10 +70,10 @@ public class SearchForItemsAcceptanceTest {
     void shouldOrderRobotItemsAscending() {
         OrderingRule orderingRule = new OrderingRule(OrderBy.NAME, OrderDirection.ASCENDING);
         SearchItemResponse searchItemResponse =
-                searchItemService.execute(new SearchItemRequest( "robot", "", List.of(orderingRule), null));
+                searchItemService.execute(new SearchItemRequest("robot", "", List.of(orderingRule), null));
         assertFalse(searchItemResponse.hasErrors());
         assertFalse(searchItemResponse.isNextPageAvailable());
-        assertTrue(isOrderedCorrectly(searchItemResponse.getItemsDTO().stream().map(itemDTO -> itemDTO.toItem()).toList(), 7L, 4L));
+        assertTrue(isOrderedCorrectly(searchItemResponse.getItemsDTO().stream().map(itemDTO -> ItemConverter.toItem(itemDTO)).toList(), 7L, 4L));
     }
 
     @Sql({"/testDatabaseTableCreation.sql", "/testDatabaseDataInsertion.sql"})
@@ -79,11 +82,11 @@ public class SearchForItemsAcceptanceTest {
     void shouldReturnSecondThreeItemPage() {
         PagingRule pagingRule = new PagingRule(2, "3");
         SearchItemResponse searchItemResponse =
-                searchItemService.execute(new SearchItemRequest( "", "", Collections.emptyList(), pagingRule));
+                searchItemService.execute(new SearchItemRequest("", "", Collections.emptyList(), pagingRule));
         assertFalse(searchItemResponse.hasErrors());
         assertEquals(3, searchItemResponse.getItemsDTO().size());
         assertTrue(searchItemResponse.isNextPageAvailable());
-        assertTrue(isPageContainingCorrectItems(searchItemResponse.getItemsDTO().stream().map(itemDTO -> itemDTO.toItem()).toList(), 4L, 5L, 6L));
+        assertTrue(isPageContainingCorrectItems(searchItemResponse.getItemsDTO().stream().map(itemDTO -> ItemConverter.toItem(itemDTO)).toList(), 4L, 5L, 6L));
     }
 
     @Sql({"/testDatabaseTableCreation.sql", "/testDatabaseDataInsertion.sql"})
@@ -103,13 +106,13 @@ public class SearchForItemsAcceptanceTest {
                 .filter(item -> new BigDecimal("25").compareTo(item.getPrice().getAmount()) < 0)
                 .findAny();
         assertTrue(wrongItem.isEmpty());
-        assertTrue(isOrderedCorrectly(searchItemResponse.getItemsDTO().stream().map(itemDTO -> itemDTO.toItem()).toList(), 11L, 6L, 4L, 9L));
+        assertTrue(isOrderedCorrectly(searchItemResponse.getItemsDTO().stream().map(itemDTO -> ItemConverter.toItem(itemDTO)).toList(), 11L, 6L, 4L, 9L));
         assertEquals(4, searchItemResponse.getItemsDTO().size());
         pagingRule = new PagingRule(2, "4");
         searchItemResponse =
                 searchItemService.execute(new SearchItemRequest("T", "25", List.of(orderingRuleName, orderingRulePrice), pagingRule));
         assertEquals(1, searchItemResponse.getItemsDTO().size());
-        assertTrue(isPageContainingCorrectItems(searchItemResponse.getItemsDTO().stream().map(itemDTO -> itemDTO.toItem()).toList(), 7L));
+        assertTrue(isPageContainingCorrectItems(searchItemResponse.getItemsDTO().stream().map(itemDTO -> ItemConverter.toItem(itemDTO)).toList(), 7L));
     }
 
     private boolean isOrderedCorrectly(List<Item> items, Long... ids) {

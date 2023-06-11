@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import shop.core.database.CartItemRepository;
 import shop.core.domain.cart.Cart;
 import shop.core.services.validators.cart.CartValidator;
-import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.support.error_code_processing.ErrorProcessor;
 import shop.core_api.requests.customer.BuyRequest;
@@ -23,8 +22,6 @@ public class BuyValidator {
 
     @Autowired
     private CartItemRepository cartItemRepository;
-    @Autowired
-    private CurrentUserIdValidator userIdValidator;
     @Autowired
     private CartValidator cartValidator;
     @Autowired

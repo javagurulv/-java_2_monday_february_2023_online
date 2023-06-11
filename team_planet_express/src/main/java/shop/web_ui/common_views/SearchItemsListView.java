@@ -11,9 +11,9 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
-import shop.core.services.actions.shared.SearchItemServiceImpl;
 import shop.core.support.paging.PagingRule;
 import shop.core_api.dto.item.ItemDTO;
+import shop.core_api.entry_point.shared.SearchItemService;
 import shop.core_api.requests.shared.SearchItemRequest;
 import shop.core_api.responses.shared.SearchItemResponse;
 import shop.web_ui.components.MainLayout;
@@ -27,7 +27,7 @@ import java.util.List;
 public class SearchItemsListView extends Main implements HasUrlParameter<String> {
 
     @Autowired
-    SearchItemServiceImpl searchItemService;
+    SearchItemService searchItemService;
 
     @Override
     public void setParameter(BeforeEvent event, String parameter) {
