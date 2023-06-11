@@ -3,8 +3,7 @@ package shop.core.database.orm;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Repository;
 import shop.core.database.ItemRepository;
 import shop.core.domain.item.Item;
 
@@ -12,8 +11,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-@Component
-@Transactional
+@Repository
 public class OrmItemRepositoryImpl implements ItemRepository {
 
     @PersistenceContext

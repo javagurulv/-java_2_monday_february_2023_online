@@ -3,7 +3,7 @@ package shop.core.services.validators.actions.customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import shop.core.domain.user.User;
 import shop.core.services.actions.shared.SecurityServiceImpl;
-import shop.core_api.requests.customer.ListShopItemsRequest;
+import shop.core_api.requests.customer.GetListShopItemsRequest;
 import shop.core_api.responses.CoreError;
 
 import java.util.ArrayList;
@@ -15,11 +15,11 @@ public class ListShopItemsValidator {
     @Autowired
     private SecurityServiceImpl securityService;
 
-    public List<CoreError> validate(ListShopItemsRequest request) {
+    public List<CoreError> validate(GetListShopItemsRequest request) {
         List<CoreError> errors = new ArrayList<>();
         Optional<User> user = securityService.getAuthenticatedUserFromDB();
-        if(user.isEmpty())
-            errors.add(new CoreError("","", ""));
+        if (user.isEmpty())
+            errors.add(new CoreError("", "", ""));
         return errors;
     }
 

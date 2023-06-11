@@ -16,8 +16,8 @@ import shop.core.services.actions.shared.SecurityServiceImpl;
 import shop.core.services.cart.CartService;
 import shop.core.services.validators.actions.customer.ListCartItemValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
-import shop.core_api.requests.customer.ListCartItemsRequest;
-import shop.core_api.responses.customer.ListCartItemsResponse;
+import shop.core_api.requests.customer.GetListCartItemsRequest;
+import shop.core_api.responses.customer.GetListCartItemsResponse;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -31,7 +31,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 
 @Ignore
-class ListCartItemsServiceImplTest {
+class GetListCartItemsServiceImplTest {
 
     @Mock
     private CartItemRepository mockCartItemRepository;
@@ -42,7 +42,7 @@ class ListCartItemsServiceImplTest {
     @Mock
     private CartService mockCartService;
     @Mock
-    private ListCartItemsRequest mockRequest;
+    private GetListCartItemsRequest mockRequest;
     @Mock
     private SecurityServiceImpl mockSecurityService;
     @Mock
@@ -53,7 +53,7 @@ class ListCartItemsServiceImplTest {
     private Item mockItem;
 
     @InjectMocks
-    private ListCartItemsServiceImpl service;
+    private GetListCartItemsServiceImpl service;
 
     @BeforeEach
     void initMock() {
@@ -70,7 +70,7 @@ class ListCartItemsServiceImplTest {
         when(mockDatabaseAccessValidator.getOpenCartByUserId(any())).thenReturn(mockCart);
         when(mockListCartItemValidator.validate(any())).thenReturn(List.of());
         when(mockCartItemRepository.getAllCartItemsForCartId(anyLong())).thenReturn(List.of(mockCartItem, mockCartItem));
-        ListCartItemsResponse response = service.execute(mockRequest);
+        GetListCartItemsResponse response = service.execute(mockRequest);
         assertEquals(response.getCartItemsDTO().size(), 2);
     }
 
@@ -80,7 +80,7 @@ class ListCartItemsServiceImplTest {
         when(mockDatabaseAccessValidator.getOpenCartByUserId(any())).thenReturn(mockCart);
         when(mockCartItemRepository.getAllCartItemsForCartId(anyLong())).thenReturn(List.of(mockCartItem, mockCartItem));
         when(mockCartService.getSum(1L)).thenReturn(BigDecimal.valueOf(1));
-        ListCartItemsResponse response = service.execute(mockRequest);
+        GetListCartItemsResponse response = service.execute(mockRequest);
         assertEquals(response.getCartTotal(), BigDecimal.valueOf(1));
     }
 }

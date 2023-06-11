@@ -2,6 +2,7 @@ package shop.core.domain.cart;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import shop.core.domain.BaseEntity;
 import shop.core.domain.user.User;
@@ -9,6 +10,7 @@ import shop.core.domain.user.User;
 import java.time.LocalDateTime;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Entity
 @Table(name = "cart")

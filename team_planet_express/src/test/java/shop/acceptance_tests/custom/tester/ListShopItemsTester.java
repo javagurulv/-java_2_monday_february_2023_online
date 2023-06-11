@@ -2,28 +2,30 @@ package shop.acceptance_tests.custom.tester;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.services.actions.customer.ListShopItemsServiceImpl;
-import shop.core_api.requests.customer.ListShopItemsRequest;
-import shop.core_api.responses.customer.ListShopItemsResponse;
+import org.springframework.transaction.annotation.Transactional;
+import shop.core.services.actions.customer.GetListShopItemsServiceImpl;
+import shop.core_api.requests.customer.GetListShopItemsRequest;
+import shop.core_api.responses.customer.GetListShopItemsResponse;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Component
+@Transactional
 public class ListShopItemsTester extends Tester {
 
     @Autowired
-    private ListShopItemsServiceImpl listShopItemsService;
+    private GetListShopItemsServiceImpl listShopItemsService;
 
-    private ListShopItemsResponse listShopItemsResponse;
+    private GetListShopItemsResponse getListShopItemsResponse;
 
     public ListShopItemsTester showListShopItems() {
-        ListShopItemsRequest listShopItemsRequest = new ListShopItemsRequest();
-        listShopItemsResponse = listShopItemsService.execute(listShopItemsRequest);
+        GetListShopItemsRequest getListShopItemsRequest = new GetListShopItemsRequest();
+        getListShopItemsResponse = listShopItemsService.execute(getListShopItemsRequest);
         return this;
     }
 
     public ListShopItemsTester checkItemInListShopResponse(String itemName, int quantity) {
-        assertTrue(listShopItemsResponse.getShopItemsDTO().stream()
+        assertTrue(getListShopItemsResponse.getShopItemsDTO().stream()
                 .anyMatch(item -> item.getName().equals(itemName) && item.getAvailableQuantity() == quantity));
         return this;
     }

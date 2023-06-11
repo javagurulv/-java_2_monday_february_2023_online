@@ -10,13 +10,13 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
-import shop.core.database.ItemRepository;
-import shop.core.domain.item.Item;
 import shop.core.domain.user.User;
-import shop.core.services.actions.customer.AddItemToCartServiceImpl;
-import shop.core.services.actions.shared.SecurityServiceImpl;
 import shop.core_api.dto.item.ItemDTO;
+import shop.core_api.entry_point.customer.AddItemToCartService;
+import shop.core_api.entry_point.customer.GetItemService;
+import shop.core_api.entry_point.shared.SecurityService;
 import shop.core_api.requests.customer.AddItemToCartRequest;
+import shop.core_api.requests.customer.GetItemRequest;
 import shop.core_api.responses.CoreError;
 import shop.core_api.responses.customer.AddItemToCartResponse;
 import shop.web_ui.components.MainLayout;
@@ -31,24 +31,24 @@ import java.util.Optional;
 @AnonymousAllowed
 public class ItemView extends Main implements HasUrlParameter<Long> {
     @Autowired
-    ItemRepository itemRepository;
+    GetItemService getItemService;
     @Autowired
-    SecurityServiceImpl securityService;
+    SecurityService securityService;
     @Autowired
-    AddItemToCartServiceImpl addItemToCartService;
-    private Item item;
+    AddItemToCartService addItemToCartService;
 
     @Override
     public void setParameter(BeforeEvent event, Long id) {
-        Optional<Item> byId = itemRepository.findById(id);
-        item = byId.get();
-        ItemCard itemCard = new ItemCardBuilder().setItemIfoContent(ItemDTO.of(item)).setClickable(false).build();
+        ItemDTO itemDTO = new ItemDTO();
+        itemDTO.setId(id);
+        ItemDTO item = getItemService.execute(new GetItemRequest(itemDTO)).getItemDTO();
+        ItemCard itemCard = new ItemCardBuilder().setItemIfoContent(item).setClickable(false).build();
         add(itemCard);
-        add(createBuyDiv(itemCard));
+        add(createBuyDiv(itemCard, item));
     }
 
 
-    private Div createBuyDiv(ItemCard itemCard) {
+    private Div createBuyDiv(ItemCard itemCard, ItemDTO item) {
         Div div = new Div();
         IntegerField quantity = new IntegerField();
         quantity.setValue(0);
@@ -68,11 +68,12 @@ public class ItemView extends Main implements HasUrlParameter<Long> {
                         add(new ErrorMessage(error.getMessage()));
                     }
                 } else {
-                    Optional<Item> byId = itemRepository.findById(item.getId());
-                    item = byId.get();
-                    quantity.setMax(item.getAvailableQuantity());
+                    ItemDTO itemDTO = new ItemDTO();
+                    itemDTO.setId(item.getId());
+                    ItemDTO itemUpdate = getItemService.execute(new GetItemRequest(itemDTO)).getItemDTO();
+                    quantity.setMax(itemUpdate.getAvailableQuantity());
                     quantity.setValue(0);
-                    itemCard.getItemInfoCard().updateQuantity(item.getAvailableQuantity().toString());
+                    itemCard.getItemInfoCard().updateQuantity(itemUpdate.getAvailableQuantity().toString());
                 }
             } else {
                 //LocalStorage

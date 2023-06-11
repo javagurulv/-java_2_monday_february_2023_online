@@ -2,26 +2,28 @@ package shop.acceptance_tests.custom.tester;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import shop.core.domain.item.Item;
-import shop.core.services.actions.customer.ListCartItemsServiceImpl;
-import shop.core_api.requests.customer.ListCartItemsRequest;
-import shop.core_api.responses.customer.ListCartItemsResponse;
+import shop.core.services.actions.customer.GetListCartItemsServiceImpl;
+import shop.core_api.requests.customer.GetListCartItemsRequest;
+import shop.core_api.responses.customer.GetListCartItemsResponse;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Component
+@Transactional
 public class ListCartItemsTester extends Tester {
 
     @Autowired
-    private ListCartItemsServiceImpl listCartItemsService;
+    private GetListCartItemsServiceImpl listCartItemsService;
 
-    private ListCartItemsResponse listCartItemsResponse;
+    private GetListCartItemsResponse getListCartItemsResponse;
 
     public ListCartItemsTester showListCartItems() {
-        ListCartItemsRequest listCartItemsRequest = new ListCartItemsRequest();
-        listCartItemsResponse = listCartItemsService.execute(listCartItemsRequest);
+        GetListCartItemsRequest getListCartItemsRequest = new GetListCartItemsRequest();
+        getListCartItemsResponse = listCartItemsService.execute(getListCartItemsRequest);
         return this;
     }
 
@@ -30,7 +32,7 @@ public class ListCartItemsTester extends Tester {
         Optional<Item> itemOptional = itemRepository.getAllItems().stream()
                 .filter(item -> item.getName().equals(itemName)).findFirst();
         assertTrue(itemOptional.isPresent());
-        assertTrue(listCartItemsResponse.getCartItemsDTO().stream()
+        assertTrue(getListCartItemsResponse.getCartItemsDTO().stream()
                 .anyMatch(cartItem -> cartItem.getItemDTO().getName().equals(itemName) && cartItem.getOrderedQuantity().equals(quantity)));
         return this;
     }

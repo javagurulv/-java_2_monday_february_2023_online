@@ -2,6 +2,7 @@ package shop.acceptance_tests.custom.tester;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import shop.core.domain.cart.Cart;
 import shop.core.services.actions.customer.BuyServiceImpl;
 import shop.core_api.requests.customer.BuyRequest;
@@ -11,6 +12,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @Component
+@Transactional
 public class BuyTester extends Tester {
 
     @Autowired

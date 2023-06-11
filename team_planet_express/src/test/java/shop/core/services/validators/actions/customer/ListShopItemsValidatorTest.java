@@ -8,7 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.test.context.support.WithMockUser;
 import shop.core.services.actions.shared.SecurityServiceImpl;
 import shop.core.support.CurrentUserId;
-import shop.core_api.requests.customer.ListShopItemsRequest;
+import shop.core_api.requests.customer.GetListShopItemsRequest;
 
 @ExtendWith(MockitoExtension.class)
 class ListShopItemsValidatorTest {
@@ -16,7 +16,7 @@ class ListShopItemsValidatorTest {
     @Mock
     private SecurityServiceImpl mockSecurityService;
     @Mock
-    private ListShopItemsRequest mockRequest;
+    private GetListShopItemsRequest mockRequest;
     @Mock
     private CurrentUserId mockUserId;
 
