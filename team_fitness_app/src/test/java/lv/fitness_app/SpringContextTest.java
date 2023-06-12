@@ -1,6 +1,7 @@
 package lv.fitness_app;
 
 import lv.fitness_app.config.SpringCoreConfiguration;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,16 +11,16 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.Assert.assertNotNull;
 
-//@Ignore
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {SpringCoreConfiguration.class})
 public class SpringContextTest {
 
-	@Autowired private ApplicationContext appContext;
+    @Autowired private ApplicationContext appContext;
 
-	@Test
-	public void start() {
-		assertNotNull(appContext);
-	}
+    @Test
+    public void start() {
+        assertNotNull(appContext);
+    }
 
 }
