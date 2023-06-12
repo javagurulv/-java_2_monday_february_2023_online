@@ -11,7 +11,7 @@ import shop.core.domain.user.User;
 import shop.core.services.actions.shared.SecurityServiceImpl;
 import shop.core.services.cart.CartService;
 import shop.core.services.validators.actions.customer.ListCartItemValidator;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.services.validators.universal.system.DatabaseAccessProvider;
 import shop.core.support.CartItemForList;
 import shop.core_api.entry_point.customer.GetListCartItemsService;
 import shop.core_api.requests.customer.GetListCartItemsRequest;
@@ -31,7 +31,7 @@ public class GetListCartItemsServiceImpl implements GetListCartItemsService {
     @Autowired
     private ListCartItemValidator validator;
     @Autowired
-    private DatabaseAccessValidator databaseAccessValidator;
+    private DatabaseAccessProvider databaseAccessProvider;
     @Autowired
     private CartService cartService;
     @Autowired
@@ -43,14 +43,14 @@ public class GetListCartItemsServiceImpl implements GetListCartItemsService {
             return new GetListCartItemsResponse(errors);
         }
         Optional<User> user = securityService.getAuthenticatedUserFromDB();
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(user.get().getId());
+        Cart cart = databaseAccessProvider.getOpenCartByUserId(user.get().getId());
         List<CartItem> cartItems = cartItemRepository.getAllCartItemsForCartId(cart.getId());
         BigDecimal cartTotal = cartService.getSum(cart.getId());
         return new GetListCartItemsResponse(cartItems, cartTotal);
     }
 
     private CartItemForList createCartItemForList(CartItem cartItem) {
-        Item item = databaseAccessValidator.getItemById(cartItem.getItem().getId());
+        Item item = databaseAccessProvider.getItemById(cartItem.getItem().getId());
         return new CartItemForList(item.getName(), item.getPrice(), cartItem.getOrderedQuantity());
     }
 

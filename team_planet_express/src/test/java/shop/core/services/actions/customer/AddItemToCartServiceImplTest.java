@@ -14,7 +14,7 @@ import shop.core.domain.item.Item;
 import shop.core.domain.user.User;
 import shop.core.services.actions.shared.SecurityServiceImpl;
 import shop.core.services.validators.actions.customer.AddItemToCartValidator;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.services.validators.universal.system.DatabaseAccessProvider;
 import shop.core.support.CurrentUserId;
 import shop.core_api.requests.customer.AddItemToCartRequest;
 import shop.matchers.CartItemMatcher;
@@ -38,7 +38,7 @@ class AddItemToCartServiceImplTest {
     @Mock
     private AddItemToCartValidator mockValidator;
     @Mock
-    private DatabaseAccessValidator mockDatabaseAccessValidator;
+    private DatabaseAccessProvider mockDatabaseAccessProvider;
     @Mock
     private AddItemToCartRequest mockRequest;
     @Mock

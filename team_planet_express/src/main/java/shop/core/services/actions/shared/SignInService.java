@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.core.domain.user.User;
 import shop.core.services.validators.actions.shared.SignInValidator;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.services.validators.universal.system.DatabaseAccessProvider;
 import shop.core_api.requests.shared.SignInRequest;
 import shop.core_api.responses.CoreError;
 import shop.core_api.responses.shared.SignInResponse;
@@ -19,14 +19,14 @@ public class SignInService {
     @Autowired
     private SignInValidator validator;
     @Autowired
-    private DatabaseAccessValidator databaseAccessValidator;
+    private DatabaseAccessProvider databaseAccessProvider;
 
     public SignInResponse execute(SignInRequest request) {
         List<CoreError> errors = validator.validate(request);
         if (!errors.isEmpty()) {
             return new SignInResponse(errors);
         }
-        User newUser = databaseAccessValidator.getUserByLoginName(request.getLoginName());
+        User newUser = databaseAccessProvider.getUserByLoginName(request.getLoginName());
         request.getCurrentUserId().setValue(newUser.getId());
         return new SignInResponse(newUser);
     }

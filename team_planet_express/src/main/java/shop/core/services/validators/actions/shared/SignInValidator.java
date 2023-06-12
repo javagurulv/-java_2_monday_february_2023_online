@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import shop.core.database.UserRepository;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.services.validators.universal.system.DatabaseAccessProvider;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 import shop.core.support.error_code_processing.ErrorProcessor;
@@ -32,7 +32,7 @@ public class SignInValidator {
     @Autowired
     private InputStringValidator inputStringValidator;
     @Autowired
-    private DatabaseAccessValidator databaseAccessValidator;
+    private DatabaseAccessProvider databaseAccessProvider;
     @Autowired
     private ErrorProcessor errorProcessor;
 
@@ -62,7 +62,7 @@ public class SignInValidator {
 
     private Optional<CoreError> validatePasswordMatches(SignInRequest request) {
         return (!request.getPassword().equals(
-                databaseAccessValidator.getUserByLoginName(request.getLoginName()).getPassword()))
+                databaseAccessProvider.getUserByLoginName(request.getLoginName()).getPassword()))
                 ? Optional.of(errorProcessor.getCoreError(FIELD_PASSWORD, ERROR_PASSWORD_INCORRECT))
                 : Optional.empty();
     }

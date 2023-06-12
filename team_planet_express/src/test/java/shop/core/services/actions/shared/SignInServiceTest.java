@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.domain.user.User;
 import shop.core.services.validators.actions.shared.SignInValidator;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.services.validators.universal.system.DatabaseAccessProvider;
 import shop.core.support.CurrentUserId;
 import shop.core_api.requests.shared.SignInRequest;
 import shop.core_api.responses.CoreError;
@@ -28,7 +28,7 @@ class SignInServiceTest {
     @Mock
     private SignInValidator mockValidator;
     @Mock
-    private DatabaseAccessValidator mockDatabaseAccessValidator;
+    private DatabaseAccessProvider mockDatabaseAccessProvider;
     @Mock
     private SignInRequest mockRequest;
     @Mock
@@ -52,7 +52,7 @@ class SignInServiceTest {
     void shouldReturnNoErrorsForValidRequest() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockRequest.getLoginName()).thenReturn("login name");
-        when(mockDatabaseAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
+        when(mockDatabaseAccessProvider.getUserByLoginName("login name")).thenReturn(mockUser);
         when(mockRequest.getCurrentUserId()).thenReturn(mockCurrentUserId);
         SignInResponse response = service.execute(mockRequest);
         assertNull(response.getErrors());
@@ -62,7 +62,7 @@ class SignInServiceTest {
     void shouldUpdateCurrentUserId() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockRequest.getLoginName()).thenReturn("login name");
-        when(mockDatabaseAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
+        when(mockDatabaseAccessProvider.getUserByLoginName("login name")).thenReturn(mockUser);
         when(mockRequest.getCurrentUserId()).thenReturn(mockCurrentUserId);
         service.execute(mockRequest);
         verify(mockCurrentUserId).setValue(any(Long.class));

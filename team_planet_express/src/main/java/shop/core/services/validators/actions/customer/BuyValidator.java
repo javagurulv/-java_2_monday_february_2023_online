@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import shop.core.database.CartItemRepository;
 import shop.core.domain.cart.Cart;
 import shop.core.services.validators.cart.CartValidator;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.services.validators.universal.system.DatabaseAccessProvider;
 import shop.core.support.error_code_processing.ErrorProcessor;
 import shop.core_api.requests.customer.BuyRequest;
 import shop.core_api.responses.CoreError;
@@ -25,7 +25,7 @@ public class BuyValidator {
     @Autowired
     private CartValidator cartValidator;
     @Autowired
-    private DatabaseAccessValidator databaseAccessValidator;
+    private DatabaseAccessProvider databaseAccessProvider;
     @Autowired
     private ErrorProcessor errorProcessor;
 
@@ -40,7 +40,7 @@ public class BuyValidator {
     }
 
     private Optional<CoreError> validateCartIsNotEmpty(Long userId) {
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(userId);
+        Cart cart = databaseAccessProvider.getOpenCartByUserId(userId);
         return (cartItemRepository.getAllCartItemsForCartId(cart.getId()).size() == 0)
                 ? Optional.of(errorProcessor.getCoreError(FIELD_NAME, ERROR_CART_EMPTY))
                 : Optional.empty();

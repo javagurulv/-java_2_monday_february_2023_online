@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import shop.core.database.ItemRepository;
 import shop.core.domain.item.Item;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.services.validators.universal.system.DatabaseAccessProvider;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 import shop.core.support.error_code_processing.ErrorProcessor;
@@ -37,7 +37,7 @@ public class ChangeItemDataValidator {
     @Autowired
     private InputStringValidator inputStringValidator;
     @Autowired
-    private DatabaseAccessValidator databaseAccessValidator;
+    private DatabaseAccessProvider databaseAccessProvider;
     @Autowired
     private ErrorProcessor errorProcessor;
 
@@ -83,7 +83,7 @@ public class ChangeItemDataValidator {
     }
 
     private Optional<CoreError> validateDuplicate(ChangeItemDataRequest request) {
-        Item originalItem = databaseAccessValidator.getItemById(Long.parseLong(request.getItemId()));
+        Item originalItem = databaseAccessProvider.getItemById(Long.parseLong(request.getItemId()));
         String newItemName = setNewItemName(request, originalItem);
         BigDecimal newPrice = setNewPrice(request, originalItem);
         return (itemRepository.getAllItems().stream()

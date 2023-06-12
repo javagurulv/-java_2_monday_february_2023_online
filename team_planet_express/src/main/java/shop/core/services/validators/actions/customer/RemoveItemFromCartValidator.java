@@ -9,7 +9,7 @@ import shop.core.domain.item.Item;
 import shop.core.domain.user.User;
 import shop.core.services.actions.shared.SecurityServiceImpl;
 import shop.core.services.validators.cart.CartValidator;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.services.validators.universal.system.DatabaseAccessProvider;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 import shop.core.support.error_code_processing.ErrorProcessor;
@@ -37,7 +37,7 @@ public class RemoveItemFromCartValidator {
     @Autowired
     private InputStringValidator inputStringValidator;
     @Autowired
-    private DatabaseAccessValidator databaseAccessValidator;
+    private DatabaseAccessProvider databaseAccessProvider;
     @Autowired
     private ErrorProcessor errorProcessor;
     @Autowired
@@ -72,8 +72,8 @@ public class RemoveItemFromCartValidator {
     }
 
     private Optional<CoreError> validateItemNameInCart(RemoveItemFromCartRequest request) {
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(securityService.getAuthenticatedUserFromDB().get().getId());
-        Item item = databaseAccessValidator.getItemByName(request.getItemName());
+        Cart cart = databaseAccessProvider.getOpenCartByUserId(securityService.getAuthenticatedUserFromDB().get().getId());
+        Item item = databaseAccessProvider.getItemByName(request.getItemName());
         return (cartItemRepository.findByCartIdAndItemId(cart.getId(), item.getId()).isEmpty())
                 ? Optional.of(errorProcessor.getCoreError(FIELD_NAME, ERROR_NO_SUCH_ITEM_IN_CART))
                 : Optional.empty();
