@@ -1,44 +1,46 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-
 <head>
   <meta charset="utf-8">
   <meta name="description" content="Servify demo project">
   <meta name="author" content="DreamTeamDevelopers">
   <title>Servify</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-
 <h3>Delete detail</h3>
-
-<table>
+<table class="table">
+  <thead>
   <tr>
-    <td>Detail ID:</td>
+    <th>Detail ID:</th>
   </tr>
-
+  </thead>
+  <tbody>
   <tr>
     <form action="/deleteDetail" th:object="${request}" method="post">
-      <td><input type="text" th:field="${request.detailId}"/></td>
+      <td><input type="text" class="form-control" th:field="${request.detailId}" /></td>
       <td>
-        <input type="submit" value="Delete Detail"/>
-        <input type="reset" value="Clear"/>
+        <input type="submit" class="btn btn-danger" value="Delete Detail" />
+        <input type="reset" class="btn btn-secondary" value="Clear" />
       </td>
     </form>
   </tr>
-
+  </tbody>
 </table>
-
-<td th:if="${errors != null}">
-  <tr th:each="error : ${errors}">
+<table class="table">
+  <tbody>
+  <tr th:if="${errors != null}" th:each="error : ${errors}">
     <td th:text="${error.field}" />
     <td th:text="${error.message}" />
   </tr>
-</td>
-
+  </tbody>
+</table>
 <form action="/" method="get">
-  <input type="submit" value="Go to main page" name="Submit" />
+  <input type="submit" class="btn btn-primary" value="Go to main page" name="Submit" />
 </form>
-
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-
 </html>

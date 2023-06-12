@@ -10,7 +10,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -45,6 +47,8 @@ public class UserEntity implements UserDetails {
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<UserType> authorities;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+    private List<Order> orders = new ArrayList<>();
 
     public UserEntity(String firstName, String lastName, String email, String phoneNumber, String password, Set<UserType> authorities) {
         this.firstName = firstName;

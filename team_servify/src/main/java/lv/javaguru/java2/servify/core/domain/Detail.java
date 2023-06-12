@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -24,8 +25,9 @@ public class Detail {
     private String side;
     @Column(name = "price", nullable = false)
     private BigDecimal price;
-
-    //public Detail() {}
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detail")
+    //@JoinColumn(name = "detail_id")
+    private List<OrderItems> orderItemsList;
 
     public Detail(String type, String side, BigDecimal price) {
         this.type = type;

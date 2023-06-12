@@ -33,7 +33,7 @@ public class UpdateDetailService {
                     detail.setId(detail.getId());
                     detail.setType(request.getType());
                     detail.setSide(request.getSide());
-                    detail.setPrice(new BigDecimal(String.valueOf(request.getPrice())));
+                    detail.setPrice(request.getPrice());
                     return new UpdateDetailResponse(detail);
                 })
                 .orElseGet(() -> {
