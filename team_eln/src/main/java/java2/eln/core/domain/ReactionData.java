@@ -1,7 +1,6 @@
 package java2.eln.core.domain;
 
 import javax.persistence.*;
-import java.io.File;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
@@ -32,9 +31,9 @@ public class ReactionData {
     private String name;
 
     @Column(name = "reactionYield")
-    private double reactionYield;
+    private Double reactionYield;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "structure_mainProduct_id")
     private StructureData mainProduct;
 
@@ -42,7 +41,7 @@ public class ReactionData {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "ReactionStartingMaterial",
             joinColumns = @JoinColumn(name = "reaction_id"),
@@ -50,11 +49,11 @@ public class ReactionData {
     )
     private List<StructureData> startingMaterials;
 
-
-    @OneToOne(mappedBy = "reaction", cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "id", referencedColumnName = "reaction_id")
     private ConditionData conditions;
 
-    private List<StructureData> products;
+//    private List<StructureData> products;
 
     public ReactionData() {
     }
@@ -64,7 +63,33 @@ public class ReactionData {
         this.name = name;
         this.startingMaterials = new ArrayList<>();
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setReactionYield(Double reactionYield) {
+        this.reactionYield = reactionYield;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public String getCode() {
+        ReactionData r = new ReactionData();
         return code;
     }
 
@@ -80,9 +105,9 @@ public class ReactionData {
         startingMaterials.add(material);
     }
 
-    public void addProduct (StructureData material){
-        products.add(material);
-    }
+//    public void addProduct (StructureData material){
+//        products.add(material);
+//    }
 
     public void setMainProduct(StructureData mainProduct) {
         this.mainProduct = mainProduct;
@@ -99,9 +124,9 @@ public class ReactionData {
         return conditions;
     }
 
-    public List<StructureData> getProducts() {
-        return products;
-    }
+//    public List<StructureData> getProducts() {
+//        return products;
+//    }
 
     public StructureData getMainProduct() {
         return mainProduct;
@@ -116,21 +141,23 @@ public class ReactionData {
         this.reactionYield = Double.parseDouble(df.format(mpMole/sm1Mole));
     }
 
-    public double getReactionYield() {
+    public Double getReactionYield() {
         return reactionYield;
     }
 
     @Override
     public String toString() {
         //calculateReactionYield();
+        Double yield = getReactionYield();
+        String yieldString = (yield != null) ? String.format("%.2f%%", yield * 100) : "N/A";
         return "*** baseClasses.ReactionData{" +
                 "\n code='" + code + '\'' +
                 "\n name='" + name + '\'' +
                 "\n startingMaterials=" + startingMaterials +
-                "\n products=" + products +
+//                "\n products=" + products +
                 "\n mainProduct=" + mainProduct +
                 "\n Conditions: \n" + conditions +
-                "\n reaction yield: " + String.format("%.2f", reactionYield*100) + "%" +
+                "\n reaction yield: " + yieldString +
                 "} ***";
     }
 

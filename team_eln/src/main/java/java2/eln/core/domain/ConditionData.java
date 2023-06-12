@@ -1,6 +1,7 @@
 package java2.eln.core.domain;
 
 import javax.persistence.*;
+import java.sql.Time;
 import java.time.Duration;
 
 @Entity
@@ -25,13 +26,51 @@ public class ConditionData {
     @Column(name = "pressure")
     private int pressure;
 
-    @Column(name = "reactionTime")
-    private Duration reactionTime;
-
     @Column(name = "reaction_id")
     private int reactionId;
 
+    @Column(name = "reactionTime")
+    private Time reactionTimeDB;
+
+    @Transient
+    private Duration reactionTime;
+
+    @PostLoad
+    private void parseReactionTime() {
+        if (reactionTimeDB != null) {
+            reactionTime = Duration.ofMillis(reactionTimeDB.getTime());
+        }
+    }
+
     public ConditionData() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public StructureData getSolvent() {
+        return solvent;
+    }
+
+    public int getReactionId() {
+        return reactionId;
+    }
+
+    public void setReactionId(int reactionId) {
+        this.reactionId = reactionId;
+    }
+
+    public Time getReactionTimeDB() {
+        return reactionTimeDB;
+    }
+
+    public void setReactionTimeDB(Time reactionTimeDB) {
+        this.reactionTimeDB = reactionTimeDB;
     }
 
     public void setSolvent(StructureData solvent) {

@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-//@Component
+@Component
 @Transactional
 public class OrmReactionRepositoryOldImpl implements ReactionRepository {
 

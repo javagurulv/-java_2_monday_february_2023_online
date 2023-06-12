@@ -38,8 +38,11 @@ public class StructureData {
     @Column(name = "mass")
     private double mass;
 
+    @Transient
     private IAtomContainer mol;
+    @Transient
     private IMolecularFormula formula;
+    @Transient
     private double mw;
 
     public StructureData() {
@@ -59,6 +62,10 @@ public class StructureData {
         smilesConverter();
         calculateBruttoFormula();
         calculateMW();
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getSmiles() {
@@ -160,6 +167,9 @@ public class StructureData {
 
     @Override
     public String toString() {
+        smilesConverter();
+        calculateBruttoFormula();
+        calculateMW();
         return "baseClasses.StructureData{" +
                 "smiles='" + smiles + '\'' +
                 ", formula=" + MolecularFormulaManipulator.getString(formula) +
