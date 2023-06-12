@@ -3,11 +3,12 @@ sorting & paging to list items and cart
 userRole madness from Q&A (many roles for an action)
 check role permissions in actions
 length to error message?
-check paging sqls
 dto ?
 
 current session user ?
+
 clear button borked
 td/tr/table ?
 
 REST tests
+REST ordering/page
