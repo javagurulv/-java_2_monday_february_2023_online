@@ -25,9 +25,9 @@ public class Detail {
     private String side;
     @Column(name = "price", nullable = false)
     private BigDecimal price;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detail")
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detail")
     //@JoinColumn(name = "detail_id")
-    private List<OrderItems> orderItemsList;
+//    private List<OrderItems> orderItemsList;
 
     public Detail(String type, String side, BigDecimal price) {
         this.type = type;

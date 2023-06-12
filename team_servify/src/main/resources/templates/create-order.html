@@ -38,7 +38,7 @@
                 $.each(data, function (index, detail) {
                     detailSelect.append($("<option></option>")
                         .attr("value", detail.id)
-                        .text(detail.name));
+                        .text(detail.side + " " + detail.type));
                 });
             });
 
@@ -48,7 +48,7 @@
                 $.each(data, function (index, color) {
                     colorSelect.append($("<option></option>")
                         .attr("value", color.id)
-                        .text(color.name));
+                        .text("Color: " + color.description + ", ID: " + color.oemCode));
                 });
             });
 
@@ -63,6 +63,7 @@
             });
         });
     </script>
+
 </body>
 
 </html>
