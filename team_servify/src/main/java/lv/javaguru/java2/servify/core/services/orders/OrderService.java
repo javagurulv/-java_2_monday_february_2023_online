@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +36,7 @@ public class OrderService {
     public Order createOrder(Principal principal, List<OrderItemRequest> orderItemRequests, String notes, String orderStatus) {
         Order order = new Order();
         order.setUser(getUserByPrinciple(principal));
-        //order.setOrderDate(new Date());
+        order.setOrderDate(new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());//TODO check correct format for Date
         order.setNotes(notes);
         order.setOrderStatus(orderStatus);
 

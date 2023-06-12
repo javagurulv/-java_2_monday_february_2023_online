@@ -39,6 +39,8 @@ public class WebSecurityConfig {
                     auth.requestMatchers("/register/**").permitAll();
                     auth.requestMatchers("/login/**", "/error").permitAll();
                     auth.requestMatchers("/detail/**").permitAll();
+                    auth.requestMatchers("/orders/**", "/error").hasAnyAuthority("CUSTOMER", "MANAGER");
+                    auth.requestMatchers("/create-order/**", "/error").hasAnyAuthority("CUSTOMER", "MANAGER");
                     auth.requestMatchers("/index/**").hasAuthority("MANAGER");
                     auth.requestMatchers("/admin/**", "/error").hasAuthority("MANAGER");
                     auth.requestMatchers("/user/**").hasAnyAuthority("CUSTOMER", "MANAGER");
