@@ -15,7 +15,7 @@ import shop.core.domain.user.User;
 import shop.core.services.actions.shared.SecurityServiceImpl;
 import shop.core.services.cart.CartService;
 import shop.core.services.validators.actions.customer.ListCartItemValidator;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.services.validators.universal.system.DatabaseAccessProvider;
 import shop.core_api.requests.customer.GetListCartItemsRequest;
 import shop.core_api.responses.customer.GetListCartItemsResponse;
 
@@ -36,7 +36,7 @@ class GetListCartItemsServiceImplTest {
     @Mock
     private CartItemRepository mockCartItemRepository;
     @Mock
-    private DatabaseAccessValidator mockDatabaseAccessValidator;
+    private DatabaseAccessProvider mockDatabaseAccessProvider;
     @Mock
     private ListCartItemValidator mockListCartItemValidator;
     @Mock
@@ -67,7 +67,7 @@ class GetListCartItemsServiceImplTest {
 
     @Test
     void shouldReturnListCartItem() {
-        when(mockDatabaseAccessValidator.getOpenCartByUserId(any())).thenReturn(mockCart);
+        when(mockDatabaseAccessProvider.getOpenCartByUserId(any())).thenReturn(mockCart);
         when(mockListCartItemValidator.validate(any())).thenReturn(List.of());
         when(mockCartItemRepository.getAllCartItemsForCartId(anyLong())).thenReturn(List.of(mockCartItem, mockCartItem));
         GetListCartItemsResponse response = service.execute(mockRequest);
@@ -77,7 +77,7 @@ class GetListCartItemsServiceImplTest {
     @Test
     void shouldReturnSum() {
         when(mockListCartItemValidator.validate(any())).thenReturn(List.of());
-        when(mockDatabaseAccessValidator.getOpenCartByUserId(any())).thenReturn(mockCart);
+        when(mockDatabaseAccessProvider.getOpenCartByUserId(any())).thenReturn(mockCart);
         when(mockCartItemRepository.getAllCartItemsForCartId(anyLong())).thenReturn(List.of(mockCartItem, mockCartItem));
         when(mockCartService.getSum(1L)).thenReturn(BigDecimal.valueOf(1));
         GetListCartItemsResponse response = service.execute(mockRequest);

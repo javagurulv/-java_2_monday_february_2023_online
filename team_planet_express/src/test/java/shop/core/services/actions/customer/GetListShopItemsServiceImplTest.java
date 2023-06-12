@@ -9,7 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.ItemRepository;
 import shop.core.domain.user.User;
 import shop.core.services.actions.shared.SecurityServiceImpl;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.services.validators.universal.system.DatabaseAccessProvider;
 import shop.core_api.requests.customer.GetListShopItemsRequest;
 
 import static org.mockito.Mockito.verify;
@@ -22,7 +22,7 @@ class GetListShopItemsServiceImplTest {
     @Mock
     private ItemRepository mockItemRepository;
     @Mock
-    private DatabaseAccessValidator mockDatabaseAccessValidator;
+    private DatabaseAccessProvider mockDatabaseAccessProvider;
     @Mock
     private GetListShopItemsRequest mockRequest;
     @Mock

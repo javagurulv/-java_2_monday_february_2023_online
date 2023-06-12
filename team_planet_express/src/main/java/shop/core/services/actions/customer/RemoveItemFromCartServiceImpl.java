@@ -11,7 +11,7 @@ import shop.core.domain.item.Item;
 import shop.core.domain.user.User;
 import shop.core.services.actions.shared.SecurityServiceImpl;
 import shop.core.services.validators.actions.customer.RemoveItemFromCartValidator;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.services.validators.universal.system.DatabaseAccessProvider;
 import shop.core_api.entry_point.customer.RemoveItemFromCartService;
 import shop.core_api.requests.customer.RemoveItemFromCartRequest;
 import shop.core_api.responses.CoreError;
@@ -31,7 +31,7 @@ public class RemoveItemFromCartServiceImpl implements RemoveItemFromCartService 
     @Autowired
     private RemoveItemFromCartValidator validator;
     @Autowired
-    private DatabaseAccessValidator databaseAccessValidator;
+    private DatabaseAccessProvider databaseAccessProvider;
     @Autowired
     private SecurityServiceImpl securityService;
 
@@ -42,9 +42,9 @@ public class RemoveItemFromCartServiceImpl implements RemoveItemFromCartService 
             return new RemoveItemFromCartResponse(errors);
         }
         Optional<User> user = securityService.getAuthenticatedUserFromDB();
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(user.get().getId());
-        Item item = databaseAccessValidator.getItemByName(request.getItemName());
-        CartItem cartItem = databaseAccessValidator.getCartItemByCartIdAndItemId(cart.getId(), item.getId());
+        Cart cart = databaseAccessProvider.getOpenCartByUserId(user.get().getId());
+        Item item = databaseAccessProvider.getItemByName(request.getItemName());
+        CartItem cartItem = databaseAccessProvider.getCartItemByCartIdAndItemId(cart.getId(), item.getId());
         Integer newAvailableQuantity = item.getAvailableQuantity() + cartItem.getOrderedQuantity();
         cartItemRepository.deleteByID(cartItem.getId());
         itemRepository.changeAvailableQuantity(item.getId(), newAvailableQuantity);

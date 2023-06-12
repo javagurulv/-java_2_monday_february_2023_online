@@ -13,7 +13,7 @@ import shop.core.domain.user.User;
 import shop.core.services.exception.ServiceMissingDataException;
 
 @Component
-public class DatabaseAccessValidator {
+public class DatabaseAccessProvider {
 
     @Autowired
     private UserRepository userRepository;

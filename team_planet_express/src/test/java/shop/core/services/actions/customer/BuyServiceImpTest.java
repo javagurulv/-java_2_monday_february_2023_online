@@ -12,7 +12,7 @@ import shop.core.domain.cart.CartStatus;
 import shop.core.domain.user.User;
 import shop.core.services.actions.shared.SecurityServiceImpl;
 import shop.core.services.validators.actions.customer.BuyValidator;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.services.validators.universal.system.DatabaseAccessProvider;
 import shop.core_api.requests.customer.BuyRequest;
 
 import java.util.List;
@@ -30,7 +30,7 @@ class BuyServiceImpTest {
     @Mock
     private BuyValidator mockValidator;
     @Mock
-    private DatabaseAccessValidator mockDatabaseAccessValidator;
+    private DatabaseAccessProvider mockDatabaseAccessProvider;
     @Mock
     private BuyRequest mockRequest;
     @Mock
@@ -45,7 +45,7 @@ class BuyServiceImpTest {
     void shouldCloseCart() {
         when(mockValidator.validate(any())).thenReturn(List.of());
         when(mockSecurityService.getAuthenticatedUserFromDB()).thenReturn(Optional.of(new User()));
-        when(mockDatabaseAccessValidator.getOpenCartByUserId(any())).thenReturn(mockCart);
+        when(mockDatabaseAccessProvider.getOpenCartByUserId(any())).thenReturn(mockCart);
         when(mockCart.getId()).thenReturn(1L);
         service.execute(mockRequest);
         verify(mockCartRepository).changeCartStatus(1L, CartStatus.CLOSED);

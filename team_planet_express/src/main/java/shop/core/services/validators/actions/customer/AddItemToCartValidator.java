@@ -6,7 +6,7 @@ import shop.core.database.ItemRepository;
 import shop.core.domain.user.User;
 import shop.core.services.actions.shared.SecurityServiceImpl;
 import shop.core.services.validators.cart.CartValidator;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.services.validators.universal.system.DatabaseAccessProvider;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 import shop.core.support.error_code_processing.ErrorProcessor;
@@ -34,7 +34,7 @@ public class AddItemToCartValidator {
     @Autowired
     private InputStringValidator inputStringValidator;
     @Autowired
-    private DatabaseAccessValidator databaseAccessValidator;
+    private DatabaseAccessProvider databaseAccessProvider;
     @Autowired
     private ErrorProcessor errorProcessor;
     @Autowired
@@ -73,7 +73,7 @@ public class AddItemToCartValidator {
 
     private Optional<CoreError> validateOrderedQuantityNotGreaterThanAvailable(AddItemToCartRequest request) {
         return (Integer.parseInt(request.getOrderedQuantity()) >
-                databaseAccessValidator.getItemByName(request.getItemName()).getAvailableQuantity())
+                databaseAccessProvider.getItemByName(request.getItemName()).getAvailableQuantity())
                 ? Optional.of(errorProcessor.getCoreError(FIELD_QUANTITY, ERROR_NOT_ENOUGH_QUANTITY))
                 : Optional.empty();
     }

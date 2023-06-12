@@ -9,7 +9,7 @@ import shop.core.domain.cart.CartStatus;
 import shop.core.domain.user.User;
 import shop.core.services.actions.shared.SecurityServiceImpl;
 import shop.core.services.validators.actions.customer.BuyValidator;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.services.validators.universal.system.DatabaseAccessProvider;
 import shop.core_api.entry_point.customer.BuyService;
 import shop.core_api.requests.customer.BuyRequest;
 import shop.core_api.responses.CoreError;
@@ -26,7 +26,7 @@ public class BuyServiceImpl implements BuyService {
     @Autowired
     private BuyValidator validator;
     @Autowired
-    private DatabaseAccessValidator databaseAccessValidator;
+    private DatabaseAccessProvider databaseAccessProvider;
     @Autowired
     private SecurityServiceImpl securityService;
 
@@ -37,7 +37,7 @@ public class BuyServiceImpl implements BuyService {
             return new BuyResponse(errors);
         }
         User user = securityService.getAuthenticatedUserFromDB().get();
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(user.getId());
+        Cart cart = databaseAccessProvider.getOpenCartByUserId(user.getId());
         cartRepository.changeCartStatus(cart.getId(), CartStatus.CLOSED);
         cartRepository.save(new Cart(user));
         return new BuyResponse();
