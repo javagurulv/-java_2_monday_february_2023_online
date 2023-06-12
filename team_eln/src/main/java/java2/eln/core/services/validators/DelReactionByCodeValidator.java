@@ -1,6 +1,6 @@
 package java2.eln.core.services.validators;
 
-import java2.eln.core.database.DatabaseIM;
+import java2.eln.core.database.ReactionRepository;
 import java2.eln.core.requests.DeleteReactionByCodeRequest;
 import java2.eln.core.responses.errorPattern.CoreError;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import java.util.Optional;
 @Component
 public class DelReactionByCodeValidator {
     @Autowired
-    DatabaseIM databaseIM;
+    ReactionRepository reactionRepository;
 
     public List<CoreError> validate(DeleteReactionByCodeRequest request) {
         List<CoreError> errors = new ArrayList<>();
@@ -28,7 +28,7 @@ public class DelReactionByCodeValidator {
                 : Optional.empty();
     }
     private Optional<CoreError> reactionIsPresentValidate (DeleteReactionByCodeRequest deleteReactionByCodeRequest){
-        return (databaseIM.hasReactionWithCode(deleteReactionByCodeRequest.getCode()))
+        return (reactionRepository.hasReactionWithCode(deleteReactionByCodeRequest.getCode()))
                 ? Optional.empty()
                 : Optional.of(new CoreError("Reaction code not found", "enter the code of the reaction existing in the database"));
     }

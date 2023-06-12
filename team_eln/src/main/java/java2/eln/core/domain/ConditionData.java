@@ -1,16 +1,37 @@
 package java2.eln.core.domain;
 
+import javax.persistence.*;
 import java.time.Duration;
 
+@Entity
+@Table(name = "ConditionData")
 public class ConditionData {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @OneToOne
+    @JoinColumn(name = "structure_solvent_id")
     private StructureData solvent;
+
+    @Column(name = "temperature")
     private int temperature;
+
+    @Column(name = "environment")
     private String environment;
+
+    @Column(name = "pressure")
     private int pressure;
+
+    @Column(name = "reactionTime")
     private Duration reactionTime;
 
-    public StructureData getSolvent() {
-        return solvent;
+    @Column(name = "reaction_id")
+    private int reactionId;
+
+    public ConditionData() {
     }
 
     public void setSolvent(StructureData solvent) {

@@ -1,21 +1,63 @@
 package java2.eln.core.domain;
 
+import javax.persistence.*;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: table ReactionSideProducts is absent
+//    @OneToMany
+//    @JoinTable(
+//            name = "ReactionSideProducts",
+//            joinColumns = @JoinColumn(name = "reaction_id"),
+//            inverseJoinColumns = @JoinColumn(name = "structure_id")
+//    )
+//    private List<StructureData> products;
+
+@Entity
+@Table(name = "ReactionData")
 public class ReactionData {
-    private final String code;
-    private final String name;
-    private List<StructureData> startingMaterials;
-    private ConditionData conditions;
-    private List<StructureData> products;
-    private StructureData mainProduct;
-    private List<File> analyticalResults;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+
+    @Column(name = "code", nullable = false)
+    private String code;
+
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "reactionYield")
     private double reactionYield;
+
+    @OneToOne
+    @JoinColumn(name = "structure_mainProduct_id")
+    private StructureData mainProduct;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany
+    @JoinTable(
+            name = "ReactionStartingMaterial",
+            joinColumns = @JoinColumn(name = "reaction_id"),
+            inverseJoinColumns = @JoinColumn(name = "structure_id")
+    )
+    private List<StructureData> startingMaterials;
+
+
+    @OneToOne(mappedBy = "reaction", cascade = CascadeType.ALL)
+    private ConditionData conditions;
+
+    private List<StructureData> products;
+
+    public ReactionData() {
+    }
 
     public ReactionData(String code, String name) {
         this.code = code;

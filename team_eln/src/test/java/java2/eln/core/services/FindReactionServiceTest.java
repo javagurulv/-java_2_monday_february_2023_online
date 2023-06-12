@@ -1,6 +1,6 @@
 package java2.eln.core.services;
 
-import java2.eln.core.database.DatabaseIM;
+import java2.eln.core.database.ReactionRepository;
 import java2.eln.core.requests.FindReactionRequest;
 import java2.eln.core.responses.FindReactionResponse;
 import java2.eln.core.responses.errorPattern.CoreError;
@@ -22,7 +22,7 @@ class FindReactionServiceTest {
     @Test
     void execute() {
         // Create mock objects
-        DatabaseIM databaseIMTest = mock(DatabaseIM.class);
+        ReactionRepository reactionRepositoryTest = mock(ReactionRepository.class);
         FindReactionValidator validator = mock(FindReactionValidator.class);
 
         // Set up mock behavior for validator
@@ -40,7 +40,7 @@ class FindReactionServiceTest {
         demoReactionLog.addStartingMaterial(sm3);
         demoReactionLog.setMainProduct(mp);
         demoReactionLog.calculateReactionYield();
-        when(databaseIMTest.getAllReactions()).thenReturn(List.of(demoReactionLog));
+        when(reactionRepositoryTest.getAllReactions()).thenReturn(List.of(demoReactionLog));
 
         // Create the service and execute it with a valid request
         FindReactionService service = new FindReactionService();
