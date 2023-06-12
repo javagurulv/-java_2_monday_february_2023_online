@@ -6,12 +6,16 @@
   <meta name="description" content="Servify demo project">
   <meta name="author" content="DreamTeamDevelopers">
   <title>Servify</title>
+
+  <!-- Add Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
+
 <body>
 
 <h3>Add detail to list</h3>
 
-<table>
+<table class="table">
   <tr>
     <td>Type:</td>
     <td>Side:</td>
@@ -20,12 +24,12 @@
 
   <tr>
     <form action="/addDetail" th:object="${request}" method="post">
-      <td><input type="text" th:field="${request.detailType}"/></td>
-      <td><input type="text" th:field="${request.detailSide}"/></td>
-      <td><input type="text" th:field="${request.detailPrice}"/></td>
+      <td><input type="text" class="form-control" th:field="${request.detailType}"/></td>
+      <td><input type="text" class="form-control" th:field="${request.detailSide}"/></td>
+      <td><input type="text" class="form-control" th:field="${request.detailPrice}"/></td>
       <td>
-        <input type="submit" value="Add Detail"/>
-        <input type="reset" value="Clear"/>
+        <input type="submit" class="btn btn-primary" value="Add Detail"/>
+        <input type="reset" class="btn btn-secondary" value="Clear"/>
       </td>
     </form>
   </tr>
@@ -40,8 +44,11 @@
 </td>
 
 <form action="/" method="get">
-  <input type="submit" value="Go to main page" name="Submit" />
+  <input type="submit" class="btn btn-primary" value="Go to main page" name="Submit" />
 </form>
+
+<!-- Add Bootstrap JS (at the end of the body) -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 </body>
 

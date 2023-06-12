@@ -7,6 +7,7 @@ import java.util.List;
 public class AddDetailResponse extends CoreResponse {
 
     private Detail newDetail;
+    private boolean isAdded;
 
     public AddDetailResponse(List<CoreError> errors) {
         super(errors);
@@ -15,7 +16,9 @@ public class AddDetailResponse extends CoreResponse {
     public AddDetailResponse(Detail newDetail) {
         this.newDetail = newDetail;
     }
-
+    public AddDetailResponse(boolean isAdded) {
+        this.isAdded = isAdded;
+    }
     public Detail newDetail() {
         return newDetail;
     }

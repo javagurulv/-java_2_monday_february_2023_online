@@ -47,6 +47,6 @@ public class RegistrationUserService {
                 ensodedPassword,
                 authorities);
         userRepository.save(newUser);
-        return new AddUserResponse(newUser);
+        return new AddUserResponse(true);
     }
 }

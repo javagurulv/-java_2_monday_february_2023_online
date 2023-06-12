@@ -3,12 +3,13 @@ package lv.javaguru.java2.servify.core.dto.responses;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lv.javaguru.java2.servify.core.dto.DetailDTO;
 
-import java.util.List;
+import java.math.BigDecimal;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetAllDetailResponse {
-    private List<DetailDTO> details;
+public class OrderResponse {
+    private Long orderId;
+    private BigDecimal totalPrice;
 }

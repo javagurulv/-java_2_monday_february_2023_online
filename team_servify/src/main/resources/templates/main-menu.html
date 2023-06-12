@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="description" content="Servify demo project">
-  <meta name="author" content="DreamTeamDevelopers">
+  <meta name="author" content="Servify">
   <title>Servify</title>
 
   <!-- Bootstrap CSS -->
@@ -13,32 +13,17 @@
 
 <body>
 
-<h3>Show all details in the list</h3>
-
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th>ID</th>
-    <th>Type</th>
-    <th>Side</th>
-    <th>Price</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="detail : ${detail}">
-    <td th:text="${detail.id}" />
-    <td th:text="${detail.type}" />
-    <td th:text="${detail.side}" />
-    <td th:text="${detail.price}" />
-  </tr>
-  </tbody>
-</table>
+<h3>Program menu</h3>
 
 <a href="/addDetail" class="btn btn-primary">Add detail</a> <br>
 <a href="/deleteDetail" class="btn btn-primary">Delete detail</a> <br>
+<a href="/showAllDetails" class="btn btn-primary">Show all details</a> <br>
+<a href="/searchDetail" class="btn btn-primary">Search detail</a> <br>
+<a href="/registerUser" class="btn btn-primary">Register user</a> <br>
+<a href="/showAllUsers" class="btn btn-primary">Show All user</a> <br>
 
-<form action="/" method="get">
-  <input type="submit" value="Go to main page" class="btn btn-primary" />
+<form th:action="@{/logout}" method="post">
+  <input type="submit" value="Sign Out" class="btn btn-danger"/>
 </form>
 
 <!-- Bootstrap JS -->
