@@ -1,14 +1,15 @@
-package shop.core.support;
+package shop.core.dtos;
 
 import lombok.Value;
 
 import java.math.BigDecimal;
 
 @Value
-public class CartItemForList {
+public class CartItemDto {
 
+    String userLogin;
     String itemName;
-    BigDecimal price;
+    BigDecimal itemPrice;
     Integer orderedQuantity;
 
 }

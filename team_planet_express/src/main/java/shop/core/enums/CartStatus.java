@@ -1,4 +1,4 @@
-package shop.core.domain.cart;
+package shop.core.enums;
 
 public enum CartStatus {
 

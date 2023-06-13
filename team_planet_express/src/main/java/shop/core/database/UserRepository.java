@@ -1,7 +1,7 @@
 package shop.core.database;
 
 
-import shop.core.domain.user.User;
+import shop.core.domain.User;
 
 import java.util.List;
 import java.util.Optional;

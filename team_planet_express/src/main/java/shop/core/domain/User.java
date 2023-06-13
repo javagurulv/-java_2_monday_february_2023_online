@@ -1,8 +1,9 @@
-package shop.core.domain.user;
+package shop.core.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import shop.core.enums.UserRole;
 
 @Data
 @NoArgsConstructor

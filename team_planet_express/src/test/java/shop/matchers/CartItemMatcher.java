@@ -1,9 +1,9 @@
 package shop.matchers;
 
 import org.mockito.ArgumentMatcher;
-import shop.core.domain.cart.Cart;
-import shop.core.domain.cart_item.CartItem;
-import shop.core.domain.item.Item;
+import shop.core.domain.Cart;
+import shop.core.domain.CartItem;
+import shop.core.domain.Item;
 
 public class CartItemMatcher implements ArgumentMatcher<CartItem> {
 

@@ -7,7 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.console_ui.UserCommunication;
-import shop.core.domain.user.User;
+import shop.core.dtos.UserDto;
 import shop.core.requests.shared.SignInRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.shared.SignInResponse;
@@ -31,7 +31,7 @@ class SignInUIActionTest {
     @Mock
     private SignInResponse mockSignInResponse;
     @Mock
-    private User mockUser;
+    private UserDto mockUserDto;
     @Mock
     private CoreError mockCoreError;
 
@@ -46,7 +46,7 @@ class SignInUIActionTest {
 
     @Test
     void shouldPrintTwoInputPrompts() {
-        when(mockSignInResponse.getUser()).thenReturn(mockUser);
+        when(mockSignInResponse.getUser()).thenReturn(mockUserDto);
         action.execute();
         verify(mockUserCommunication, times(2)).requestInput(anyString());
     }
@@ -54,7 +54,7 @@ class SignInUIActionTest {
     @Test
     void shouldCallService() {
         when(mockUserCommunication.requestInput(anyString())).thenReturn("login", "password");
-        when(mockSignInResponse.getUser()).thenReturn(mockUser);
+        when(mockSignInResponse.getUser()).thenReturn(mockUserDto);
         action.execute();
         verify(mockSignInService)
                 .execute(argThat(new SignInRequestMatcher(mockCurrentUserId, "login", "password")));
@@ -62,7 +62,7 @@ class SignInUIActionTest {
 
     @Test
     void shouldPrintSuccessMessage() {
-        when(mockSignInResponse.getUser()).thenReturn(mockUser);
+        when(mockSignInResponse.getUser()).thenReturn(mockUserDto);
         action.execute();
         verify(mockUserCommunication).informUser(anyString());
     }

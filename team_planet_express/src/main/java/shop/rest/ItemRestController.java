@@ -44,7 +44,7 @@ public class ItemRestController {
 
     @GetMapping(path = "/all", produces = "application/json")
     public ListShopItemsResponse getAllItems() {
-        ListShopItemsRequest request = new ListShopItemsRequest(currentUserId);
+        ListShopItemsRequest request = new ListShopItemsRequest();
         return listShopItemsService.execute(request);
     }
 

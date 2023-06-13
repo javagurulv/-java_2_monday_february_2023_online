@@ -17,7 +17,7 @@ public class ListShopItemsTester extends Tester {
     private ListShopItemsResponse listShopItemsResponse;
 
     public ListShopItemsTester showListShopItems() {
-        ListShopItemsRequest listShopItemsRequest = new ListShopItemsRequest(currentUserId);
+        ListShopItemsRequest listShopItemsRequest = new ListShopItemsRequest();
         listShopItemsResponse = listShopItemsService.execute(listShopItemsRequest);
         return this;
     }

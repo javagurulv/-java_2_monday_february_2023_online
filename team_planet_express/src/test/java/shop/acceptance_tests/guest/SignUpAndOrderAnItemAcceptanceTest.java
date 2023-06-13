@@ -7,11 +7,13 @@ import org.springframework.test.context.jdbc.Sql;
 import shop.core.database.CartItemRepository;
 import shop.core.database.CartRepository;
 import shop.core.database.ItemRepository;
-import shop.core.domain.cart.Cart;
-import shop.core.domain.cart_item.CartItem;
-import shop.core.domain.item.Item;
-import shop.core.domain.user.User;
-import shop.core.domain.user.UserRole;
+import shop.core.database.UserRepository;
+import shop.core.domain.Cart;
+import shop.core.domain.CartItem;
+import shop.core.domain.Item;
+import shop.core.domain.User;
+import shop.core.dtos.UserDto;
+import shop.core.enums.UserRole;
 import shop.core.requests.customer.AddItemToCartRequest;
 import shop.core.requests.guest.SignUpRequest;
 import shop.core.responses.customer.AddItemToCartResponse;
@@ -27,6 +29,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class SignUpAndOrderAnItemAcceptanceTest {
 
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private ItemRepository itemRepository;
     @Autowired
@@ -46,7 +50,8 @@ public class SignUpAndOrderAnItemAcceptanceTest {
         SignUpResponse signUpResponse =
                 signUpService.execute(new SignUpRequest(currentUserId, "Brannigan", "captain", "password"));
         assertFalse(signUpResponse.hasErrors());
-        User newUser = signUpResponse.getUser();
+        UserDto newUserDto = signUpResponse.getUser();
+        User newUser = userRepository.findByLoginName(newUserDto.getLogin()).orElseThrow();
         assertEquals(UserRole.CUSTOMER, newUser.getUserRole());
         assertTrue(cartRepository.findOpenCartForUserId(newUser.getId()).isPresent());
         Item orderedItem = itemRepository.findByName("Lightspeed Briefs").orElseThrow();

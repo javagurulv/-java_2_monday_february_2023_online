@@ -2,8 +2,8 @@ package shop.acceptance_tests.custom;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import shop.acceptance_tests.custom.tester.*;
-import shop.core.domain.user.User;
-import shop.core.domain.user.UserRole;
+import shop.core.domain.User;
+import shop.core.enums.UserRole;
 import shop.core.services.user.UserCreationData;
 import shop.core.services.user.UserService;
 import shop.core.support.CurrentUserId;

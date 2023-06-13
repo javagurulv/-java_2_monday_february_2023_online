@@ -5,11 +5,10 @@ import org.springframework.stereotype.Component;
 import shop.console_ui.UserCommunication;
 import shop.console_ui.actions.UIAction;
 import shop.console_ui.item_list.ItemStringProvider;
-import shop.core.domain.user.UserRole;
+import shop.core.enums.UserRole;
 import shop.core.requests.customer.ListShopItemsRequest;
 import shop.core.responses.customer.ListShopItemsResponse;
 import shop.core.services.actions.customer.ListShopItemsService;
-import shop.core.support.CurrentUserId;
 
 @Component
 public class ListShopItemsUIAction extends UIAction {
@@ -22,8 +21,6 @@ public class ListShopItemsUIAction extends UIAction {
     @Autowired
     private ListShopItemsService listShopItemsService;
     @Autowired
-    private CurrentUserId currentUserId;
-    @Autowired
     private ItemStringProvider itemStringProvider;
     @Autowired
     private UserCommunication userCommunication;
@@ -35,10 +32,10 @@ public class ListShopItemsUIAction extends UIAction {
     @Override
     public void execute() {
         userCommunication.informUser(HEADER_TEXT);
-        ListShopItemsRequest request = new ListShopItemsRequest(currentUserId);
+        ListShopItemsRequest request = new ListShopItemsRequest();
         ListShopItemsResponse response = listShopItemsService.execute(request);
         response.getShopItems()
-                .forEach(item -> userCommunication.informUser(itemStringProvider.get(item, response.getUserRole())));
+                .forEach(item -> userCommunication.informUser(itemStringProvider.get(item)));
     }
 
 }

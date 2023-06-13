@@ -2,7 +2,7 @@ package shop.core.services.item_list;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import shop.core.domain.item.Item;
+import shop.core.domain.Item;
 import shop.core.support.paging.PagingRule;
 
 import java.util.List;

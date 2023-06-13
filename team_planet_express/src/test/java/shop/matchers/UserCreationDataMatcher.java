@@ -1,7 +1,7 @@
 package shop.matchers;
 
 import org.mockito.ArgumentMatcher;
-import shop.core.domain.user.UserRole;
+import shop.core.enums.UserRole;
 import shop.core.services.user.UserCreationData;
 
 public class UserCreationDataMatcher implements ArgumentMatcher<UserCreationData> {

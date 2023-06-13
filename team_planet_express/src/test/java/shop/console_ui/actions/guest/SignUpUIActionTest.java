@@ -7,7 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.console_ui.UserCommunication;
-import shop.core.domain.user.User;
+import shop.core.dtos.UserDto;
 import shop.core.requests.guest.SignUpRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.guest.SignUpResponse;
@@ -31,7 +31,7 @@ class SignUpUIActionTest {
     @Mock
     private SignUpResponse mockSignUpResponse;
     @Mock
-    private User mockUser;
+    private UserDto mockUserDto;
     @Mock
     private CoreError mockCoreError;
 
@@ -46,7 +46,7 @@ class SignUpUIActionTest {
 
     @Test
     void shouldPrintThreeInputPrompts() {
-        when(mockSignUpResponse.getUser()).thenReturn(mockUser);
+        when(mockSignUpResponse.getUser()).thenReturn(mockUserDto);
         action.execute();
         verify(mockUserCommunication, times(3)).requestInput(anyString());
     }
@@ -54,7 +54,7 @@ class SignUpUIActionTest {
     @Test
     void shouldCallService() {
         when(mockUserCommunication.requestInput(anyString())).thenReturn("name", "login", "password");
-        when(mockSignUpResponse.getUser()).thenReturn(mockUser);
+        when(mockSignUpResponse.getUser()).thenReturn(mockUserDto);
         action.execute();
         verify(mockSignUpService)
                 .execute(argThat(new SignUpRequestMatcher(mockCurrentUserId, "name", "login", "password")));
@@ -62,7 +62,7 @@ class SignUpUIActionTest {
 
     @Test
     void shouldPrintSuccessMessage() {
-        when(mockSignUpResponse.getUser()).thenReturn(mockUser);
+        when(mockSignUpResponse.getUser()).thenReturn(mockUserDto);
         action.execute();
         verify(mockUserCommunication).informUser(anyString());
     }

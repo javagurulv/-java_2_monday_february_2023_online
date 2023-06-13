@@ -4,14 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import shop.console_ui.UserCommunication;
 import shop.console_ui.actions.UIAction;
-import shop.core.domain.user.UserRole;
+import shop.core.dtos.CartItemDto;
+import shop.core.enums.UserRole;
 import shop.core.requests.customer.ListCartItemsRequest;
 import shop.core.responses.customer.ListCartItemsResponse;
 import shop.core.services.actions.customer.ListCartItemsService;
-import shop.core.support.CartItemForList;
 import shop.core.support.CurrentUserId;
-
-import java.math.BigDecimal;
 
 @Component
 public class ListCartItemsUIAction extends UIAction {
@@ -21,7 +19,6 @@ public class ListCartItemsUIAction extends UIAction {
 
     private static final String HEADER_TEXT = "Cart items:";
     private static final String MESSAGE_CART_IS_EMPTY = "Your cart is empty.";
-    private static final String MESSAGE_CART_TOTAL = "Your cart total is: ";
 
     @Autowired
     private ListCartItemsService listCartItemsService;
@@ -47,20 +44,18 @@ public class ListCartItemsUIAction extends UIAction {
     }
 
     private void printCartItems(ListCartItemsResponse response) {
-        if (response.getCartItemsForList().isEmpty()) {
+        if (response.getCartItems().isEmpty()) {
             userCommunication.informUser(MESSAGE_CART_IS_EMPTY);
         } else {
-            response.getCartItemsForList()
-                    .forEach(cartItemForList -> userCommunication.informUser(getCartItemString(cartItemForList)));
-            BigDecimal cartTotal = response.getCartTotal();
-            userCommunication.informUser(MESSAGE_CART_TOTAL + cartTotal);
+            response.getCartItems()
+                    .forEach(cartItem -> userCommunication.informUser(getCartItemString(cartItem)));
         }
     }
 
-    private String getCartItemString(CartItemForList cartItemForList) {
-        return cartItemForList.getItemName() +
-                ", price: " + cartItemForList.getPrice() +
-                ", ordered quantity: " + cartItemForList.getOrderedQuantity();
+    private String getCartItemString(CartItemDto cartItem) {
+        return cartItem.getItemName() +
+                ", price: " + cartItem.getItemPrice() +
+                ", ordered quantity: " + cartItem.getOrderedQuantity();
     }
 
 }

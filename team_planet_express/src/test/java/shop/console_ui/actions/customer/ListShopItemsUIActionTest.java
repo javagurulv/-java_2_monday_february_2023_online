@@ -8,11 +8,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.console_ui.UserCommunication;
 import shop.console_ui.item_list.ItemStringProvider;
-import shop.core.domain.item.Item;
+import shop.core.dtos.ItemDto;
 import shop.core.requests.customer.ListShopItemsRequest;
 import shop.core.responses.customer.ListShopItemsResponse;
 import shop.core.services.actions.customer.ListShopItemsService;
-import shop.core.support.CurrentUserId;
 
 import java.util.List;
 
@@ -24,15 +23,13 @@ class ListShopItemsUIActionTest {
     @Mock
     private ListShopItemsService mockListShopItemsService;
     @Mock
-    private CurrentUserId mockCurrentUserId;
-    @Mock
     private ItemStringProvider mockItemStringProvider;
     @Mock
     private UserCommunication mockUserCommunication;
     @Mock
     private ListShopItemsResponse mockListShopItemsResponse;
     @Mock
-    private Item mockItem;
+    private ItemDto mockItemDto;
 
     @InjectMocks
     private ListShopItemsUIAction action;
@@ -57,7 +54,7 @@ class ListShopItemsUIActionTest {
 
     @Test
     void shouldListHeaderAndTwoItems() {
-        when(mockListShopItemsResponse.getShopItems()).thenReturn(List.of(mockItem, mockItem));
+        when(mockListShopItemsResponse.getShopItems()).thenReturn(List.of(mockItemDto, mockItemDto));
         action.execute();
         verify(mockUserCommunication, times(3)).informUser(any());
     }

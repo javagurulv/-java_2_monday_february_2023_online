@@ -1,7 +1,7 @@
 package shop.core.services.fake;
 
 import org.junit.jupiter.api.Test;
-import shop.core.domain.user.User;
+import shop.core.domain.User;
 
 import java.util.List;
 

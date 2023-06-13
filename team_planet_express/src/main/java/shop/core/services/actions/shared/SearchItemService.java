@@ -3,8 +3,10 @@ package shop.core.services.actions.shared;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import shop.core.converters.ItemConverter;
 import shop.core.database.ItemRepository;
-import shop.core.domain.item.Item;
+import shop.core.domain.Item;
+import shop.core.dtos.ItemDto;
 import shop.core.requests.shared.SearchItemRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.shared.SearchItemResponse;
@@ -31,6 +33,8 @@ public class SearchItemService {
     private PagingService pagingService;
     @Autowired
     private DatabaseAccessValidator databaseAccessValidator;
+    @Autowired
+    private ItemConverter itemConverter;
 
     public SearchItemResponse execute(SearchItemRequest request) {
         List<CoreError> errors = validator.validate(request);
@@ -40,8 +44,8 @@ public class SearchItemService {
         } else {
             List<Item> items = search(request);
             boolean nextPageAvailable = isExtraItemAvailable(request, items);
-            response = new SearchItemResponse(items, nextPageAvailable,
-                    databaseAccessValidator.getUserById(request.getCurrentUserId().getValue()).getUserRole());
+            List<ItemDto> itemDtos = itemConverter.toItemDto(items);
+            response = new SearchItemResponse(itemDtos, nextPageAvailable);
         }
         return response;
     }

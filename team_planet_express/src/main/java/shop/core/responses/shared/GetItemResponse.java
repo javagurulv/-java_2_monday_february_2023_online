@@ -1,7 +1,7 @@
 package shop.core.responses.shared;
 
 import lombok.Getter;
-import shop.core.domain.item.Item;
+import shop.core.dtos.ItemDto;
 import shop.core.responses.CoreError;
 import shop.core.responses.CoreResponse;
 
@@ -10,9 +10,9 @@ import java.util.List;
 @Getter
 public class GetItemResponse extends CoreResponse {
 
-    private Item item;
+    private ItemDto item;
 
-    public GetItemResponse(Item item) {
+    public GetItemResponse(ItemDto item) {
         this.item = item;
     }
 

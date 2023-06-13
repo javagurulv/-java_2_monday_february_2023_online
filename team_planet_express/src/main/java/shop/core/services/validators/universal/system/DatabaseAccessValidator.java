@@ -6,10 +6,10 @@ import shop.core.database.CartItemRepository;
 import shop.core.database.CartRepository;
 import shop.core.database.ItemRepository;
 import shop.core.database.UserRepository;
-import shop.core.domain.cart.Cart;
-import shop.core.domain.cart_item.CartItem;
-import shop.core.domain.item.Item;
-import shop.core.domain.user.User;
+import shop.core.domain.Cart;
+import shop.core.domain.CartItem;
+import shop.core.domain.Item;
+import shop.core.domain.User;
 import shop.core.services.exception.ServiceMissingDataException;
 
 @Component

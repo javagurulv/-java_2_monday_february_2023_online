@@ -5,8 +5,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import shop.core.domain.user.User;
-import shop.core.domain.user.UserRole;
+import shop.core.converters.UserConverter;
+import shop.core.domain.User;
+import shop.core.enums.UserRole;
 import shop.core.requests.guest.SignUpRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.guest.SignUpResponse;
@@ -30,6 +31,8 @@ class SignUpServiceTest {
     private SignUpValidator mockValidator;
     @Mock
     private UserService mockUserService;
+    @Mock
+    private UserConverter mockUserConverter;
     @Mock
     private SignUpRequest mockRequest;
     @Mock

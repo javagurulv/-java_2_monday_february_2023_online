@@ -2,7 +2,7 @@ package shop.acceptance_tests.custom.tester;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.domain.item.Item;
+import shop.core.domain.Item;
 import shop.core.requests.customer.ListCartItemsRequest;
 import shop.core.responses.customer.ListCartItemsResponse;
 import shop.core.services.actions.customer.ListCartItemsService;
@@ -30,7 +30,7 @@ public class ListCartItemsTester extends Tester {
         Optional<Item> itemOptional = itemRepository.getAllItems().stream()
                 .filter(item -> item.getName().equals(itemName)).findFirst();
         assertTrue(itemOptional.isPresent());
-        assertTrue(listCartItemsResponse.getCartItemsForList().stream()
+        assertTrue(listCartItemsResponse.getCartItems().stream()
                 .anyMatch(item -> item.getItemName().equals(itemName) && item.getOrderedQuantity().equals(quantity)));
         return this;
     }

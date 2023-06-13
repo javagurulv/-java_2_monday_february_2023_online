@@ -1,7 +1,7 @@
 package shop.core.services.fake;
 
-import shop.core.domain.cart.Cart;
-import shop.core.domain.user.User;
+import shop.core.domain.Cart;
+import shop.core.domain.User;
 
 import java.util.ArrayList;
 import java.util.List;

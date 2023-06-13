@@ -1,4 +1,4 @@
-package shop.core.support.error_code_processing;
+package shop.core.error_code_processing;
 
 import lombok.Value;
 

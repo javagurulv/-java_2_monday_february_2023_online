@@ -1,7 +1,7 @@
 package shop.matchers;
 
 import org.mockito.ArgumentMatcher;
-import shop.core.domain.item.Item;
+import shop.core.domain.Item;
 
 import java.math.BigDecimal;
 

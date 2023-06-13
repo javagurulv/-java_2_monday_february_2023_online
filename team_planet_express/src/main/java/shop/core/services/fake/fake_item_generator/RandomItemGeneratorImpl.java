@@ -1,6 +1,6 @@
 package shop.core.services.fake.fake_item_generator;
 
-import shop.core.domain.item.Item;
+import shop.core.domain.Item;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

@@ -6,8 +6,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.CartItemRepository;
-import shop.core.domain.cart_item.CartItem;
-import shop.core.domain.item.Item;
+import shop.core.domain.CartItem;
+import shop.core.domain.Item;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 
 import java.math.BigDecimal;

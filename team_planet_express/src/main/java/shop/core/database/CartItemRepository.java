@@ -1,6 +1,6 @@
 package shop.core.database;
 
-import shop.core.domain.cart_item.CartItem;
+import shop.core.domain.CartItem;
 
 import java.util.List;
 import java.util.Optional;

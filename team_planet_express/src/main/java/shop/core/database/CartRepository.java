@@ -1,7 +1,7 @@
 package shop.core.database;
 
-import shop.core.domain.cart.Cart;
-import shop.core.domain.cart.CartStatus;
+import shop.core.domain.Cart;
+import shop.core.enums.CartStatus;
 
 import java.util.List;
 import java.util.Optional;

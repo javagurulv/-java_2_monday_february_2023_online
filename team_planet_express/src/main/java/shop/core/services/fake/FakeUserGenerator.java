@@ -1,7 +1,7 @@
 package shop.core.services.fake;
 
-import shop.core.domain.user.User;
-import shop.core.domain.user.UserRole;
+import shop.core.domain.User;
+import shop.core.enums.UserRole;
 
 import java.util.ArrayList;
 import java.util.List;

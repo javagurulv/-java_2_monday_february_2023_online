@@ -1,7 +1,7 @@
 package shop.core.services.fake.fake_item_generator;
 
 import org.junit.jupiter.api.Test;
-import shop.core.domain.item.Item;
+import shop.core.domain.Item;
 
 import java.util.List;
 

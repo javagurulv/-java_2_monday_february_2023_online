@@ -3,7 +3,9 @@ package shop.core.services.actions.shared;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import shop.core.domain.user.User;
+import shop.core.converters.UserConverter;
+import shop.core.domain.User;
+import shop.core.dtos.UserDto;
 import shop.core.requests.shared.SignInRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.shared.SignInResponse;
@@ -20,6 +22,8 @@ public class SignInService {
     private SignInValidator validator;
     @Autowired
     private DatabaseAccessValidator databaseAccessValidator;
+    @Autowired
+    private UserConverter userConverter;
 
     public SignInResponse execute(SignInRequest request) {
         List<CoreError> errors = validator.validate(request);
@@ -28,7 +32,8 @@ public class SignInService {
         }
         User newUser = databaseAccessValidator.getUserByLoginName(request.getLoginName());
         request.getCurrentUserId().setValue(newUser.getId());
-        return new SignInResponse(newUser);
+        UserDto newUserDto = userConverter.toUserDto(newUser);
+        return new SignInResponse(newUserDto);
     }
 
 }

@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import shop.core.database.ItemRepository;
-import shop.core.domain.item.Item;
+import shop.core.domain.Item;
 import shop.core.requests.manager.ChangeItemDataRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.manager.ChangeItemDataResponse;

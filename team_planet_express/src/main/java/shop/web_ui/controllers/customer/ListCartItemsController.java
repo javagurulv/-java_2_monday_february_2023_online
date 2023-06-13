@@ -24,8 +24,7 @@ public class ListCartItemsController {
         if (response.hasErrors()) {
             modelMap.addAttribute("errors", response.getErrors());
         } else {
-            modelMap.addAttribute("items", response.getCartItemsForList());
-            modelMap.addAttribute("total", response.getCartTotal());
+            modelMap.addAttribute("items", response.getCartItems());
         }
         return "customer/listCartItems";
     }

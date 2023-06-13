@@ -1,4 +1,4 @@
-package shop.core.domain.item;
+package shop.core.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;

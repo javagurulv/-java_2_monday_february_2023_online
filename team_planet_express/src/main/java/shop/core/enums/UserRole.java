@@ -1,4 +1,4 @@
-package shop.core.domain.user;
+package shop.core.enums;
 
 public enum UserRole {
 

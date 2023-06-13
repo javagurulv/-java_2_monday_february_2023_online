@@ -6,9 +6,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.CartRepository;
-import shop.core.domain.cart.Cart;
+import shop.core.domain.Cart;
+import shop.core.error_code_processing.ErrorProcessor;
 import shop.core.responses.CoreError;
-import shop.core.support.error_code_processing.ErrorProcessor;
 
 import java.util.Optional;
 

@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import shop.core.database.CartItemRepository;
 import shop.core.database.CartRepository;
 import shop.core.database.ItemRepository;
-import shop.core.domain.cart.Cart;
-import shop.core.domain.cart_item.CartItem;
+import shop.core.domain.Cart;
+import shop.core.domain.CartItem;
 import shop.core.support.CurrentUserId;
 
 import java.util.Optional;

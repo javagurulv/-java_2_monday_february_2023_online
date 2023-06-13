@@ -1,6 +1,6 @@
 package shop.core.database;
 
-import shop.core.domain.item.Item;
+import shop.core.domain.Item;
 
 import java.math.BigDecimal;
 import java.util.List;

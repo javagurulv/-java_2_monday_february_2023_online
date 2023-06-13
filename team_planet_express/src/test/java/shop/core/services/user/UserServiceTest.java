@@ -7,10 +7,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.CartRepository;
 import shop.core.database.UserRepository;
-import shop.core.domain.cart.Cart;
-import shop.core.domain.cart.CartStatus;
-import shop.core.domain.user.User;
-import shop.core.domain.user.UserRole;
+import shop.core.domain.Cart;
+import shop.core.domain.User;
+import shop.core.enums.CartStatus;
+import shop.core.enums.UserRole;
 import shop.matchers.CartMatcher;
 import shop.matchers.UserMatcher;
 

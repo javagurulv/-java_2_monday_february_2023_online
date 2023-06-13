@@ -3,7 +3,10 @@ package shop.core.services.actions.shared;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import shop.core.converters.ItemConverter;
 import shop.core.database.ItemRepository;
+import shop.core.domain.Item;
+import shop.core.dtos.ItemDto;
 import shop.core.requests.shared.GetItemRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.shared.GetItemResponse;
@@ -19,6 +22,8 @@ public class GetItemService {
     private ItemRepository itemRepository;
     @Autowired
     private GetItemValidator validator;
+    @Autowired
+    private ItemConverter itemConverter;
 
     public GetItemResponse execute(GetItemRequest request) {
         List<CoreError> errors = validator.validate(request);
@@ -26,7 +31,9 @@ public class GetItemService {
             return new GetItemResponse(errors);
         }
         Long itemId = Long.parseLong(request.getItemId());
-        return new GetItemResponse(itemRepository.findById(itemId).orElseThrow());
+        Item item = itemRepository.findById(itemId).orElseThrow();
+        ItemDto itemDto = itemConverter.toItemDto(item);
+        return new GetItemResponse(itemDto);
     }
 
 }

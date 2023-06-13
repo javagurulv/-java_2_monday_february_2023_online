@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import shop.core.database.UserRepository;
-import shop.core.domain.user.User;
-import shop.core.domain.user.UserRole;
+import shop.core.domain.User;
+import shop.core.enums.UserRole;
 import shop.core.requests.shared.SignInRequest;
 import shop.core.requests.shared.SignOutRequest;
 import shop.core.responses.shared.SignInResponse;
@@ -39,7 +39,7 @@ public class SignInAndOutAcceptanceTest {
                 signInService.execute(new SignInRequest(currentUserId, "theAnnihilator", "pathetichumans"));
         assertFalse(signInResponse.hasErrors());
         assertEquals(currentUserId.getValue(), userRepository.findByLoginName("theAnnihilator").orElseThrow().getId());
-        assertEquals(UserRole.CUSTOMER, signInResponse.getUser().getUserRole());
+        assertEquals(UserRole.CUSTOMER.toString(), signInResponse.getUser().getUserRole());
         assertEquals("Morbo", signInResponse.getUser().getName());
         SignOutResponse signOutResponse =
                 signOutService.execute(new SignOutRequest(currentUserId));

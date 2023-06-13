@@ -5,7 +5,7 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import shop.core.database.CartItemRepository;
-import shop.core.domain.cart_item.CartItem;
+import shop.core.domain.CartItem;
 
 import java.util.List;
 import java.util.Optional;

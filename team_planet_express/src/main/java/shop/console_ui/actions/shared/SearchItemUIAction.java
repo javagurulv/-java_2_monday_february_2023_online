@@ -7,7 +7,7 @@ import shop.console_ui.actions.UIAction;
 import shop.console_ui.item_list.ItemStringProvider;
 import shop.console_ui.item_list.OrderingUIElement;
 import shop.console_ui.item_list.PagingUIElement;
-import shop.core.domain.user.UserRole;
+import shop.core.enums.UserRole;
 import shop.core.requests.shared.SearchItemRequest;
 import shop.core.responses.shared.SearchItemResponse;
 import shop.core.services.actions.shared.SearchItemService;
@@ -66,7 +66,7 @@ public class SearchItemUIAction extends UIAction {
             } else {
                 userCommunication.informUser(MESSAGE_SEARCH_RESULTS);
                 response.getItems()
-                        .forEach(item -> userCommunication.informUser(itemStringProvider.get(item, response.getUserRole())));
+                        .forEach(item -> userCommunication.informUser(itemStringProvider.get(item)));
                 continuePaging = pagingUIElement.continuePagingThrough(request.getPagingRule(), response.isNextPageAvailable());
             }
         } while (continuePaging);

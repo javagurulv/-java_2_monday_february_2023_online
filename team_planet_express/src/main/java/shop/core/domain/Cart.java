@@ -1,9 +1,9 @@
-package shop.core.domain.cart;
+package shop.core.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import shop.core.domain.user.User;
+import shop.core.enums.CartStatus;
 
 import java.time.LocalDateTime;
 

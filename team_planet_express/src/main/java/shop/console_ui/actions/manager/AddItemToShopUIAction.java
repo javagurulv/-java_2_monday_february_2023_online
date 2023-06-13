@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import shop.console_ui.UserCommunication;
 import shop.console_ui.actions.UIAction;
-import shop.core.domain.user.UserRole;
+import shop.core.enums.UserRole;
 import shop.core.requests.manager.AddItemToShopRequest;
 import shop.core.responses.manager.AddItemToShopResponse;
 import shop.core.services.actions.manager.AddItemToShopService;

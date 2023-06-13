@@ -1,9 +1,9 @@
 package shop.matchers;
 
 import org.mockito.ArgumentMatcher;
-import shop.core.domain.cart.Cart;
-import shop.core.domain.cart.CartStatus;
-import shop.core.domain.user.User;
+import shop.core.domain.Cart;
+import shop.core.domain.User;
+import shop.core.enums.CartStatus;
 
 public class CartMatcher implements ArgumentMatcher<Cart> {
 

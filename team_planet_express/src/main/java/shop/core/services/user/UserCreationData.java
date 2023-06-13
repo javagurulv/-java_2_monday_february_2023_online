@@ -1,7 +1,7 @@
 package shop.core.services.user;
 
 import lombok.Value;
-import shop.core.domain.user.UserRole;
+import shop.core.enums.UserRole;
 
 @Value
 public class UserCreationData {

@@ -19,7 +19,7 @@ public class ListShopItemsController {
 
     @GetMapping(value = "/listShopItems")
     public String showListShopItemsPage(ModelMap modelMap) {
-        ListShopItemsRequest request = new ListShopItemsRequest(currentUserId);
+        ListShopItemsRequest request = new ListShopItemsRequest();
         ListShopItemsResponse response = listShopItemsService.execute(request);
         modelMap.addAttribute("items", response.getShopItems());
         return "customer/listShopItems";

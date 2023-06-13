@@ -12,3 +12,7 @@ td/tr/table ?
 
 REST tests
 REST ordering/page
+
+buy -> buy + close
+
+converter tests

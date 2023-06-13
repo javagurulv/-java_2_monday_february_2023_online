@@ -3,7 +3,6 @@ package shop.console_ui;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import shop.console_ui.actions.UIAction;
-import shop.console_ui.actions.admin.ChangeUserDataUIAction;
 import shop.console_ui.actions.customer.*;
 import shop.console_ui.actions.guest.SignUpUIAction;
 import shop.console_ui.actions.manager.AddItemToShopUIAction;
@@ -13,8 +12,8 @@ import shop.console_ui.actions.shared.SearchItemUIAction;
 import shop.console_ui.actions.shared.SignInUIAction;
 import shop.console_ui.actions.shared.SignOutUIAction;
 import shop.core.database.UserRepository;
-import shop.core.domain.user.User;
-import shop.core.domain.user.UserRole;
+import shop.core.domain.User;
+import shop.core.enums.UserRole;
 import shop.core.support.CurrentUserId;
 
 import java.util.ArrayList;
@@ -55,7 +54,6 @@ public class UIActionsList {
         sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof BuyUIAction).findFirst().orElseThrow());
         sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof AddItemToShopUIAction).findFirst().orElseThrow());
         sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof ChangeItemDataUIAction).findFirst().orElseThrow());
-        sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof ChangeUserDataUIAction).findFirst().orElseThrow());
         sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof SignInUIAction).findFirst().orElseThrow());
         sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof SignUpUIAction).findFirst().orElseThrow());
         sortedUIActions.add(uiActionsList.stream().filter(uiAction -> uiAction instanceof SignOutUIAction).findFirst().orElseThrow());

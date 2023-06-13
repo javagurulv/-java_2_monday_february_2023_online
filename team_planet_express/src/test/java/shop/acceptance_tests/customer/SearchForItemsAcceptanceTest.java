@@ -7,8 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import shop.core.database.ItemRepository;
 import shop.core.database.UserRepository;
-import shop.core.domain.item.Item;
-import shop.core.domain.user.User;
+import shop.core.domain.Item;
+import shop.core.domain.User;
+import shop.core.dtos.ItemDto;
 import shop.core.requests.shared.SearchItemRequest;
 import shop.core.responses.shared.SearchItemResponse;
 import shop.core.services.actions.shared.SearchItemService;
@@ -62,7 +63,7 @@ public class SearchForItemsAcceptanceTest {
                 searchItemService.execute(new SearchItemRequest(currentUserId, "", "10", Collections.emptyList(), null));
         assertFalse(searchItemResponse.hasErrors());
         assertFalse(searchItemResponse.isNextPageAvailable());
-        Optional<Item> wrongItem = searchItemResponse.getItems().stream()
+        Optional<ItemDto> wrongItem = searchItemResponse.getItems().stream()
                 .filter(item -> new BigDecimal("10").compareTo(item.getPrice()) < 0)
                 .findAny();
         assertTrue(wrongItem.isEmpty());
@@ -103,7 +104,7 @@ public class SearchForItemsAcceptanceTest {
                 searchItemService.execute(new SearchItemRequest(currentUserId, "T", "25", List.of(orderingRuleName, orderingRulePrice), pagingRule));
         assertFalse(searchItemResponse.hasErrors());
         assertTrue(searchItemResponse.isNextPageAvailable());
-        Optional<Item> wrongItem = searchItemResponse.getItems().stream()
+        Optional<ItemDto> wrongItem = searchItemResponse.getItems().stream()
                 .filter(item -> new BigDecimal("25").compareTo(item.getPrice()) < 0)
                 .findAny();
         assertTrue(wrongItem.isEmpty());
@@ -116,12 +117,12 @@ public class SearchForItemsAcceptanceTest {
         assertTrue(isPageContainingCorrectItems(searchItemResponse.getItems(), 7L));
     }
 
-    private boolean isOrderedCorrectly(List<Item> items, Long... ids) {
+    private boolean isOrderedCorrectly(List<ItemDto> items, Long... ids) {
         return IntStream.range(0, ids.length)
                 .allMatch(index -> ids[index].equals(items.get(index).getId()));
     }
 
-    private boolean isPageContainingCorrectItems(List<Item> items, Long... ids) {
+    private boolean isPageContainingCorrectItems(List<ItemDto> items, Long... ids) {
         return IntStream.range(0, ids.length)
                 .allMatch(index -> ids[index].equals(items.get(index).getId()));
     }

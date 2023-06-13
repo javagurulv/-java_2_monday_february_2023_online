@@ -6,7 +6,7 @@ import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import shop.core.database.ItemRepository;
-import shop.core.domain.item.Item;
+import shop.core.domain.Item;
 
 import java.math.BigDecimal;
 import java.util.List;

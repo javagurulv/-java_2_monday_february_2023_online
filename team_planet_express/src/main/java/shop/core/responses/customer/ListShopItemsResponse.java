@@ -1,8 +1,7 @@
 package shop.core.responses.customer;
 
 import lombok.Getter;
-import shop.core.domain.item.Item;
-import shop.core.domain.user.UserRole;
+import shop.core.dtos.ItemDto;
 import shop.core.responses.CoreResponse;
 
 import java.util.List;
@@ -10,12 +9,10 @@ import java.util.List;
 @Getter
 public class ListShopItemsResponse extends CoreResponse {
 
-    private final List<Item> shopItems;
-    private final UserRole userRole;
+    private final List<ItemDto> shopItems;
 
-    public ListShopItemsResponse(List<Item> shopItems, UserRole userRole) {
+    public ListShopItemsResponse(List<ItemDto> shopItems) {
         this.shopItems = shopItems;
-        this.userRole = userRole;
     }
 
 }

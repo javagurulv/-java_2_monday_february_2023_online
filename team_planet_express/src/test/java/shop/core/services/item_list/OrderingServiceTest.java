@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
-import shop.core.domain.item.Item;
+import shop.core.domain.Item;
 import shop.core.support.ordering.OrderBy;
 import shop.core.support.ordering.OrderDirection;
 import shop.core.support.ordering.OrderingRule;

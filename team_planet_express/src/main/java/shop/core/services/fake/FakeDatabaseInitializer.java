@@ -4,9 +4,9 @@ import org.springframework.transaction.annotation.Transactional;
 import shop.core.database.CartRepository;
 import shop.core.database.ItemRepository;
 import shop.core.database.UserRepository;
-import shop.core.domain.cart.Cart;
-import shop.core.domain.item.Item;
-import shop.core.domain.user.User;
+import shop.core.domain.Cart;
+import shop.core.domain.Item;
+import shop.core.domain.User;
 import shop.core.services.fake.fake_item_generator.RandomItemGeneratorImpl;
 
 import java.util.List;

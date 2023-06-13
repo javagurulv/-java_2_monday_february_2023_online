@@ -1,10 +1,8 @@
-package shop.core.domain.cart_item;
+package shop.core.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import shop.core.domain.cart.Cart;
-import shop.core.domain.item.Item;
 
 @Data
 @NoArgsConstructor

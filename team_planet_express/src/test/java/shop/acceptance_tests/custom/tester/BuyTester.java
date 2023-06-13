@@ -2,7 +2,7 @@ package shop.acceptance_tests.custom.tester;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.domain.cart.Cart;
+import shop.core.domain.Cart;
 import shop.core.requests.customer.BuyRequest;
 import shop.core.services.actions.customer.BuyService;
 

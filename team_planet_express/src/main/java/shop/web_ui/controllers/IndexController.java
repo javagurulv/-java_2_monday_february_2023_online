@@ -6,7 +6,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import shop.core.database.CartItemRepository;
 import shop.core.database.CartRepository;
-import shop.core.domain.cart.Cart;
+import shop.core.domain.Cart;
 import shop.core.requests.customer.AddItemToCartRequest;
 import shop.core.requests.customer.ListShopItemsRequest;
 import shop.core.requests.shared.SignInRequest;
@@ -30,7 +30,7 @@ public class IndexController {
 
     @GetMapping(value = "/")
     public String index(ModelMap modelMap) {
-        ListShopItemsRequest request = new ListShopItemsRequest(currentUserId);
+        ListShopItemsRequest request = new ListShopItemsRequest();
         ListShopItemsResponse response = listShopItemsService.execute(request);
         modelMap.addAttribute("items", response.getShopItems());
         Optional<Cart> cart = cartRepository.findOpenCartForUserId(currentUserId.getValue());
