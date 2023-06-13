@@ -22,7 +22,7 @@
     <tr>
         <form action="/registerNewUser" th:object="${request}" method="post">
             <td><input type="text" th:field="${request.email}"/></td>
-            <td><input type="text" th:field="${request.name}"/></td>
+            <td><input type="text" th:field="${request.username}"/></td>
             <td><input type="text" th:field="${request.password}"/></td>
             <td>
                 <input type="submit" value="Add User"/>
