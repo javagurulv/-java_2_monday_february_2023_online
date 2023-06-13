@@ -1,18 +1,15 @@
 package lv.fitness_app.core.services.validators;
 
+import lv.fitness_app.core.requests.Ordering;
+import lv.fitness_app.core.requests.Paging;
+import lv.fitness_app.core.requests.SearchExerciseRequest;
+import lv.fitness_app.core.responses.CoreError;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import lv.fitness_app.core.requests.SearchExerciseRequest;
-import lv.fitness_app.core.requests.Paging;
-import lv.fitness_app.core.requests.Ordering;
-import lv.fitness_app.core.responses.CoreError;
-import org.springframework.stereotype.Component;
-
-
-@Component
-public class SearchExerciseRequestValidator {
+public class SearchExerciseEquivalentRequestValidator {
 
     public List<CoreError> validate(SearchExerciseRequest request) {
         List<CoreError> errors = new ArrayList<>();
@@ -35,9 +32,8 @@ public class SearchExerciseRequestValidator {
 
     private List<CoreError> validateSearchFields(SearchExerciseRequest request) {
         List<CoreError> errors = new ArrayList<>();
-        if (isEmpty(request.getName()) && isEmpty(request.getMuscleGroup())) {
+        if (isEmpty(request.getName())) {
             errors.add(new CoreError("name", "Must not be empty!"));
-            errors.add(new CoreError("muscleGroup", "Must not be empty!"));
         }
         return errors;
     }
@@ -97,5 +93,4 @@ public class SearchExerciseRequestValidator {
                 ? Optional.of(new CoreError("pageSize", "Must not be empty!"))
                 : Optional.empty();
     }
-
 }
