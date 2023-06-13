@@ -4,11 +4,13 @@ import lv.fitness_app.core.requests.Ordering;
 import lv.fitness_app.core.requests.Paging;
 import lv.fitness_app.core.requests.SearchExerciseRequest;
 import lv.fitness_app.core.responses.CoreError;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class SearchExerciseEquivalentRequestValidator {
 
     public List<CoreError> validate(SearchExerciseRequest request) {
