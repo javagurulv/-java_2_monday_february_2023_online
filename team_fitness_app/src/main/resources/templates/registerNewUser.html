@@ -10,7 +10,7 @@
 
 <body>
 
-<h3>Program menu</h3>
+<h3>Registration</h3>
 
 <table>
     <tr>
@@ -20,7 +20,7 @@
     </tr>
 
     <tr>
-        <form action="/addBookToList" th:object="${request}" method="post">
+        <form action="/registerNewUser" th:object="${request}" method="post">
             <td><input type="text" th:field="${request.email}"/></td>
             <td><input type="text" th:field="${request.name}"/></td>
             <td><input type="text" th:field="${request.password}"/></td>
@@ -31,6 +31,13 @@
         </form>
     </tr>
 </table>
+
+<td th:if="${errors != null}">
+    <tr th:each="error : ${errors}">
+        <td th:text="${error.field}"/>
+        <td th:text="${error.message}"/>
+    </tr>
+</td>
 
 </body>
 
