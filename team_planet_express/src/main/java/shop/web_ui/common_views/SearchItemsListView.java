@@ -5,10 +5,7 @@ import com.vaadin.flow.component.html.Main;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.BeforeEvent;
-import com.vaadin.flow.router.HasUrlParameter;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import shop.core.support.paging.PagingRule;
@@ -30,7 +27,7 @@ public class SearchItemsListView extends Main implements HasUrlParameter<String>
     SearchItemService searchItemService;
 
     @Override
-    public void setParameter(BeforeEvent event, String parameter) {
+    public void setParameter(BeforeEvent event, @WildcardParameter String parameter) {
         SearchItemRequest searchItemRequest = new SearchItemRequest(parameter, "", List.of(), new PagingRule(1, "10"));
         SearchItemResponse response = searchItemService.execute(searchItemRequest);
         List<ItemDTO> items = response.getItemsDTO();

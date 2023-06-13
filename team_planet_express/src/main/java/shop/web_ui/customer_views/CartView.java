@@ -31,7 +31,7 @@ import java.util.List;
 @PermitAll
 public class CartView extends Main {
     public CartView(@Autowired GetListCartItemsService getListCartItemsService, @Autowired SecurityService securityService,
-                    @Autowired RemoveItemFromCartService removeItemFromCartService, @Autowired BuyService buyService) {
+                    @Autowired RemoveItemFromCartService removeItemFromCartService, @Autowired BuyService buyCartService) {
         GetListCartItemsRequest request = new GetListCartItemsRequest();
         GetListCartItemsResponse response = getListCartItemsService.execute(request);
 
@@ -49,7 +49,7 @@ public class CartView extends Main {
                 HorizontalLayout horizontalLayout = new HorizontalLayout();
                 Button button = new Button("Buy", event -> {
                     BuyRequest buyRequest = new BuyRequest();
-                    BuyResponse buyResponse = buyService.execute(buyRequest);
+                    BuyResponse buyResponse = buyCartService.execute(buyRequest);
                     if (buyResponse.hasErrors()) {
                         for (CoreError error : buyResponse.getErrors()) {
                             add(new ErrorMessage(error.getMessage()));
