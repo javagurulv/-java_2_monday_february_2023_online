@@ -27,6 +27,13 @@ dependencies {
     //Spring JDBC
     implementation'org.springframework:spring-jdbc:5.2.6.RELEASE'
 
+    //Object Relational Mapping
+    implementation('org.hibernate:hibernate-core:5.4.25.Final')
+
+    implementation('org.springframework:spring-orm:5.3.23')
+    implementation('org.springframework:spring-tx:5.3.23')
+
+
 //    tasks.compileJava {
 //        options.compilerArgs << '-Xlint:unchecked'
 //    }

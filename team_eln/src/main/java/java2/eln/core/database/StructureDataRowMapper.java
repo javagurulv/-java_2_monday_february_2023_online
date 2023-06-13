@@ -2,10 +2,12 @@ package java2.eln.core.database;
 
 import java2.eln.core.domain.StructureData;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Component
 public class StructureDataRowMapper implements RowMapper<StructureData> {
     @Override
     public StructureData mapRow(ResultSet rs, int rowNum) throws SQLException {

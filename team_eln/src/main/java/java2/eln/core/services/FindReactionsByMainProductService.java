@@ -1,6 +1,6 @@
 package java2.eln.core.services;
 
-import java2.eln.core.database.DatabaseIM;
+import java2.eln.core.database.ReactionRepository;
 import java2.eln.core.requests.FindReactionsByMainProductRequest;
 import java2.eln.core.responses.FindReactionsByMainProductResponse;
 import java2.eln.core.domain.ReactionData;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class FindReactionsByMainProductService {
 
     @Autowired
-    DatabaseIM databaseIM;
+    ReactionRepository reactionRepository;
 
 //    public FindReactionsByMainProductService(DatabaseIM databaseIM) {
 //        this.databaseIM = databaseIM;
@@ -25,7 +25,7 @@ public class FindReactionsByMainProductService {
         StructureData searchedSubstance = findReactionsByMainProductRequest.getSearchedSubstance();
         AtomContainerComparator comparator = new AtomContainerComparator();
 
-        List<ReactionData> searchingResults = databaseIM.getAllReactions().stream()
+        List<ReactionData> searchingResults = reactionRepository.getAllReactions().stream()
                 .filter(reactionData -> comparator.compare(searchedSubstance.getMol(), reactionData.getMainProduct().getMol()) == 0)
                 .collect(Collectors.toList());
 

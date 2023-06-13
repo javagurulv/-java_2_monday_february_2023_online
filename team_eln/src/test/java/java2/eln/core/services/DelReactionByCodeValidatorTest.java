@@ -1,7 +1,7 @@
 package java2.eln.core.services;
 
-import java2.eln.core.database.DatabaseIM;
-import java2.eln.core.database.InMemoryDatabaseImplIM;
+import java2.eln.core.database.ReactionRepository;
+import java2.eln.core.database.InMemoryReactionRepositoryImpl;
 import java2.eln.core.requests.DeleteReactionByCodeRequest;
 import java2.eln.core.responses.errorPattern.CoreError;
 import java2.eln.core.services.validators.DelReactionByCodeValidator;
@@ -15,7 +15,7 @@ public class DelReactionByCodeValidatorTest {
     @Disabled
     @Test
     public void testNotEmptyCode() {
-        DatabaseIM inMemoryDataBase = new InMemoryDatabaseImplIM();
+        ReactionRepository inMemoryDataBase = new InMemoryReactionRepositoryImpl();
 
         DeleteReactionByCodeRequest deleteReactionByCodeRequest = new DeleteReactionByCodeRequest("TP1");
         DelReactionByCodeValidator delReactionByCodeValidator = new DelReactionByCodeValidator();
