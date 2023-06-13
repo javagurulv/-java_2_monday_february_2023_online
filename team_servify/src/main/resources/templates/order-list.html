@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Order List</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <h2>Order List</h2>
+  <h4>Welcome, <span th:text="${userName}"></span></h4>
+  <p><a href="/">Home</a></p>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Order ID</th>
+<!--      <th>User</th>-->
+      <th>Order Date</th>
+      <th>Order Complete</th>
+      <th>Total Price</th>
+      <th>Notes</th>
+      <th>Order Status</th>
+      <th>Order Items</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iterate over the list of orders -->
+    <tr th:each="order : ${orders}">
+      <td th:text="${order.id}"></td>
+<!--      <td th:text="${order.user.firstName} ${order.user.lastName}"></td>-->
+      <td th:text="${order.orderDate}"></td>
+      <td th:text="${order.orderComplete}"></td>
+      <td th:text="${order.totalPrice}"></td>
+      <td th:text="${order.notes}"></td>
+      <td th:text="${order.orderStatus}"></td>
+      <td>
+        <ul>
+          <!-- Iterate over the order items for each order -->
+          <li th:each="orderItem : ${order.orderItemsList}">
+            Detail Type: <span th:text="${orderItem.detail.type}"></span> |
+            Detail Side: <span th:text="${orderItem.detail.side}"></span> |
+            Detail Price: <span th:text="${orderItem.detail.price}"></span> |
+            Color ID: <span th:text="${orderItem.color.id}"></span> |
+            Count: <span th:text="${orderItem.countDetail}"></span>
+          </li>
+        </ul>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

@@ -7,7 +7,7 @@ import java.util.*;
 /**
  * This interface represents a database that stores reaction data.
  */
-public interface DatabaseIM {
+public interface ReactionRepository {
     /**
      * Adds the specified reaction to the database.
      *

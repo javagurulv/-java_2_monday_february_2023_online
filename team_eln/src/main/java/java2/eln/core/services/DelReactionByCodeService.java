@@ -1,6 +1,6 @@
 package java2.eln.core.services;
 
-import java2.eln.core.database.DatabaseIM;
+import java2.eln.core.database.ReactionRepository;
 import java2.eln.core.requests.DeleteReactionByCodeRequest;
 import java2.eln.core.responses.errorPattern.CoreError;
 import java2.eln.core.responses.DeleteReactionResponse;
@@ -14,7 +14,7 @@ import java.util.List;
 public class DelReactionByCodeService {
 
     @Autowired
-    DatabaseIM databaseIM;
+    ReactionRepository reactionRepository;
 
     @Autowired
     DelReactionByCodeValidator delReactionByCodeValidator;
@@ -30,7 +30,7 @@ public class DelReactionByCodeService {
             return new DeleteReactionResponse(errors);
         }
         String code = deleteReactionByCodeRequest.getCode();
-        return new DeleteReactionResponse(databaseIM.delReactionByCode(code));
+        return new DeleteReactionResponse(reactionRepository.delReactionByCode(code));
     }
 
 }

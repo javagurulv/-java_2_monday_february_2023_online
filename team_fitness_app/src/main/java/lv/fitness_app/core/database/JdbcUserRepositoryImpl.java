@@ -1,4 +1,4 @@
-package lv.fitness_app.database;
+package lv.fitness_app.core.database;
 
 import lv.fitness_app.core.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;

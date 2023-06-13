@@ -7,7 +7,7 @@ import lv.fitness_app.core.requests.SearchExerciseRequest;
 import lv.fitness_app.core.responses.CoreError;
 import lv.fitness_app.core.responses.SearchExerciseResponse;
 import lv.fitness_app.core.services.validators.SearchExerciseRequestValidator;
-import lv.fitness_app.database.ExerciseRepository;
+import lv.fitness_app.core.database.ExerciseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

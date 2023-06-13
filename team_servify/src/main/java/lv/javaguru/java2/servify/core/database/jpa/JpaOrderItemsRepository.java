@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface JpaOrderItemRepository extends JpaRepository<OrderItems, Long> {
+public interface JpaOrderItemsRepository extends JpaRepository<OrderItems, Long> {
 }

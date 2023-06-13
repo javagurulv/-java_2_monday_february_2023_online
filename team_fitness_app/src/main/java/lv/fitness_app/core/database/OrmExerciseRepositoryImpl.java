@@ -1,7 +1,6 @@
-package lv.fitness_app.database;
+package lv.fitness_app.core.database;
 
 import lv.fitness_app.core.domain.Exercise;
-import lv.fitness_app.core.domain.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;

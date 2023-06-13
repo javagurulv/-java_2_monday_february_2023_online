@@ -29,9 +29,9 @@ public class AddDetailService {
             return new AddDetailResponse(errors);
         }
         Detail newDetail = new Detail(request.getDetailType(),
-                request.getDetailSide(),
-                request.getDetailPrice());
+                                      request.getDetailSide(),
+                                      request.getDetailPrice());
         detailRepository.save(newDetail);
-        return new AddDetailResponse(newDetail);
+        return new AddDetailResponse(true);
     }
 }

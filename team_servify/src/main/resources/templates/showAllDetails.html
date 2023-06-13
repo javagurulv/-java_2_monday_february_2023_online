@@ -2,42 +2,47 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
-  <head>
-    <meta charset="utf-8">
-    <meta name="description" content="Servify demo project">
-    <meta name="author" content="DreamTeamDevelopers">
-    <title>Servify</title>
-  </head>
+  <meta charset="utf-8">
+  <meta name="description" content="Servify demo project">
+  <meta name="author" content="DreamTeamDevelopers">
+  <title>Servify</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
 
 <body>
 
 <h3>Show all details in the list</h3>
 
-<table>
+<table class="table table-striped">
+  <thead>
   <tr>
-    <td>Type:</td>
-    <td>Side:</td>
-    <td>Price:</td>
+    <th>ID</th>
+    <th>Type</th>
+    <th>Side</th>
+    <th>Price</th>
   </tr>
-
-  <td th:if="${detail != null}">
-    <tr th:each="detail : ${detail}">
-      <td th:text="${detail.id}" />
-      <td th:text="${detail.type}" />
-      <td th:text="${detail.side}" />
-      <td th:text="${detail.price}" />
-    </tr>
-  </td>
-
+  </thead>
+  <tbody>
+  <tr th:each="detail : ${detail}">
+    <td th:text="${detail.id}" />
+    <td th:text="${detail.type}" />
+    <td th:text="${detail.side}" />
+    <td th:text="${detail.price}" />
+  </tr>
+  </tbody>
 </table>
 
-<a href="/addDetail">Add detail</a> <br>
-<a href="/deleteDetail">Delete detail</a> <br>
+<a href="/addDetail" class="btn btn-primary">Add detail</a> <br>
+<a href="/deleteDetail" class="btn btn-primary">Delete detail</a> <br>
 
 <form action="/" method="get">
-  <input type="submit" value="Go to main page" name="Submit" />
+  <input type="submit" value="Go to main page" class="btn btn-primary" />
 </form>
 
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

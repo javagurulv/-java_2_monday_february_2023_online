@@ -1,6 +1,6 @@
 package java2.eln.core.services;
 
-import java2.eln.core.database.DatabaseIM;
+import java2.eln.core.database.ReactionRepository;
 import java2.eln.core.requests.FindReactionRequest;
 import java2.eln.core.requests.Ordering;
 import java2.eln.core.responses.FindReactionResponse;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class FindReactionService {
 
     @Autowired
-    DatabaseIM databaseIM;
+    ReactionRepository reactionRepository;
 
     @Autowired
     FindReactionValidator findReactionValidator;
@@ -54,7 +54,7 @@ public class FindReactionService {
 
     @NotNull
     private List<ReactionData> getSearchingResults(FindReactionRequest findReactionRequest) {
-        return databaseIM.getAllReactions().stream()
+        return reactionRepository.getAllReactions().stream()
             .filter(reaction -> compareObjects(findReactionRequest, reaction))
             .collect(Collectors.toList());
     }

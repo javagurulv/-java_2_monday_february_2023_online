@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
@@ -14,11 +13,11 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Objects;
 
-@Component
-class JdbcDatabaseImpl implements DatabaseIM {
+//@Component
+class JdbcReactionRepositoryImpl implements ReactionRepository {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    @Autowired private JdbcTemplate jdbcTemplate;
+    @Autowired private ReactionDataRowMapper reactionDataRowMapper;
 
     @Override
     @Transactional
@@ -75,8 +74,7 @@ class JdbcDatabaseImpl implements DatabaseIM {
                 LEFT JOIN ConditionData\s
                 ON reaction_id = reactions.id
                 """;
-        List<ReactionData> reactions = jdbcTemplate.query(sql, new ReactionDataRowMapper(jdbcTemplate));
-        return reactions;
+        return jdbcTemplate.query(sql, reactionDataRowMapper);
     }
 
     @Override

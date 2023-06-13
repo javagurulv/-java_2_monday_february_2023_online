@@ -1,10 +1,26 @@
 package java2.eln.core.domain;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "user")
 public class User {
-    private int userId = 0;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private int userId;
+
+    @Column(name = "username")
     private String username;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "password")
     private String password;
+
+    public User() {
+    }
 
     public User(int userId, String username, String email, String password) {
         this.userId = userId;
@@ -49,8 +65,6 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    // Additional getters and setters, if required
 
     @Override
     public String toString() {

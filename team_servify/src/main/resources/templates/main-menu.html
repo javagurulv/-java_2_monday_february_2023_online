@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Servify demo project">
+  <meta name="author" content="Servify">
+  <title>Servify</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+
+<h3>Program menu</h3>
+
+<a href="/addDetail" class="btn btn-primary">Add detail</a> <br>
+<a href="/deleteDetail" class="btn btn-primary">Delete detail</a> <br>
+<a href="/showAllDetails" class="btn btn-primary">Show all details</a> <br>
+<a href="/searchDetail" class="btn btn-primary">Search detail</a> <br>
+<a href="/registerUser" class="btn btn-primary">Register user</a> <br>
+<a href="/showAllUsers" class="btn btn-primary">Show All user</a> <br>
+
+<form th:action="@{/logout}" method="post">
+  <input type="submit" value="Sign Out" class="btn btn-danger"/>
+</form>
+
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

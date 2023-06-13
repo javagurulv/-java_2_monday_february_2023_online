@@ -1,8 +1,10 @@
 package lv.javaguru.java2.servify.core.services.details;
 
 //import javax.transaction.Transactional;
+
 import lv.javaguru.java2.servify.core.database.DetailRepository;
 import lv.javaguru.java2.servify.core.database.jpa.JpaDetailRepository;
+import lv.javaguru.java2.servify.core.dto.DetailDTO;
 import lv.javaguru.java2.servify.core.dto.requests.RemoveDetailRequest;
 import lv.javaguru.java2.servify.core.dto.responses.CoreError;
 import lv.javaguru.java2.servify.core.dto.responses.RemoveDetailResponse;
@@ -17,8 +19,10 @@ import java.util.List;
 @Transactional
 public class RemoveDetailService {
 
-    @Autowired private JpaDetailRepository detailRepository;
-    @Autowired private RemoveDetailRequestValidator validator;
+    @Autowired
+    private JpaDetailRepository detailRepository;
+    @Autowired
+    private RemoveDetailRequestValidator validator;
 
     public RemoveDetailResponse execute(RemoveDetailRequest request) {
         List<CoreError> errors = validator.validate(request);

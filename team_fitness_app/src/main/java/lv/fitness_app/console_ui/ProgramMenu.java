@@ -14,11 +14,12 @@ import java.util.Scanner;
 public class ProgramMenu {
 
 	private Map<Integer, UIAction> menuNumberToUIActionMap;
-	@Autowired
-	UserMenu userMenu;
+
+	private UserMenu userMenu;
 
 	@Autowired
-	public ProgramMenu(List<UIAction> uiActions) {
+	public ProgramMenu(List<UIAction> uiActions, UserMenu userMenu) {
+		this.userMenu = userMenu;
 		menuNumberToUIActionMap = new HashMap<>();
 		menuNumberToUIActionMap.put(1, findUIAction(uiActions, AddUserUIAction.class));
 		menuNumberToUIActionMap.put(2, findUIAction(uiActions, LoginUserUIAction.class));

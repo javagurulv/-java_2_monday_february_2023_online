@@ -12,31 +12,40 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "StructureData")
 public class StructureData {
-    private String smiles; // "CC(=O)O";
-    private String casNumber;
-    private String name;
-    private String internalCode;
-    private double mass;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
 
+    @Column(name = "smiles")
+    private String smiles;
+
+    @Column(name = "casNumber")
+    private String casNumber;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "internalCode")
+    private String internalCode;
+
+    @Column(name = "mass")
+    private double mass;
+
+    @Transient
     private IAtomContainer mol;
+    @Transient
     private IMolecularFormula formula;
+    @Transient
     private double mw;
 
-    public String getSmiles() {
-        return smiles;
-    }
-
-    public String getName() {
-        return name;
-    }
-    public IAtomContainer getMol() {
-        return mol;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public StructureData() {
     }
 
     public StructureData(String smiles) {
@@ -53,6 +62,25 @@ public class StructureData {
         smilesConverter();
         calculateBruttoFormula();
         calculateMW();
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getSmiles() {
+        return smiles;
+    }
+
+    public String getName() {
+        return name;
+    }
+    public IAtomContainer getMol() {
+        return mol;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCasNumber() {
@@ -139,6 +167,9 @@ public class StructureData {
 
     @Override
     public String toString() {
+        smilesConverter();
+        calculateBruttoFormula();
+        calculateMW();
         return "baseClasses.StructureData{" +
                 "smiles='" + smiles + '\'' +
                 ", formula=" + MolecularFormulaManipulator.getString(formula) +

@@ -69,7 +69,7 @@ public class Exercise {
     }
 
     public void setDetailedMuscleGroup(String detailedMuscleGroup) {
-        detailedMuscleGroup = detailedMuscleGroup;
+        this.detailedMuscleGroup = detailedMuscleGroup;
     }
 
     public String getOtherMuscleGroup() {
@@ -77,7 +77,7 @@ public class Exercise {
     }
 
     public void setOtherMuscleGroup(String otherMuscleGroup) {
-        otherMuscleGroup = otherMuscleGroup;
+        this.otherMuscleGroup = otherMuscleGroup;
     }
 
     public String getType() {

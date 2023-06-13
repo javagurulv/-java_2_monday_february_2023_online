@@ -1,6 +1,6 @@
 package java2.eln.core.services;
 
-import java2.eln.core.database.DatabaseIM;
+import java2.eln.core.database.ReactionRepository;
 import java2.eln.core.requests.AddReactionRequest;
 import java2.eln.core.responses.AddReactionResponse;
 import java2.eln.core.responses.errorPattern.CoreError;
@@ -14,7 +14,7 @@ import java.util.List;
 @Component
 public class AddReactionService {
     @Autowired
-    private DatabaseIM databaseIM;
+    private ReactionRepository reactionRepository;
     @Autowired
     private AddReactionValidator validator;
 
@@ -33,7 +33,7 @@ public class AddReactionService {
 
         demoReactionLog.calculateReactionYield();
 
-        databaseIM.addReaction(demoReactionLog);
+        reactionRepository.addReaction(demoReactionLog);
         return new AddReactionResponse(demoReactionLog);
     }
 
