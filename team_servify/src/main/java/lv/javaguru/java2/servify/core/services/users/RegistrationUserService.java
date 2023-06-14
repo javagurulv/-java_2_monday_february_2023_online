@@ -9,7 +9,6 @@ import lv.javaguru.java2.servify.core.dto.responses.AddUserResponse;
 import lv.javaguru.java2.servify.core.dto.responses.CoreError;
 import lv.javaguru.java2.servify.core.services.validators.RegistrationUserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,8 +25,6 @@ public class RegistrationUserService {
     private JpaUserTypeRepository roleRepository;
     @Autowired
     private RegistrationUserValidator validator;
-    @Autowired
-    private PasswordEncoder encoder;
 
 
     public AddUserResponse registerUser(RegistrationDTO registrDTO) {
@@ -35,7 +32,6 @@ public class RegistrationUserService {
         if (!errors.isEmpty()) {
             return new AddUserResponse(errors);
         }
-        String ensodedPassword = encoder.encode(registrDTO.getPassword());
         UserType userRole = roleRepository.findByAuthority("CUSTOMER").get();
         Set<UserType> authorities = new HashSet<>();
         authorities.add(userRole);
@@ -44,7 +40,7 @@ public class RegistrationUserService {
                 registrDTO.getLastName(),
                 registrDTO.getEmail(),
                 registrDTO.getPhoneNumber(),
-                ensodedPassword,
+                registrDTO.getPassword(),
                 authorities);
         userRepository.save(newUser);
         return new AddUserResponse(true);

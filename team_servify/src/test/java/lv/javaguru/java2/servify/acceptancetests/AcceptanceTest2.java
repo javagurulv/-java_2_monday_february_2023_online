@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servify.acceptancetests;
 
-import lv.javaguru.java2.servify.config.ServifyConfiguration;
+import lv.javaguru.java2.servify.core.config.ServifyCoreConfiguration;
 import lv.javaguru.java2.servify.core.dto.requests.SearchDetailRequest;
 import lv.javaguru.java2.servify.core.dto.responses.SearchDetailResponse;
 import lv.javaguru.java2.servify.core.services.details.SearchDetailService;
@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {ServifyConfiguration.class})
+@ContextConfiguration(classes = {ServifyCoreConfiguration.class})
 public class AcceptanceTest2 {
 
     @Autowired private SearchDetailService searchDetailService;
