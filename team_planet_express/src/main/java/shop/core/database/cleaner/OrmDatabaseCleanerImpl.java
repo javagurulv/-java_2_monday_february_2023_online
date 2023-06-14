@@ -1,14 +1,14 @@
-package shop.core.database.orm.cleaner;
+package shop.core.database.cleaner;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import shop.core.database.CartItemRepository;
-import shop.core.database.CartRepository;
-import shop.core.database.ItemRepository;
-import shop.core.database.UserRepository;
+import shop.core.database.jpa.JpaCartItemRepository;
+import shop.core.database.jpa.JpaCartRepository;
+import shop.core.database.jpa.JpaItemRepository;
+import shop.core.database.jpa.JpaUserRepository;
 import shop.core.domain.Cart;
 import shop.core.domain.CartItem;
 import shop.core.domain.Item;
@@ -24,23 +24,23 @@ public class OrmDatabaseCleanerImpl implements DatabaseCleaner {
     private EntityManager entityManager;
 
     @Autowired
-    private UserRepository userRepository;
+    private JpaUserRepository userRepository;
     @Autowired
-    private ItemRepository itemRepository;
+    private JpaItemRepository itemRepository;
     @Autowired
-    private CartRepository cartRepository;
+    private JpaCartRepository cartRepository;
     @Autowired
-    private CartItemRepository cartItemRepository;
+    private JpaCartItemRepository cartItemRepository;
 
     @Override
     public void clean() {
-        List<CartItem> cartItemTableData = cartItemRepository.getAllCartItems();
+        List<CartItem> cartItemTableData = cartItemRepository.findAll();
         clearTable(cartItemTableData);
-        List<Cart> cartTableData = cartRepository.getAllCarts();
+        List<Cart> cartTableData = cartRepository.findAll();
         clearTable(cartTableData);
-        List<Item> itemTableData = itemRepository.getAllItems();
+        List<Item> itemTableData = itemRepository.findAll();
         clearTable(itemTableData);
-        List<User> userTableData = userRepository.getAllUsers();
+        List<User> userTableData = userRepository.findAll();
         clearTable(userTableData);
     }
 

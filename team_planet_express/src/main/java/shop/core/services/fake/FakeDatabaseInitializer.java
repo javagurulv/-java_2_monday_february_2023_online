@@ -1,9 +1,9 @@
 package shop.core.services.fake;
 
 import org.springframework.transaction.annotation.Transactional;
-import shop.core.database.CartRepository;
-import shop.core.database.ItemRepository;
-import shop.core.database.UserRepository;
+import shop.core.database.jpa.JpaCartRepository;
+import shop.core.database.jpa.JpaItemRepository;
+import shop.core.database.jpa.JpaUserRepository;
 import shop.core.domain.Cart;
 import shop.core.domain.Item;
 import shop.core.domain.User;
@@ -14,13 +14,13 @@ import java.util.List;
 @Transactional
 public class FakeDatabaseInitializer {
 
-    private final UserRepository userRepository;
-    private final ItemRepository itemRepository;
-    private final CartRepository cartRepository;
+    private final JpaUserRepository userRepository;
+    private final JpaItemRepository itemRepository;
+    private final JpaCartRepository cartRepository;
 
-    public FakeDatabaseInitializer(UserRepository userRepository,
-                                   ItemRepository itemRepository,
-                                   CartRepository cartRepository) {
+    public FakeDatabaseInitializer(JpaUserRepository userRepository,
+                                   JpaItemRepository itemRepository,
+                                   JpaCartRepository cartRepository) {
         this.userRepository = userRepository;
         this.itemRepository = itemRepository;
         this.cartRepository = cartRepository;
@@ -40,7 +40,7 @@ public class FakeDatabaseInitializer {
     }
 
     private void createFakeCartsForUsers() {
-        List<Cart> fakeCarts = new FakeCartGenerator().createCartsForUsers(userRepository.getAllUsers());
+        List<Cart> fakeCarts = new FakeCartGenerator().createCartsForUsers(userRepository.findAll());
         for (Cart cart : fakeCarts) {
             cartRepository.save(cart);
         }

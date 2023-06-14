@@ -2,8 +2,8 @@ package shop.core.services.validators.actions.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.database.CartItemRepository;
-import shop.core.database.ItemRepository;
+import shop.core.database.jpa.JpaCartItemRepository;
+import shop.core.database.jpa.JpaItemRepository;
 import shop.core.domain.Cart;
 import shop.core.domain.Item;
 import shop.core.error_code_processing.ErrorProcessor;
@@ -11,7 +11,7 @@ import shop.core.requests.customer.RemoveItemFromCartRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.cart.CartValidator;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.services.validators.universal.system.RepositoryAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 
@@ -28,9 +28,9 @@ public class RemoveItemFromCartValidator {
     private static final String ERROR_NO_SUCH_ITEM_IN_SHOP = "VDT-RIC-NIS";
 
     @Autowired
-    private ItemRepository itemRepository;
+    private JpaItemRepository itemRepository;
     @Autowired
-    private CartItemRepository cartItemRepository;
+    private JpaCartItemRepository cartItemRepository;
     @Autowired
     private CurrentUserIdValidator userIdValidator;
     @Autowired
@@ -38,7 +38,7 @@ public class RemoveItemFromCartValidator {
     @Autowired
     private InputStringValidator inputStringValidator;
     @Autowired
-    private DatabaseAccessValidator databaseAccessValidator;
+    private RepositoryAccessValidator repositoryAccessValidator;
     @Autowired
     private ErrorProcessor errorProcessor;
 
@@ -71,8 +71,8 @@ public class RemoveItemFromCartValidator {
     }
 
     private Optional<CoreError> validateItemNameInCart(RemoveItemFromCartRequest request) {
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getCurrentUserId().getValue());
-        Item item = databaseAccessValidator.getItemByName(request.getItemName());
+        Cart cart = repositoryAccessValidator.getOpenCartByUserId(request.getCurrentUserId().getValue());
+        Item item = repositoryAccessValidator.getItemByName(request.getItemName());
         return (cartItemRepository.findByCartIdAndItemId(cart.getId(), item.getId()).isEmpty())
                 ? Optional.of(errorProcessor.getCoreError(FIELD_NAME, ERROR_NO_SUCH_ITEM_IN_CART))
                 : Optional.empty();

@@ -2,12 +2,12 @@ package shop.core.services.validators.actions.manager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.database.ItemRepository;
+import shop.core.database.jpa.JpaItemRepository;
 import shop.core.domain.Item;
 import shop.core.error_code_processing.ErrorProcessor;
 import shop.core.requests.manager.ChangeItemDataRequest;
 import shop.core.responses.CoreError;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.services.validators.universal.system.RepositoryAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 
@@ -33,11 +33,11 @@ public class ChangeItemDataValidator {
     private static final String ERROR_ITEM_EXISTS = "VDT-CID-EIE";
 
     @Autowired
-    private ItemRepository itemRepository;
+    private JpaItemRepository itemRepository;
     @Autowired
     private InputStringValidator inputStringValidator;
     @Autowired
-    private DatabaseAccessValidator databaseAccessValidator;
+    private RepositoryAccessValidator repositoryAccessValidator;
     @Autowired
     private ErrorProcessor errorProcessor;
 
@@ -83,10 +83,10 @@ public class ChangeItemDataValidator {
     }
 
     private Optional<CoreError> validateDuplicate(ChangeItemDataRequest request) {
-        Item originalItem = databaseAccessValidator.getItemById(Long.parseLong(request.getItemId()));
+        Item originalItem = repositoryAccessValidator.getItemById(Long.parseLong(request.getItemId()));
         String newItemName = setNewItemName(request, originalItem);
         BigDecimal newPrice = setNewPrice(request, originalItem);
-        return (itemRepository.getAllItems().stream()
+        return (itemRepository.findAll().stream()
                 .filter(item -> !originalItem.getId().equals(item.getId()))
                 .anyMatch(item -> newItemName.equals(item.getName()) && newPrice.compareTo(item.getPrice()) == 0))
                 ? Optional.of(errorProcessor.getCoreError(FIELD_BUTTON, ERROR_ITEM_EXISTS))

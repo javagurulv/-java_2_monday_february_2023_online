@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import shop.core.converters.ItemConverter;
-import shop.core.database.ItemRepository;
+import shop.core.database.jpa.JpaItemRepository;
 import shop.core.domain.Item;
 import shop.core.dtos.ItemDto;
 import shop.core.requests.shared.SearchItemRequest;
@@ -13,7 +13,7 @@ import shop.core.responses.shared.SearchItemResponse;
 import shop.core.services.item_list.OrderingService;
 import shop.core.services.item_list.PagingService;
 import shop.core.services.validators.actions.shared.SearchItemValidator;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.services.validators.universal.system.RepositoryAccessValidator;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -24,7 +24,7 @@ import java.util.List;
 public class SearchItemService {
 
     @Autowired
-    private ItemRepository itemRepository;
+    private JpaItemRepository itemRepository;
     @Autowired
     private SearchItemValidator validator;
     @Autowired
@@ -32,7 +32,7 @@ public class SearchItemService {
     @Autowired
     private PagingService pagingService;
     @Autowired
-    private DatabaseAccessValidator databaseAccessValidator;
+    private RepositoryAccessValidator repositoryAccessValidator;
     @Autowired
     private ItemConverter itemConverter;
 
@@ -53,22 +53,24 @@ public class SearchItemService {
     private List<Item> search(SearchItemRequest request) {
         List<Item> items;
         //TODO is blank actually ok in here ?
+        //TODO this is dead
         if (request.getItemName() != null && !isPresent(request.getPrice())) {
-            items = itemRepository.searchByName(
-                    request.getItemName().toLowerCase(),
-                    orderingService.getSQLOrderBy(request.getOrderingRules()),
-                    pagingService.getSQLLimitOffset(request.getPagingRule()));
+//            items = itemRepository.findByName(
+//                    request.getItemName().toLowerCase(),
+//                    orderingService.getSQLOrderBy(request.getOrderingRules()),
+//                    pagingService.getSQLLimitOffset(request.getPagingRule()));
         } else if (request.getItemName() != null && isPresent(request.getPrice())) {
             BigDecimal price = new BigDecimal(request.getPrice()).setScale(2, RoundingMode.HALF_UP);
-            items = itemRepository.searchByNameAndPrice(
-                    request.getItemName().toLowerCase(),
-                    price,
-                    orderingService.getSQLOrderBy(request.getOrderingRules()),
-                    pagingService.getSQLLimitOffset(request.getPagingRule()));
+//            items = itemRepository.findByNameAndPrice(
+//                    request.getItemName().toLowerCase(),
+//                    price,
+//                    orderingService.getSQLOrderBy(request.getOrderingRules()),
+//                    pagingService.getSQLLimitOffset(request.getPagingRule()));
         } else {
-            items = itemRepository.getAllItems();
+            items = itemRepository.findAll();
         }
-        return items;
+        //return items;
+        return null;
     }
 
     private boolean isExtraItemAvailable(SearchItemRequest request, List<Item> items) {

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import shop.core.database.ItemRepository;
+import shop.core.database.jpa.JpaItemRepository;
 import shop.core.domain.Item;
 import shop.core.error_code_processing.ErrorProcessor;
 import shop.core.requests.manager.AddItemToShopRequest;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 class AddItemToShopValidatorTest {
 
     @Mock
-    private ItemRepository mockItemRepository;
+    private JpaItemRepository mockItemRepository;
     @Mock
     private InputStringValidator mockInputStringValidator;
     @Mock
@@ -52,7 +52,7 @@ class AddItemToShopValidatorTest {
     @Test
     void shouldReturnErrorForExistingName() {
         when(mockRequest.getItemName()).thenReturn("name");
-        when(mockItemRepository.findByName("name")).thenReturn(Optional.of(mockItem));
+        when(mockItemRepository.findByName("name")).thenReturn(List.of(mockItem));
         when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
         validator.validate(mockRequest);
         verify(mockErrorProcessor).getCoreError("name", "VDT-AIS-IAE");

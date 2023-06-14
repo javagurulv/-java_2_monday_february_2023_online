@@ -6,7 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.converters.ItemConverter;
-import shop.core.database.ItemRepository;
+import shop.core.database.jpa.JpaItemRepository;
 import shop.core.requests.customer.ListShopItemsRequest;
 
 import static org.mockito.Mockito.verify;
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.verify;
 class ListShopItemsServiceTest {
 
     @Mock
-    private ItemRepository mockItemRepository;
+    private JpaItemRepository mockItemRepository;
     @Mock
     private ItemConverter mockItemConverter;
     @Mock
@@ -27,7 +27,7 @@ class ListShopItemsServiceTest {
     @Test
     void shouldGetItemsFromDatabase() {
         service.execute(mockRequest);
-        verify(mockItemRepository).getAllItems();
+        verify(mockItemRepository).findAll();
     }
 
 }

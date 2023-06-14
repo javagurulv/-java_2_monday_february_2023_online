@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
-import shop.core.database.CartItemRepository;
-import shop.core.database.CartRepository;
-import shop.core.database.ItemRepository;
-import shop.core.database.UserRepository;
+import shop.core.database.jpa.JpaCartItemRepository;
+import shop.core.database.jpa.JpaCartRepository;
+import shop.core.database.jpa.JpaItemRepository;
+import shop.core.database.jpa.JpaUserRepository;
 import shop.core.domain.Cart;
 import shop.core.domain.CartItem;
 import shop.core.domain.Item;
@@ -30,13 +30,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SignUpAndOrderAnItemAcceptanceTest {
 
     @Autowired
-    private UserRepository userRepository;
+    private JpaUserRepository userRepository;
     @Autowired
-    private ItemRepository itemRepository;
+    private JpaItemRepository itemRepository;
     @Autowired
-    private CartRepository cartRepository;
+    private JpaCartRepository cartRepository;
     @Autowired
-    private CartItemRepository cartItemRepository;
+    private JpaCartItemRepository cartItemRepository;
     @Autowired
     private CurrentUserId currentUserId;
     @Autowired
@@ -51,15 +51,15 @@ public class SignUpAndOrderAnItemAcceptanceTest {
                 signUpService.execute(new SignUpRequest(currentUserId, "Brannigan", "captain", "password"));
         assertFalse(signUpResponse.hasErrors());
         UserDto newUserDto = signUpResponse.getUser();
-        User newUser = userRepository.findByLoginName(newUserDto.getLogin()).orElseThrow();
+        User newUser = userRepository.findByLogin(newUserDto.getLogin()).stream().findFirst().orElseThrow();
         assertEquals(UserRole.CUSTOMER, newUser.getUserRole());
-        assertTrue(cartRepository.findOpenCartForUserId(newUser.getId()).isPresent());
-        Item orderedItem = itemRepository.findByName("Lightspeed Briefs").orElseThrow();
+        assertTrue(cartRepository.findOpenCartByUserId(newUser.getId()).stream().findFirst().isPresent());
+        Item orderedItem = itemRepository.findByName("Lightspeed Briefs").stream().findFirst().orElseThrow();
         AddItemToCartResponse addItemToCartResponse =
                 addItemToCartService.execute(new AddItemToCartRequest(currentUserId, orderedItem.getName(), "1"));
         assertFalse(addItemToCartResponse.hasErrors());
-        Cart userCart = cartRepository.findOpenCartForUserId(newUser.getId()).get();
-        List<CartItem> cartItems = cartItemRepository.getAllCartItemsForCartId(userCart.getId());
+        Cart userCart = cartRepository.findOpenCartByUserId(newUser.getId()).stream().findFirst().get();
+        List<CartItem> cartItems = cartItemRepository.findByCartId(userCart.getId());
         assertEquals(1, cartItems.size());
         CartItem cartItem = cartItems.get(0);
         Item originalItem = itemRepository.findById(cartItem.getItem().getId()).orElseThrow();

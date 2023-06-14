@@ -5,7 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import shop.core.database.ItemRepository;
+import shop.core.database.jpa.JpaItemRepository;
 import shop.core.requests.manager.AddItemToShopRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.manager.AddItemToShopResponse;
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 class AddItemToShopServiceTest {
 
     @Mock
-    private ItemRepository mockItemRepository;
+    private JpaItemRepository mockItemRepository;
     @Mock
     private AddItemToShopValidator mockValidator;
     @Mock

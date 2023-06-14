@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
-import shop.core.database.UserRepository;
+import shop.core.database.jpa.JpaUserRepository;
 import shop.core.domain.User;
 import shop.core.enums.UserRole;
 import shop.core.requests.shared.SignInRequest;
@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 public class SignInAndOutAcceptanceTest {
 
     @Autowired
-    private UserRepository userRepository;
+    private JpaUserRepository userRepository;
     @Autowired
     private CurrentUserId currentUserId;
     @Autowired
@@ -38,7 +38,7 @@ public class SignInAndOutAcceptanceTest {
         SignInResponse signInResponse =
                 signInService.execute(new SignInRequest(currentUserId, "theAnnihilator", "pathetichumans"));
         assertFalse(signInResponse.hasErrors());
-        assertEquals(currentUserId.getValue(), userRepository.findByLoginName("theAnnihilator").orElseThrow().getId());
+        assertEquals(currentUserId.getValue(), userRepository.findByLogin("theAnnihilator").stream().findFirst().orElseThrow().getId());
         assertEquals(UserRole.CUSTOMER.toString(), signInResponse.getUser().getUserRole());
         assertEquals("Morbo", signInResponse.getUser().getName());
         SignOutResponse signOutResponse =

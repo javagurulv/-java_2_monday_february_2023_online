@@ -2,13 +2,12 @@ package shop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
 import shop.console_ui.UIMenu;
-import shop.core.database.CartRepository;
-import shop.core.database.ItemRepository;
-import shop.core.database.UserRepository;
-import shop.core.database.orm.cleaner.DatabaseCleaner;
+import shop.core.database.cleaner.DatabaseCleaner;
+import shop.core.database.jpa.JpaCartRepository;
+import shop.core.database.jpa.JpaItemRepository;
+import shop.core.database.jpa.JpaUserRepository;
 import shop.core.domain.User;
 import shop.core.enums.UserRole;
 import shop.core.services.fake.FakeDatabaseInitializer;
@@ -17,7 +16,7 @@ import shop.core.services.user.UserService;
 import shop.core.support.CurrentUserId;
 import shop.web_ui.config.SpringWebConfiguration;
 
-@SpringBootApplication(exclude = HibernateJpaAutoConfiguration.class)
+@SpringBootApplication
 public class WebShopApplication {
 
     private static final String BLANK = "";
@@ -26,9 +25,9 @@ public class WebShopApplication {
         ConfigurableApplicationContext context = SpringApplication.run(SpringWebConfiguration.class);
 
         context.getBean(DatabaseCleaner.class).clean();
-        new FakeDatabaseInitializer(context.getBean(UserRepository.class),
-                context.getBean(ItemRepository.class),
-                context.getBean(CartRepository.class)
+        new FakeDatabaseInitializer(context.getBean(JpaUserRepository.class),
+                context.getBean(JpaItemRepository.class),
+                context.getBean(JpaCartRepository.class)
         ).initialize();
 
         UserService userService = context.getBean(UserService.class);

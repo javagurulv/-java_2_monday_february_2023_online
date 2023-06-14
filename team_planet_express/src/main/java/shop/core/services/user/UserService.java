@@ -3,8 +3,8 @@ package shop.core.services.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import shop.core.database.CartRepository;
-import shop.core.database.UserRepository;
+import shop.core.database.jpa.JpaCartRepository;
+import shop.core.database.jpa.JpaUserRepository;
 import shop.core.domain.Cart;
 import shop.core.domain.User;
 import shop.core.enums.UserRole;
@@ -16,9 +16,9 @@ import java.util.Optional;
 public class UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private JpaUserRepository userRepository;
     @Autowired
-    private CartRepository cartRepository;
+    private JpaCartRepository cartRepository;
 
     public User createUser(UserCreationData userCreationData) {
         User createdUser = userRepository
@@ -28,9 +28,9 @@ public class UserService {
     }
 
     public Optional<User> findGuestWithOpenCart() {
-        return userRepository.getAllUsers().stream()
+        return userRepository.findAll().stream()
                 .filter(user -> UserRole.GUEST.equals(user.getUserRole()))
-                .filter(user -> cartRepository.findOpenCartForUserId(user.getId()).isPresent())
+                .filter(user -> cartRepository.findOpenCartByUserId(user.getId()).stream().findFirst().isPresent())
                 .findFirst();
     }
 

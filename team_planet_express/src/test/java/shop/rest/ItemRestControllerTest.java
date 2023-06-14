@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.web.client.RestTemplate;
-import shop.core.database.ItemRepository;
+import shop.core.database.jpa.JpaItemRepository;
 import shop.core.requests.manager.AddItemToShopRequest;
 import shop.core.responses.manager.AddItemToShopResponse;
 
@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ItemRestControllerTest {
 
     @Autowired
-    private ItemRepository itemRepository;
+    private JpaItemRepository itemRepository;
 
     private static final ObjectMapper mapper = new ObjectMapper();
 
@@ -65,7 +65,7 @@ class ItemRestControllerTest {
         AddItemToShopResponse response = restTemplate.postForObject(url, httpRequest, AddItemToShopResponse.class);
         assertNotNull(response);
         assertNull(response.getErrors());
-        assertTrue(itemRepository.findByName("uuwuu").isPresent());
+        assertTrue(itemRepository.findByName("uuwuu").stream().findFirst().isPresent());
     }
 
 }

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import shop.core.converters.ItemConverter;
-import shop.core.database.ItemRepository;
+import shop.core.database.jpa.JpaItemRepository;
 import shop.core.domain.Item;
 import shop.core.dtos.ItemDto;
 import shop.core.requests.shared.GetItemRequest;
@@ -19,7 +19,7 @@ import java.util.List;
 public class GetItemService {
 
     @Autowired
-    private ItemRepository itemRepository;
+    private JpaItemRepository itemRepository;
     @Autowired
     private GetItemValidator validator;
     @Autowired

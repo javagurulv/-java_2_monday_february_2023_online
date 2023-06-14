@@ -5,7 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import shop.core.database.ItemRepository;
+import shop.core.database.jpa.JpaItemRepository;
 import shop.core.requests.manager.ChangeItemDataRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.manager.ChangeItemDataResponse;
@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 class ChangeItemDataServiceTest {
 
     @Mock
-    private ItemRepository mockItemRepository;
+    private JpaItemRepository mockItemRepository;
     @Mock
     private ChangeItemDataValidator mockValidator;
     @Mock
@@ -55,7 +55,7 @@ class ChangeItemDataServiceTest {
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockRequest.getNewItemName()).thenReturn("name");
         service.execute(mockRequest);
-        verify(mockItemRepository).changeName(1L, "name");
+        verify(mockItemRepository).updateName(1L, "name");
     }
 
     @Test
@@ -64,7 +64,7 @@ class ChangeItemDataServiceTest {
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockRequest.getNewItemName()).thenReturn("");
         service.execute(mockRequest);
-        verify(mockItemRepository, times(0)).changeName(anyLong(), anyString());
+        verify(mockItemRepository, times(0)).updateName(anyLong(), anyString());
     }
 
     @Test
@@ -73,7 +73,7 @@ class ChangeItemDataServiceTest {
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockRequest.getNewPrice()).thenReturn("10.10");
         service.execute(mockRequest);
-        verify(mockItemRepository).changePrice(1L, new BigDecimal("10.10"));
+        verify(mockItemRepository).updatePrice(1L, new BigDecimal("10.10"));
     }
 
     @Test
@@ -82,7 +82,7 @@ class ChangeItemDataServiceTest {
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockRequest.getNewPrice()).thenReturn(" ");
         service.execute(mockRequest);
-        verify(mockItemRepository, times(0)).changePrice(anyLong(), any(BigDecimal.class));
+        verify(mockItemRepository, times(0)).updatePrice(anyLong(), any(BigDecimal.class));
     }
 
     @Test
@@ -91,7 +91,7 @@ class ChangeItemDataServiceTest {
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockRequest.getNewAvailableQuantity()).thenReturn("10");
         service.execute(mockRequest);
-        verify(mockItemRepository).changeAvailableQuantity(1L, 10);
+        verify(mockItemRepository).updateAvailableQuantity(1L, 10);
     }
 
     @Test
@@ -100,7 +100,7 @@ class ChangeItemDataServiceTest {
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockRequest.getNewItemName()).thenReturn(null);
         service.execute(mockRequest);
-        verify(mockItemRepository, times(0)).changeAvailableQuantity(anyLong(), anyInt());
+        verify(mockItemRepository, times(0)).updateAvailableQuantity(anyLong(), anyInt());
     }
 
     @Test
@@ -109,7 +109,7 @@ class ChangeItemDataServiceTest {
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockRequest.getNewPrice()).thenReturn("10.10776");
         service.execute(mockRequest);
-        verify(mockItemRepository).changePrice(1L, new BigDecimal("10.11"));
+        verify(mockItemRepository).updatePrice(1L, new BigDecimal("10.11"));
     }
 
     @Test
@@ -118,7 +118,7 @@ class ChangeItemDataServiceTest {
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockRequest.getNewPrice()).thenReturn("10.092234");
         service.execute(mockRequest);
-        verify(mockItemRepository).changePrice(1L, new BigDecimal("10.09"));
+        verify(mockItemRepository).updatePrice(1L, new BigDecimal("10.09"));
 
     }
 

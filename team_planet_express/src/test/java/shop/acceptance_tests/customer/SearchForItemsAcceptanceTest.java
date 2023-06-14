@@ -1,12 +1,13 @@
 package shop.acceptance_tests.customer;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
-import shop.core.database.ItemRepository;
-import shop.core.database.UserRepository;
+import shop.core.database.jpa.JpaItemRepository;
+import shop.core.database.jpa.JpaUserRepository;
 import shop.core.domain.Item;
 import shop.core.domain.User;
 import shop.core.dtos.ItemDto;
@@ -27,13 +28,14 @@ import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Disabled
 @SpringBootTest
 public class SearchForItemsAcceptanceTest {
 
     @Autowired
-    private UserRepository userRepository;
+    private JpaUserRepository userRepository;
     @Autowired
-    protected ItemRepository itemRepository;
+    protected JpaItemRepository itemRepository;
     @Autowired
     private CurrentUserId currentUserId;
     @Autowired

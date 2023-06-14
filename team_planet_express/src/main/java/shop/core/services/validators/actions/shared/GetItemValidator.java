@@ -2,7 +2,7 @@ package shop.core.services.validators.actions.shared;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.database.ItemRepository;
+import shop.core.database.jpa.JpaItemRepository;
 import shop.core.error_code_processing.ErrorProcessor;
 import shop.core.requests.shared.GetItemRequest;
 import shop.core.responses.CoreError;
@@ -21,7 +21,7 @@ public class GetItemValidator {
     private static final String ERROR_ID_NOT_EXISTS = "VDT-CID-INE";
 
     @Autowired
-    private ItemRepository itemRepository;
+    private JpaItemRepository itemRepository;
     @Autowired
     private InputStringValidator inputStringValidator;
     @Autowired

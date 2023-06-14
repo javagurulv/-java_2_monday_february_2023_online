@@ -11,7 +11,7 @@ import shop.console_ui.actions.shared.ExitUIAction;
 import shop.console_ui.actions.shared.SearchItemUIAction;
 import shop.console_ui.actions.shared.SignInUIAction;
 import shop.console_ui.actions.shared.SignOutUIAction;
-import shop.core.database.UserRepository;
+import shop.core.database.jpa.JpaUserRepository;
 import shop.core.domain.User;
 import shop.core.enums.UserRole;
 import shop.core.support.CurrentUserId;
@@ -27,7 +27,7 @@ public class UIActionsList {
     private final List<UIAction> uiActionsList;
 
     @Autowired
-    private UserRepository userRepository;
+    private JpaUserRepository userRepository;
     @Autowired
     private CurrentUserId currentUserId;
 

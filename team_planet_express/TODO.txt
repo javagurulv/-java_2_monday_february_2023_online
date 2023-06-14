@@ -16,3 +16,5 @@ REST ordering/page
 buy -> buy + close
 
 converter tests
+
+findOne does actually work ?

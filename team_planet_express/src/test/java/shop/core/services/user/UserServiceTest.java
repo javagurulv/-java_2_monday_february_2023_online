@@ -5,8 +5,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import shop.core.database.CartRepository;
-import shop.core.database.UserRepository;
+import shop.core.database.jpa.JpaCartRepository;
+import shop.core.database.jpa.JpaUserRepository;
 import shop.core.domain.Cart;
 import shop.core.domain.User;
 import shop.core.enums.CartStatus;
@@ -14,8 +14,8 @@ import shop.core.enums.UserRole;
 import shop.matchers.CartMatcher;
 import shop.matchers.UserMatcher;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
@@ -24,9 +24,9 @@ import static org.mockito.Mockito.*;
 class UserServiceTest {
 
     @Mock
-    private UserRepository mockUserRepository;
+    private JpaUserRepository mockJpaUserRepository;
     @Mock
-    private CartRepository mockCartRepository;
+    private JpaCartRepository mockJpaCartRepository;
     @Mock
     private User mockUser;
     @Mock
@@ -37,38 +37,38 @@ class UserServiceTest {
 
     @Test
     void shouldSaveUserAndCart() {
-        when(mockUserRepository.save(any(User.class))).thenReturn(mockUser);
+        when(mockJpaUserRepository.save(any(User.class))).thenReturn(mockUser);
         UserCreationData userCreationData =
                 new UserCreationData("Name", "login name", "password", UserRole.GUEST);
         service.createUser(userCreationData);
-        verify(mockUserRepository)
+        verify(mockJpaUserRepository)
                 .save(argThat(new UserMatcher("Name", "login name", "password", UserRole.GUEST)));
-        verify(mockCartRepository)
+        verify(mockJpaCartRepository)
                 .save(argThat(new CartMatcher(mockUser, CartStatus.OPEN)));
     }
 
     @Test
     void shouldReturnExistingGuest() {
-        when(mockUserRepository.getAllUsers()).thenReturn(List.of(mockUser));
+        when(mockJpaUserRepository.findAll()).thenReturn(List.of(mockUser));
         when(mockUser.getUserRole()).thenReturn(UserRole.GUEST);
         when(mockUser.getId()).thenReturn(1L);
-        when(mockCartRepository.findOpenCartForUserId(1L)).thenReturn(Optional.of(mockCart));
+        when(mockJpaCartRepository.findOpenCartByUserId(1L)).thenReturn(List.of(mockCart));
         assertTrue(service.findGuestWithOpenCart().isPresent());
     }
 
     @Test
     void shouldReturnEmptyOptionalForNoGuest() {
-        when(mockUserRepository.getAllUsers()).thenReturn(List.of(mockUser));
+        when(mockJpaUserRepository.findAll()).thenReturn(List.of(mockUser));
         when(mockUser.getUserRole()).thenReturn(UserRole.ADMIN);
         assertTrue(service.findGuestWithOpenCart().isEmpty());
     }
 
     @Test
     void shouldReturnEmptyOptionalForNoOpenCart() {
-        when(mockUserRepository.getAllUsers()).thenReturn(List.of(mockUser));
+        when(mockJpaUserRepository.findAll()).thenReturn(List.of(mockUser));
         when(mockUser.getUserRole()).thenReturn(UserRole.GUEST);
         when(mockUser.getId()).thenReturn(1L);
-        when(mockCartRepository.findOpenCartForUserId(1L)).thenReturn(Optional.empty());
+        when(mockJpaCartRepository.findOpenCartByUserId(1L)).thenReturn(Collections.emptyList());
         assertTrue(service.findGuestWithOpenCart().isEmpty());
     }
 

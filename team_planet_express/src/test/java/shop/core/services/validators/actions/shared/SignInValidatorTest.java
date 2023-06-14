@@ -5,18 +5,19 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import shop.core.database.UserRepository;
+import shop.core.database.jpa.JpaUserRepository;
 import shop.core.domain.User;
 import shop.core.error_code_processing.ErrorProcessor;
 import shop.core.requests.shared.SignInRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.services.validators.universal.system.RepositoryAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 import shop.core.support.CurrentUserId;
 import shop.matchers.InputStringValidatorDataMatcher;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,13 +28,13 @@ import static org.mockito.Mockito.*;
 class SignInValidatorTest {
 
     @Mock
-    private UserRepository mockUserRepository;
+    private JpaUserRepository mockJpaUserRepository;
     @Mock
     private CurrentUserIdValidator mockCurrentUserIdValidator;
     @Mock
     private InputStringValidator mockInputStringValidator;
     @Mock
-    private DatabaseAccessValidator mockDatabaseAccessValidator;
+    private RepositoryAccessValidator mockRepositoryAccessValidator;
     @Mock
     private ErrorProcessor mockErrorProcessor;
     @Mock
@@ -53,9 +54,9 @@ class SignInValidatorTest {
         when(mockRequest.getCurrentUserId()).thenReturn(mockUserId);
         when(mockRequest.getLoginName()).thenReturn("login name");
         when(mockRequest.getPassword()).thenReturn("password");
-        when(mockUserRepository.findByLoginName("login name")).thenReturn(Optional.of(mockUser));
+        when(mockJpaUserRepository.findByLogin("login name")).thenReturn(List.of(mockUser));
         when(mockUser.getPassword()).thenReturn("password");
-        when(mockDatabaseAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
+        when(mockRepositoryAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
         validator.validate(mockRequest);
         verify(mockCurrentUserIdValidator).validateCurrentUserIdIsPresent(mockUserId);
     }
@@ -64,9 +65,9 @@ class SignInValidatorTest {
     void shouldValidateLoginNameIsPresent() {
         when(mockRequest.getLoginName()).thenReturn("login name");
         when(mockRequest.getPassword()).thenReturn("password");
-        when(mockUserRepository.findByLoginName("login name")).thenReturn(Optional.of(mockUser));
+        when(mockJpaUserRepository.findByLogin("login name")).thenReturn(List.of(mockUser));
         when(mockUser.getPassword()).thenReturn("password");
-        when(mockDatabaseAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
+        when(mockRepositoryAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
         validator.validate(mockRequest);
         verify(mockInputStringValidator)
                 .validateIsPresent(argThat(new InputStringValidatorDataMatcher("login name", "login", "Login name")));
@@ -75,7 +76,7 @@ class SignInValidatorTest {
     @Test
     void shouldReturnErrorForNonexistentLoginName() {
         when(mockRequest.getLoginName()).thenReturn("login name");
-        when(mockUserRepository.findByLoginName("login name")).thenReturn(Optional.empty());
+        when(mockJpaUserRepository.findByLogin("login name")).thenReturn(Collections.emptyList());
         when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
         validator.validate(mockRequest);
         verify(mockErrorProcessor).getCoreError("login", "VDT-SIN-LNE");
@@ -85,9 +86,9 @@ class SignInValidatorTest {
     void shouldValidatePasswordIsPresent() {
         when(mockRequest.getLoginName()).thenReturn("login name");
         when(mockRequest.getPassword()).thenReturn("password");
-        when(mockUserRepository.findByLoginName("login name")).thenReturn(Optional.of(mockUser));
+        when(mockJpaUserRepository.findByLogin("login name")).thenReturn(List.of(mockUser));
         when(mockUser.getPassword()).thenReturn("password");
-        when(mockDatabaseAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
+        when(mockRepositoryAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
         validator.validate(mockRequest);
         verify(mockInputStringValidator)
                 .validateIsPresent(argThat(new InputStringValidatorDataMatcher("password", "password", "Password")));
@@ -97,8 +98,8 @@ class SignInValidatorTest {
     void shouldReturnErrorForWrongPassword() {
         when(mockRequest.getLoginName()).thenReturn("login name");
         when(mockRequest.getPassword()).thenReturn("wrong password");
-        when(mockUserRepository.findByLoginName("login name")).thenReturn(Optional.of(mockUser));
-        when(mockDatabaseAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
+        when(mockJpaUserRepository.findByLogin("login name")).thenReturn(List.of(mockUser));
+        when(mockRepositoryAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
         when(mockUser.getPassword()).thenReturn("password");
         when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
         validator.validate(mockRequest);
@@ -116,8 +117,8 @@ class SignInValidatorTest {
     void shouldReturnNoErrorsForValidInput() {
         when(mockRequest.getLoginName()).thenReturn("login name");
         when(mockRequest.getPassword()).thenReturn("password");
-        when(mockUserRepository.findByLoginName("login name")).thenReturn(Optional.of(mockUser));
-        when(mockDatabaseAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
+        when(mockJpaUserRepository.findByLogin("login name")).thenReturn(List.of(mockUser));
+        when(mockRepositoryAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
         when(mockUser.getPassword()).thenReturn("password");
         List<CoreError> errors = validator.validate(mockRequest);
         assertTrue(errors.isEmpty());

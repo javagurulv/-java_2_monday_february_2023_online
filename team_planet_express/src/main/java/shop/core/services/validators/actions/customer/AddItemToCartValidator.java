@@ -2,13 +2,13 @@ package shop.core.services.validators.actions.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.database.ItemRepository;
+import shop.core.database.jpa.JpaItemRepository;
 import shop.core.error_code_processing.ErrorProcessor;
 import shop.core.requests.customer.AddItemToCartRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.cart.CartValidator;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.services.validators.universal.system.RepositoryAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 
@@ -27,7 +27,7 @@ public class AddItemToCartValidator {
     private static final String ERROR_NOT_ENOUGH_QUANTITY = "VDT-AIC-NEQ";
 
     @Autowired
-    private ItemRepository itemRepository;
+    private JpaItemRepository itemRepository;
     @Autowired
     private CurrentUserIdValidator userIdValidator;
     @Autowired
@@ -35,7 +35,7 @@ public class AddItemToCartValidator {
     @Autowired
     private InputStringValidator inputStringValidator;
     @Autowired
-    private DatabaseAccessValidator databaseAccessValidator;
+    private RepositoryAccessValidator repositoryAccessValidator;
     @Autowired
     private ErrorProcessor errorProcessor;
 
@@ -69,7 +69,7 @@ public class AddItemToCartValidator {
 
     private Optional<CoreError> validateOrderedQuantityNotGreaterThanAvailable(AddItemToCartRequest request) {
         return (Integer.parseInt(request.getOrderedQuantity()) >
-                databaseAccessValidator.getItemByName(request.getItemName()).getAvailableQuantity())
+                repositoryAccessValidator.getItemByName(request.getItemName()).getAvailableQuantity())
                 ? Optional.of(errorProcessor.getCoreError(FIELD_QUANTITY, ERROR_NOT_ENOUGH_QUANTITY))
                 : Optional.empty();
     }

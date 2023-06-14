@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import shop.core.database.CartItemRepository;
-import shop.core.database.CartRepository;
+import shop.core.database.jpa.JpaCartItemRepository;
+import shop.core.database.jpa.JpaCartRepository;
 import shop.core.domain.Cart;
 import shop.core.requests.customer.AddItemToCartRequest;
 import shop.core.requests.customer.ListShopItemsRequest;
@@ -24,22 +24,22 @@ public class IndexController {
     @Autowired
     private CurrentUserId currentUserId;
     @Autowired
-    private CartRepository cartRepository;
+    private JpaCartRepository cartRepository;
     @Autowired
-    CartItemRepository cartItemRepository;
+    private JpaCartItemRepository cartItemRepository;
 
     @GetMapping(value = "/")
     public String index(ModelMap modelMap) {
         ListShopItemsRequest request = new ListShopItemsRequest();
         ListShopItemsResponse response = listShopItemsService.execute(request);
         modelMap.addAttribute("items", response.getShopItems());
-        Optional<Cart> cart = cartRepository.findOpenCartForUserId(currentUserId.getValue());
+        Optional<Cart> cart = cartRepository.findOpenCartByUserId(currentUserId.getValue()).stream().findFirst();
         modelMap.addAttribute("signInRequest", new SignInRequest());
         modelMap.addAttribute("addItemToCartRequest", new AddItemToCartRequest());
         modelMap.addAttribute("user", currentUserId);
         modelMap.addAttribute("cartStatus", cart.isPresent() ? "Open" : "Closed");
         modelMap.addAttribute("cartItemQuantity",
-                cart.map(openCart -> cartItemRepository.getAllCartItemsForCartId(openCart.getId()).size())
+                cart.map(openCart -> cartItemRepository.findByCartId(openCart.getId()).size())
                         .orElse(0));
         return "index";
     }

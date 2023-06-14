@@ -27,7 +27,7 @@ public class ListCartItemsTester extends Tester {
 
     @SuppressWarnings("UnusedReturnValue")
     public ListCartItemsTester checkItemInCartResponse(String itemName, int quantity) {
-        Optional<Item> itemOptional = itemRepository.getAllItems().stream()
+        Optional<Item> itemOptional = itemRepository.findAll().stream()
                 .filter(item -> item.getName().equals(itemName)).findFirst();
         assertTrue(itemOptional.isPresent());
         assertTrue(listCartItemsResponse.getCartItems().stream()

@@ -3,7 +3,7 @@ package shop.core.services.actions.manager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import shop.core.database.ItemRepository;
+import shop.core.database.jpa.JpaItemRepository;
 import shop.core.requests.manager.ChangeItemDataRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.manager.ChangeItemDataResponse;
@@ -18,7 +18,7 @@ import java.util.List;
 public class ChangeItemDataService {
 
     @Autowired
-    private ItemRepository itemRepository;
+    private JpaItemRepository itemRepository;
     @Autowired
     private ChangeItemDataValidator validator;
 
@@ -36,21 +36,21 @@ public class ChangeItemDataService {
 
     private void changeItemName(Long itemId, String newItemName) {
         if (newItemName != null && !newItemName.isBlank()) {
-            itemRepository.changeName(itemId, newItemName);
+            itemRepository.updateName(itemId, newItemName);
         }
     }
 
     private void changePrice(Long itemId, String newPriceString) {
         if (newPriceString != null && !newPriceString.isBlank()) {
             BigDecimal newPrice = new BigDecimal(newPriceString).setScale(2, RoundingMode.HALF_UP);
-            itemRepository.changePrice(itemId, newPrice);
+            itemRepository.updatePrice(itemId, newPrice);
         }
     }
 
     private void changeAvailableQuantity(Long itemId, String newAvailableQuantityString) {
         if (newAvailableQuantityString != null && !newAvailableQuantityString.isBlank()) {
             Integer newAvailableQuantity = Integer.parseInt(newAvailableQuantityString);
-            itemRepository.changeAvailableQuantity(itemId, newAvailableQuantity);
+            itemRepository.updateAvailableQuantity(itemId, newAvailableQuantity);
         }
     }
 

@@ -2,12 +2,12 @@ package shop.core.services.validators.actions.shared;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.database.UserRepository;
+import shop.core.database.jpa.JpaUserRepository;
 import shop.core.error_code_processing.ErrorProcessor;
 import shop.core.requests.shared.SignInRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.services.validators.universal.system.RepositoryAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 
@@ -26,13 +26,13 @@ public class SignInValidator {
     private static final String ERROR_PASSWORD_INCORRECT = "VDT-SIN-PII";
 
     @Autowired
-    private UserRepository userRepository;
+    private JpaUserRepository userRepository;
     @Autowired
     private CurrentUserIdValidator userIdValidator;
     @Autowired
     private InputStringValidator inputStringValidator;
     @Autowired
-    private DatabaseAccessValidator databaseAccessValidator;
+    private RepositoryAccessValidator repositoryAccessValidator;
     @Autowired
     private ErrorProcessor errorProcessor;
 
@@ -62,14 +62,14 @@ public class SignInValidator {
 
     private Optional<CoreError> validatePasswordMatches(SignInRequest request) {
         return (!request.getPassword().equals(
-                databaseAccessValidator.getUserByLoginName(request.getLoginName()).getPassword()))
+                repositoryAccessValidator.getUserByLoginName(request.getLoginName()).getPassword()))
                 ? Optional.of(errorProcessor.getCoreError(FIELD_PASSWORD, ERROR_PASSWORD_INCORRECT))
                 : Optional.empty();
     }
 
     private Optional<CoreError> validateLoginNameExists(String loginName) {
         return (loginName != null && !loginName.isBlank() &&
-                userRepository.findByLoginName(loginName).isEmpty())
+                userRepository.findByLogin(loginName).isEmpty())
                 ? Optional.of(errorProcessor.getCoreError(FIELD_LOGIN_NAME, ERROR_LOGIN_NOT_EXISTS))
                 : Optional.empty();
     }

@@ -3,8 +3,8 @@ package shop.core.services.actions.customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import shop.core.database.CartItemRepository;
-import shop.core.database.ItemRepository;
+import shop.core.database.jpa.JpaCartItemRepository;
+import shop.core.database.jpa.JpaItemRepository;
 import shop.core.domain.Cart;
 import shop.core.domain.CartItem;
 import shop.core.domain.Item;
@@ -12,7 +12,7 @@ import shop.core.requests.customer.RemoveItemFromCartRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.customer.RemoveItemFromCartResponse;
 import shop.core.services.validators.actions.customer.RemoveItemFromCartValidator;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.services.validators.universal.system.RepositoryAccessValidator;
 
 import java.util.List;
 
@@ -21,13 +21,13 @@ import java.util.List;
 public class RemoveItemFromCartService {
 
     @Autowired
-    private ItemRepository itemRepository;
+    private JpaItemRepository itemRepository;
     @Autowired
-    private CartItemRepository cartItemRepository;
+    private JpaCartItemRepository cartItemRepository;
     @Autowired
     private RemoveItemFromCartValidator validator;
     @Autowired
-    private DatabaseAccessValidator databaseAccessValidator;
+    private RepositoryAccessValidator repositoryAccessValidator;
 
 
     public RemoveItemFromCartResponse execute(RemoveItemFromCartRequest request) {
@@ -35,12 +35,12 @@ public class RemoveItemFromCartService {
         if (!errors.isEmpty()) {
             return new RemoveItemFromCartResponse(errors);
         }
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getCurrentUserId().getValue());
-        Item item = databaseAccessValidator.getItemByName(request.getItemName());
-        CartItem cartItem = databaseAccessValidator.getCartItemByCartIdAndItemId(cart.getId(), item.getId());
+        Cart cart = repositoryAccessValidator.getOpenCartByUserId(request.getCurrentUserId().getValue());
+        Item item = repositoryAccessValidator.getItemByName(request.getItemName());
+        CartItem cartItem = repositoryAccessValidator.getCartItemByCartIdAndItemId(cart.getId(), item.getId());
         Integer newAvailableQuantity = item.getAvailableQuantity() + cartItem.getOrderedQuantity();
-        cartItemRepository.deleteByID(cartItem.getId());
-        itemRepository.changeAvailableQuantity(item.getId(), newAvailableQuantity);
+        cartItemRepository.deleteById(cartItem.getId());
+        itemRepository.updateAvailableQuantity(item.getId(), newAvailableQuantity);
         return new RemoveItemFromCartResponse();
     }
 

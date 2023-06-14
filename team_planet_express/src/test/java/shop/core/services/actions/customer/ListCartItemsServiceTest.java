@@ -7,14 +7,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.converters.CartItemConverter;
-import shop.core.database.CartItemRepository;
+import shop.core.database.jpa.JpaCartItemRepository;
 import shop.core.domain.Cart;
 import shop.core.domain.CartItem;
 import shop.core.dtos.CartItemDto;
 import shop.core.requests.customer.ListCartItemsRequest;
 import shop.core.responses.customer.ListCartItemsResponse;
 import shop.core.services.validators.actions.customer.ListCartItemValidator;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.services.validators.universal.system.RepositoryAccessValidator;
 import shop.core.support.CurrentUserId;
 
 import java.util.List;
@@ -28,11 +28,11 @@ import static org.mockito.Mockito.when;
 class ListCartItemsServiceTest {
 
     @Mock
-    private CartItemRepository mockCartItemRepository;
+    private JpaCartItemRepository mockJpaCartItemRepository;
     @Mock
     private ListCartItemValidator mockValidator;
     @Mock
-    private DatabaseAccessValidator mockDatabaseAccessValidator;
+    private RepositoryAccessValidator mockRepositoryAccessValidator;
     @Mock
     private CartItemConverter mockCartItemConverter;
     @Mock
@@ -56,8 +56,8 @@ class ListCartItemsServiceTest {
 
     @Test
     void shouldReturnListCartItem() {
-        when(mockDatabaseAccessValidator.getOpenCartByUserId(any())).thenReturn(mockCart);
-        when(mockCartItemRepository.getAllCartItemsForCartId(anyLong())).thenReturn(List.of(mockCartItem, mockCartItem));
+        when(mockRepositoryAccessValidator.getOpenCartByUserId(any())).thenReturn(mockCart);
+        when(mockJpaCartItemRepository.findByCartId(anyLong())).thenReturn(List.of(mockCartItem, mockCartItem));
         when(mockCartItemConverter.toCartItemDto(List.of(mockCartItem, mockCartItem))).thenReturn(List.of(mockCartItemDto, mockCartItemDto));
         ListCartItemsResponse response = service.execute(mockRequest);
         assertEquals(response.getCartItems().size(), 2);

@@ -3,7 +3,7 @@ package shop.console_ui;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import shop.console_ui.actions.UIAction;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.services.validators.universal.system.RepositoryAccessValidator;
 import shop.core.support.CurrentUserId;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class UIMenu {
     @Autowired
     private UIActionsList uiActionsList;
     @Autowired
-    private DatabaseAccessValidator databaseAccessValidator;
+    private RepositoryAccessValidator repositoryAccessValidator;
     @Autowired
     private UserCommunication userCommunication;
     @Autowired
@@ -49,7 +49,7 @@ public class UIMenu {
     }
 
     private String getCurrentUserName() {
-        return databaseAccessValidator.getUserById(currentUserId.getValue()).getName();
+        return repositoryAccessValidator.getUserById(currentUserId.getValue()).getName();
     }
 
 }

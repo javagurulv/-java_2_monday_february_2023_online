@@ -1,4 +1,4 @@
-package shop.core.database.orm.cleaner;
+package shop.core.database.cleaner;
 
 public interface DatabaseCleaner {
 

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import shop.core.database.UserRepository;
+import shop.core.database.jpa.JpaUserRepository;
 import shop.core.domain.User;
 import shop.core.error_code_processing.ErrorProcessor;
 import shop.core.requests.guest.SignUpRequest;
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 class SignUpValidatorTest {
 
     @Mock
-    private UserRepository mockUserRepository;
+    private JpaUserRepository mockJpaUserRepository;
     @Mock
     private CurrentUserIdValidator mockCurrentUserIdValidator;
     @Mock
@@ -75,7 +75,7 @@ class SignUpValidatorTest {
     @Test
     void shouldReturnErrorForExistingLoginName() {
         when(mockRequest.getLoginName()).thenReturn("login");
-        when(mockUserRepository.findByLoginName("login")).thenReturn(Optional.of(mockUser));
+        when(mockJpaUserRepository.findByLogin("login")).thenReturn(List.of(mockUser));
         when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
         validator.validate(mockRequest);
         verify(mockErrorProcessor).getCoreError("login", "VDT-SUP-LAE");

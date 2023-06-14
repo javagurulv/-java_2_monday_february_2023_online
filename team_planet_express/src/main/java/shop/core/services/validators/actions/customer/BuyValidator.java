@@ -2,14 +2,14 @@ package shop.core.services.validators.actions.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.database.CartItemRepository;
+import shop.core.database.jpa.JpaCartItemRepository;
 import shop.core.domain.Cart;
 import shop.core.error_code_processing.ErrorProcessor;
 import shop.core.requests.customer.BuyRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.cart.CartValidator;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.core.services.validators.universal.system.RepositoryAccessValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +22,13 @@ public class BuyValidator {
     private static final String ERROR_CART_EMPTY = "VDT-BUY-CIE";
 
     @Autowired
-    private CartItemRepository cartItemRepository;
+    private JpaCartItemRepository cartItemRepository;
     @Autowired
     private CurrentUserIdValidator userIdValidator;
     @Autowired
     private CartValidator cartValidator;
     @Autowired
-    private DatabaseAccessValidator databaseAccessValidator;
+    private RepositoryAccessValidator repositoryAccessValidator;
     @Autowired
     private ErrorProcessor errorProcessor;
 
@@ -43,8 +43,8 @@ public class BuyValidator {
     }
 
     private Optional<CoreError> validateCartIsNotEmpty(Long userId) {
-        Cart cart = databaseAccessValidator.getOpenCartByUserId(userId);
-        return (cartItemRepository.getAllCartItemsForCartId(cart.getId()).size() == 0)
+        Cart cart = repositoryAccessValidator.getOpenCartByUserId(userId);
+        return (cartItemRepository.findByCartId(cart.getId()).size() == 0)
                 ? Optional.of(errorProcessor.getCoreError(FIELD_NAME, ERROR_CART_EMPTY))
                 : Optional.empty();
     }
