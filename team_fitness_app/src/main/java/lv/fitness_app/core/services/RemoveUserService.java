@@ -3,7 +3,6 @@ package lv.fitness_app.core.services;
 import lv.fitness_app.core.database.jpa.JpaUserRepository;
 import lv.fitness_app.core.domain.User;
 import lv.fitness_app.core.services.validators.RemoveUserRequestValidator;
-import lv.fitness_app.core.database.UserRepository;
 import lv.fitness_app.core.responses.CoreError;
 import lv.fitness_app.core.responses.RemoveUserResponse;
 import lv.fitness_app.core.requests.RemoveUserRequest;
@@ -30,7 +29,7 @@ public class RemoveUserService {
         } else if (userRepository.findUserByEmail(request.getEmail())!= null) {
             User user = userRepository.findUserByEmail(request.getEmail());
             if (user.getEmail().equals(request.getEmail()) && user.getPassword().equals(request.getPassword())) {
-                userRepository.delete(user);
+                userRepository.deleteUser(user);
                 isUserRemoved = true;
             }
         }

@@ -3,7 +3,6 @@ package lv.fitness_app.core.services;
 import lv.fitness_app.core.database.jpa.JpaUserRepository;
 import lv.fitness_app.core.domain.User;
 import lv.fitness_app.core.services.validators.AddUserRequestValidator;
-import lv.fitness_app.core.database.UserRepository;
 import lv.fitness_app.core.requests.AddUserRequest;
 import lv.fitness_app.core.responses.AddUserResponse;
 import lv.fitness_app.core.responses.CoreError;
@@ -21,14 +20,13 @@ public class AddUserService {
     private JpaUserRepository userRepository;
     @Autowired private AddUserRequestValidator validator;
 
-@Transactional
     public AddUserResponse execute(AddUserRequest request) {
         List<CoreError> errors = validator.validate(request);
         if (!errors.isEmpty()) {
             return new AddUserResponse(errors);
         } else {
             User user = new User(request.getEmail(), request.getUsername(), request.getPassword());
-            userRepository.save(user);
+            userRepository.add(user);
             return new AddUserResponse(user);
         }
     }
