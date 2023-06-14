@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Servify demo project">
+  <meta name="author" content="DreamTeamDevelopers">
+  <title>Servify</title>
+
+  <!-- Add Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+
+<body>
+
+<h3>Add detail to list</h3>
+
+<table class="table">
+  <tr>
+    <td>Type:</td>
+    <td>Side:</td>
+    <td>Price:</td>
+  </tr>
+
+  <tr>
+    <form action="/addDetail" th:object="${request}" method="post">
+      <td><input type="text" class="form-control" th:field="${request.detailType}"/></td>
+      <td><input type="text" class="form-control" th:field="${request.detailSide}"/></td>
+      <td><input type="text" class="form-control" th:field="${request.detailPrice}"/></td>
+      <td>
+        <input type="submit" class="btn btn-primary" value="Add Detail"/>
+        <input type="reset" class="btn btn-secondary" value="Clear"/>
+      </td>
+    </form>
+  </tr>
+
+</table>
+
+<td th:if="${errors != null}">
+  <tr th:each="error : ${errors}">
+    <td th:text="${error.field}" />
+    <td th:text="${error.message}" />
+  </tr>
+</td>
+
+<form action="/" method="get">
+  <input type="submit" class="btn btn-primary" value="Go to main page" name="Submit" />
+</form>
+
+<!-- Add Bootstrap JS (at the end of the body) -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

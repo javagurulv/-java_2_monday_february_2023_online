@@ -1,8 +1,10 @@
 package lv.fitness_app.console_ui;
 
+import com.opencsv.exceptions.CsvException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,8 +15,11 @@ public class ProgramMenu {
 
 	private Map<Integer, UIAction> menuNumberToUIActionMap;
 
+	private UserMenu userMenu;
+
 	@Autowired
-	public ProgramMenu(List<UIAction> uiActions) {
+	public ProgramMenu(List<UIAction> uiActions, UserMenu userMenu) {
+		this.userMenu = userMenu;
 		menuNumberToUIActionMap = new HashMap<>();
 		menuNumberToUIActionMap.put(1, findUIAction(uiActions, AddUserUIAction.class));
 		menuNumberToUIActionMap.put(2, findUIAction(uiActions, LoginUserUIAction.class));
@@ -47,8 +52,15 @@ public class ProgramMenu {
 		return Integer.parseInt(scanner.nextLine());
 	}
 
-	public void executeSelectedMenuItem(int selectedMenu) {
+	public void executeSelectedMenuItem(int selectedMenu) throws IOException, CsvException {
 		menuNumberToUIActionMap.get(selectedMenu).execute();
 	}
 
+	public void runUserMenu() throws IOException, CsvException {
+		while (true) {
+			userMenu.printUserMenu();
+			int selectedMenu = getMenuNumberFromUser();
+			userMenu.executeSelectedMenuItem(selectedMenu);
+		}
+	}
 }

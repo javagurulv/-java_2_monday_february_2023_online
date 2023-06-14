@@ -1,27 +1,45 @@
 package lv.fitness_app.core.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 
+@Entity
+@Table(name = "exercise")
 public class Exercise {
 
+    @Id
+    @Column(name = "name")
     private String name;
+    @Column(name = "musclegroup")
     private String muscleGroup;
-    private String DetailedMuscleGroup;
-    private String OtherMuscleGroup;
-    private Type type;
+    @Column(name = "detailedMuscleGroup")
+    private String detailedMuscleGroup;
+    @Column(name = "otherMuscleGroup")
+    private String otherMuscleGroup;
+    @Column(name = "type")
+    private String type;
+    @Column(name = "mechanics")
     private String mechanics;
+    @Column(name = "equipment")
     private String equipment;
-    private Difficulty difficulty;
+    @Column(name = "difficulty")
+    private String difficulty;
+    @Column(name = "description")
     private String description;
+    @Column(name = "gif")
     private String gif;
 
-    public Exercise() { }
+    public Exercise() {
+    }
 
-    public Exercise(String name, String muscleGroup, String detailedMuscleGroup, String otherMuscleGroup, Type type, String mechanics, String equipment, Difficulty difficulty, String description, String gif) {
+    public Exercise(String name, String muscleGroup, String detailedMuscleGroup, String otherMuscleGroup, String type, String mechanics, String equipment, String difficulty, String description, String gif) {
         this.name = name;
         this.muscleGroup = muscleGroup;
-        DetailedMuscleGroup = detailedMuscleGroup;
-        OtherMuscleGroup = otherMuscleGroup;
+        this.detailedMuscleGroup = detailedMuscleGroup;
+        this.otherMuscleGroup = otherMuscleGroup;
         this.type = type;
         this.mechanics = mechanics;
         this.equipment = equipment;
@@ -47,26 +65,26 @@ public class Exercise {
     }
 
     public String getDetailedMuscleGroup() {
-        return DetailedMuscleGroup;
+        return detailedMuscleGroup;
     }
 
     public void setDetailedMuscleGroup(String detailedMuscleGroup) {
-        DetailedMuscleGroup = detailedMuscleGroup;
+        this.detailedMuscleGroup = detailedMuscleGroup;
     }
 
     public String getOtherMuscleGroup() {
-        return OtherMuscleGroup;
+        return otherMuscleGroup;
     }
 
     public void setOtherMuscleGroup(String otherMuscleGroup) {
-        OtherMuscleGroup = otherMuscleGroup;
+        this.otherMuscleGroup = otherMuscleGroup;
     }
 
-    public Type getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -86,11 +104,11 @@ public class Exercise {
         this.equipment = equipment;
     }
 
-    public Difficulty getDifficulty() {
+    public String getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(Difficulty difficulty) {
+    public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
     }
 
@@ -102,20 +120,25 @@ public class Exercise {
         this.description = description;
     }
 
-    public String getGif(){return gif;}
-    public void setGif(String gif) {this.gif = gif;}
+    public String getGif() {
+        return gif;
+    }
+
+    public void setGif(String gif) {
+        this.gif = gif;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Exercise exercise = (Exercise) o;
-        return Objects.equals(name, exercise.name) && Objects.equals(muscleGroup, exercise.muscleGroup) && Objects.equals(DetailedMuscleGroup, exercise.DetailedMuscleGroup) && Objects.equals(OtherMuscleGroup, exercise.OtherMuscleGroup) && type == exercise.type && Objects.equals(mechanics, exercise.mechanics) && Objects.equals(equipment, exercise.equipment) && difficulty == exercise.difficulty && Objects.equals(description, exercise.description) && Objects.equals(gif, exercise.gif);
+        return Objects.equals(name, exercise.name) && Objects.equals(muscleGroup, exercise.muscleGroup) && Objects.equals(detailedMuscleGroup, exercise.detailedMuscleGroup) && Objects.equals(otherMuscleGroup, exercise.otherMuscleGroup) && type == exercise.type && Objects.equals(mechanics, exercise.mechanics) && Objects.equals(equipment, exercise.equipment) && difficulty == exercise.difficulty && Objects.equals(description, exercise.description) && Objects.equals(gif, exercise.gif);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, muscleGroup, DetailedMuscleGroup, OtherMuscleGroup, type, mechanics, equipment, difficulty, description, gif);
+        return Objects.hash(name, muscleGroup, detailedMuscleGroup, otherMuscleGroup, type, mechanics, equipment, difficulty, description, gif);
     }
 
     @Override
@@ -123,14 +146,14 @@ public class Exercise {
         return "Exercise{" +
                 "name='" + name + '\'' +
                 ", muscleGroup='" + muscleGroup + '\'' +
-                ", DetailedMuscleGroup='" + DetailedMuscleGroup + '\'' +
-                ", OtherMuscleGroup='" + OtherMuscleGroup + '\'' +
+                ", DetailedMuscleGroup='" + detailedMuscleGroup + '\'' +
+                ", OtherMuscleGroup='" + otherMuscleGroup + '\'' +
                 ", type=" + type +
                 ", mechanics='" + mechanics + '\'' +
                 ", equipment='" + equipment + '\'' +
                 ", difficulty=" + difficulty +
                 ", description='" + description + '\'' +
-                ", gif='"+gif+'\''+
+                ", gif='" + gif + '\'' +
                 '}';
     }
 }

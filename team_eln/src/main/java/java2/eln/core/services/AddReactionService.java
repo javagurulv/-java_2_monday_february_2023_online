@@ -1,6 +1,6 @@
 package java2.eln.core.services;
 
-import java2.eln.core.database.DatabaseIM;
+import java2.eln.core.database.ReactionRepository;
 import java2.eln.core.requests.AddReactionRequest;
 import java2.eln.core.responses.AddReactionResponse;
 import java2.eln.core.responses.errorPattern.CoreError;
@@ -13,24 +13,16 @@ import java.util.List;
 
 @Component
 public class AddReactionService {
-
     @Autowired
-    DatabaseIM databaseIM;
-
+    private ReactionRepository reactionRepository;
     @Autowired
-    AddReactionValidator validator;
-
-//    public AddReactionService(DatabaseIM databaseIM, AddReactionValidator validator) {
-//        this.databaseIM = databaseIM;
-//        this.validator = validator;
-//    }
+    private AddReactionValidator validator;
 
      public AddReactionResponse execute(AddReactionRequest addReactionRequest) {
         List<CoreError> errors = validator.validate(addReactionRequest);
          if (!errors.isEmpty()) {
              return new AddReactionResponse(errors);
          }
-
         String code = addReactionRequest.getCode();
         String name = addReactionRequest.getName();
         String filename = addReactionRequest.getFilename();
@@ -39,8 +31,9 @@ public class AddReactionService {
         additionOfMaterials(filename, demoReactionLog); // The Materials added to the ReactionData from the file
         additionOfConditions(filename, demoReactionLog); // The Reaction Conditions added to the ReactionData from the file
 
-        databaseIM.addReaction(demoReactionLog);
+        demoReactionLog.calculateReactionYield();
 
+        reactionRepository.addReaction(demoReactionLog);
         return new AddReactionResponse(demoReactionLog);
     }
 

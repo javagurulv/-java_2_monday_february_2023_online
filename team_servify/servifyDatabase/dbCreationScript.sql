@@ -18,47 +18,17 @@ CREATE TABLE IF NOT EXISTS `colors` (
 )
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `details_type` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `detail_type` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`id`)
-)
-ENGINE = InnoDB;
-
-CREATE TABLE IF NOT EXISTS `details_side` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `detail_side` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`id`)
-)
-ENGINE = InnoDB;
-
-CREATE TABLE IF NOT EXISTS `orders_status` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `order_status` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`id`)
-)
-ENGINE = InnoDB;
-
-CREATE TABLE IF NOT EXISTS `users_types` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `user_types` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`id`)
-)
-ENGINE = InnoDB;
-
 CREATE TABLE IF NOT EXISTS `details`
 (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `detail_type_id` BIGINT NOT NULL,
-  `detail_side_id` BIGINT NOT NULL,
+  `detail_type` VARCHAR(100) NOT NULL,
+  `detail_side` VARCHAR(100),
   `price` DECIMAL(10, 2) NOT NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`detail_type_id`) REFERENCES `details_type`(`id`),
-  FOREIGN KEY (`detail_side_id`) REFERENCES `details_side`(`id`)
+  PRIMARY KEY (`id`)
 )
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `address` (
+CREATE TABLE IF NOT EXISTS `addresses` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `country` VARCHAR(500) NOT NULL,
   `city` VARCHAR(500) NOT NULL,
@@ -74,13 +44,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   `first_name` VARCHAR(100) NOT NULL,
   `last_name` VARCHAR(100) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
-  `phone_number` INT NOT NULL,
-  `user_type_id` BIGINT NOT NULL,
-  `address_id` bigint,
-  `is_inactive` BOOLEAN NOT NULL,
-  `password` VARCHAR(500),
-  FOREIGN KEY (`user_type_id`) REFERENCES `users_types`(`id`),
-  FOREIGN KEY (`address_id`) REFERENCES `address`(`id`),
+  `phone_number` VARCHAR(100) NOT NULL,
+  `active` BOOLEAN NOT NULL,
+  `password` VARCHAR(255),
   PRIMARY KEY (`id`)
 )
 ENGINE = InnoDB;
@@ -88,6 +54,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `orders` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `user_id` BIGINT NOT NULL,
+  `order_status` VARCHAR(100) NOT NULL,
   `order_date` DATETIME NOT NULL,
   `order_close_date` DATETIME,
   `total_price` DECIMAL(10, 2),
@@ -101,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `orders_items` (
   `order_id` BIGINT NOT NULL,
   `detail_id` BIGINT NOT NULL,
   `color_id` BIGINT NOT NULL,
-  `cunt` BIGINT NOT NULL,
+  `count` BIGINT NOT NULL,
   FOREIGN KEY (`order_id`) REFERENCES `orders`(`id`),
   FOREIGN KEY (`detail_id`) REFERENCES `details`(`id`),
   FOREIGN KEY (`color_id`) REFERENCES `colors`(`id`),
@@ -110,4 +77,40 @@ CREATE TABLE IF NOT EXISTS `orders_items` (
 ENGINE = InnoDB;
 
 ALTER TABLE `users`
-ALTER COLUMN `is_inactive` SET DEFAULT FALSE;
+ALTER COLUMN `active` SET DEFAULT TRUE;
+
+ALTER TABLE `addresses`
+ADD COLUMN `postal_code`VARCHAR(500);
+
+ALTER TABLE `orders`
+ADD COLUMN `notes` VARCHAR(2000);
+
+CREATE TABLE IF NOT EXISTS `roles` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `role` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `user_role` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `user_id` BIGINT NOT NULL,
+  `role_id` BIGINT NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES `users` (id),
+  FOREIGN KEY (`role_id`) REFERENCES `roles` (id)
+)
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `user_address` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `user_id` BIGINT NOT NULL,
+  `address_id` BIGINT,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES `users` (id),
+  FOREIGN KEY (`address_id`) REFERENCES `addresses` (id)
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `users`
+ADD COLUMN `user_name` varchar(255) NOT NULL;
