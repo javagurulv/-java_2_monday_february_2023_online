@@ -1,6 +1,7 @@
 package lv.fitness_app.core.services;
 
 import lv.fitness_app.core.database.ExerciseRepository;
+import lv.fitness_app.core.database.jpa.JpaExerciseRepository;
 import lv.fitness_app.core.domain.Exercise;
 import lv.fitness_app.core.requests.Ordering;
 import lv.fitness_app.core.requests.Paging;
@@ -30,7 +31,7 @@ public class SearchExerciseEquivalentService {
     private boolean pagingEnabled;
 
     @Autowired
-    private ExerciseRepository exerciseRepository;
+    private JpaExerciseRepository exerciseRepository;
     @Autowired
     private SearchExerciseEquivalentRequestValidator validator;
 

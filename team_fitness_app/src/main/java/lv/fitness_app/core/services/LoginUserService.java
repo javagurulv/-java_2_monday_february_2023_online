@@ -1,5 +1,6 @@
 package lv.fitness_app.core.services;
 
+import lv.fitness_app.core.database.jpa.JpaUserRepository;
 import lv.fitness_app.core.domain.User;
 import lv.fitness_app.core.services.validators.LoginUserRequestValidator;
 import lv.fitness_app.core.database.UserRepository;
@@ -17,7 +18,7 @@ import java.util.List;
 public class LoginUserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private JpaUserRepository userRepository;
     @Autowired private LoginUserRequestValidator validator;
 
 
