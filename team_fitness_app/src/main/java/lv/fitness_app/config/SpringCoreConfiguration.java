@@ -9,7 +9,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan(basePackages = "lv.fitness_app.core")
@@ -17,7 +16,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EntityScan(basePackages = "lv.fitness_app.core.domain")
 @EnableJpaRepositories(value = "lv.fitness_app.core.database.jpa")
-
 public class SpringCoreConfiguration {
 
 }

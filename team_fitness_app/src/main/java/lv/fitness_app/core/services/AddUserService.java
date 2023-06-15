@@ -26,7 +26,7 @@ public class AddUserService {
             return new AddUserResponse(errors);
         } else {
             User user = new User(request.getEmail(), request.getUsername(), request.getPassword());
-            userRepository.add(user);
+            userRepository.save(user);
             return new AddUserResponse(user);
         }
     }

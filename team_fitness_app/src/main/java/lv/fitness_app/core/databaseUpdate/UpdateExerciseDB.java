@@ -1,5 +1,6 @@
 package lv.fitness_app.core.databaseUpdate;
 
+import lv.fitness_app.core.database.jpa.JpaExerciseRepository;
 import lv.fitness_app.core.domain.Exercise;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -14,17 +15,15 @@ import java.util.List;
 public class UpdateExerciseDB {
 
     @Autowired
-    private SessionFactory sessionFactory;
+    private JpaExerciseRepository jpaExerciseRepository;
 
     public void deleteAllFromExerciseDB() {
-        Query query = sessionFactory.getCurrentSession().createQuery(
-                "delete Exercise");
-        query.executeUpdate();
+        jpaExerciseRepository.deleteAll();
     }
 
     public void updateExerciseDB(List<Exercise> exercises) {
         for (Exercise exercise : exercises) {
-            sessionFactory.getCurrentSession().persist(exercise);
+            jpaExerciseRepository.saveAll(exercises);
         }
     }
 

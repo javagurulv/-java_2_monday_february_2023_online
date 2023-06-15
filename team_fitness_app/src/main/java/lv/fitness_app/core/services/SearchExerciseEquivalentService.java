@@ -24,12 +24,6 @@ import java.util.stream.Collectors;
 @Transactional
 public class SearchExerciseEquivalentService {
 
-    @Value("${search.ordering.enabled}")
-    private boolean orderingEnabled;
-
-    @Value("${search.paging.enabled}")
-    private boolean pagingEnabled;
-
     @Autowired
     private JpaExerciseRepository exerciseRepository;
     @Autowired
@@ -41,8 +35,8 @@ public class SearchExerciseEquivalentService {
             return new SearchExerciseResponse(null, errors);
         }
         List<Exercise> exercises = search(request);
-        exercises = order(exercises, request.getOrdering());
-        exercises = paging(exercises, request.getPaging());
+//        exercises = order(exercises, request.getOrdering());
+//        exercises = paging(exercises, request.getPaging());
 
         return new SearchExerciseResponse(exercises, null);
     }
@@ -71,29 +65,29 @@ public class SearchExerciseEquivalentService {
     }
 
 
-    private List<Exercise> order(List<Exercise> exercises, Ordering ordering) {
-        if (orderingEnabled && (ordering != null)) {
-            Comparator<Exercise> comparator = ordering.getOrderBy().equals("name")
-                    ? Comparator.comparing(Exercise::getName)
-                    : Comparator.comparing(Exercise::getMuscleGroup);
-            if (ordering.getOrderDirection().equals("DESCENDING")) {
-                comparator = comparator.reversed();
-            }
-            return exercises.stream().sorted(comparator).collect(Collectors.toList());
-        } else {
-            return exercises;
-        }
-    }
-
-    private List<Exercise> paging(List<Exercise> exercises, Paging paging) {
-        if (pagingEnabled && (paging != null)) {
-            int skip = (paging.getPageNumber() - 1) * paging.getPageSize();
-            return exercises.stream()
-                    .skip(skip)
-                    .limit(paging.getPageSize())
-                    .collect(Collectors.toList());
-        } else {
-            return exercises;
-        }
-    }
+//    private List<Exercise> order(List<Exercise> exercises, Ordering ordering) {
+//        if (orderingEnabled && (ordering != null)) {
+//            Comparator<Exercise> comparator = ordering.getOrderBy().equals("name")
+//                    ? Comparator.comparing(Exercise::getName)
+//                    : Comparator.comparing(Exercise::getMuscleGroup);
+//            if (ordering.getOrderDirection().equals("DESCENDING")) {
+//                comparator = comparator.reversed();
+//            }
+//            return exercises.stream().sorted(comparator).collect(Collectors.toList());
+//        } else {
+//            return exercises;
+//        }
+//    }
+//
+//    private List<Exercise> paging(List<Exercise> exercises, Paging paging) {
+//        if (pagingEnabled && (paging != null)) {
+//            int skip = (paging.getPageNumber() - 1) * paging.getPageSize();
+//            return exercises.stream()
+//                    .skip(skip)
+//                    .limit(paging.getPageSize())
+//                    .collect(Collectors.toList());
+//        } else {
+//            return exercises;
+//        }
+//    }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 //@Transactional
 public class OrmUserRepositoryImpl implements UserRepository {
 
-    @Autowired
+//    @Autowired
     private SessionFactory sessionFactory;
 
     @Override

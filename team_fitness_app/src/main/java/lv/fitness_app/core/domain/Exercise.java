@@ -15,9 +15,9 @@ public class Exercise {
     private String name;
     @Column(name = "musclegroup")
     private String muscleGroup;
-    @Column(name = "detailedMuscleGroup")
+    @Column(name = "detailedmusclegroup")
     private String detailedMuscleGroup;
-    @Column(name = "otherMuscleGroup")
+    @Column(name = "othermusclegroup")
     private String otherMuscleGroup;
     @Column(name = "type")
     private String type;

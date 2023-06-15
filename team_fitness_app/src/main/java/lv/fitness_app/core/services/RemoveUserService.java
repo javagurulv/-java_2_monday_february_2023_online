@@ -29,7 +29,7 @@ public class RemoveUserService {
         } else if (userRepository.findUserByEmail(request.getEmail())!= null) {
             User user = userRepository.findUserByEmail(request.getEmail());
             if (user.getEmail().equals(request.getEmail()) && user.getPassword().equals(request.getPassword())) {
-                userRepository.deleteUser(user);
+                userRepository.delete(user);
                 isUserRemoved = true;
             }
         }
