@@ -9,7 +9,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.math.BigDecimal;
 
-import lv.javaguru.java2.servify.config.ServifyConfiguration;
+import lv.javaguru.java2.servify.core.config.ServifyCoreConfiguration;
 import lv.javaguru.java2.servify.core.dto.requests.AddDetailRequest;
 import lv.javaguru.java2.servify.core.dto.responses.GetAllDetailResponse;
 import lv.javaguru.java2.servify.core.services.details.AddDetailService;
@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {ServifyConfiguration.class})
+@ContextConfiguration(classes = {ServifyCoreConfiguration.class})
 
 public class AcceptanceTest1 {
 
