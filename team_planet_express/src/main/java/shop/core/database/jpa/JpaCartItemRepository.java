@@ -13,17 +13,13 @@ import java.util.List;
 @Repository
 public interface JpaCartItemRepository extends JpaRepository<CartItem, Long> {
 
+    List<CartItem> findByCart(Cart cart);
+
     @Query("SELECT ci FROM CartItem ci WHERE cart.id = :cart_id AND item.id = :item_id")
     List<CartItem> findByCartIdAndItemId(@Param(value = "cart_id") Long cartId, @Param(value = "item_id") Long itemId);
 
     @Modifying
     @Query("UPDATE CartItem ci SET ci.orderedQuantity = :new_ordered_quantity WHERE ci.id = :id")
     void updateOrderedQuantity(@Param(value = "id") Long id, @Param(value = "new_ordered_quantity") Integer newOrderedQuantity);
-
-    //TODO does this work ?
-    List<CartItem> findByCart(Cart cart);
-
-    @Query("SELECT ci FROM CartItem ci WHERE cart.id = :cart_id")
-    List<CartItem> findByCartId(@Param(value = "cart_id") Long cartId);
 
 }

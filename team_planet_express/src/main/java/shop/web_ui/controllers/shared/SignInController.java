@@ -32,6 +32,7 @@ public class SignInController {
         SignInResponse response = signInService.execute(request);
         if (response.hasErrors()) {
             modelMap.addAttribute("signInErrors", response.getErrors());
+            return "shared/signIn";
         }
         return "redirect:/";
     }

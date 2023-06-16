@@ -24,7 +24,7 @@ public class BuyTester extends Tester {
 
     @SuppressWarnings("UnusedReturnValue")
     public BuyTester checkCartIsClosed() {
-        Optional<Cart> cart = cartRepository.findOpenCartByUserId(currentUserId.getValue()).stream().findFirst();
+        Optional<Cart> cart = cartRepository.findOpenCartByUserId(currentUserId.getValue());
         assertTrue(cart.isEmpty());
         return this;
     }

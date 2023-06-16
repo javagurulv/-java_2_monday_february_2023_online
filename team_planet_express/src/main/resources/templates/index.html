@@ -9,8 +9,18 @@
 </head>
 
 <body>
-<h2>Sign in</h2>
-<table>
+<h2>Hello,
+    <text th:text="${user}"></text>
+</h2>
+<h3>Your cart is
+    <text th:text="${cartStatus}"></text>
+    <span th:if="${cartStatus == 'Open'}">
+        and it has
+        <text th:text="${cartItemQuantity}"></text>
+        items
+    </span>
+</h3>
+<table th:if="${userRole == 'GUEST'}">
     <tr>
         <td>Login:</td>
         <td>Password:</td>
@@ -22,9 +32,22 @@
             <td>
                 <input type="submit" value="Sign in"/>
             </td>
+
+        </form>
+        <form action="/signUp" th:object="${signUpRequest}" method="get">
+            <td>
+                <input type="submit" value="Sign Up">
+            </td>
         </form>
     </tr>
 </table>
+<div th:if="${userRole != 'GUEST'}">
+    <form action="/signOut" th:object="${signOutRequest}" method="post">
+        <td>
+            <input type="submit" value="Sign Out">
+        </td>
+    </form>
+</div>
 <table th:if="${signInErrors != null}">
     <tr th:each="error : ${signInErrors}">
         <td th:text="${error.field}"></td>
@@ -40,8 +63,8 @@
         <td>Quantity:</td>
         <td>Order amount:</td>
     </tr>
-    <td th:if="${items != null}">
-        <tr th:each="item : ${items}">
+    <td th:if="${shopItems != null}">
+        <tr th:each="item : ${shopItems}">
             <form action="/addItemToCart" th:object="${addItemToCartRequest}" method="post">
                 <td th:text="${item.name}"></td>
                 <td><input type="hidden" th:value="${item.name}" th:attr="name=itemName"/></td>
@@ -56,15 +79,6 @@
     </td>
 </table>
 <h2>Program menu</h2>
-<h3>You are:
-    <text th:text="${user.value}"></text>
-</h3>
-<h3>Your cart is:
-    <text th:text="${cartStatus}"></text>
-    , it has
-    <text th:text="${cartItemQuantity}"></text>
-    items
-</h3>
 <a href="/listShopItems">List shop items</a> <br>
 <a href="/searchItem">Search</a> <br>
 <a href="/addItemToCart">Add item to cart</a> <br>
@@ -73,9 +87,7 @@
 <a href="/buy">Buy</a> <br>
 <a href="/addItemToShop">Add item to shop</a> <br>
 <a href="/changeItemData">Change item data</a> <br>
-<a href="/changeUserData">Change user data</a> <br>
 <a href="/signUp">Sign up</a> <br>
-<a href="/signOut">Sign out</a> <br>
 </body>
 
 </html>

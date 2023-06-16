@@ -3,7 +3,6 @@ package shop;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import shop.console_ui.UIMenu;
 import shop.core.database.cleaner.DatabaseCleaner;
 import shop.core.database.jpa.JpaCartRepository;
 import shop.core.database.jpa.JpaItemRepository;
@@ -36,9 +35,6 @@ public class WebShopApplication {
                 () -> userService.createUser(userCreationData));
         CurrentUserId currentUserId = context.getBean(CurrentUserId.class);
         currentUserId.setValue(currentUser.getId());
-
-        UIMenu uiMenu = context.getBean(UIMenu.class);
-        uiMenu.startUI();
 
     }
 

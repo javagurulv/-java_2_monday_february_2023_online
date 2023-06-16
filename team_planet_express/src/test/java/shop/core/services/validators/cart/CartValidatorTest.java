@@ -10,8 +10,6 @@ import shop.core.domain.Cart;
 import shop.core.error_code_processing.ErrorProcessor;
 import shop.core.responses.CoreError;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -36,14 +34,14 @@ class CartValidatorTest {
 
     @Test
     void shouldReturnNoError() {
-        when(mockJpaCartRepository.findOpenCartByUserId(1L)).thenReturn(List.of(mockCart));
+        when(mockJpaCartRepository.findOpenCartByUserId(1L)).thenReturn(Optional.of(mockCart));
         Optional<CoreError> error = validator.validateOpenCartExistsForUserId(1L);
         assertTrue(error.isEmpty());
     }
 
     @Test
     void shouldReturnError() {
-        when(mockJpaCartRepository.findOpenCartByUserId(1L)).thenReturn(Collections.emptyList());
+        when(mockJpaCartRepository.findOpenCartByUserId(1L)).thenReturn(Optional.empty());
         when(mockErrorProcessor.getCoreError(anyString(), anyString())).thenReturn(mockCoreError);
         validator.validateOpenCartExistsForUserId(1L);
         verify(mockErrorProcessor).getCoreError("button", "VDT-CRT-NOC");

@@ -28,7 +28,6 @@ public class SignUpController {
     @PostMapping(value = "/signUp")
     public String processSignUpRequest(
             @ModelAttribute(value = "request") SignUpRequest request, ModelMap modelMap) {
-        //TODO shame
         request.setCurrentUserId(currentUserId);
         SignUpResponse response = signUpService.execute(request);
         if (response.hasErrors()) {

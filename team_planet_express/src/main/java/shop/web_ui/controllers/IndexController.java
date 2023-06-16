@@ -6,10 +6,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import shop.core.database.jpa.JpaCartItemRepository;
 import shop.core.database.jpa.JpaCartRepository;
+import shop.core.database.jpa.JpaUserRepository;
 import shop.core.domain.Cart;
+import shop.core.domain.User;
 import shop.core.requests.customer.AddItemToCartRequest;
 import shop.core.requests.customer.ListShopItemsRequest;
+import shop.core.requests.guest.SignUpRequest;
 import shop.core.requests.shared.SignInRequest;
+import shop.core.requests.shared.SignOutRequest;
 import shop.core.responses.customer.ListShopItemsResponse;
 import shop.core.services.actions.customer.ListShopItemsService;
 import shop.core.support.CurrentUserId;
@@ -24,24 +28,54 @@ public class IndexController {
     @Autowired
     private CurrentUserId currentUserId;
     @Autowired
+    private JpaUserRepository userRepository;
+    @Autowired
     private JpaCartRepository cartRepository;
     @Autowired
     private JpaCartItemRepository cartItemRepository;
 
     @GetMapping(value = "/")
     public String index(ModelMap modelMap) {
+        signIn(modelMap);
+        signOut(modelMap);
+        signUp(modelMap);
+        listShopItems(modelMap);
+        addITemToCart(modelMap);
+        showUserInfo(modelMap);
+        return "index";
+    }
+
+    private void signIn(ModelMap modelMap) {
+        modelMap.addAttribute("signInRequest", new SignInRequest());
+    }
+
+    private void signOut(ModelMap modelMap) {
+        modelMap.addAttribute("signOutRequest", new SignOutRequest());
+    }
+
+    private void signUp(ModelMap modelMap) {
+        modelMap.addAttribute("signUpRequest", new SignUpRequest());
+    }
+
+    private void listShopItems(ModelMap modelMap) {
         ListShopItemsRequest request = new ListShopItemsRequest();
         ListShopItemsResponse response = listShopItemsService.execute(request);
-        modelMap.addAttribute("items", response.getShopItems());
-        Optional<Cart> cart = cartRepository.findOpenCartByUserId(currentUserId.getValue()).stream().findFirst();
-        modelMap.addAttribute("signInRequest", new SignInRequest());
+        modelMap.addAttribute("shopItems", response.getShopItems());
+    }
+
+    private void addITemToCart(ModelMap modelMap) {
         modelMap.addAttribute("addItemToCartRequest", new AddItemToCartRequest());
-        modelMap.addAttribute("user", currentUserId);
+    }
+
+    private void showUserInfo(ModelMap modelMap) {
+        User user = userRepository.findById(currentUserId.getValue()).orElseThrow();
+        Optional<Cart> cart = cartRepository.findOpenCartByUserId(currentUserId.getValue());
+        modelMap.addAttribute("user", user.getName());
+        modelMap.addAttribute("userRole", user.getUserRole().toString());
         modelMap.addAttribute("cartStatus", cart.isPresent() ? "Open" : "Closed");
         modelMap.addAttribute("cartItemQuantity",
-                cart.map(openCart -> cartItemRepository.findByCartId(openCart.getId()).size())
+                cart.map(openCart -> cartItemRepository.findByCart(openCart).size())
                         .orElse(0));
-        return "index";
     }
 
 }

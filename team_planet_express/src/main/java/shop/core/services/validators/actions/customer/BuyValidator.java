@@ -44,7 +44,7 @@ public class BuyValidator {
 
     private Optional<CoreError> validateCartIsNotEmpty(Long userId) {
         Cart cart = repositoryAccessValidator.getOpenCartByUserId(userId);
-        return (cartItemRepository.findByCartId(cart.getId()).size() == 0)
+        return (cartItemRepository.findByCart(cart).size() == 0)
                 ? Optional.of(errorProcessor.getCoreError(FIELD_NAME, ERROR_CART_EMPTY))
                 : Optional.empty();
     }

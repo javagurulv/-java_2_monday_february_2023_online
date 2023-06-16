@@ -25,7 +25,7 @@ public abstract class Tester {
     protected CurrentUserId currentUserId;
 
     protected Tester checkItemInCart(String itemName, Integer quantity) {
-        Optional<Cart> cart = cartRepository.findOpenCartByUserId(currentUserId.getValue()).stream().findFirst();
+        Optional<Cart> cart = cartRepository.findOpenCartByUserId(currentUserId.getValue());
         assertTrue(cart.isPresent());
         Optional<CartItem> cartItem = cartItemRepository.findByCartIdAndItemId(
                 cart.get().getId(),
@@ -46,7 +46,7 @@ public abstract class Tester {
 
     @SuppressWarnings("UnusedReturnValue")
     protected Tester notItemInCart(String itemName) {
-        Optional<Cart> cart = cartRepository.findOpenCartByUserId(currentUserId.getValue()).stream().findFirst();
+        Optional<Cart> cart = cartRepository.findOpenCartByUserId(currentUserId.getValue());
         if (cart.isPresent()) {
             Optional<CartItem> cartItem = cartItemRepository.findByCartIdAndItemId(
                     cart.get().getId(),

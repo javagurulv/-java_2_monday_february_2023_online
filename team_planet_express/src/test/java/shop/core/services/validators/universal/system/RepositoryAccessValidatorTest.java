@@ -96,13 +96,13 @@ class RepositoryAccessValidatorTest {
 
     @Test
     void shouldReturnOpenCartByUserId() {
-        when(mockJpaCartRepository.findOpenCartByUserId(1L)).thenReturn(List.of(mockCart));
+        when(mockJpaCartRepository.findOpenCartByUserId(1L)).thenReturn(Optional.of(mockCart));
         assertNotNull(repositoryAccessValidator.getOpenCartByUserId(1L));
     }
 
     @Test
     void shouldThrowExceptionForMissingOptionalForOpenCartByUserId() {
-        when(mockJpaCartRepository.findOpenCartByUserId(1L)).thenReturn(Collections.emptyList());
+        when(mockJpaCartRepository.findOpenCartByUserId(1L)).thenReturn(Optional.empty());
         assertThrows(ServiceMissingDataException.class, () -> repositoryAccessValidator.getOpenCartByUserId(1L));
     }
 

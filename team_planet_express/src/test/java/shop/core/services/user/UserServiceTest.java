@@ -14,8 +14,8 @@ import shop.core.enums.UserRole;
 import shop.matchers.CartMatcher;
 import shop.matchers.UserMatcher;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
@@ -52,7 +52,7 @@ class UserServiceTest {
         when(mockJpaUserRepository.findAll()).thenReturn(List.of(mockUser));
         when(mockUser.getUserRole()).thenReturn(UserRole.GUEST);
         when(mockUser.getId()).thenReturn(1L);
-        when(mockJpaCartRepository.findOpenCartByUserId(1L)).thenReturn(List.of(mockCart));
+        when(mockJpaCartRepository.findOpenCartByUserId(1L)).thenReturn(Optional.of(mockCart));
         assertTrue(service.findGuestWithOpenCart().isPresent());
     }
 
@@ -68,7 +68,7 @@ class UserServiceTest {
         when(mockJpaUserRepository.findAll()).thenReturn(List.of(mockUser));
         when(mockUser.getUserRole()).thenReturn(UserRole.GUEST);
         when(mockUser.getId()).thenReturn(1L);
-        when(mockJpaCartRepository.findOpenCartByUserId(1L)).thenReturn(Collections.emptyList());
+        when(mockJpaCartRepository.findOpenCartByUserId(1L)).thenReturn(Optional.empty());
         assertTrue(service.findGuestWithOpenCart().isEmpty());
     }
 

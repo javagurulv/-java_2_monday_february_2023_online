@@ -28,15 +28,13 @@ public class SignOutController {
     @PostMapping(value = "/signOut")
     public String processSignOutRequest(
             @ModelAttribute(value = "request") SignOutRequest request, ModelMap modelMap) {
-        //TODO shame
         request.setCurrentUserId(currentUserId);
         SignOutResponse response = signOutService.execute(request);
         if (response.hasErrors()) {
             modelMap.addAttribute("errors", response.getErrors());
             return "shared/signOut";
-        } else {
-            return "redirect:/";
         }
+        return "redirect:/";
     }
 
 }

@@ -45,7 +45,7 @@ public class RepositoryAccessValidator {
     }
 
     public Cart getOpenCartByUserId(Long userId) {
-        return cartRepository.findOpenCartByUserId(userId).stream().findFirst() //TODO LOL
+        return cartRepository.findOpenCartByUserId(userId) //TODO LOL
                 .orElseThrow(ServiceMissingDataException::new);
     }
 

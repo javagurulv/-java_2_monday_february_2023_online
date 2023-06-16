@@ -21,7 +21,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -57,7 +56,7 @@ class ListCartItemsServiceTest {
     @Test
     void shouldReturnListCartItem() {
         when(mockRepositoryAccessValidator.getOpenCartByUserId(any())).thenReturn(mockCart);
-        when(mockJpaCartItemRepository.findByCartId(anyLong())).thenReturn(List.of(mockCartItem, mockCartItem));
+        when(mockJpaCartItemRepository.findByCart(any(Cart.class))).thenReturn(List.of(mockCartItem, mockCartItem));
         when(mockCartItemConverter.toCartItemDto(List.of(mockCartItem, mockCartItem))).thenReturn(List.of(mockCartItemDto, mockCartItemDto));
         ListCartItemsResponse response = service.execute(mockRequest);
         assertEquals(response.getCartItems().size(), 2);

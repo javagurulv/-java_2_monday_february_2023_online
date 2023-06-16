@@ -22,12 +22,12 @@
         </tr>
         <tr th:each="item : ${items}">
             <td th:text="${item.itemName}"></td>
-            <td th:text="${item.price}"></td>
+            <td th:text="${item.itemPrice}"></td>
             <td th:text="${item.orderedQuantity}"></td>
         </tr>
         <tr>
             <td>Total:</td>
-            <td th:text="${total}"></td>
+            <td th:text="${#aggregates.sum(items.![itemPrice * orderedQuantity])}"></td>
         </tr>
     </table>
 </div>
