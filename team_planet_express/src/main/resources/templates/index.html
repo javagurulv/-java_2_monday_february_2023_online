@@ -12,14 +12,19 @@
 <h2>Hello,
     <text th:text="${user}"></text>
 </h2>
-<h3>Your cart is
-    <text th:text="${cartStatus}"></text>
-    <span th:if="${cartStatus == 'Open'}">
-        and it has
-        <text th:text="${cartItemQuantity}"></text>
-        items
-    </span>
-</h3>
+<div th:if="${userRole != 'MANAGER'}">
+    <h3>Your cart is
+        <text th:text="${cartStatus}"></text>
+        <span th:if="${cartStatus == 'Open'}">
+            and it has
+            <text th:text="${cartItemQuantity}"></text>
+            items
+            <form action="/listCartItems" method="get">
+                <input type="submit" value="My cart">
+            </form>
+        </span>
+    </h3>
+</div>
 <table th:if="${userRole == 'GUEST'}">
     <tr>
         <td>Login:</td>
@@ -55,39 +60,37 @@
         <td th:text="${error.message}"></td>
     </tr>
 </table>
-<h2>Items</h2>
-<table>
-    <tr>
-        <td>Name:</td>
-        <td>Price:</td>
-        <td>Quantity:</td>
-        <td>Order amount:</td>
-    </tr>
-    <td th:if="${shopItems != null}">
-        <tr th:each="item : ${shopItems}">
-            <form action="/addItemToCart" th:object="${addItemToCartRequest}" method="post">
-                <td th:text="${item.name}"></td>
-                <td><input type="hidden" th:value="${item.name}" th:attr="name=itemName"/></td>
-                <td th:text="${item.price}"></td>
-                <td th:text="${item.availableQuantity}"></td>
-                <td><input type="text" th:field="${addItemToCartRequest.orderedQuantity}"/></td>
-                <td>
-                    <input type="submit" value="Add item">
-                </td>
-            </form>
+<div th:if="${userRole != 'MANAGER'}">
+    <h2>Items</h2>
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td>Price:</td>
+            <td>Quantity:</td>
+            <td>Order amount:</td>
         </tr>
-    </td>
-</table>
-<h2>Program menu</h2>
-<a href="/listShopItems">List shop items</a> <br>
-<a href="/searchItem">Search</a> <br>
-<a href="/addItemToCart">Add item to cart</a> <br>
-<a href="/removeItemFromCart">Remove item from cart</a> <br>
-<a href="/listCartItems">List cart items</a> <br>
-<a href="/buy">Buy</a> <br>
-<a href="/addItemToShop">Add item to shop</a> <br>
-<a href="/changeItemData">Change item data</a> <br>
-<a href="/signUp">Sign up</a> <br>
+        <div th:if="${shopItems != null}">
+            <tr th:each="item : ${shopItems}">
+                <form action="/addItemToCart" th:object="${addItemToCartRequest}" method="post">
+                    <td th:text="${item.name}"></td>
+                    <td><input type="hidden" th:value="${item.name}" th:attr="name=itemName"/></td>
+                    <td th:text="${item.price}"></td>
+                    <td th:text="${item.availableQuantity}"></td>
+                    <td><input type="number" th:min="0" th:max="${item.availableQuantity}" placeholder="0"
+                               th:field="${addItemToCartRequest.orderedQuantity}"/></td>
+                    <td>
+                        <input type="submit" value="Add item">
+                    </td>
+                </form>
+            </tr>
+        </div>
+    </table>
+    <a href="/searchItem">Search</a> <br>
+</div>
+<div th:if="${userRole == 'MANAGER'}">
+    <a href="/addItemToShop">Add item to shop</a> <br>
+    <a href="/changeItemData">Change item data</a> <br>
+</div>
 </body>
 
 </html>

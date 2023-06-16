@@ -5,7 +5,6 @@ public enum UserRole {
     GUEST(1, "Guest"),
     CUSTOMER(2, "Customer"),
     MANAGER(4, "Manager"),
-    ADMIN(8, "Admin"),
     ALL_USERS(Integer.MAX_VALUE, "GOD");
 
     private final int role;

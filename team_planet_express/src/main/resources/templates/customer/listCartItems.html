@@ -21,15 +21,24 @@
             <td>Quantity:</td>
         </tr>
         <tr th:each="item : ${items}">
-            <td th:text="${item.itemName}"></td>
-            <td th:text="${item.itemPrice}"></td>
-            <td th:text="${item.orderedQuantity}"></td>
+            <form action="/removeItemFromCart" th:object="${removeItemFromCartRequest}" method="post">
+                <td th:text="${item.itemName}"></td>
+                <td><input type="hidden" th:value="${item.itemName}" th:attr="name=itemName"/></td>
+                <td th:text="${item.itemPrice}"></td>
+                <td th:text="${item.orderedQuantity}"></td>
+                <td>
+                    <input type="submit" value="Remove item">
+                </td>
+            </form>
         </tr>
         <tr>
             <td>Total:</td>
             <td th:text="${#aggregates.sum(items.![itemPrice * orderedQuantity])}"></td>
         </tr>
     </table>
+    <form action="/buy" method="post">
+        <input type="submit" value="Buy">
+    </form>
 </div>
 <table th:if="${errors != null}">
     <tr th:each="error : ${errors}">

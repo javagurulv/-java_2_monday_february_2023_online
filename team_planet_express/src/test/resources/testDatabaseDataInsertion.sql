@@ -1,14 +1,12 @@
 INSERT INTO shop_user (name, login, password, role)
 VALUES ('Guest', '', '', 'GUEST'),
         ('Customer', 'customer', 'customer', 'CUSTOMER'),
-        ('Manager', 'manager', 'manager', 'MANAGER'),
-        ('Admin', 'admin', 'admin', 'ADMIN');
+        ('Manager', 'manager', 'manager', 'MANAGER');
 
 INSERT INTO cart (user_id, status)
 VALUES (1, 'OPEN'),
         (2, 'OPEN'),
-        (3, 'OPEN'),
-        (4, 'OPEN');
+        (3, 'OPEN');
 
 INSERT INTO item (name, price, available_quantity)
 VALUES ('Stop-and-Drop Suicide Booth', 1000.00, 1),

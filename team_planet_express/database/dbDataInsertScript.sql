@@ -1,14 +1,12 @@
 INSERT INTO shop_user (name, login, password, role)
 VALUES ('Guest', '', '', 'GUEST'),
         ('Customer', 'customer', 'customer', 'CUSTOMER'),
-        ('Manager', 'manager', 'manager', 'MANAGER'),
-        ('Admin', 'admin', 'admin', 'ADMIN');
+        ('Manager', 'manager', 'manager', 'MANAGER');
 
 INSERT INTO cart (user_id, status, last_update)
 VALUES (1, 'OPEN', '2023-05-05 10:00:00'),
         (2, 'OPEN', '2023-05-05 10:00:00'),
-        (3, 'OPEN', '2023-05-05 10:00:00'),
-        (4, 'OPEN', '2023-05-05 10:00:00');
+        (3, 'OPEN', '2023-05-05 10:00:00');
 
 INSERT INTO item (name, price, available_quantity)
 VALUES ('cvxhv', 79.71, 6),

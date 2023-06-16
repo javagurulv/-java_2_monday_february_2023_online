@@ -13,7 +13,6 @@ public class FakeUserGenerator {
         fakeUsers.add(new User("Guest", "", "", UserRole.GUEST));
         fakeUsers.add(new User("Customer", "customer", "customer", UserRole.CUSTOMER));
         fakeUsers.add(new User("Manager", "manager", "manager", UserRole.MANAGER));
-        fakeUsers.add(new User("Admin", "admin", "admin", UserRole.ADMIN));
         return fakeUsers;
     }
 

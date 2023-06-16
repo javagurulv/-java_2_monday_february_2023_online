@@ -59,7 +59,7 @@ class UserServiceTest {
     @Test
     void shouldReturnEmptyOptionalForNoGuest() {
         when(mockJpaUserRepository.findAll()).thenReturn(List.of(mockUser));
-        when(mockUser.getUserRole()).thenReturn(UserRole.ADMIN);
+        when(mockUser.getUserRole()).thenReturn(UserRole.MANAGER);
         assertTrue(service.findGuestWithOpenCart().isEmpty());
     }
 

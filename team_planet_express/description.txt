@@ -12,9 +12,9 @@ Customer can finalize their shopping cart (buy without paying and/or actually ge
 
 Kickstarter goals:
 1. User registration.
-2. User roles (customer and admin).
+2. User roles (customer and manager).
 3. Item descriptions.
-4. Administrators ability to add and remove items from the warehouse.
+4. Managers ability to add and remove items from the warehouse.
 5. Introduce some kind of payment system and credit card operations.
 6. Notifications if items became unavailable while shopping.
 7. Item categories.

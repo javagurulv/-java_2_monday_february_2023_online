@@ -28,7 +28,6 @@ public class BuyController {
     @PostMapping(value = "/buy")
     public String processBuyRequest(
             @ModelAttribute(value = "request") BuyRequest request, ModelMap modelMap) {
-        //TODO shame
         request.setCurrentUserId(currentUserId);
         BuyResponse response = buyService.execute(request);
         if (response.hasErrors()) {

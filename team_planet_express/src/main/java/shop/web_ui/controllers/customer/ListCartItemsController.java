@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import shop.core.requests.customer.ListCartItemsRequest;
+import shop.core.requests.customer.RemoveItemFromCartRequest;
 import shop.core.responses.customer.ListCartItemsResponse;
 import shop.core.services.actions.customer.ListCartItemsService;
 import shop.core.support.CurrentUserId;
@@ -26,6 +27,7 @@ public class ListCartItemsController {
         } else {
             modelMap.addAttribute("items", response.getCartItems());
         }
+        modelMap.addAttribute("removeItemFromCartRequest", new RemoveItemFromCartRequest());
         return "customer/listCartItems";
     }
 

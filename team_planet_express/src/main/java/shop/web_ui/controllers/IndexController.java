@@ -39,9 +39,9 @@ public class IndexController {
         signIn(modelMap);
         signOut(modelMap);
         signUp(modelMap);
+        showUserInfo(modelMap);
         listShopItems(modelMap);
         addITemToCart(modelMap);
-        showUserInfo(modelMap);
         return "index";
     }
 
@@ -57,16 +57,6 @@ public class IndexController {
         modelMap.addAttribute("signUpRequest", new SignUpRequest());
     }
 
-    private void listShopItems(ModelMap modelMap) {
-        ListShopItemsRequest request = new ListShopItemsRequest();
-        ListShopItemsResponse response = listShopItemsService.execute(request);
-        modelMap.addAttribute("shopItems", response.getShopItems());
-    }
-
-    private void addITemToCart(ModelMap modelMap) {
-        modelMap.addAttribute("addItemToCartRequest", new AddItemToCartRequest());
-    }
-
     private void showUserInfo(ModelMap modelMap) {
         User user = userRepository.findById(currentUserId.getValue()).orElseThrow();
         Optional<Cart> cart = cartRepository.findOpenCartByUserId(currentUserId.getValue());
@@ -76,6 +66,16 @@ public class IndexController {
         modelMap.addAttribute("cartItemQuantity",
                 cart.map(openCart -> cartItemRepository.findByCart(openCart).size())
                         .orElse(0));
+    }
+
+    private void listShopItems(ModelMap modelMap) {
+        ListShopItemsRequest request = new ListShopItemsRequest();
+        ListShopItemsResponse response = listShopItemsService.execute(request);
+        modelMap.addAttribute("shopItems", response.getShopItems());
+    }
+
+    private void addITemToCart(ModelMap modelMap) {
+        modelMap.addAttribute("addItemToCartRequest", new AddItemToCartRequest());
     }
 
 }

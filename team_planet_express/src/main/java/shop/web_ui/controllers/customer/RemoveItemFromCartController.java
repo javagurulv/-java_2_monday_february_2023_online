@@ -28,14 +28,14 @@ public class RemoveItemFromCartController {
     @PostMapping(value = "/removeItemFromCart")
     public String processRemoveItemFromCart(
             @ModelAttribute(value = "request") RemoveItemFromCartRequest request, ModelMap modelMap) {
-        //TODO shame
         request.setCurrentUserId(currentUserId);
         RemoveItemFromCartResponse response = removeItemFromCartService.execute(request);
         if (response.hasErrors()) {
             modelMap.addAttribute("errors", response.getErrors());
             return "removeItemFromCart";
         } else {
-            return "customer/redirect:/";
+            return "redirect:/listCartItems";
         }
     }
+
 }
