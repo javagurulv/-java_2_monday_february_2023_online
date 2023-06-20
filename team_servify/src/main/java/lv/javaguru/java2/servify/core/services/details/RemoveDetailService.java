@@ -30,7 +30,7 @@ public class RemoveDetailService {
             return new RemoveDetailResponse(errors);
         }
         detailRepository.deleteById(request.getDetailId());
-        return new RemoveDetailResponse();
+        return new RemoveDetailResponse(true);
     }
 
 }
