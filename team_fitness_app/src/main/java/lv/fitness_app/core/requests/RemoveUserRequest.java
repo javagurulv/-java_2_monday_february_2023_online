@@ -4,6 +4,7 @@ public class RemoveUserRequest {
 
     private String email;
     private String password;
+    public RemoveUserRequest() { }
 
     public RemoveUserRequest(String email, String password) {
         this.email = email;
