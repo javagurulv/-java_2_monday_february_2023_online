@@ -17,5 +17,14 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories(value = "shop.core.database.jpa")
 public class SpringCoreConfiguration {
 
+//    Liquibase wants money for triggers
+//    @Bean
+//    public SpringLiquibase springLiquibase(DataSource dataSource) {
+//        SpringLiquibase liquibase = new SpringLiquibase();
+//        liquibase.setChangeLog("classpath:/db/changelog/changelog-master.xml");
+//        liquibase.setShouldRun(true);
+//        liquibase.setDataSource(dataSource);
+//        return liquibase;
+//    }
 
 }

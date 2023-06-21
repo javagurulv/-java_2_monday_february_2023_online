@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+
+    <changeSet author="vs" id="8">
+        <createIndex tableName="shop_user" indexName="login">
+            <column name="login"/>
+        </createIndex>
+        <createIndex tableName="item" indexName="name">
+            <column name="name"/>
+        </createIndex>
+        <createIndex tableName="item" indexName="price">
+            <column name="price"/>
+        </createIndex>
+        <createIndex tableName="cart" indexName="status">
+            <column name="status"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex tableName="shop_user" indexName="login"/>
+            <dropIndex tableName="item" indexName="name"/>
+            <dropIndex tableName="item" indexName="price"/>
+            <dropIndex tableName="cart" indexName="status"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
