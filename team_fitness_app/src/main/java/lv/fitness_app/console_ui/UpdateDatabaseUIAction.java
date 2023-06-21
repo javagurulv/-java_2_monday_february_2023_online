@@ -11,19 +11,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+//@Component
 public class UpdateDatabaseUIAction implements UIAction{
 
-    @Autowired
-    private UpdateExerciseDB updater;
-    @Autowired
-    private CsvParser parser;
-
-    @Override
+//    @Autowired
+//    private UpdateExerciseDB updater;
+//    @Autowired
+//    private CsvParser parser;
+//
+//    @Override
     public void execute() throws IOException, CsvException {
-        List<Exercise> list = new ArrayList<>();
-        list.addAll(parser.parseToListOfObjects());
-        updater.deleteAllFromExerciseDB();
-        updater.updateExerciseDB(list);
+//        List<Exercise> list = new ArrayList<>();
+//        list.addAll(parser.parseToListOfObjects());
+//        updater.deleteAllFromExerciseDB();
+//        updater.updateExerciseDB(list);
     }
 }
