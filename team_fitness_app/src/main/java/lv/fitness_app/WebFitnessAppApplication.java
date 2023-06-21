@@ -8,9 +8,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication
 public class WebFitnessAppApplication {
 
-    public static void main(String[] args) {
-
-        ConfigurableApplicationContext context = SpringApplication.run(SpringWebConfiguration.class);
-    }
+    public static void main(String[] args) { SpringApplication.run(SpringWebConfiguration.class); }
 
 }

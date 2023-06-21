@@ -8,7 +8,7 @@ import java.util.List;
 //@Component
 public class JdbcUserRepositoryImpl implements UserRepository {
 
-    @Autowired
+//    @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Override
