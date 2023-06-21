@@ -22,4 +22,7 @@ public class AddDetailResponse extends CoreResponse {
     public Detail newDetail() {
         return newDetail;
     }
+    public boolean isAdded() {
+        return isAdded;
+    }
 }
