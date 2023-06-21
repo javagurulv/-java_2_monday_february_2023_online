@@ -30,10 +30,15 @@ public class UpdateDetailService {
         }
         return detailRepository.findById(request.getId())
                 .map(detail -> {
-                    detail.setId(detail.getId());
-                    detail.setType(request.getType());
-                    detail.setSide(request.getSide());
-                    detail.setPrice(request.getPrice());
+                    if (request.getType() != null && !request.getType().isBlank()) {
+                        detail.setType(request.getType());
+                    }
+                    if (request.getSide() != null && !request.getSide().isBlank()) {
+                        detail.setSide(request.getSide());
+                    }
+                    if (request.getPrice() != null && !request.getPrice().toString().isBlank()) {
+                        detail.setPrice(request.getPrice());
+                    }
                     return new UpdateDetailResponse(detail);
                 })
                 .orElseGet(() -> {

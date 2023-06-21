@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servify.integrationtests;
 
-import lv.javaguru.java2.servify.config.ServifyConfiguration;
+import lv.javaguru.java2.servify.core.config.ServifyCoreConfiguration;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {ServifyConfiguration.class})
+@ContextConfiguration(classes = {ServifyCoreConfiguration.class})
 public class SpringContextTest {
 
     @Autowired private ApplicationContext appContext;
