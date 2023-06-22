@@ -55,28 +55,25 @@ class RemoveItemFromCartServiceTest {
 
     @Test
     void shouldDeleteFromCart() {
-        when(mockRepositoryAccessValidator.getOpenCartByUserId(any())).thenReturn(mockCart);
+        when(mockRepositoryAccessValidator.getOpenCartByUser(any())).thenReturn(mockCart);
         when(mockRequest.getItemName()).thenReturn("Item");
         when(mockRepositoryAccessValidator.getItemByName("Item")).thenReturn(mockItem);
-        when(mockCart.getId()).thenReturn(1L);
-        when(mockItem.getId()).thenReturn(2L);
         when(mockCartItem.getId()).thenReturn(3L);
-        when(mockRepositoryAccessValidator.getCartItemByCartIdAndItemId(1L, 2L)).thenReturn(mockCartItem);
+        when(mockRepositoryAccessValidator.getCartItemByCartAndItem(mockCart, mockItem)).thenReturn(mockCartItem);
         service.execute(mockRequest);
         verify(mockJpaCartItemRepository).deleteById(3L);
     }
 
     @Test
     void shouldReturnAvailableQuantity() {
-        when(mockRepositoryAccessValidator.getOpenCartByUserId(any())).thenReturn(mockCart);
+        when(mockRepositoryAccessValidator.getOpenCartByUser(any())).thenReturn(mockCart);
         when(mockRequest.getItemName()).thenReturn("Item");
         when(mockRepositoryAccessValidator.getItemByName("Item")).thenReturn(mockItem);
-        when(mockCart.getId()).thenReturn(1L);
-        when(mockItem.getId()).thenReturn(2L);
         when(mockItem.getAvailableQuantity()).thenReturn(10);
         when(mockCartItem.getId()).thenReturn(3L);
         when(mockCartItem.getOrderedQuantity()).thenReturn(11);
-        when(mockRepositoryAccessValidator.getCartItemByCartIdAndItemId(1L, 2L)).thenReturn(mockCartItem);
+        when(mockRepositoryAccessValidator.getCartItemByCartAndItem(mockCart, mockItem)).thenReturn(mockCartItem);
+        when(mockItem.getId()).thenReturn(2L);
         service.execute(mockRequest);
         verify(mockJpaItemRepository).updateAvailableQuantity(2L, 21);
     }

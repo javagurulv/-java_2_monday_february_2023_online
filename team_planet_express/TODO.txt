@@ -16,4 +16,6 @@ buy -> buy + close
 
 converter tests
 
-findOne does actually work ?
+modelMap pass stuff back
+
+jpa update ?

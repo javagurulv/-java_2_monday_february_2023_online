@@ -31,7 +31,8 @@ public class BuyService {
         if (!errors.isEmpty()) {
             return new BuyResponse(errors);
         }
-        Cart cart = repositoryAccessValidator.getOpenCartByUserId(request.getCurrentUserId().getValue());
+        Cart cart = repositoryAccessValidator.getOpenCartByUser(
+                repositoryAccessValidator.getUserById(request.getCurrentUserId().getValue()));
         cartRepository.updateCartStatus(cart.getId(), CartStatus.CLOSED);
         return new BuyResponse();
     }

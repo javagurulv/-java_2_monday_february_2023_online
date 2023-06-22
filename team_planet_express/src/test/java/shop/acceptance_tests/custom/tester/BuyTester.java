@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import shop.core.domain.Cart;
 import shop.core.requests.customer.BuyRequest;
 import shop.core.services.actions.customer.BuyService;
+import shop.core.services.validators.universal.system.RepositoryAccessValidator;
 
 import java.util.Optional;
 
@@ -15,6 +16,8 @@ public class BuyTester extends Tester {
 
     @Autowired
     private BuyService buyService;
+    @Autowired
+    RepositoryAccessValidator repositoryAccessValidator;
 
     public BuyTester buy() {
         BuyRequest buyRequest = new BuyRequest(currentUserId);
@@ -24,7 +27,8 @@ public class BuyTester extends Tester {
 
     @SuppressWarnings("UnusedReturnValue")
     public BuyTester checkCartIsClosed() {
-        Optional<Cart> cart = cartRepository.findOpenCartByUserId(currentUserId.getValue());
+        Optional<Cart> cart = cartRepository.findOpenCartByUser(
+                repositoryAccessValidator.getUserById(currentUserId.getValue()));
         assertTrue(cart.isEmpty());
         return this;
     }

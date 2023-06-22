@@ -53,12 +53,12 @@ public class SignUpAndOrderAnItemAcceptanceTest {
         UserDto newUserDto = signUpResponse.getUser();
         User newUser = userRepository.findByLogin(newUserDto.getLogin()).stream().findFirst().orElseThrow();
         assertEquals(UserRole.CUSTOMER, newUser.getUserRole());
-        assertTrue(cartRepository.findOpenCartByUserId(newUser.getId()).isPresent());
+        assertTrue(cartRepository.findOpenCartByUser(newUser).isPresent());
         Item orderedItem = itemRepository.findByName("Lightspeed Briefs").stream().findFirst().orElseThrow();
         AddItemToCartResponse addItemToCartResponse =
                 addItemToCartService.execute(new AddItemToCartRequest(currentUserId, orderedItem.getName(), "1"));
         assertFalse(addItemToCartResponse.hasErrors());
-        Cart userCart = cartRepository.findOpenCartByUserId(newUser.getId()).get();
+        Cart userCart = cartRepository.findOpenCartByUser(newUser).get();
         List<CartItem> cartItems = cartItemRepository.findByCart(userCart);
         assertEquals(1, cartItems.size());
         CartItem cartItem = cartItems.get(0);

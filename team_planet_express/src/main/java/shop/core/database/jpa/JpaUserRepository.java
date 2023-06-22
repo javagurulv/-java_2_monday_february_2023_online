@@ -13,6 +13,6 @@ public interface JpaUserRepository extends JpaRepository<User, Long> {
 
     List<User> findByLogin(String login);
 
-    Optional<User> findOneByLogin(String login);
+    Optional<User> findFirstByLogin(String login);
 
 }

@@ -30,7 +30,7 @@ public class UserService {
     public Optional<User> findGuestWithOpenCart() {
         return userRepository.findAll().stream()
                 .filter(user -> UserRole.GUEST.equals(user.getUserRole()))
-                .filter(user -> cartRepository.findOpenCartByUserId(user.getId()).isPresent())
+                .filter(user -> cartRepository.findOpenCartByUser(user).isPresent())
                 .findFirst();
     }
 

@@ -15,8 +15,6 @@ import shop.core.domain.Item;
 import shop.core.domain.User;
 import shop.core.services.exception.ServiceMissingDataException;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -60,13 +58,13 @@ class RepositoryAccessValidatorTest {
 
     @Test
     void shouldReturnUserByLoginName() {
-        when(mockJpaUserRepository.findOneByLogin("login name")).thenReturn(Optional.of(mockUser));
+        when(mockJpaUserRepository.findFirstByLogin("login name")).thenReturn(Optional.of(mockUser));
         assertNotNull(repositoryAccessValidator.getUserByLoginName("login name"));
     }
 
     @Test
     void shouldThrowExceptionForMissingOptionalForUserByLoginName() {
-        when(mockJpaUserRepository.findOneByLogin("login name")).thenReturn(Optional.empty());
+        when(mockJpaUserRepository.findFirstByLogin("login name")).thenReturn(Optional.empty());
         assertThrows(ServiceMissingDataException.class, () -> repositoryAccessValidator.getUserByLoginName("login name"));
     }
 
@@ -84,38 +82,38 @@ class RepositoryAccessValidatorTest {
 
     @Test
     void shouldReturnItemByName() {
-        when(mockJpaItemRepository.findOneByName("item name")).thenReturn(Optional.of(mockItem));
+        when(mockJpaItemRepository.findFirstByName("item name")).thenReturn(Optional.of(mockItem));
         assertNotNull(repositoryAccessValidator.getItemByName("item name"));
     }
 
     @Test
     void shouldThrowExceptionForMissingOptionalForItemByName() {
-        when(mockJpaItemRepository.findOneByName("item name")).thenReturn(Optional.empty());
+        when(mockJpaItemRepository.findFirstByName("item name")).thenReturn(Optional.empty());
         assertThrows(ServiceMissingDataException.class, () -> repositoryAccessValidator.getItemByName("item name"));
     }
 
     @Test
-    void shouldReturnOpenCartByUserId() {
-        when(mockJpaCartRepository.findOpenCartByUserId(1L)).thenReturn(Optional.of(mockCart));
-        assertNotNull(repositoryAccessValidator.getOpenCartByUserId(1L));
+    void shouldReturnOpenCartByUser() {
+        when(mockJpaCartRepository.findOpenCartByUser(mockUser)).thenReturn(Optional.of(mockCart));
+        assertNotNull(repositoryAccessValidator.getOpenCartByUser(mockUser));
     }
 
     @Test
-    void shouldThrowExceptionForMissingOptionalForOpenCartByUserId() {
-        when(mockJpaCartRepository.findOpenCartByUserId(1L)).thenReturn(Optional.empty());
-        assertThrows(ServiceMissingDataException.class, () -> repositoryAccessValidator.getOpenCartByUserId(1L));
+    void shouldThrowExceptionForMissingOptionalForOpenCartByUser() {
+        when(mockJpaCartRepository.findOpenCartByUser(mockUser)).thenReturn(Optional.empty());
+        assertThrows(ServiceMissingDataException.class, () -> repositoryAccessValidator.getOpenCartByUser(mockUser));
     }
 
     @Test
-    void shouldReturnCartItemByCartIdAndItemId() {
-        when(mockJpaCartItemRepository.findByCartIdAndItemId(1L, 1L)).thenReturn(List.of(mockCartItem));
-        assertNotNull(repositoryAccessValidator.getCartItemByCartIdAndItemId(1L, 1L));
+    void shouldReturnCartItemByCartIdAndItem() {
+        when(mockJpaCartItemRepository.findFirstByCartAndItem(mockCart, mockItem)).thenReturn(Optional.of(mockCartItem));
+        assertNotNull(repositoryAccessValidator.getCartItemByCartAndItem(mockCart, mockItem));
     }
 
     @Test
-    void shouldThrowExceptionForMissingOptionalForCartItemByCartIdAndItemId() {
-        when(mockJpaCartItemRepository.findByCartIdAndItemId(1L, 1L)).thenReturn(Collections.emptyList());
-        assertThrows(ServiceMissingDataException.class, () -> repositoryAccessValidator.getCartItemByCartIdAndItemId(1L, 1L));
+    void shouldThrowExceptionForMissingOptionalForCartItemByCartAndItem() {
+        when(mockJpaCartItemRepository.findFirstByCartAndItem(mockCart, mockItem)).thenReturn(Optional.empty());
+        assertThrows(ServiceMissingDataException.class, () -> repositoryAccessValidator.getCartItemByCartAndItem(mockCart, mockItem));
     }
 
 }

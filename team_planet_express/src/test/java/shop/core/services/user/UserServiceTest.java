@@ -51,8 +51,7 @@ class UserServiceTest {
     void shouldReturnExistingGuest() {
         when(mockJpaUserRepository.findAll()).thenReturn(List.of(mockUser));
         when(mockUser.getUserRole()).thenReturn(UserRole.GUEST);
-        when(mockUser.getId()).thenReturn(1L);
-        when(mockJpaCartRepository.findOpenCartByUserId(1L)).thenReturn(Optional.of(mockCart));
+        when(mockJpaCartRepository.findOpenCartByUser(mockUser)).thenReturn(Optional.of(mockCart));
         assertTrue(service.findGuestWithOpenCart().isPresent());
     }
 
@@ -67,8 +66,7 @@ class UserServiceTest {
     void shouldReturnEmptyOptionalForNoOpenCart() {
         when(mockJpaUserRepository.findAll()).thenReturn(List.of(mockUser));
         when(mockUser.getUserRole()).thenReturn(UserRole.GUEST);
-        when(mockUser.getId()).thenReturn(1L);
-        when(mockJpaCartRepository.findOpenCartByUserId(1L)).thenReturn(Optional.empty());
+        when(mockJpaCartRepository.findOpenCartByUser(mockUser)).thenReturn(Optional.empty());
         assertTrue(service.findGuestWithOpenCart().isEmpty());
     }
 

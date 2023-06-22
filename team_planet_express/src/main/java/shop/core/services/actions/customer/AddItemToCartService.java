@@ -35,7 +35,8 @@ public class AddItemToCartService {
         if (!errors.isEmpty()) {
             return new AddItemToCartResponse(errors);
         }
-        Cart cart = repositoryAccessValidator.getOpenCartByUserId(request.getCurrentUserId().getValue());
+        Cart cart = repositoryAccessValidator.getOpenCartByUser(
+                repositoryAccessValidator.getUserById(request.getCurrentUserId().getValue()));
         Item item = repositoryAccessValidator.getItemByName(request.getItemName());
         Integer orderedQuantity = Integer.parseInt(request.getOrderedQuantity());
         addItemToCart(cart, item, orderedQuantity);
@@ -44,7 +45,7 @@ public class AddItemToCartService {
     }
 
     private void addItemToCart(Cart cart, Item item, Integer orderedQuantity) {
-        Optional<CartItem> cartItem = cartItemRepository.findByCartIdAndItemId(cart.getId(), item.getId())
+        Optional<CartItem> cartItem = cartItemRepository.findFirstByCartAndItem(cart, item)
                 .stream()
                 .findFirst();
         if (cartItem.isEmpty()) {

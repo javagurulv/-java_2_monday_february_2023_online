@@ -30,7 +30,7 @@ public class RepositoryAccessValidator {
     }
 
     public User getUserByLoginName(String login) {
-        return userRepository.findOneByLogin(login)/* TODO CHECK .stream().findFirst()*/
+        return userRepository.findFirstByLogin(login)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 
@@ -40,17 +40,17 @@ public class RepositoryAccessValidator {
     }
 
     public Item getItemByName(String itemName) {
-        return itemRepository.findOneByName(itemName)
+        return itemRepository.findFirstByName(itemName)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 
-    public Cart getOpenCartByUserId(Long userId) {
-        return cartRepository.findOpenCartByUserId(userId) //TODO LOL
+    public Cart getOpenCartByUser(User user) {
+        return cartRepository.findOpenCartByUser(user)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 
-    public CartItem getCartItemByCartIdAndItemId(Long cartId, Long itemId) {
-        return cartItemRepository.findByCartIdAndItemId(cartId, itemId).stream().findFirst() //TODO TROLOLO
+    public CartItem getCartItemByCartAndItem(Cart cart, Item item) {
+        return cartItemRepository.findFirstByCartAndItem(cart, item)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 

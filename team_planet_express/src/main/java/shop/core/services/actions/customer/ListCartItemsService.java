@@ -34,7 +34,8 @@ public class ListCartItemsService {
         if (!errors.isEmpty()) {
             return new ListCartItemsResponse(null, errors);
         }
-        Cart cart = repositoryAccessValidator.getOpenCartByUserId(request.getCurrentUserId().getValue());
+        Cart cart = repositoryAccessValidator.getOpenCartByUser(
+                repositoryAccessValidator.getUserById(request.getCurrentUserId().getValue()));
         List<CartItem> cartItems = cartItemRepository.findByCart(cart);
         List<CartItemDto> cartItemDtos = cartItemConverter.toCartItemDto(cartItems);
         return new ListCartItemsResponse(cartItemDtos, null);

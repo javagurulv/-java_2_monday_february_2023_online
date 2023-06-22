@@ -28,7 +28,6 @@ import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled
 @SpringBootTest
 public class SearchForItemsAcceptanceTest {
 
@@ -71,6 +70,7 @@ public class SearchForItemsAcceptanceTest {
         assertTrue(wrongItem.isEmpty());
     }
 
+    @Disabled
     @Sql({"/testDatabaseTableCreation.sql", "/testDatabaseDataInsertion.sql"})
     @Test
     void shouldOrderRobotItemsAscending() {
@@ -82,6 +82,7 @@ public class SearchForItemsAcceptanceTest {
         assertTrue(isOrderedCorrectly(searchItemResponse.getItems(), 7L, 4L));
     }
 
+    @Disabled
     @Sql({"/testDatabaseTableCreation.sql", "/testDatabaseDataInsertion.sql"})
     @Test
     void shouldReturnSecondThreeItemPage() {
@@ -94,6 +95,7 @@ public class SearchForItemsAcceptanceTest {
         assertTrue(isPageContainingCorrectItems(searchItemResponse.getItems(), 4L, 5L, 6L));
     }
 
+    @Disabled
     @Sql({"/testDatabaseTableCreation.sql", "/testDatabaseDataInsertion.sql"})
     @Test
     void shouldReturnCorrectItemsInCorrectOrder() {

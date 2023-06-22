@@ -10,48 +10,25 @@
 
 <body>
 <h2>Search item</h2>
-<table>
-    <tr>
-        <td>Name:</td>
-        <td>Max price:</td>
-        <td>Sort by name:</td>
-        <td>Asc:</td>
-        <td>Sort by price:</td>
-        <td>Asc:</td>
-        <td>Max per page:</td>
-        <td>Page:</td>
-    </tr>
-    <tr>
-        <form action="/searchItem" th:object="${request}" method="post">
-            <td><input type="text" th:field="${request.itemName}"/></td>
-            <td><input type="text" th:field="${request.price}"/></td>
-            <!--            ordering/paging-->
-            <td>
-                <input type="submit" value="Search item"/>
-                <input type="reset" value="Clear"/>
-            </td>
-        </form>
-    </tr>
-</table>
-<table th:if="${errors != null}">
-    <tr th:each="error : ${errors}">
+<table th:if="${searchItemErrors != null}">
+    <tr th:each="error : ${searchItemErrors}">
         <td th:text="${error.field}"></td>
         <td th:text="${error.errorCode}"></td>
         <td th:text="${error.message}"></td>
     </tr>
 </table>
 <h2>Results</h2>
-<div th:if="${items != null and items.empty}">
+<div th:if="${searchItemFoundItems != null and searchItemFoundItems.empty}">
     No results.
 </div>
-<div th:if="${items != null and !items.empty}">
+<div th:if="${searchItemFoundItems != null and !searchItemFoundItems.empty}">
     <table>
         <tr>
             <td>Name:</td>
             <td>Price:</td>
             <td>Quantity:</td>
         </tr>
-        <tr th:each="item : ${items}">
+        <tr th:each="item : ${searchItemFoundItems}">
             <td th:text="${item.name}"></td>
             <td th:text="${item.price}"></td>
             <td th:text="${item.availableQuantity}"></td>

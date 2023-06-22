@@ -9,6 +9,7 @@ import shop.core.database.jpa.JpaCartItemRepository;
 import shop.core.database.jpa.JpaItemRepository;
 import shop.core.domain.Cart;
 import shop.core.domain.Item;
+import shop.core.domain.User;
 import shop.core.requests.customer.AddItemToCartRequest;
 import shop.core.services.validators.actions.customer.AddItemToCartValidator;
 import shop.core.services.validators.universal.system.RepositoryAccessValidator;
@@ -16,6 +17,7 @@ import shop.core.support.CurrentUserId;
 import shop.matchers.CartItemMatcher;
 
 import java.util.Collections;
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
@@ -35,6 +37,8 @@ class AddItemToCartServiceTest {
     @Mock
     private CurrentUserId mockUserId;
     @Mock
+    private User mockUser;
+    @Mock
     private Item mockItem;
     @Mock
     private Cart mockCart;
@@ -45,15 +49,13 @@ class AddItemToCartServiceTest {
     @Test
     void shouldAddNewItemToCart() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
+        when(mockRepositoryAccessValidator.getUserById(anyLong())).thenReturn(mockUser);
         when(mockRequest.getCurrentUserId()).thenReturn(mockUserId);
-        when(mockUserId.getValue()).thenReturn(1L);
-        when(mockRepositoryAccessValidator.getOpenCartByUserId(1L)).thenReturn(mockCart);
+        when(mockRepositoryAccessValidator.getOpenCartByUser(mockUser)).thenReturn(mockCart);
         when(mockRequest.getItemName()).thenReturn("item name");
         when(mockRepositoryAccessValidator.getItemByName("item name")).thenReturn(mockItem);
         when(mockRequest.getOrderedQuantity()).thenReturn("10");
-        when(mockCart.getId()).thenReturn(1L);
-        when(mockItem.getId()).thenReturn(1L);
-        when(mockJpaCartItemRepository.findByCartIdAndItemId(1L, 1L)).thenReturn(Collections.emptyList());
+        when(mockJpaCartItemRepository.findFirstByCartAndItem(mockCart, mockItem)).thenReturn(Optional.empty());
         service.execute(mockRequest);
         verify(mockJpaCartItemRepository).save(argThat(new CartItemMatcher(mockCart, mockItem, 10)));
     }
@@ -61,9 +63,9 @@ class AddItemToCartServiceTest {
     @Test
     void shouldDecreaseAvailableQuantity() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
+        when(mockRepositoryAccessValidator.getUserById(anyLong())).thenReturn(mockUser);
         when(mockRequest.getCurrentUserId()).thenReturn(mockUserId);
-        when(mockUserId.getValue()).thenReturn(1L);
-        when(mockRepositoryAccessValidator.getOpenCartByUserId(1L)).thenReturn(mockCart);
+        when(mockRepositoryAccessValidator.getOpenCartByUser(mockUser)).thenReturn(mockCart);
         when(mockRequest.getItemName()).thenReturn("item name");
         when(mockRepositoryAccessValidator.getItemByName("item name")).thenReturn(mockItem);
         when(mockRequest.getOrderedQuantity()).thenReturn("10");
@@ -72,7 +74,5 @@ class AddItemToCartServiceTest {
         service.execute(mockRequest);
         verify(mockJpaItemRepository).updateAvailableQuantity(1L, 5);
     }
-
-    //TODO MOAR
 
 }

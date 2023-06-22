@@ -52,25 +52,18 @@ public class SearchItemService {
 
     private List<Item> search(SearchItemRequest request) {
         List<Item> items;
-        //TODO is blank actually ok in here ?
-        //TODO this is dead
         if (request.getItemName() != null && !isPresent(request.getPrice())) {
-//            items = itemRepository.findByName(
-//                    request.getItemName().toLowerCase(),
-//                    orderingService.getSQLOrderBy(request.getOrderingRules()),
-//                    pagingService.getSQLLimitOffset(request.getPagingRule()));
+            items = itemRepository.findByNameLikeIgnoreCase(
+                    "%" + request.getItemName() + "%");
         } else if (request.getItemName() != null && isPresent(request.getPrice())) {
             BigDecimal price = new BigDecimal(request.getPrice()).setScale(2, RoundingMode.HALF_UP);
-//            items = itemRepository.findByNameAndPrice(
-//                    request.getItemName().toLowerCase(),
-//                    price,
-//                    orderingService.getSQLOrderBy(request.getOrderingRules()),
-//                    pagingService.getSQLLimitOffset(request.getPagingRule()));
+            items = itemRepository.findByNameLikeIgnoreCaseAndPriceLessThanEqual(
+                    "%" + request.getItemName() + "%",
+                    price);
         } else {
             items = itemRepository.findAll();
         }
-        //return items;
-        return null;
+        return items;
     }
 
     private boolean isExtraItemAvailable(SearchItemRequest request, List<Item> items) {

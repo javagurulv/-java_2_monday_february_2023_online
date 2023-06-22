@@ -35,9 +35,10 @@ public class RemoveItemFromCartService {
         if (!errors.isEmpty()) {
             return new RemoveItemFromCartResponse(errors);
         }
-        Cart cart = repositoryAccessValidator.getOpenCartByUserId(request.getCurrentUserId().getValue());
+        Cart cart = repositoryAccessValidator.getOpenCartByUser(
+                repositoryAccessValidator.getUserById(request.getCurrentUserId().getValue()));
         Item item = repositoryAccessValidator.getItemByName(request.getItemName());
-        CartItem cartItem = repositoryAccessValidator.getCartItemByCartIdAndItemId(cart.getId(), item.getId());
+        CartItem cartItem = repositoryAccessValidator.getCartItemByCartAndItem(cart, item);
         Integer newAvailableQuantity = item.getAvailableQuantity() + cartItem.getOrderedQuantity();
         cartItemRepository.deleteById(cartItem.getId());
         itemRepository.updateAvailableQuantity(item.getId(), newAvailableQuantity);

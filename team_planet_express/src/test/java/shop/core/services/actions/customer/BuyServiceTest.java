@@ -40,7 +40,7 @@ class BuyServiceTest {
     void shouldCloseCart() {
         when(mockValidator.validate(any())).thenReturn(List.of());
         when(mockRequest.getCurrentUserId()).thenReturn(mockCurrentUserId);
-        when(mockRepositoryAccessValidator.getOpenCartByUserId(any())).thenReturn(mockCart);
+        when(mockRepositoryAccessValidator.getOpenCartByUser(any())).thenReturn(mockCart);
         when(mockCart.getId()).thenReturn(1L);
         service.execute(mockRequest);
         verify(mockJpaCartRepository).updateCartStatus(1L, CartStatus.CLOSED);

@@ -65,6 +65,22 @@
     <table>
         <tr>
             <td>Name:</td>
+            <td>Max price:</td>
+        </tr>
+        <tr>
+            <form action="/searchItem" th:object="${searchItemRequest}" method="post">
+                <td><input type="text" th:field="${searchItemRequest.itemName}"/></td>
+                <td><input type="text" th:field="${searchItemRequest.price}"/></td>
+                <td>
+                    <input type="submit" value="Search item"/>
+                    <input type="reset" value="Clear"/>
+                </td>
+            </form>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>Name:</td>
             <td>Price:</td>
             <td>Quantity:</td>
             <td>Order amount:</td>
@@ -85,7 +101,6 @@
             </tr>
         </div>
     </table>
-    <a href="/searchItem">Search</a> <br>
 </div>
 <div th:if="${userRole == 'MANAGER'}">
     <a href="/addItemToShop">Add item to shop</a> <br>

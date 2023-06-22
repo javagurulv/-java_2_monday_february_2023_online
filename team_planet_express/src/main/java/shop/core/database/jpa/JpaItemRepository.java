@@ -16,7 +16,7 @@ public interface JpaItemRepository extends JpaRepository<Item, Long> {
 
     List<Item> findByName(String name);
 
-    Optional<Item> findOneByName(String name);
+    Optional<Item> findFirstByName(String name);
 
     @Modifying
     @Query("UPDATE Item i SET i.name = :new_name WHERE i.id = :id")
@@ -30,9 +30,8 @@ public interface JpaItemRepository extends JpaRepository<Item, Long> {
     @Query("UPDATE Item i SET i.availableQuantity = :new_available_quantity WHERE i.id = :id")
     void updateAvailableQuantity(@Param(value = "id") Long id, @Param(value = "new_available_quantity") Integer newAvailableQuantity);
 
-    //TODO SEARCH ????
-    //List<Item> findByName(String itemName, String ordering, String paging);
+    List<Item> findByNameLikeIgnoreCase(String itemName);
 
-    //List<Item> findByNameAndPrice(String itemName, BigDecimal price, String ordering, String paging);
+    List<Item> findByNameLikeIgnoreCaseAndPriceLessThanEqual(String itemName, BigDecimal price);
 
 }

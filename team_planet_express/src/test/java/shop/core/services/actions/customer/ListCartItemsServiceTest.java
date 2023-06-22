@@ -55,7 +55,7 @@ class ListCartItemsServiceTest {
 
     @Test
     void shouldReturnListCartItem() {
-        when(mockRepositoryAccessValidator.getOpenCartByUserId(any())).thenReturn(mockCart);
+        when(mockRepositoryAccessValidator.getOpenCartByUser(any())).thenReturn(mockCart);
         when(mockJpaCartItemRepository.findByCart(any(Cart.class))).thenReturn(List.of(mockCartItem, mockCartItem));
         when(mockCartItemConverter.toCartItemDto(List.of(mockCartItem, mockCartItem))).thenReturn(List.of(mockCartItemDto, mockCartItemDto));
         ListCartItemsResponse response = service.execute(mockRequest);

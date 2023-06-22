@@ -12,10 +12,12 @@ import shop.core.domain.User;
 import shop.core.requests.customer.AddItemToCartRequest;
 import shop.core.requests.customer.ListShopItemsRequest;
 import shop.core.requests.guest.SignUpRequest;
+import shop.core.requests.shared.SearchItemRequest;
 import shop.core.requests.shared.SignInRequest;
 import shop.core.requests.shared.SignOutRequest;
 import shop.core.responses.customer.ListShopItemsResponse;
 import shop.core.services.actions.customer.ListShopItemsService;
+import shop.core.services.validators.universal.system.RepositoryAccessValidator;
 import shop.core.support.CurrentUserId;
 
 import java.util.Optional;
@@ -33,6 +35,8 @@ public class IndexController {
     private JpaCartRepository cartRepository;
     @Autowired
     private JpaCartItemRepository cartItemRepository;
+    @Autowired
+    private RepositoryAccessValidator repositoryAccessValidator;
 
     @GetMapping(value = "/")
     public String index(ModelMap modelMap) {
@@ -40,6 +44,7 @@ public class IndexController {
         signOut(modelMap);
         signUp(modelMap);
         showUserInfo(modelMap);
+        searchItem(modelMap);
         listShopItems(modelMap);
         addITemToCart(modelMap);
         return "index";
@@ -58,14 +63,18 @@ public class IndexController {
     }
 
     private void showUserInfo(ModelMap modelMap) {
-        User user = userRepository.findById(currentUserId.getValue()).orElseThrow();
-        Optional<Cart> cart = cartRepository.findOpenCartByUserId(currentUserId.getValue());
+        User user = repositoryAccessValidator.getUserById(currentUserId.getValue());
+        Optional<Cart> cart = cartRepository.findOpenCartByUser(user);
         modelMap.addAttribute("user", user.getName());
         modelMap.addAttribute("userRole", user.getUserRole().toString());
         modelMap.addAttribute("cartStatus", cart.isPresent() ? "Open" : "Closed");
         modelMap.addAttribute("cartItemQuantity",
                 cart.map(openCart -> cartItemRepository.findByCart(openCart).size())
                         .orElse(0));
+    }
+
+    private void searchItem(ModelMap modelMap) {
+        modelMap.addAttribute("searchItemRequest", new SearchItemRequest());
     }
 
     private void listShopItems(ModelMap modelMap) {

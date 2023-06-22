@@ -6,6 +6,7 @@ import shop.core.database.jpa.JpaCartRepository;
 import shop.core.database.jpa.JpaItemRepository;
 import shop.core.domain.Cart;
 import shop.core.domain.CartItem;
+import shop.core.services.validators.universal.system.RepositoryAccessValidator;
 import shop.core.support.CurrentUserId;
 
 import java.util.Optional;
@@ -23,13 +24,16 @@ public abstract class Tester {
     protected JpaCartItemRepository cartItemRepository;
     @Autowired
     protected CurrentUserId currentUserId;
+    @Autowired
+    protected RepositoryAccessValidator repositoryAccessValidator;
 
     protected Tester checkItemInCart(String itemName, Integer quantity) {
-        Optional<Cart> cart = cartRepository.findOpenCartByUserId(currentUserId.getValue());
+        Optional<Cart> cart = cartRepository.findOpenCartByUser(
+                repositoryAccessValidator.getUserById(currentUserId.getValue()));
         assertTrue(cart.isPresent());
-        Optional<CartItem> cartItem = cartItemRepository.findByCartIdAndItemId(
-                cart.get().getId(),
-                itemRepository.findOneByName(itemName).orElseThrow().getId()
+        Optional<CartItem> cartItem = cartItemRepository.findFirstByCartAndItem(
+                cart.get(),
+                repositoryAccessValidator.getItemByName(itemName)
         ).stream().findFirst();
         assertTrue(cartItem.isPresent());
         assertEquals(quantity, cartItem.get().getOrderedQuantity());
@@ -46,11 +50,12 @@ public abstract class Tester {
 
     @SuppressWarnings("UnusedReturnValue")
     protected Tester notItemInCart(String itemName) {
-        Optional<Cart> cart = cartRepository.findOpenCartByUserId(currentUserId.getValue());
+        Optional<Cart> cart = cartRepository.findOpenCartByUser(
+                repositoryAccessValidator.getUserById(currentUserId.getValue()));
         if (cart.isPresent()) {
-            Optional<CartItem> cartItem = cartItemRepository.findByCartIdAndItemId(
-                    cart.get().getId(),
-                    itemRepository.findOneByName(itemName).orElseThrow().getId()
+            Optional<CartItem> cartItem = cartItemRepository.findFirstByCartAndItem(
+                    cart.get(),
+                    repositoryAccessValidator.getItemByName(itemName)
             ).stream().findFirst();
             assertTrue(cartItem.isEmpty());
         }

@@ -28,14 +28,12 @@ public class SearchItemController {
     @PostMapping(value = "/searchItem")
     public String processSearchItemRequest(
             @ModelAttribute(value = "request") SearchItemRequest request, ModelMap modelMap) {
-        //TODO ordering/paging
-        //TODO shame
         request.setCurrentUserId(currentUserId);
         SearchItemResponse response = searchItemService.execute(request);
         if (response.hasErrors()) {
-            modelMap.addAttribute("errors", response.getErrors());
+            modelMap.addAttribute("searchItemErrors", response.getErrors());
         } else {
-            modelMap.addAttribute("items", response.getItems());
+            modelMap.addAttribute("searchItemFoundItems", response.getItems());
         }
         return "shared/searchItem";
     }
