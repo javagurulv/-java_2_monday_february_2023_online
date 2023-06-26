@@ -6,16 +6,9 @@ length to error message?
 
 current session user ?
 
-clear button borked
 td/tr/table ?
-
-REST tests
-REST ordering/page
-
-buy -> buy + close
-
-converter tests
-
+clear button borked
 modelMap pass stuff back
 
-jpa update ?
+REST ordering/page
+REST tests

@@ -38,8 +38,7 @@ public class BuyItemAcceptanceTest extends CustomAcceptanceTest {
                 .checkItemInCart("Lightspeed Briefs", 2)
                 .checkItemInCartResponse("Lightspeed Briefs", 2);
         buyCartTester
-                .buy()
-                .checkCartIsClosed();
+                .buy();
         listShopItemsTester
                 .showListShopItems()
                 .checkItemInListShopResponse("Lightspeed Briefs", 1)

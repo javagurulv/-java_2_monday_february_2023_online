@@ -34,6 +34,7 @@ public class BuyService {
         Cart cart = repositoryAccessValidator.getOpenCartByUser(
                 repositoryAccessValidator.getUserById(request.getCurrentUserId().getValue()));
         cartRepository.updateCartStatus(cart.getId(), CartStatus.CLOSED);
+        cartRepository.save(new Cart(repositoryAccessValidator.getUserById(request.getCurrentUserId().getValue())));
         return new BuyResponse();
     }
 
