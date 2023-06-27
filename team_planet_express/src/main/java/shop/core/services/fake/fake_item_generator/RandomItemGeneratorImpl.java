@@ -8,10 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+//TODO YEET
 public class RandomItemGeneratorImpl implements ItemGenerator {
 
-    private static final Integer ITEM_AMOUNT = 10;
-    private static final Integer NAME_LENGTH = 5;
+    private static final Integer ITEM_AMOUNT = 1000;
+    private static final Integer NAME_LENGTH = 20;
     private static final String AVAILABLE_LETTERS = "abcdefghijklmnopqrstuvwxyz";
 
     private final Random random = new Random();

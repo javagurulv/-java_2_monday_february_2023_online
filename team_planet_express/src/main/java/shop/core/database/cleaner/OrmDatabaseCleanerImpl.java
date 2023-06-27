@@ -16,6 +16,7 @@ import shop.core.domain.User;
 
 import java.util.List;
 
+//TODO YEET
 @Component
 @Transactional
 public class OrmDatabaseCleanerImpl implements DatabaseCleaner {

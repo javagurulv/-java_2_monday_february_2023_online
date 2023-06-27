@@ -11,6 +11,7 @@ import shop.core.services.fake.fake_item_generator.RandomItemGeneratorImpl;
 
 import java.util.List;
 
+//TODO YEET
 @Transactional
 public class FakeDatabaseInitializer {
 

@@ -5,6 +5,7 @@ import shop.core.domain.Item;
 import java.math.BigDecimal;
 import java.util.List;
 
+//TODO YEET
 public class HardcodedItemGeneratorImpl implements ItemGenerator {
 
     @Override

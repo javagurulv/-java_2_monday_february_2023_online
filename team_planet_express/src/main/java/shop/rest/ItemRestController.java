@@ -55,7 +55,7 @@ public class ItemRestController {
         return searchItemService.execute(request);
     }
 
-    @PostMapping(path = "/", consumes = "application/json", produces = "application/json")
+    @PostMapping(path = "", consumes = "application/json", produces = "application/json")
     public AddItemToShopResponse addItem(@RequestBody AddItemToShopRequest request) {
         return addItemToShopService.execute(request);
     }
