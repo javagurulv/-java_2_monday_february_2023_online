@@ -78,6 +78,13 @@
             </form>
         </tr>
     </table>
+    <form action="/" method="get">
+        <input type="submit" name="pageSize" value="5">
+        <input type="submit" name="pageSize" value="10">
+        <input type="submit" name="pageSize" value="20">
+        <input type="submit" name="paging" value="back">
+        <input type="submit" name="paging" value="next">
+    </form>
     <table>
         <tr>
             <td>Name:</td>
@@ -101,6 +108,8 @@
             </tr>
         </div>
     </table>
+    Page:
+    <text th:text="${pageNumber}"></text>
 </div>
 <div th:if="${userRole == 'MANAGER'}">
     <a href="/addItemToShop">Add item to shop</a> <br>

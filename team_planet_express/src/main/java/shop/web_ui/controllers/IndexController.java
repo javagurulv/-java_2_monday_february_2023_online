@@ -19,6 +19,7 @@ import shop.core.responses.customer.ListShopItemsResponse;
 import shop.core.services.actions.customer.ListShopItemsService;
 import shop.core.services.validators.universal.system.RepositoryAccessValidator;
 import shop.core.support.CurrentUserId;
+import shop.core.support.paging.PagingRule;
 
 import java.util.Optional;
 
@@ -38,14 +39,17 @@ public class IndexController {
     @Autowired
     private RepositoryAccessValidator repositoryAccessValidator;
 
+    private Integer pageNumber = 0;
+    private Integer pageSize = 10;
+
     @GetMapping(value = "/")
-    public String index(ModelMap modelMap) {
+    public String index(ModelMap modelMap, String pageSize, String paging) {
         signIn(modelMap);
         signOut(modelMap);
         signUp(modelMap);
         showUserInfo(modelMap);
         searchItem(modelMap);
-        listShopItems(modelMap);
+        listShopItems(modelMap, pageSize, paging);
         addITemToCart(modelMap);
         return "index";
     }
@@ -77,9 +81,21 @@ public class IndexController {
         modelMap.addAttribute("searchItemRequest", new SearchItemRequest());
     }
 
-    private void listShopItems(ModelMap modelMap) {
-        ListShopItemsRequest request = new ListShopItemsRequest();
+    private void listShopItems(ModelMap modelMap, String pageSize, String paging) {
+        if (pageSize == null || pageSize.isBlank()) {
+        } else {
+            this.pageSize = Integer.parseInt(pageSize);
+        }
+        if (paging == null || paging.isBlank()) {
+        } else if (paging.equals("back") && pageNumber > 0) {
+            pageNumber--;
+        } else if (paging.equals("next")) {
+            pageNumber++;
+        }
+        PagingRule pagingRule = new PagingRule(pageNumber, this.pageSize.toString());
+        ListShopItemsRequest request = new ListShopItemsRequest(null, pagingRule);
         ListShopItemsResponse response = listShopItemsService.execute(request);
+        modelMap.addAttribute("pageNumber", pageNumber + 1);
         modelMap.addAttribute("shopItems", response.getShopItems());
     }
 

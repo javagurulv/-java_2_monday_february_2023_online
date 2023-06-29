@@ -18,6 +18,7 @@ import shop.core.services.actions.manager.ChangeItemDataService;
 import shop.core.services.actions.shared.GetItemService;
 import shop.core.services.actions.shared.SearchItemService;
 import shop.core.support.CurrentUserId;
+import shop.core.support.paging.PagingRule;
 
 @RestController
 @RequestMapping("/item")
@@ -45,6 +46,12 @@ public class ItemRestController {
     @GetMapping(path = "/all", produces = "application/json")
     public ListShopItemsResponse getAllItems() {
         ListShopItemsRequest request = new ListShopItemsRequest();
+        return listShopItemsService.execute(request);
+    }
+
+    @GetMapping(path = "/page", consumes = "application/json", produces = "application/json")
+    public ListShopItemsResponse getPagedItems(@RequestBody PagingRule pagingRule) {
+        ListShopItemsRequest request = new ListShopItemsRequest(null, pagingRule);
         return listShopItemsService.execute(request);
     }
 
