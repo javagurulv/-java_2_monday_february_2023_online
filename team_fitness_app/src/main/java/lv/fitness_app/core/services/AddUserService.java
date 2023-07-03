@@ -20,7 +20,6 @@ public class AddUserService {
     private UserRepository userRepository;
     @Autowired private AddUserRequestValidator validator;
 
-@Transactional
     public AddUserResponse execute(AddUserRequest request) {
         List<CoreError> errors = validator.validate(request);
         if (!errors.isEmpty()) {
