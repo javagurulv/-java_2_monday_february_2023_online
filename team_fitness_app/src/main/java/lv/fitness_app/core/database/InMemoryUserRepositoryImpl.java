@@ -4,6 +4,7 @@ import lv.fitness_app.core.domain.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 //@Component("inMemory")
 public class InMemoryUserRepositoryImpl implements UserRepository {
@@ -32,5 +33,15 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     @Override
     public void deleteUser(User user) {
         users.remove(user);
+    }
+
+    @Override
+    public Optional<User> getByEmail(String email) {
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean deleteByEmail(String email) {
+        return false;
     }
 }

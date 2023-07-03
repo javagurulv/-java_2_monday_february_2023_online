@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
+import java.util.Optional;
+
 //@Component
 public class JdbcUserRepositoryImpl implements UserRepository {
 
@@ -40,5 +42,15 @@ public class JdbcUserRepositoryImpl implements UserRepository {
         return jdbcTemplate.query(sql, new UserRowMapper()).stream()
         .findFirst()
         .orElse(null);
+    }
+
+    @Override
+    public Optional<User> getByEmail(String email) {
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean deleteByEmail(String email) {
+        return false;
     }
 }
