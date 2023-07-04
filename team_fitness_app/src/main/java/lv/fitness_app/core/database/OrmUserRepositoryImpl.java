@@ -10,11 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Component
-@Transactional
+//@Component
+//@Transactional
 public class OrmUserRepositoryImpl implements UserRepository {
 
-    @Autowired
+ //   @Autowired
     private SessionFactory sessionFactory;
 
     @Override

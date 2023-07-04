@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Component
-@Transactional
+//@Component
+//@Transactional
 public class OrmExerciseRepositoryImpl implements ExerciseRepository{
     @Autowired
     private SessionFactory sessionFactory;

@@ -1,6 +1,7 @@
 package lv.fitness_app.core.services;
 
 import lv.fitness_app.core.database.UserRepository;
+import lv.fitness_app.core.database.jpa.JpaUserRepository;
 import lv.fitness_app.core.requests.DeleteUserRequest;
 import lv.fitness_app.core.responses.CoreError;
 import lv.fitness_app.core.responses.DeleteUserResponse;
@@ -11,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Component
-@Transactional
+//@Component
+//@Transactional
 public class DeleteUserService {
 
     @Autowired
