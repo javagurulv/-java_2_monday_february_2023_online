@@ -14,9 +14,7 @@ public class GetExercisesFromWebsite {
 
     public static void main(String[] args) throws IOException {
 
-        String link = "https://www.jefit.com/exercises/bodypart.php?id=11&exercises=All" +
-                "&All=0&Bands=0&Bench=0&Dumbbell=0&EZBar=0&Kettlebell=0&MachineStrength=0&MachineCardio=0&Barbell=0&BodyOnly=0&ExerciseBall=0&FoamRoll=0&PullBar=0&WeightPlate=0&Other=0&Strength=0&" +
-                "Stretching=0&Powerlifting=0&OlympicWeightLifting=0&Beginner=0&Intermediate=0&Expert=0&page=";
+        String link = "https://www.jefit.com/exercises/bodypart.php?id=11&exercises=All" + "&page=";
 
         int pages = getNumberOfPages(link);
         List<String> listWithExercises = getExerciseDescription(link, pages);
