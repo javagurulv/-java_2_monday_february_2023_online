@@ -7,6 +7,7 @@ import lv.fitness_app.core.requests.Paging;
 import lv.fitness_app.core.requests.SearchExerciseRequest;
 import lv.fitness_app.core.responses.CoreError;
 import lv.fitness_app.core.responses.SearchExerciseResponse;
+import lv.fitness_app.core.services.validators.SearchExerciseEquivalentRequestValidator;
 import lv.fitness_app.core.services.validators.SearchExerciseRequestValidator;
 import lv.fitness_app.core.database.ExerciseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,27 +18,23 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 @Component
 @Transactional
-public class SearchExerciseService {
-//    @Value("${search.ordering.enabled}")
-//    private boolean orderingEnabled;
-//
-//    @Value("${search.paging.enabled}")
-//    private boolean pagingEnabled;
+public class SearchExerciseEquivalentService {
 
     @Autowired
     private JpaExerciseRepository exerciseRepository;
-    @Autowired private SearchExerciseRequestValidator validator;
+    @Autowired
+    private SearchExerciseEquivalentRequestValidator validator;
 
     public SearchExerciseResponse execute(SearchExerciseRequest request) {
         List<CoreError> errors = validator.validate(request);
         if (!errors.isEmpty()) {
             return new SearchExerciseResponse(null, errors);
         }
-
         List<Exercise> exercises = search(request);
 //        exercises = order(exercises, request.getOrdering());
 //        exercises = paging(exercises, request.getPaging());
@@ -47,17 +44,27 @@ public class SearchExerciseService {
 
     private List<Exercise> search(SearchExerciseRequest request) {
         List<Exercise> exercises = new ArrayList<>();
-        if (request.isNameProvided() && !request.isMuscleGroupProvided()) {
+        if (request.isNameProvided()) {
             exercises = exerciseRepository.findByName(request.getName());
+
         }
-        if (!request.isNameProvided() && request.isMuscleGroupProvided()) {
-            exercises = exerciseRepository.findByMuscleGroup(request.getMuscleGroup());
+        if (exercises.size() == 0) {
+            System.out.println("No exercises with this name found. ");
+
+        } else {
+            for (int i = 0; i < exercises.size(); i++) {
+                System.out.println(i + 1 + " . " + exercises.get(i));
+            }
         }
-        if (request.isNameProvided() && request.isMuscleGroupProvided()) {
-            exercises = exerciseRepository.findByNameAndMuscleGroup(request.getName(), request.getMuscleGroup());
-        }
+        System.out.println("Choose one exercise from the list above, input number.");
+        Scanner scanner = new Scanner(System.in);
+        int n = Integer.parseInt(scanner.nextLine());
+        String activeString = exercises.get(n - 1).getMuscleGroup();
+        exercises = exerciseRepository.findByMuscleGroup(activeString);
+
         return exercises;
     }
+
 
 //    private List<Exercise> order(List<Exercise> exercises, Ordering ordering) {
 //        if (orderingEnabled && (ordering != null)) {
@@ -84,5 +91,4 @@ public class SearchExerciseService {
 //            return exercises;
 //        }
 //    }
-
 }

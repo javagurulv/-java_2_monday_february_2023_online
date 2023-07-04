@@ -1,4 +1,4 @@
-package lv.fitness_app.databaseUpdate;
+package lv.fitness_app.core.databaseUpdate;
 
 import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;

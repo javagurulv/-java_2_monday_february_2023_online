@@ -1,5 +1,6 @@
 package lv.fitness_app.core.services;
 
+import lv.fitness_app.core.database.jpa.JpaUserRepository;
 import lv.fitness_app.core.domain.User;
 import lv.fitness_app.core.services.validators.RemoveUserRequestValidator;
 import lv.fitness_app.core.database.UserRepository;
@@ -17,7 +18,7 @@ import java.util.List;
 public class RemoveUserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private JpaUserRepository userRepository;
     @Autowired private RemoveUserRequestValidator validator;
 
 
@@ -29,7 +30,7 @@ public class RemoveUserService {
         } else if (userRepository.findUserByEmail(request.getEmail())!= null) {
             User user = userRepository.findUserByEmail(request.getEmail());
             if (user.getEmail().equals(request.getEmail()) && user.getPassword().equals(request.getPassword())) {
-                userRepository.deleteUser(user);
+                userRepository.delete(user);
                 isUserRemoved = true;
             }
         }

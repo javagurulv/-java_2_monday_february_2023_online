@@ -2,8 +2,8 @@ package lv.fitness_app.console_ui;
 
 import com.opencsv.exceptions.CsvException;
 import lv.fitness_app.core.domain.Exercise;
-import lv.fitness_app.databaseUpdate.CsvParser;
-import lv.fitness_app.databaseUpdate.UpdateExerciseDB;
+import lv.fitness_app.core.databaseUpdate.CsvParser;
+import lv.fitness_app.core.databaseUpdate.UpdateExerciseDB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

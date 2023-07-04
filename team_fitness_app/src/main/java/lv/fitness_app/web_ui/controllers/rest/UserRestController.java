@@ -6,8 +6,8 @@ import lv.fitness_app.core.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/user")
+//@RestController
+//@RequestMapping("/user")
 public class UserRestController {
 
 	@Autowired private GetUserService getUserService;
