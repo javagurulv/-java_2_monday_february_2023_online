@@ -12,12 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-//@Component
-//@Transactional
+@Component
+@Transactional
 public class DeleteUserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private JpaUserRepository userRepository;
     @Autowired private DeleteUserValidator validator;
 
     public DeleteUserResponse execute(DeleteUserRequest request) {
@@ -25,9 +25,9 @@ public class DeleteUserService {
         if (!errors.isEmpty()) {
             return new DeleteUserResponse(errors);
         }
-        return userRepository.getByEmail(request.getEmail())
+        return userRepository.findById(request.getEmail())
                 .map(user -> {
-                    userRepository.deleteByEmail(request.getEmail());
+                    userRepository.deleteById(request.getEmail());
                     return new DeleteUserResponse(user);
                 })
                 .orElseGet(() -> {

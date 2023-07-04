@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-//@Component
+@Component
 public class GetUserValidator {
 
     public List<CoreError> validate(GetUserRequest request) {

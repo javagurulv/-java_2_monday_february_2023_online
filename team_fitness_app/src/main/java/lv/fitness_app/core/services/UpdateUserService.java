@@ -1,6 +1,7 @@
 package lv.fitness_app.core.services;
 
 import lv.fitness_app.core.database.UserRepository;
+import lv.fitness_app.core.database.jpa.JpaUserRepository;
 import lv.fitness_app.core.requests.UpdateUserRequest;
 import lv.fitness_app.core.responses.CoreError;
 import lv.fitness_app.core.responses.UpdateUserResponse;
@@ -11,12 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-//@Component
-//@Transactional
+@Component
+@Transactional
 public class UpdateUserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private JpaUserRepository userRepository;
     @Autowired private UpdateUserRequestValidator validator;
 
     public UpdateUserResponse execute(UpdateUserRequest request) {
@@ -25,7 +26,7 @@ public class UpdateUserService {
             return new UpdateUserResponse(errors);
         }
 
-        return userRepository.getByEmail(request.getEmail())
+        return userRepository.findById(request.getEmail())
                 .map(user -> {
                     user.setUsername(request.getNewUsername());
                     user.setPassword(request.getNewPassword());
