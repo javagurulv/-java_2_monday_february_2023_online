@@ -4,15 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.core.database.CartItemRepository;
+import shop.core.database.CartRepository;
+import shop.core.database.specifications.CartItemSpecs;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
-import shop.core.domain.item.Item;
+import shop.core.domain.cart_item.CartItem_;
 import shop.core.domain.user.User;
 import shop.core.services.actions.shared.SecurityServiceImpl;
 import shop.core.services.cart.CartService;
-import shop.core.services.validators.actions.customer.ListCartItemValidator;
-import shop.core.services.validators.universal.system.DatabaseAccessProvider;
-import shop.core.support.CartItemForList;
+import shop.core.services.validators.services_validators.customer.ListCartItemValidator;
 import shop.core_api.entry_point.customer.GetListCartItemsService;
 import shop.core_api.requests.customer.GetListCartItemsRequest;
 import shop.core_api.responses.CoreError;
@@ -22,6 +22,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+import static shop.core.database.specifications.CartSpecs.findOpenCartForUser;
+
 @Service
 @Transactional
 public class GetListCartItemsServiceImpl implements GetListCartItemsService {
@@ -29,9 +31,9 @@ public class GetListCartItemsServiceImpl implements GetListCartItemsService {
     @Autowired
     private CartItemRepository cartItemRepository;
     @Autowired
-    private ListCartItemValidator validator;
+    private CartRepository cartRepository;
     @Autowired
-    private DatabaseAccessProvider databaseAccessProvider;
+    private ListCartItemValidator validator;
     @Autowired
     private CartService cartService;
     @Autowired
@@ -43,15 +45,11 @@ public class GetListCartItemsServiceImpl implements GetListCartItemsService {
             return new GetListCartItemsResponse(errors);
         }
         Optional<User> user = securityService.getAuthenticatedUserFromDB();
-        Cart cart = databaseAccessProvider.getOpenCartByUserId(user.get().getId());
-        List<CartItem> cartItems = cartItemRepository.getAllCartItemsForCartId(cart.getId());
+
+        Cart cart = cartRepository.findOne(findOpenCartForUser(user.get())).get();
+        List<CartItem> cartItems = cartItemRepository.findAll(CartItemSpecs.findBy(CartItem_.CART, cart));
         BigDecimal cartTotal = cartService.getSum(cart.getId());
         return new GetListCartItemsResponse(cartItems, cartTotal);
-    }
-
-    private CartItemForList createCartItemForList(CartItem cartItem) {
-        Item item = databaseAccessProvider.getItemById(cartItem.getItem().getId());
-        return new CartItemForList(item.getName(), item.getPrice(), cartItem.getOrderedQuantity());
     }
 
 }

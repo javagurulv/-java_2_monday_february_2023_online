@@ -8,7 +8,6 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 import shop.core_api.dto.cart_item.CartItemDTO;
 import shop.core_api.dto.item.ItemDTO;
 import shop.core_api.entry_point.customer.RemoveItemFromCartService;
-import shop.core_api.entry_point.shared.SecurityService;
 import shop.core_api.requests.customer.RemoveItemFromCartRequest;
 import shop.web_ui.customer_views.ItemView;
 
@@ -20,10 +19,12 @@ public class ItemCardBuilder {
     private ImageItemCard image;
     private Text quantity;
     private ItemDTO item;
+    private long itemCartId;
 
     private String width;
 
     private Boolean clickable = true;
+    private RemoveItemFromCartService removeItemFromCartService;
 
     public ItemCard build() {
         ItemCard itemCard = new ItemCard();
@@ -68,11 +69,12 @@ public class ItemCardBuilder {
         return this;
     }
 
-    public ItemCardBuilder setDelButton(SecurityService securityService, RemoveItemFromCartService removeItemFromCartService) {
+    public ItemCardBuilder setDelButton() {
         deleteButton = new Button(new Icon(VaadinIcon.TRASH));
         deleteButton.addClickListener(e -> {
+            CartItemDTO cartItemDTO = new CartItemDTO(itemCartId, null, item, null);
             RemoveItemFromCartRequest request = new RemoveItemFromCartRequest(
-                    item.getName()
+                    cartItemDTO
             );
             removeItemFromCartService.execute(request);
             deleteButton.getParent().get().removeFromParent();
@@ -86,6 +88,16 @@ public class ItemCardBuilder {
 
     public ItemCardBuilder setClickable(Boolean clickable) {
         this.clickable = clickable;
+        return this;
+    }
+
+    public ItemCardBuilder setItemCartId(long itemCartId) {
+        this.itemCartId = itemCartId;
+        return this;
+    }
+
+    public ItemCardBuilder setRemoveItemFromCartService(RemoveItemFromCartService removeItemFromCartService) {
+        this.removeItemFromCartService = removeItemFromCartService;
         return this;
     }
 }

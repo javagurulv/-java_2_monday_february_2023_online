@@ -16,7 +16,7 @@ public class GetListShopItemsServiceImpl implements GetListShopItemsService {
     private ItemRepository itemRepository;
 
     public GetListShopItemsResponse execute(GetListShopItemsRequest request) {
-        return new GetListShopItemsResponse(itemRepository.getAllItems());
+        return new GetListShopItemsResponse(itemRepository.findAll());
     }
 
 }

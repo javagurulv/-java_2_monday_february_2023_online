@@ -17,9 +17,9 @@ public class AddItemToShopRequestMatcher implements ArgumentMatcher<AddItemToSho
 
     @Override
     public boolean matches(AddItemToShopRequest request) {
-        return itemName.equals(request.getItemName()) &&
-                price.equals(request.getPrice()) &&
-                availableQuantity.equals(request.getAvailableQuantity());
+        return itemName.equals(request.getItemDTO().getName()) &&
+                price.equals(request.getItemDTO().getPrice()) &&
+                availableQuantity.equals(request.getItemDTO().getAvailableQuantity());
     }
 
 }

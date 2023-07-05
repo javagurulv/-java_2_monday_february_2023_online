@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.core.database.ItemRepository;
+import shop.core.database.specifications.ItemSpecs;
 import shop.core.domain.item.Item;
 import shop.core.domain.item.ItemConverter;
-import shop.core.services.validators.actions.customer.GetItemValidator;
+import shop.core.domain.item.Item_;
+import shop.core.services.validators.services_validators.customer.GetItemValidator;
 import shop.core_api.entry_point.customer.GetItemService;
 import shop.core_api.requests.customer.GetItemRequest;
 import shop.core_api.responses.CoreError;
@@ -31,7 +33,9 @@ public class GetItemServiceImpl implements GetItemService {
         } else {
             Optional<Item> optionalItem;
             if (request.getItemDTO().getName() != null)
-                optionalItem = itemRepository.findByName(request.getItemDTO().getName());
+                optionalItem = itemRepository.findOne(
+                        ItemSpecs.findBy(Item_.NAME, request.getItemDTO().getName())
+                );
             else
                 optionalItem = itemRepository.findById(request.getItemDTO().getId());
             if (optionalItem.isEmpty())

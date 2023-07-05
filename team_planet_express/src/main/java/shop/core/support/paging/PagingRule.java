@@ -1,25 +1,13 @@
 package shop.core.support.paging;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 public class PagingRule {
 
-    private final String pageSize;
-    private Integer pageNumber;
-
-    public PagingRule(Integer pageNumber, String pageSize) {
-        this.pageNumber = pageNumber;
-        this.pageSize = pageSize;
-    }
-
-    public Integer getPageNumber() {
-        return pageNumber;
-    }
-
-    public String getPageSize() {
-        return pageSize;
-    }
-
-    public void changePageNumber(Integer pageNumberDelta) {
-        this.pageNumber += pageNumberDelta;
-    }
+    private final Integer pageNumber;
+    private final Integer pageSize;
 
 }

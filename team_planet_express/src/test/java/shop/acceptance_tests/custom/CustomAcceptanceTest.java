@@ -2,8 +2,6 @@ package shop.acceptance_tests.custom;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import shop.acceptance_tests.custom.tester.*;
-import shop.core.services.actions.shared.SecurityServiceImpl;
-import shop.core.services.user.UserService;
 
 public abstract class CustomAcceptanceTest {
 
@@ -17,12 +15,6 @@ public abstract class CustomAcceptanceTest {
     protected ListCartItemsTester listCartItemsTester;
     @Autowired
     protected BuyTester buyCartTester;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private SecurityServiceImpl securityService;
 
-    protected void setupDefaultUser() {
-    }
 
 }

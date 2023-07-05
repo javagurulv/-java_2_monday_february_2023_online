@@ -4,5 +4,6 @@ import lombok.Value;
 
 @Value
 public class GetListShopItemsRequest {
-
+//    List<OrderingRule> orderingRules;
+//    PagingRule pagingRule;
 }

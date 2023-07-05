@@ -11,6 +11,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import shop.core.domain.user.User;
+import shop.core_api.dto.cart_item.CartItemDTO;
 import shop.core_api.dto.item.ItemDTO;
 import shop.core_api.entry_point.customer.AddItemToCartService;
 import shop.core_api.entry_point.customer.GetItemService;
@@ -44,7 +45,12 @@ public class ItemView extends Main implements HasUrlParameter<Long> {
         ItemDTO item = getItemService.execute(new GetItemRequest(itemDTO)).getItemDTO();
         ItemCard itemCard = new ItemCardBuilder().setItemIfoContent(item).setClickable(false).build();
         add(itemCard);
-        add(createBuyDiv(itemCard, item));
+        Optional<User> authenticatedUserFromDB = securityService.getAuthenticatedUserFromDB();
+        if (authenticatedUserFromDB.isPresent()) {
+            add(createBuyDiv(itemCard, item));
+        } else {
+            //LocalStorage
+        }
     }
 
 
@@ -56,31 +62,30 @@ public class ItemView extends Main implements HasUrlParameter<Long> {
         quantity.setMin(0);
         quantity.setMax(item.getAvailableQuantity());
         Button addToCartButton = new Button("Add to cart", event -> {
-            Optional<User> authenticatedUserFromDB = securityService.getAuthenticatedUserFromDB();
-            if (authenticatedUserFromDB.isPresent()) {
-                AddItemToCartRequest addItemToCartRequest = new AddItemToCartRequest(
-                        item.getName(),
-                        quantity.getValue().toString()
-                );
-                AddItemToCartResponse response = addItemToCartService.execute(addItemToCartRequest);
-                if (response.hasErrors()) {
-                    for (CoreError error : response.getErrors()) {
-                        add(new ErrorMessage(error.getMessage()));
-                    }
-                } else {
-                    ItemDTO itemDTO = new ItemDTO();
-                    itemDTO.setId(item.getId());
-                    ItemDTO itemUpdate = getItemService.execute(new GetItemRequest(itemDTO)).getItemDTO();
-                    quantity.setMax(itemUpdate.getAvailableQuantity());
-                    quantity.setValue(0);
-                    itemCard.getItemInfoCard().updateQuantity(itemUpdate.getAvailableQuantity().toString());
+            ItemDTO itemDTO1 = new ItemDTO();
+            itemDTO1.setId(item.getId());
+            CartItemDTO cartItemDTO = new CartItemDTO(null, null, itemDTO1, quantity.getValue());
+            AddItemToCartRequest addItemToCartRequest = new AddItemToCartRequest(
+                    cartItemDTO
+            );
+            AddItemToCartResponse response = addItemToCartService.execute(addItemToCartRequest);
+            if (response.hasErrors()) {
+                for (CoreError error : response.getErrors()) {
+                    add(new ErrorMessage(error.getMessage()));
                 }
             } else {
-                //LocalStorage
+                ItemDTO itemDTO = new ItemDTO();
+                itemDTO.setId(item.getId());
+                ItemDTO itemUpdate = getItemService.execute(new GetItemRequest(itemDTO)).getItemDTO();
+                quantity.setMax(itemUpdate.getAvailableQuantity());
+                quantity.setValue(0);
+                itemCard.getItemInfoCard().updateQuantity(itemUpdate.getAvailableQuantity().toString());
             }
-        });
+        }
+        );
         div.add(quantity);
         div.add(addToCartButton);
         return div;
     }
+
 }

@@ -6,7 +6,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.ItemRepository;
-import shop.core.services.validators.actions.manager.AddItemToShopValidator;
+import shop.core.services.validators.services_validators.manager.AddItemToShopValidator;
+import shop.core_api.dto.item.ItemDTO;
+import shop.core_api.dto.item.Money;
 import shop.core_api.requests.manager.AddItemToShopRequest;
 import shop.core_api.responses.CoreError;
 import shop.core_api.responses.manager.AddItemToShopResponse;
@@ -32,6 +34,8 @@ class AddItemToShopServiceImplTest {
     @Mock
     private AddItemToShopRequest mockRequest;
     @Mock
+    private ItemDTO mockItemDTO;
+    @Mock
     private CoreError mockCoreError;
 
     @InjectMocks
@@ -47,8 +51,9 @@ class AddItemToShopServiceImplTest {
     @Test
     void shouldReturnNoErrorsForValidRequest() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
-        when(mockRequest.getPrice()).thenReturn("100.10");
-        when(mockRequest.getAvailableQuantity()).thenReturn("10");
+        when(mockRequest.getItemDTO()).thenReturn(mockItemDTO);
+        when(mockItemDTO.getPrice()).thenReturn(Money.dollars(BigDecimal.valueOf(100.10)));
+        when(mockItemDTO.getAvailableQuantity()).thenReturn(10);
         AddItemToShopResponse response = service.execute(mockRequest);
         assertNull(response.getErrors());
     }
@@ -56,9 +61,10 @@ class AddItemToShopServiceImplTest {
     @Test
     void shouldSaveValidRequest() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
-        when(mockRequest.getItemName()).thenReturn("name");
-        when(mockRequest.getPrice()).thenReturn("100.10");
-        when(mockRequest.getAvailableQuantity()).thenReturn("10");
+        when(mockRequest.getItemDTO()).thenReturn(mockItemDTO);
+        when(mockItemDTO.getName()).thenReturn("name");
+        when(mockItemDTO.getPrice()).thenReturn(Money.dollars(BigDecimal.valueOf(100.10)));
+        when(mockItemDTO.getAvailableQuantity()).thenReturn(10);
         service.execute(mockRequest);
         verify(mockItemRepository)
                 .save(argThat(new ItemMatcher("name", new BigDecimal("100.10"), 10)));
@@ -67,9 +73,10 @@ class AddItemToShopServiceImplTest {
     @Test
     void shouldRoundPriceUp() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
-        when(mockRequest.getItemName()).thenReturn("name");
-        when(mockRequest.getPrice()).thenReturn("100.10755");
-        when(mockRequest.getAvailableQuantity()).thenReturn("10");
+        when(mockRequest.getItemDTO()).thenReturn(mockItemDTO);
+        when(mockItemDTO.getName()).thenReturn("name");
+        when(mockItemDTO.getPrice()).thenReturn(Money.dollars(BigDecimal.valueOf(100.10755)));
+        when(mockItemDTO.getAvailableQuantity()).thenReturn(10);
         service.execute(mockRequest);
         verify(mockItemRepository)
                 .save(argThat(new ItemMatcher("name", new BigDecimal("100.11"), 10)));
@@ -78,9 +85,10 @@ class AddItemToShopServiceImplTest {
     @Test
     void shouldRoundPriceDown() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
-        when(mockRequest.getItemName()).thenReturn("name");
-        when(mockRequest.getPrice()).thenReturn("99.102234");
-        when(mockRequest.getAvailableQuantity()).thenReturn("10");
+        when(mockRequest.getItemDTO()).thenReturn(mockItemDTO);
+        when(mockItemDTO.getName()).thenReturn("name");
+        when(mockItemDTO.getPrice()).thenReturn(Money.dollars(BigDecimal.valueOf(99.102234)));
+        when(mockItemDTO.getAvailableQuantity()).thenReturn(10);
         service.execute(mockRequest);
         verify(mockItemRepository)
                 .save(argThat(new ItemMatcher("name", new BigDecimal("99.10"), 10)));

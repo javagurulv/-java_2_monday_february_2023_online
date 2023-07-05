@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import shop.core.domain.item.Item;
 import shop.core.services.actions.customer.GetListCartItemsServiceImpl;
+import shop.core_api.dto.cart_item.CartItemDTO;
 import shop.core_api.requests.customer.GetListCartItemsRequest;
 import shop.core_api.responses.customer.GetListCartItemsResponse;
 
@@ -29,7 +30,7 @@ public class ListCartItemsTester extends Tester {
 
     @SuppressWarnings("UnusedReturnValue")
     public ListCartItemsTester checkItemInCartResponse(String itemName, int quantity) {
-        Optional<Item> itemOptional = itemRepository.getAllItems().stream()
+        Optional<Item> itemOptional = itemRepository.findAll().stream()
                 .filter(item -> item.getName().equals(itemName)).findFirst();
         assertTrue(itemOptional.isPresent());
         assertTrue(getListCartItemsResponse.getCartItemsDTO().stream()
@@ -38,8 +39,8 @@ public class ListCartItemsTester extends Tester {
     }
 
     @Override
-    public ListCartItemsTester checkItemInCart(String itemName, Integer quantity) {
-        super.checkItemInCart(itemName, quantity);
+    public ListCartItemsTester checkItemInCart(CartItemDTO cartItemDTO) {
+        super.checkItemInCart(cartItemDTO);
         return this;
     }
 

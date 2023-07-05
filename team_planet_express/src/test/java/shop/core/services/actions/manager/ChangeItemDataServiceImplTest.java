@@ -6,7 +6,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.ItemRepository;
-import shop.core.services.validators.actions.manager.ChangeItemDataValidator;
+import shop.core.domain.item.Item;
+import shop.core.services.validators.services_validators.manager.ChangeItemDataValidator;
+import shop.core_api.dto.item.ItemDTO;
+import shop.core_api.dto.item.Money;
 import shop.core_api.requests.manager.ChangeItemDataRequest;
 import shop.core_api.responses.CoreError;
 import shop.core_api.responses.manager.ChangeItemDataResponse;
@@ -14,6 +17,7 @@ import shop.core_api.responses.manager.ChangeItemDataResponse;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -30,6 +34,12 @@ class ChangeItemDataServiceImplTest {
     private ChangeItemDataRequest mockRequest;
     @Mock
     private CoreError mockCoreError;
+    @Mock
+    private ItemDTO mockItemDTO;
+    @Mock
+    private Item mockItem;
+    @Mock
+    private Optional<Item> mockOptionalItem;
 
     @InjectMocks
     private ChangeItemDataServiceImpl service;
@@ -44,7 +54,10 @@ class ChangeItemDataServiceImplTest {
     @Test
     void shouldReturnNoErrorsForValidRequest() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
-        when(mockRequest.getItemId()).thenReturn("1");
+        when(mockRequest.getItemDTO()).thenReturn(mockItemDTO);
+        when(mockItemDTO.getId()).thenReturn(1L);
+        when(mockItemRepository.findById(1L)).thenReturn(mockOptionalItem);
+        when(mockOptionalItem.get()).thenReturn(mockItem);
         ChangeItemDataResponse response = service.execute(mockRequest);
         assertNull(response.getErrors());
     }
@@ -52,74 +65,95 @@ class ChangeItemDataServiceImplTest {
     @Test
     void shouldUpdateName() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
-        when(mockRequest.getItemId()).thenReturn("1");
-        when(mockRequest.getNewItemName()).thenReturn("name");
+        when(mockRequest.getItemDTO()).thenReturn(mockItemDTO);
+        when(mockItemDTO.getId()).thenReturn(1L);
+        when(mockItemRepository.findById(1L)).thenReturn(mockOptionalItem);
+        when(mockOptionalItem.get()).thenReturn(mockItem);
+        when(mockItemDTO.getName()).thenReturn("name");
         service.execute(mockRequest);
-        verify(mockItemRepository).changeName(1L, "name");
+        verify(mockItem).setName("name");
     }
 
     @Test
     void shouldNotUpdateName() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
-        when(mockRequest.getItemId()).thenReturn("1");
-        when(mockRequest.getNewItemName()).thenReturn("");
+        when(mockRequest.getItemDTO()).thenReturn(mockItemDTO);
+        when(mockItemDTO.getId()).thenReturn(1L);
+        when(mockItemRepository.findById(1L)).thenReturn(mockOptionalItem);
+        when(mockOptionalItem.get()).thenReturn(mockItem);
         service.execute(mockRequest);
-        verify(mockItemRepository, times(0)).changeName(anyLong(), anyString());
+        verify(mockItem, times(0)).setName(anyString());
     }
 
     @Test
     void shouldUpdatePrice() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
-        when(mockRequest.getItemId()).thenReturn("1");
-        when(mockRequest.getNewPrice()).thenReturn("10.10");
+        when(mockRequest.getItemDTO()).thenReturn(mockItemDTO);
+        when(mockItemDTO.getId()).thenReturn(1L);
+        when(mockItemRepository.findById(1L)).thenReturn(mockOptionalItem);
+        when(mockOptionalItem.get()).thenReturn(mockItem);
+        when(mockItemDTO.getPrice()).thenReturn(Money.dollars(new BigDecimal("10.10")));
         service.execute(mockRequest);
-        verify(mockItemRepository).changePrice(1L, new BigDecimal("10.10"));
+        verify(mockItem).setPrice(new BigDecimal("10.10"));
     }
 
     @Test
     void shouldNotUpdatePrice() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
-        when(mockRequest.getItemId()).thenReturn("1");
-        when(mockRequest.getNewPrice()).thenReturn(" ");
+        when(mockRequest.getItemDTO()).thenReturn(mockItemDTO);
+        when(mockItemDTO.getId()).thenReturn(1L);
+        when(mockItemRepository.findById(1L)).thenReturn(mockOptionalItem);
+        when(mockOptionalItem.get()).thenReturn(mockItem);
         service.execute(mockRequest);
-        verify(mockItemRepository, times(0)).changePrice(anyLong(), any(BigDecimal.class));
+        verify(mockItem, times(0)).setPrice(any(BigDecimal.class));
     }
 
     @Test
     void shouldUpdateQuantity() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
-        when(mockRequest.getItemId()).thenReturn("1");
-        when(mockRequest.getNewAvailableQuantity()).thenReturn("10");
+        when(mockRequest.getItemDTO()).thenReturn(mockItemDTO);
+        when(mockItemDTO.getId()).thenReturn(1L);
+        when(mockItemRepository.findById(1L)).thenReturn(mockOptionalItem);
+        when(mockOptionalItem.get()).thenReturn(mockItem);
+        when(mockItemDTO.getAvailableQuantity()).thenReturn(10);
         service.execute(mockRequest);
-        verify(mockItemRepository).changeAvailableQuantity(1L, 10);
+        verify(mockItem).setAvailableQuantity(10);
     }
 
     @Test
     void shouldNotUpdateQuantity() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
-        when(mockRequest.getItemId()).thenReturn("1");
-        when(mockRequest.getNewItemName()).thenReturn(null);
+        when(mockRequest.getItemDTO()).thenReturn(mockItemDTO);
+        when(mockItemDTO.getId()).thenReturn(1L);
+        when(mockItemRepository.findById(1L)).thenReturn(mockOptionalItem);
+        when(mockItemDTO.getAvailableQuantity()).thenReturn(null);
+        when(mockOptionalItem.get()).thenReturn(mockItem);
         service.execute(mockRequest);
-        verify(mockItemRepository, times(0)).changeAvailableQuantity(anyLong(), anyInt());
+        verify(mockItem, times(0)).setAvailableQuantity(anyInt());
     }
 
     @Test
     void shouldRoundPriceUp() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
-        when(mockRequest.getItemId()).thenReturn("1");
-        when(mockRequest.getNewPrice()).thenReturn("10.10776");
+        when(mockRequest.getItemDTO()).thenReturn(mockItemDTO);
+        when(mockItemDTO.getId()).thenReturn(1L);
+        when(mockItemRepository.findById(1L)).thenReturn(mockOptionalItem);
+        when(mockOptionalItem.get()).thenReturn(mockItem);
+        when(mockItemDTO.getPrice()).thenReturn(Money.dollars(new BigDecimal("10.10776")));
         service.execute(mockRequest);
-        verify(mockItemRepository).changePrice(1L, new BigDecimal("10.11"));
+        verify(mockItem).setPrice(new BigDecimal("10.11"));
     }
 
     @Test
     void shouldRoundPriceDown() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
-        when(mockRequest.getItemId()).thenReturn("1");
-        when(mockRequest.getNewPrice()).thenReturn("10.092234");
+        when(mockRequest.getItemDTO()).thenReturn(mockItemDTO);
+        when(mockItemDTO.getId()).thenReturn(1L);
+        when(mockItemRepository.findById(1L)).thenReturn(mockOptionalItem);
+        when(mockOptionalItem.get()).thenReturn(mockItem);
+        when(mockItemDTO.getPrice()).thenReturn(Money.dollars(new BigDecimal("10.092234")));
         service.execute(mockRequest);
-        verify(mockItemRepository).changePrice(1L, new BigDecimal("10.09"));
-
+        verify(mockItem).setPrice(new BigDecimal("10.09"));
     }
 
 }

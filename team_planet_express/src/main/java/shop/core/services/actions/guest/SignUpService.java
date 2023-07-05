@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.core.domain.user.User;
-import shop.core.domain.user.UserRole;
-import shop.core.services.user.UserCreationData;
-import shop.core.services.user.UserService;
-import shop.core.services.validators.actions.guest.SignUpValidator;
+import shop.core.services.validators.services_validators.guest.SignUpValidator;
 import shop.core_api.requests.guest.SignUpRequest;
 import shop.core_api.responses.CoreError;
 import shop.core_api.responses.guest.SignUpResponse;
@@ -20,8 +17,6 @@ public class SignUpService {
 
     @Autowired
     private SignUpValidator validator;
-    @Autowired
-    private UserService userService;
 
     public SignUpResponse execute(SignUpRequest request) {
         List<CoreError> errors = validator.validate(request);
@@ -31,10 +26,7 @@ public class SignUpService {
         String name = request.getName();
         String loginName = request.getLoginName();
         String password = request.getPassword();
-        UserCreationData userCreationData = new UserCreationData(name, loginName, password, UserRole.CUSTOMER);
-        User createdUser = userService.createUser(userCreationData);
-        request.getCurrentUserId().setValue(createdUser.getId());
-        return new SignUpResponse(createdUser);
+        return new SignUpResponse(new User());
     }
 
 }

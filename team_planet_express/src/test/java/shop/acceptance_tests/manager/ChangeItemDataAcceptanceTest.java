@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import shop.core.database.ItemRepository;
 import shop.core.domain.item.Item;
 import shop.core.services.actions.manager.ChangeItemDataServiceImpl;
+import shop.core_api.dto.item.ItemDTO;
+import shop.core_api.dto.item.Money;
 import shop.core_api.requests.manager.ChangeItemDataRequest;
 import shop.core_api.responses.CoreError;
 import shop.core_api.responses.manager.ChangeItemDataResponse;
@@ -34,8 +36,9 @@ public class ChangeItemDataAcceptanceTest {
     @Test
     @Ignore
     void shouldChangeItemNameOnly() {
+        ItemDTO itemDTO = new ItemDTO(6L, "Delivery-Boy Man", null, null, null);
         ChangeItemDataResponse changeItemDataResponse =
-                changeItemDataService.execute(new ChangeItemDataRequest("6", "Delivery-Boy Man", "", ""));
+                changeItemDataService.execute(new ChangeItemDataRequest(itemDTO));
         assertFalse(changeItemDataResponse.hasErrors());
         Item item = itemRepository.findById(6L).orElseThrow();
         assertCorrectItemChanges(item, "Delivery-Boy Man", new BigDecimal("24.99"), 70);
@@ -45,8 +48,9 @@ public class ChangeItemDataAcceptanceTest {
     @Test
     @Ignore
     void shouldChangePriceOnly() {
+        ItemDTO itemDTO = new ItemDTO(10L, "Popplers", Money.dollars(BigDecimal.valueOf(1000.00)), 0, null);
         ChangeItemDataResponse changeItemDataResponse =
-                changeItemDataService.execute(new ChangeItemDataRequest("10", "", "1000.00", ""));
+                changeItemDataService.execute(new ChangeItemDataRequest(itemDTO));
         assertFalse(changeItemDataResponse.hasErrors());
         Item item = itemRepository.findById(10L).orElseThrow();
         assertCorrectItemChanges(item, "Popplers", new BigDecimal("1000.00"), 0);
@@ -56,8 +60,9 @@ public class ChangeItemDataAcceptanceTest {
     @Test
     @Ignore
     void shouldChangeQuantityOnly() {
+        ItemDTO itemDTO = new ItemDTO(1L, null, null, 0, null);
         ChangeItemDataResponse changeItemDataResponse =
-                changeItemDataService.execute(new ChangeItemDataRequest("1", "", "", "0"));
+                changeItemDataService.execute(new ChangeItemDataRequest(itemDTO));
         assertFalse(changeItemDataResponse.hasErrors());
         Item item = itemRepository.findById(1L).orElseThrow();
         assertCorrectItemChanges(item, "Stop-and-Drop Suicide Booth", new BigDecimal("1000.00"), 0);
@@ -67,8 +72,9 @@ public class ChangeItemDataAcceptanceTest {
     @Test
     @Ignore
     void shouldChangeEverything() {
+        ItemDTO itemDTO = new ItemDTO(2L, "Good News Everyone", Money.dollars(BigDecimal.valueOf(7.77)), 100, null);
         ChangeItemDataResponse changeItemDataResponse =
-                changeItemDataService.execute(new ChangeItemDataRequest("2", "Good News Everyone", "7.77", "100"));
+                changeItemDataService.execute(new ChangeItemDataRequest(itemDTO));
         assertFalse(changeItemDataResponse.hasErrors());
         Item item = itemRepository.findById(2L).orElseThrow();
         assertCorrectItemChanges(item, "Good News Everyone", new BigDecimal("7.77"), 100);
@@ -78,8 +84,9 @@ public class ChangeItemDataAcceptanceTest {
     @Test
     @Ignore
     void shouldReturnErrorForDuplicate() {
+        ItemDTO itemDTO = new ItemDTO(4L, "Lightspeed Briefs", Money.dollars(BigDecimal.valueOf(249.99)), 50, null);
         ChangeItemDataResponse changeItemDataResponse =
-                changeItemDataService.execute(new ChangeItemDataRequest("4", "Lightspeed Briefs", "249.99", "50"));
+                changeItemDataService.execute(new ChangeItemDataRequest(itemDTO));
         assertTrue(changeItemDataResponse.hasErrors());
         List<CoreError> errors = changeItemDataResponse.getErrors();
         assertEquals(1, errors.size());
@@ -90,10 +97,11 @@ public class ChangeItemDataAcceptanceTest {
     @Test
     @Ignore
     void shouldReturnErrorForDuplicate2() {
+        ItemDTO itemDTO = new ItemDTO(11L, "Lightspeed Briefs", null, null, null);
         Item item = new Item("Angry Norwegian Anchovies", new BigDecimal("249.99"), 1);
         itemRepository.save(item);
         ChangeItemDataResponse changeItemDataResponse =
-                changeItemDataService.execute(new ChangeItemDataRequest("11", "Lightspeed Briefs", "", ""));
+                changeItemDataService.execute(new ChangeItemDataRequest(itemDTO));
         assertTrue(changeItemDataResponse.hasErrors());
         List<CoreError> errors = changeItemDataResponse.getErrors();
         assertEquals(1, errors.size());

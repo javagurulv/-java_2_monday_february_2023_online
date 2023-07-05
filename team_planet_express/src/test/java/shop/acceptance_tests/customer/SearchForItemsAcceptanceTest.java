@@ -13,7 +13,6 @@ import shop.core.domain.item.Item;
 import shop.core.domain.item.ItemConverter;
 import shop.core.services.actions.shared.SearchItemServiceImpl;
 import shop.core.support.ordering.OrderBy;
-import shop.core.support.ordering.OrderDirection;
 import shop.core.support.ordering.OrderingRule;
 import shop.core.support.paging.PagingRule;
 import shop.core_api.dto.item.ItemDTO;
@@ -42,8 +41,9 @@ public class SearchForItemsAcceptanceTest {
     @Test
     @WithUserDetails("customer")
     void shouldReturnAllItemsWithRobotInTheName() {
+        PagingRule pagingRule = new PagingRule(0, 10);
         SearchItemResponse searchItemResponse =
-                searchItemService.execute(new SearchItemRequest("robot", "", Collections.emptyList(), null));
+                searchItemService.execute(new SearchItemRequest("robot", null, null, Collections.emptyList(), pagingRule));
         assertFalse(searchItemResponse.hasErrors());
         assertFalse(searchItemResponse.isNextPageAvailable());
         assertEquals("Moms Old-Fashioned Robot Oil", searchItemResponse.getItemsDTO().get(0).getName());
@@ -54,8 +54,9 @@ public class SearchForItemsAcceptanceTest {
     @Test
     @WithUserDetails("customer")
     void shouldReturnAllItemsCheaperThan10() {
+        PagingRule pagingRule = new PagingRule(0, 10);
         SearchItemResponse searchItemResponse =
-                searchItemService.execute(new SearchItemRequest("", "10", Collections.emptyList(), null));
+                searchItemService.execute(new SearchItemRequest("", 0, 10, Collections.emptyList(), pagingRule));
         assertFalse(searchItemResponse.hasErrors());
         assertFalse(searchItemResponse.isNextPageAvailable());
         Optional<ItemDTO> wrongItem = searchItemResponse.getItemsDTO().stream()
@@ -68,9 +69,10 @@ public class SearchForItemsAcceptanceTest {
     @Test
     @WithUserDetails("customer")
     void shouldOrderRobotItemsAscending() {
-        OrderingRule orderingRule = new OrderingRule(OrderBy.NAME, OrderDirection.ASCENDING);
+        PagingRule pagingRule = new PagingRule(0, 10);
+        OrderingRule orderingRule = new OrderingRule(OrderBy.NAME, true);
         SearchItemResponse searchItemResponse =
-                searchItemService.execute(new SearchItemRequest("robot", "", List.of(orderingRule), null));
+                searchItemService.execute(new SearchItemRequest("robot", 0, null, List.of(orderingRule), pagingRule));
         assertFalse(searchItemResponse.hasErrors());
         assertFalse(searchItemResponse.isNextPageAvailable());
         assertTrue(isOrderedCorrectly(searchItemResponse.getItemsDTO().stream().map(itemDTO -> ItemConverter.toItem(itemDTO)).toList(), 7L, 4L));
@@ -80,9 +82,9 @@ public class SearchForItemsAcceptanceTest {
     @Test
     @WithUserDetails("customer")
     void shouldReturnSecondThreeItemPage() {
-        PagingRule pagingRule = new PagingRule(2, "3");
+        PagingRule pagingRule = new PagingRule(1, 3);
         SearchItemResponse searchItemResponse =
-                searchItemService.execute(new SearchItemRequest("", "", Collections.emptyList(), pagingRule));
+                searchItemService.execute(new SearchItemRequest("", 0, null, Collections.emptyList(), pagingRule));
         assertFalse(searchItemResponse.hasErrors());
         assertEquals(3, searchItemResponse.getItemsDTO().size());
         assertTrue(searchItemResponse.isNextPageAvailable());
@@ -95,11 +97,11 @@ public class SearchForItemsAcceptanceTest {
     void shouldReturnCorrectItemsInCorrectOrder() {
         Item newItem = new Item("Morbo on Management", new BigDecimal("4.99"), 1);
         itemRepository.save(newItem);
-        OrderingRule orderingRuleName = new OrderingRule(OrderBy.NAME, OrderDirection.DESCENDING);
-        OrderingRule orderingRulePrice = new OrderingRule(OrderBy.PRICE, OrderDirection.ASCENDING);
-        PagingRule pagingRule = new PagingRule(1, "4");
+        OrderingRule orderingRuleName = new OrderingRule(OrderBy.NAME, false);
+        OrderingRule orderingRulePrice = new OrderingRule(OrderBy.PRICE, true);
+        PagingRule pagingRule = new PagingRule(0, 4);
         SearchItemResponse searchItemResponse =
-                searchItemService.execute(new SearchItemRequest("T", "25", List.of(orderingRuleName, orderingRulePrice), pagingRule));
+                searchItemService.execute(new SearchItemRequest("T", 0, 25, List.of(orderingRuleName, orderingRulePrice), pagingRule));
         assertFalse(searchItemResponse.hasErrors());
         assertTrue(searchItemResponse.isNextPageAvailable());
         Optional<ItemDTO> wrongItem = searchItemResponse.getItemsDTO().stream()
@@ -108,9 +110,9 @@ public class SearchForItemsAcceptanceTest {
         assertTrue(wrongItem.isEmpty());
         assertTrue(isOrderedCorrectly(searchItemResponse.getItemsDTO().stream().map(itemDTO -> ItemConverter.toItem(itemDTO)).toList(), 11L, 6L, 4L, 9L));
         assertEquals(4, searchItemResponse.getItemsDTO().size());
-        pagingRule = new PagingRule(2, "4");
+        pagingRule = new PagingRule(1, 4);
         searchItemResponse =
-                searchItemService.execute(new SearchItemRequest("T", "25", List.of(orderingRuleName, orderingRulePrice), pagingRule));
+                searchItemService.execute(new SearchItemRequest("T", 0, 25, List.of(orderingRuleName, orderingRulePrice), pagingRule));
         assertEquals(1, searchItemResponse.getItemsDTO().size());
         assertTrue(isPageContainingCorrectItems(searchItemResponse.getItemsDTO().stream().map(itemDTO -> ItemConverter.toItem(itemDTO)).toList(), 7L));
     }

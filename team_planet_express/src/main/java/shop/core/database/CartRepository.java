@@ -1,19 +1,10 @@
 package shop.core.database;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.stereotype.Repository;
 import shop.core.domain.cart.Cart;
-import shop.core.domain.cart.CartStatus;
 
-import java.util.List;
-import java.util.Optional;
-
-public interface CartRepository {
-
-    Cart save(Cart cart);
-
-    Optional<Cart> findOpenCartForUserId(Long userId);
-
-    void changeCartStatus(Long id, CartStatus cartStatus);
-
-    List<Cart> getAllCarts();
-
+@Repository
+public interface CartRepository extends JpaRepository<Cart, Long>, JpaSpecificationExecutor<Cart> {
 }

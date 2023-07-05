@@ -19,10 +19,10 @@ public class ChangeItemDataRequestMatcher implements ArgumentMatcher<ChangeItemD
 
     @Override
     public boolean matches(ChangeItemDataRequest request) {
-        return itemId.equals(request.getItemId()) &&
-                newItemName.equals(request.getNewItemName()) &&
-                newPrice.equals(request.getNewPrice()) &&
-                newAvailableQuantity.equals(request.getNewAvailableQuantity());
+        return itemId.equals(request.getItemDTO().getId()) &&
+                newItemName.equals(request.getItemDTO().getName()) &&
+                newPrice.equals(request.getItemDTO().getPrice()) &&
+                newAvailableQuantity.equals(request.getItemDTO().getAvailableQuantity());
     }
 
 }

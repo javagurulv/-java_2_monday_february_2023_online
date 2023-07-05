@@ -27,7 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        shop.core.domain.user.User user = userRepository.findByLoginName(username)
+        shop.core.domain.user.User user = userRepository.findByLogin(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
         return User.builder()
                 .username(user.getLogin())

@@ -35,7 +35,7 @@ public class SecurityServiceImpl implements SecurityService {
         Optional<User> user;
         Optional<UserDetails> authenticatedUser = authenticationContext.getAuthenticatedUser(UserDetails.class);
         if (authenticatedUser.isPresent()) {
-            user = userRepository.findByLoginName(authenticatedUser.get().getUsername());
+            user = userRepository.findByLogin(authenticatedUser.get().getUsername());
         } else
             user = Optional.empty();
         return user;

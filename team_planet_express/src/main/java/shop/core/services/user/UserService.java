@@ -5,11 +5,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import shop.core.database.CartRepository;
 import shop.core.database.UserRepository;
-import shop.core.domain.cart.Cart;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
 
 import java.util.Optional;
+
+import static shop.core.database.specifications.CartSpecs.findOpenCartForUser;
 
 @Component
 @Transactional
@@ -21,17 +22,14 @@ public class UserService {
     @Autowired
     private CartRepository cartRepository;
 
-    public User createUser(UserCreationData userCreationData) {
-        User createdUser = userRepository
-                .save(new User(userCreationData.getName(), userCreationData.getLoginName(), userCreationData.getPassword(), userCreationData.getUserRole()));
-        cartRepository.save(new Cart(createdUser));
-        return createdUser;
+    public User createUser() {
+        return new User();
     }
 
     public Optional<User> findGuestWithOpenCart() {
-        return userRepository.getAllUsers().stream()
+        return userRepository.findAll().stream()
                 .filter(user -> UserRole.GUEST.equals(user.getUserRole()))
-                .filter(user -> cartRepository.findOpenCartForUserId(user.getId()).isPresent())
+                .filter(user -> cartRepository.findOne(findOpenCartForUser(user)).isPresent())
                 .findFirst();
     }
 

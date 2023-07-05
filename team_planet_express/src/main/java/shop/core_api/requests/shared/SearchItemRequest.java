@@ -9,7 +9,8 @@ import java.util.List;
 @Value
 public class SearchItemRequest {
     String itemName;
-    String price;
+    Integer minPrice;
+    Integer maxPrice;
     List<OrderingRule> orderingRules;
     PagingRule pagingRule;
 

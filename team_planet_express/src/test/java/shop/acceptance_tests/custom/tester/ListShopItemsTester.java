@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import shop.core.services.actions.customer.GetListShopItemsServiceImpl;
+import shop.core_api.dto.item.ItemDTO;
 import shop.core_api.requests.customer.GetListShopItemsRequest;
 import shop.core_api.responses.customer.GetListShopItemsResponse;
 
@@ -31,8 +32,8 @@ public class ListShopItemsTester extends Tester {
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public ListShopItemsTester checkItemInShop(String itemName, Integer quantity) {
-        super.checkItemInShop(itemName, quantity);
+    public ListShopItemsTester checkItemInShop(ItemDTO itemDTO) {
+        super.checkItemInShop(itemDTO);
         return this;
     }
 

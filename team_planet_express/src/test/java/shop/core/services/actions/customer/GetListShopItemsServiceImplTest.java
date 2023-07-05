@@ -7,9 +7,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.ItemRepository;
-import shop.core.domain.user.User;
-import shop.core.services.actions.shared.SecurityServiceImpl;
-import shop.core.services.validators.universal.system.DatabaseAccessProvider;
 import shop.core_api.requests.customer.GetListShopItemsRequest;
 
 import static org.mockito.Mockito.verify;
@@ -22,13 +19,7 @@ class GetListShopItemsServiceImplTest {
     @Mock
     private ItemRepository mockItemRepository;
     @Mock
-    private DatabaseAccessProvider mockDatabaseAccessProvider;
-    @Mock
     private GetListShopItemsRequest mockRequest;
-    @Mock
-    private User mockUser;
-    @Mock
-    private SecurityServiceImpl mockSecurityService;
 
     @InjectMocks
     private GetListShopItemsServiceImpl service;
@@ -36,7 +27,7 @@ class GetListShopItemsServiceImplTest {
     @Test
     void shouldGetItemsFromDatabase() {
         service.execute(mockRequest);
-        verify(mockItemRepository).getAllItems();
+        verify(mockItemRepository).findAll();
     }
 
 }

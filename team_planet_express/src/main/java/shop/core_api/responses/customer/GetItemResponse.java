@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 public class GetItemResponse extends CoreResponse {
-    ItemDTO itemDTO;
+    private ItemDTO itemDTO;
 
     public GetItemResponse(ItemDTO itemDTO) {
         this.itemDTO = itemDTO;

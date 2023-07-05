@@ -1,7 +1,7 @@
 package shop.matchers;
 
 import org.mockito.ArgumentMatcher;
-import shop.core.support.error_code_processing.TextReplacementData;
+import shop.core.services.validators.error_code_processing.TextReplacementData;
 
 public class TextReplacementDataMatcher implements ArgumentMatcher<TextReplacementData> {
 

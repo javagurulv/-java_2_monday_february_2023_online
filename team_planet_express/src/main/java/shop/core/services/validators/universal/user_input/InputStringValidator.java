@@ -2,8 +2,8 @@ package shop.core.services.validators.universal.user_input;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.core.support.error_code_processing.ErrorProcessor;
-import shop.core.support.error_code_processing.TextReplacementData;
+import shop.core.services.validators.error_code_processing.ErrorProcessor;
+import shop.core.services.validators.error_code_processing.TextReplacementData;
 import shop.core_api.responses.CoreError;
 
 import java.util.ArrayList;

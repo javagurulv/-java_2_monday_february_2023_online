@@ -9,6 +9,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 import org.springframework.beans.factory.annotation.Autowired;
+import shop.core_api.dto.cart.CartDTO;
 import shop.core_api.dto.cart_item.CartItemDTO;
 import shop.core_api.entry_point.customer.BuyService;
 import shop.core_api.entry_point.customer.GetListCartItemsService;
@@ -42,13 +43,15 @@ public class CartView extends Main {
         } else {
             List<CartItemDTO> cartItems = response.getCartItemsDTO();
             VerticalLayout list;
-            if (cartItems != null) {
+            if (cartItems != null && !cartItems.isEmpty()) {
                 ItemCardBuilder itemCardBuilder = new ItemCardBuilder();
-                itemCardBuilder.setDelButton(securityService, removeItemFromCartService);
+                itemCardBuilder.setRemoveItemFromCartService(removeItemFromCartService);
                 list = createList(cartItems, itemCardBuilder);
                 HorizontalLayout horizontalLayout = new HorizontalLayout();
                 Button button = new Button("Buy", event -> {
-                    BuyRequest buyRequest = new BuyRequest();
+                    CartDTO cartDTO = new CartDTO();
+                    cartDTO.setId(cartItems.get(0).getCartId());
+                    BuyRequest buyRequest = new BuyRequest(cartDTO);
                     BuyResponse buyResponse = buyCartService.execute(buyRequest);
                     if (buyResponse.hasErrors()) {
                         for (CoreError error : buyResponse.getErrors()) {
@@ -69,7 +72,7 @@ public class CartView extends Main {
         VerticalLayout itemList = new VerticalLayout();
         itemList.setAlignItems(FlexComponent.Alignment.CENTER);
         for (CartItemDTO cartItem : cartItems) {
-            itemCardBuilder.setItemIfoContent(cartItem);
+            itemCardBuilder.setItemIfoContent(cartItem).setItemCartId(cartItem.getId()).setDelButton();
             itemList.add(itemCardBuilder.build());
         }
         return itemList;

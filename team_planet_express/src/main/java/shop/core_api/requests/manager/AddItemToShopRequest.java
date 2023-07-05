@@ -1,12 +1,11 @@
 package shop.core_api.requests.manager;
 
 import lombok.Value;
+import shop.core_api.dto.item.ItemDTO;
 
 @Value
 public class AddItemToShopRequest {
 
-    String itemName;
-    String price;
-    String availableQuantity;
+    ItemDTO itemDTO;
 
 }

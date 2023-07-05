@@ -1,19 +1,14 @@
 package shop.core.database;
 
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.stereotype.Repository;
 import shop.core.domain.user.User;
 
-import java.util.List;
 import java.util.Optional;
 
-public interface UserRepository {
-
-    User save(User user);
-
-    Optional<User> findById(Long userId);
-
-    Optional<User> findByLoginName(String login);
-
-    List<User> getAllUsers();
-
+@Repository
+public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
+    Optional<User> findByLogin(String login);
 }

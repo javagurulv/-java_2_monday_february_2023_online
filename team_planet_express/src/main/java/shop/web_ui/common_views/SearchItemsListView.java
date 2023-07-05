@@ -28,7 +28,7 @@ public class SearchItemsListView extends Main implements HasUrlParameter<String>
 
     @Override
     public void setParameter(BeforeEvent event, @WildcardParameter String parameter) {
-        SearchItemRequest searchItemRequest = new SearchItemRequest(parameter, "", List.of(), new PagingRule(1, "10"));
+        SearchItemRequest searchItemRequest = new SearchItemRequest(parameter, 0, null, List.of(), new PagingRule(0, 10));
         SearchItemResponse response = searchItemService.execute(searchItemRequest);
         List<ItemDTO> items = response.getItemsDTO();
         add(createList(items, 4));

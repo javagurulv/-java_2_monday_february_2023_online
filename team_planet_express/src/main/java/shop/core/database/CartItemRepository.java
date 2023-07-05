@@ -1,22 +1,10 @@
 package shop.core.database;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.stereotype.Repository;
 import shop.core.domain.cart_item.CartItem;
 
-import java.util.List;
-import java.util.Optional;
-
-public interface CartItemRepository {
-
-    CartItem save(CartItem cartItem);
-
-    Optional<CartItem> findByCartIdAndItemId(Long cartId, Long itemId);
-
-    void deleteByID(Long id);
-
-    void changeOrderedQuantity(Long id, Integer newOrderedQuantity);
-
-    List<CartItem> getAllCartItems();
-
-    List<CartItem> getAllCartItemsForCartId(Long cartId);
-
+@Repository
+public interface CartItemRepository extends JpaRepository<CartItem, Long>, JpaSpecificationExecutor<CartItem> {
 }
