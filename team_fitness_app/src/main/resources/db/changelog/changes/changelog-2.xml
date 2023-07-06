@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+
+    <changeSet author="fitness_app" id="2">
+        <createTable tableName="public.exercise">
+            <column name="name" type="VARCHAR(255)">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="muscleGroup" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="detailedMuscleGroup" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="otherMuscleGroup" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="mechanics" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="equipment" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="difficulty" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="description" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="gif" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+        <rollback>
+            <dropTable tableName="exercise"
+                       cascadeConstraints="true"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

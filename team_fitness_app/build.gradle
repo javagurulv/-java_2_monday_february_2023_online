@@ -20,4 +20,5 @@ dependencies {
 	implementation('com.opencsv:opencsv:5.7.1')
 	implementation('one.util:streamex:0.8.1')
 	implementation 'org.jsoup:jsoup:1.16.1'
+	implementation ('org.liquibase:liquibase-core:4.2.2')
 }
