@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Order Page</title>
+</head>
+<body>
+<h1>Order Page</h1>
+
+<form method="POST" action="/create-order">
+  <label for="detail">Detail:</label>
+  <select name="detail" id="detail">
+    <option value="1">Detail 1</option>
+    <option value="2">Detail 2</option>
+    <option value="3">Detail 3</option>
+    <!-- Add more options for available details -->
+  </select>
+
+  <br><br>
+
+  <label for="color">Color:</label>
+  <select name="color" id="color">
+    <option value="1">Color 1</option>
+    <option value="2">Color 2</option>
+    <option value="3">Color 3</option>
+    <!-- Add more options for available colors -->
+  </select>
+
+  <br><br>
+
+  <label for="amount">Amount:</label>
+  <input type="number" name="amount" id="amount" min="1" value="1">
+
+  <br><br>
+
+  <button type="submit">Add to Cart</button>
+</form>
+
+<br><br>
+
+<h2>Cart</h2>
+
+<table>
+  <tr>
+    <th>Detail</th>
+    <th>Color</th>
+    <th>Amount</th>
+  </tr>
+  <!-- Loop through the cart items and display them here -->
+  <tr>
+    <td>Detail 1</td>
+    <td>Color 1</td>
+    <td>1</td>
+  </tr>
+</table>
+</body>
+</html>

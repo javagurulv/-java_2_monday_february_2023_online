@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -48,11 +49,25 @@ public class OrderController {
         return "/orderPage";
     }
 
-    @PostMapping("/order")
-    public String submitOrder(@ModelAttribute("order") Order order,
-                              @ModelAttribute("orderItemRequests") List<OrderItemRequest> orderItemRequests, Principal principal) {
-        orderService.createOrder(principal, orderItemRequests, order.getNotes(), order.getOrderStatus());
-        return "redirect:/order";
+    @GetMapping("/create")
+    public String showCreateOrderPage(Model model) {
+        model.addAttribute("orderItemRequest", new OrderItemRequest());
+        model.addAttribute("details", getAllDetailsService.getAll(new GetAllDetailsRequest()));
+        model.addAttribute("colors", getAllColorsService.getAll());
+        return "orderPage";
+    }
+
+    @PostMapping("/create")
+    public String createOrder(Principal principal,
+                              @ModelAttribute("orderItemRequest") OrderItemRequest orderItemRequest,
+                              @RequestParam(value = "notes", required = false) String notes,
+                              @RequestParam(value = "orderStatus", required = false) String orderStatus) {
+        List<OrderItemRequest> orderItemRequests = new ArrayList<>();
+        orderItemRequests.add(orderItemRequest);
+
+        Order order = orderService.createOrder(principal, orderItemRequests, notes, orderStatus);
+        // Redirect to a success page or display a success message
+        return "redirect:/orders/" + order.getId();
     }
 
 }

@@ -25,17 +25,27 @@
 
         <div class="form-group">
             <label for="detailsCount">Details Count:</label>
-            <input type="number" class="form-control" id="detailsCount" name="detailsCount">
+            <input type="number" name="amount" id="detailsCount" min="1" value="1">
         </div>
 
         <div class="form-group">
-            <label for="orderItemRequests">Order Items:</label>
-            <div th:each="item, itemStat : ${order.orderItemsList}" class="order-item">
-                <input type="text" th:name="|orderItemRequests[${itemStat.index}].detailId|" placeholder="Detail ID" required/>
-                <input type="text" th:name="|orderItemRequests[${itemStat.index}].colorId|" placeholder="Color ID" required/>
-                <input type="number" th:name="|orderItemRequests[${itemStat.index}].count|" placeholder="Count" required/>
-            </div>
+            <label for="notes">Notes:</label>
+            <input type="text" class="form-control" id="notes" name="notes">
         </div>
+
+        <div class="form-group">
+            <label for="orderStatus">Order Status:</label>
+            <input type="text" class="form-control" id="orderStatus" name="orderStatus">
+        </div>
+
+<!--        <div class="form-group">-->
+<!--            <label for="orderItemsList">Order Items:</label>-->
+<!--            <div th:each="item, itemStat : ${order.orderItemsList}" class="order-item">-->
+<!--                <input type="text" th:name="|orderItemRequests[${itemStat.index}].detailId|" placeholder="Detail ID" required/>-->
+<!--                <input type="text" th:name="|orderItemRequests[${itemStat.index}].colorId|" placeholder="Color ID" required/>-->
+<!--                <input type="number" th:name="|orderItemRequests[${itemStat.index}].count|" placeholder="Count" required/>-->
+<!--            </div>-->
+<!--        </div>-->
 
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
@@ -52,7 +62,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="orderItem  : ${order.orderItemsList}">
+        <tr th:each="orderItem : ${order.orderItemsList}">
             <td th:text="${orderItem.detail.type}"></td>
             <td th:text="${orderItem.detail.side}"></td>
             <td th:text="${orderItem.detail.price}"></td>

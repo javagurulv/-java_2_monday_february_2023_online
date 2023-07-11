@@ -39,7 +39,10 @@
             Detail Type: <span th:text="${orderItem.detail.type}"></span> |
             Detail Side: <span th:text="${orderItem.detail.side}"></span> |
             Detail Price: <span th:text="${orderItem.detail.price}"></span> |
-            Color ID: <span th:text="${orderItem.color.id}"></span> |
+<!--            Color ID: <span th:text="${orderItem.color.id}"></span> |-->
+            Color: <span th:text="${orderItem.color.description}"></span> |
+            OEM Code: <span th:text="${orderItem.color.oemCode}"></span> |
+            Is metalic: <span th:text="${orderItem.color.isMetalic}"></span> |
             Count: <span th:text="${orderItem.countDetail}"></span>
           </li>
         </ul>

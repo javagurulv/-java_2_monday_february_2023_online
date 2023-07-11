@@ -32,14 +32,9 @@ public class Order {
     private BigDecimal totalPrice;
     @Column(name = "notes")
     private String notes;
-//    @ElementCollection(targetClass = OrderStatus.class, fetch = FetchType.EAGER)
-//    @CollectionTable(name = "order_status", joinColumns = @JoinColumn(name = "status_id"))
-//    @Enumerated(EnumType.STRING)
-//    private Set<OrderStatus> orderStatus;
     @Column(name = "order_status")
     private String orderStatus;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
-    //@JoinColumn(name = "order_id")
     private List<OrderItems> orderItemsList;
 
     @PrePersist
