@@ -2,6 +2,7 @@ package lv.javaguru.java2.servify.web_ui.controllers;
 
 import lv.javaguru.java2.servify.core.domain.Order;
 import lv.javaguru.java2.servify.core.dto.requests.GetAllDetailsRequest;
+import lv.javaguru.java2.servify.core.dto.requests.OrderItemRequest;
 import lv.javaguru.java2.servify.core.dto.responses.GetAllColorsResponse;
 import lv.javaguru.java2.servify.core.dto.responses.GetAllDetailResponse;
 import lv.javaguru.java2.servify.core.services.GetAllColorsService;
@@ -33,14 +34,25 @@ public class OrderController {
     }
 
     @GetMapping("/orderPage")
-    public String showColorPage(Model model) {
+    public String showColorPage(Model model, Principal principal) {
         GetAllColorsResponse response = getAllColorsService.getAll();
         model.addAttribute("colors", response.getColors());
 
         GetAllDetailResponse responseDetail = getAllDetailsService.getAll(new GetAllDetailsRequest());
         model.addAttribute("details", responseDetail.getDetails());
+
+        List<Order> orders = orderService.listOrderItems(principal);
+        model.addAttribute("orders", orders);
+        model.addAttribute("order", new Order());
+
         return "/orderPage";
     }
 
+    @PostMapping("/order")
+    public String submitOrder(@ModelAttribute("order") Order order,
+                              @ModelAttribute("orderItemRequests") List<OrderItemRequest> orderItemRequests, Principal principal) {
+        orderService.createOrder(principal, orderItemRequests, order.getNotes(), order.getOrderStatus());
+        return "redirect:/order";
+    }
 
 }
