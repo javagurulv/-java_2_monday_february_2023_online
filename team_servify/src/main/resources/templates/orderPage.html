@@ -30,6 +30,29 @@
 
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+
+    <h2>Order List:</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Detail Type</th>
+            <th>Detail Side</th>
+            <th>Detail Price</th>
+            <th>Color Id</th>
+            <th>Count</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="orderItem  : ${order.orderItemsList}">
+            <td th:text="${orderItem.detail.type}"></td>
+            <td th:text="${orderItem.detail.side}"></td>
+            <td th:text="${orderItem.detail.price}"></td>
+            <td th:text="${orderItem.color.id}"></td>
+            <td th:text="${orderItem.countDetail}"></td>
+        </tr>
+        </tbody>
+    </table>
+
 </div>
 </body>
 </html>

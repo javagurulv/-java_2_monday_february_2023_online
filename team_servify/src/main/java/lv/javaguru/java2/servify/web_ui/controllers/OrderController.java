@@ -18,9 +18,19 @@ import java.util.List;
 @Controller
 public class OrderController {
     @Autowired
+    private OrderService orderService;
+    @Autowired
     private GetAllColorsService getAllColorsService;
     @Autowired
     private GetAllDetailsService getAllDetailsService;
+
+    @GetMapping("/orders")
+    public String listOrders(Principal principal, Model model) {
+        List<Order> orders = orderService.listOrderItems(principal);
+        model.addAttribute("orders", orders);
+        model.addAttribute("userName", principal.getName());
+        return "order-list";
+    }
 
     @GetMapping("/orderPage")
     public String showColorPage(Model model) {
@@ -31,5 +41,6 @@ public class OrderController {
         model.addAttribute("details", responseDetail.getDetails());
         return "/orderPage";
     }
+
 
 }
