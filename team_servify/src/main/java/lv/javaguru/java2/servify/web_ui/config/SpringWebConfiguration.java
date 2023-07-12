@@ -12,7 +12,7 @@ import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
-@EnableWebMvc
+//@EnableWebMvc
 @ComponentScan(basePackages = {"lv.javaguru.java2.servify"})
 public class SpringWebConfiguration implements WebMvcConfigurer{
 
