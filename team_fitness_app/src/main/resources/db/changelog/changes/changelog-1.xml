@@ -28,7 +28,7 @@
             </column>
         </createTable>
         <rollback>
-            <dropTable tableName="client"
+            <dropTable tableName="public.client"
                        cascadeConstraints="true"/>
         </rollback>
     </changeSet>

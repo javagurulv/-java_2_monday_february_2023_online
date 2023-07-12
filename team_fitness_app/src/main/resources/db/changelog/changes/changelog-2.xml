@@ -49,7 +49,7 @@
 
         </createTable>
         <rollback>
-            <dropTable tableName="exercise"
+            <dropTable tableName="public.exercise"
                        cascadeConstraints="true"/>
         </rollback>
     </changeSet>
