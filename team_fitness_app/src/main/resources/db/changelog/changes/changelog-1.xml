@@ -6,7 +6,7 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
 
     <changeSet author = "fitness_app" id = "1">
-        <createTable tableName="public.client">
+        <createTable tableName="client">
             <column name="email" type="VARCHAR(255)">
                 <constraints primaryKey="true"/>
             </column>
@@ -28,7 +28,7 @@
             </column>
         </createTable>
         <rollback>
-            <dropTable tableName="public.client"
+            <dropTable tableName="client"
                        cascadeConstraints="true"/>
         </rollback>
     </changeSet>

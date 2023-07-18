@@ -7,6 +7,9 @@ public class SearchExerciseRequest {
     private Ordering ordering;
     private Paging paging;
 
+    public SearchExerciseRequest() {
+    }
+
     public SearchExerciseRequest(String name, String muscleGroup) {
         this.name = (name == null || name.length() == 0) ? "%" : name;
         this.muscleGroup = (muscleGroup == null || muscleGroup.length() == 0) ? "%" : muscleGroup;

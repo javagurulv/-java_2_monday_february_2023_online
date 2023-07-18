@@ -1,4 +1,4 @@
-package lv.fitness_app.core.databaseUpdate;
+package lv.fitness_app.core.database.databaseUpdate;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.*;
 import org.jsoup.select.Elements;

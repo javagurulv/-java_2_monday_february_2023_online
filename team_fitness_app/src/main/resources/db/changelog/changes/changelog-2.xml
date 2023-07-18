@@ -6,7 +6,7 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
 
     <changeSet author="fitness_app" id="2">
-        <createTable tableName="public.exercise">
+        <createTable tableName="exercise">
             <column name="name" type="VARCHAR(255)">
                 <constraints primaryKey="true"/>
             </column>

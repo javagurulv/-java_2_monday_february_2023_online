@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="MED-ID demo project">
+    <meta name="developer" content="Dmitrijs Kozlovs">
+    <title>FitnesApp search</title>
+</head>
+
+<body>
+
+<h3>Search Exercise</h3>
+<table>
+    <tbody>
+    <form action="/searchExercise" th:object="${request}" method="post">
+
+        <tr>
+            <td>Exercise Name:</td>
+            <td>Muscle Group:</td>
+        </tr>
+        <tr>
+            <td><input type="text" th:field="*{name}"/></td>
+            <td><input type="text" th:field="*{muscleGroup}"/></td>
+        </tr>
+
+        <tr>
+            <td>
+                <input type="submit" value="Search"/>
+                <input type="reset" value="Clear"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <hr/>
+            </td>
+        </tr>
+    </form>
+    </tbody>
+</table>
+<td th:if="${errors != null}">
+    <tr th:each="error : ${errors}">
+<td th:text="${error.field}"/>
+<td th:text="${error.message}"/>
+</tr>
+</td>
+
+</div>
+
+<ol>
+    <li th:each="exercise : ${exercises}" th:text="${exercise}">Medicine search result:</li>
+</ol>
+</body>
+
+</html>

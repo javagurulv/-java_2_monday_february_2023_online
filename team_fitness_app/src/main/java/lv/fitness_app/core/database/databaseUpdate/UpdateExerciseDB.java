@@ -1,4 +1,4 @@
-package lv.fitness_app.core.databaseUpdate;
+package lv.fitness_app.core.database.databaseUpdate;
 
 import lv.fitness_app.core.domain.Exercise;
 import org.hibernate.SessionFactory;
