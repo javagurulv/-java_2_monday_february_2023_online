@@ -29,7 +29,7 @@ public class LoginController {
             modelMap.addAttribute("errors", response.getErrors());
             return "login";
         } else if (response.isUserLogged()){
-            return "redirect:/";
+            return "redirect:/searchExercise";
         }else {
             modelMap.addAttribute("Email or Password incorrect", response.getErrors());
             return "login";

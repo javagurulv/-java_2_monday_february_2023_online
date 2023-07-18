@@ -16,7 +16,7 @@ public class SearchExerciseController {
     @Autowired
     SearchExerciseService searchExerciseService;
 
-    @GetMapping(value = "/searchExercese")
+    @GetMapping(value = "/searchExercise")
     public String showSearchPage(ModelMap modelMap) {
         modelMap.addAttribute("request", new SearchExerciseRequest());
         return "SearchExercise";
