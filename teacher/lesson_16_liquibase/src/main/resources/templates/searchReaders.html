@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Book Library demo project">
+    <meta name="author" content="JavaGuru">
+    <title>Book Library</title>
+</head>
+
+<body>
+
+    <h3>Search criteria (readers):</h3>
+
+    <table>
+        <tr>
+            <td>Search by First Name:</td>
+            <td>Search by Last Name:</td>
+        </tr>
+
+        <tr>
+            <form action="/searchReaders" th:object="${request}" method="post">
+                <td><input type="text" th:field="${request.firstName}"/></td>
+                <td><input type="text" th:field="${request.lastName}"/></td>
+                <td>
+                    <input type="submit" value="Search Readers"/>
+                    <input type="reset" value="Clear"/>
+                </td>
+            </form>
+        </tr>
+    </table>
+
+    <h3>Search results:</h3>
+
+    <table>
+        <tr>
+            <td>ID:</td>
+            <td>First Name:</td>
+            <td>Last Name:</td>
+        </tr>
+
+        <td th:if="${readers != null}">
+            <tr th:each="reader : ${readers}">
+                <td th:text="${reader.id}" />
+                <td th:text="${reader.firstName}" />
+                <td th:text="${reader.lastName}" />
+            </tr>
+        </td>
+
+    </table>
+
+    <form action="/" method="get">
+        <input type="submit" value="Go to main page" name="Submit" />
+    </form>
+
+</body>
+
+</html>
