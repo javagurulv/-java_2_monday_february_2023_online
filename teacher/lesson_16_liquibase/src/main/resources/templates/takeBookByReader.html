@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Book Library demo project">
+    <meta name="author" content="JavaGuru">
+    <title>Book Library</title>
+</head>
+
+<body>
+
+<h3>Take book by reader</h3>
+
+<form action="/takeBookByReader" th:object="${request}" method="post">
+    <table>
+        <tr>
+            <td>Reader ID:</td>
+            <td><input type="text" th:field="${request.readerId}"/></td>
+        </tr>
+        <tr>
+            <td>Book ID:</td>
+            <td><input type="text" th:field="${request.bookId}"/></td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" value="Take Book by Reader"/>
+                <input type="reset" value="Clear"/>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<td th:if="${errors != null}">
+    <tr th:each="error : ${errors}">
+        <td th:text="${error.field}"/>
+        <td th:text="${error.message}"/>
+    </tr>
+</td>
+
+
+<h3>Search criteria (readers and books):</h3>
+
+<form action="/takeBookByReader/search" th:object="${searchRequest}" method="post">
+    <table>
+        <tr>
+            <td>Search by Reader First Name:</td>
+            <td><input type="text" th:field="${searchRequest.readerFirstName}"/></td>
+        </tr>
+        <tr>
+            <td>Search by Reader Last Name:</td>
+            <td><input type="text" th:field="${searchRequest.readerLastName}"/></td>
+        </tr>
+        <tr>
+            <td>Search by Book Title:</td>
+            <td><input type="text" th:field="${searchRequest.bookTitle}"/></td>
+        </tr>
+        <tr>
+            <td>Search by Book Author:</td>
+            <td><input type="text" th:field="${searchRequest.bookAuthor}"/></td>
+        </tr>
+        </tr>
+        <td>
+            <input type="submit" value="Search Readers And Books"/>
+            <input type="reset" value="Clear"/>
+        </td>
+        </tr>
+    </table>
+</form>
+
+<h3>Search results (readers):</h3>
+
+<table>
+    <tr>
+        <td>ID:</td>
+        <td>First Name:</td>
+        <td>Last Name:</td>
+    </tr>
+
+    <td th:if="${readers != null}">
+        <tr th:each="reader : ${readers}">
+            <td th:text="${reader.id}"/>
+            <td th:text="${reader.firstName}"/>
+            <td th:text="${reader.lastName}"/>
+        </tr>
+    </td>
+
+</table>
+
+
+<h3>Search results (books):</h3>
+
+<table>
+    <tr>
+        <td>ID:</td>
+        <td>Title:</td>
+        <td>Author:</td>
+    </tr>
+
+    <td th:if="${books != null}">
+        <tr th:each="book : ${books}">
+            <td th:text="${book.id}"/>
+            <td th:text="${book.title}"/>
+            <td th:text="${book.author}"/>
+        </tr>
+    </td>
+
+</table>
+
+
+<form action="/" method="get">
+    <input type="submit" value="Go to main page" name="Submit"/>
+</form>
+
+
+</body>
+
+</html>
