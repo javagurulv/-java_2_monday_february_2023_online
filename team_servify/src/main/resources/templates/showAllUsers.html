@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta name="description" content="Servify demo project">
   <meta name="author" content="DreamTeamDevelopment">
+  <<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <title>Servify</title>
 </head>
 
@@ -19,8 +20,8 @@
     <td>Last Name:</td>
     <td>e-mail:</td>
     <td>Phone number:</td>
-    <td>Role:</td>
-    <td>Is inactive:</td>
+<!--    <td>Role:</td>-->
+<!--    <td>Is inactive:</td>-->
   </tr>
 
   <td th:if="${users != null}">
@@ -30,8 +31,8 @@
       <td th:text="${userEntity.lastName}" />
       <td th:text="${userEntity.email}" />
       <td th:text="${userEntity.phoneNumber}" />
-      <td th:text="${userEntity.role}" />
-      <td th:text="${userEntity.isInactive}" />
+<!--      <td th:text="${userEntity.role}" />-->
+<!--      <td th:text="${userEntity.isInactive}" />-->
     </tr>
   </td>
 
