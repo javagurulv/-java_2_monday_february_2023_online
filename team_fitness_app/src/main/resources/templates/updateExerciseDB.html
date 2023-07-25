@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Fitness App demo project">
+    <meta name="developer" content="Fitness App">
+    <title>FitnesApp update</title>
+</head>
+
+<body>
+
+<h3>Update Exercise</h3>
+<table>
+    <tbody>
+    <form action="/updateExerciseDB" th:object="${request}" method="post">
+
+        <tr>
+            <td>Exercise Name:</td>
+            <td>Muscle Group:</td>
+            <td>Detailed Muscle Group:</td>
+            <td>Other Muscle Group:</td>
+            <td>Type:</td>
+            <td>Mechanics:</td>
+            <td>Equipment:</td>
+            <td>Difficulty:</td>
+            <td>Description:</td>
+            <td>Gif:</td>
+
+        </tr>
+        <tr>
+            <td><input type="text" th:field="*{name}"/></td>
+            <td><input type="text" th:field="*{muscleGroup}"/></td>
+            <td><input type="text" th:field="*{detailedMuscleGroup}"/></td>
+            <td><input type="text" th:field="*{otherMuscleGroup}"/></td>
+            <td><input type="text" th:field="*{type}"/></td>
+            <td><input type="text" th:field="*{mechanics}"/></td>
+            <td><input type="text" th:field="*{equipment}"/></td>
+            <td><input type="text" th:field="*{difficulty}"/></td>
+            <td><input type="text" th:field="*{description}"/></td>
+            <td><input type="text" th:field="*{gif}"/></td>
+
+        </tr>
+
+        <tr>
+            <td>
+                <input type="submit" value="Update"/>
+                <input type="reset" value="Clear"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <hr/>
+            </td>
+        </tr>
+    </form>
+    </tbody>
+</table>
+<td th:if="${errors != null}">
+    <tr th:each="error : ${errors}">
+        <td th:text="${error.field}"/>
+        <td th:text="${error.message}"/>
+    </tr>
+</td>
+
+</div>
+
+<ol>
+    <li th:each="exercise : ${exercises}" th:text="${exercise}">Exercise update result:</li>
+</ol>
+</body>
+
+</html>

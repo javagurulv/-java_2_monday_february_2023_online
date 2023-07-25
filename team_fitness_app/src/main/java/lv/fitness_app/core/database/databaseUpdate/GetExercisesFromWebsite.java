@@ -2,6 +2,7 @@ package lv.fitness_app.core.database.databaseUpdate;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.*;
 import org.jsoup.select.Elements;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -9,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Component
 public class GetExercisesFromWebsite {
 
     public static void main(String[] args) throws IOException {
