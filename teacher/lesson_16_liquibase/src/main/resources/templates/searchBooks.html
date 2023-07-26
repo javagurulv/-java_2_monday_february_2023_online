@@ -10,7 +10,27 @@
 
 <body>
 
-    <h3>Show all books in the list</h3>
+    <h3>Search criteria (books):</h3>
+
+    <table>
+        <tr>
+            <td>Search by Title:</td>
+            <td>Search by Author:</td>
+        </tr>
+
+        <tr>
+            <form action="/searchBooks" th:object="${request}" method="post">
+                <td><input type="text" th:field="${request.title}"/></td>
+                <td><input type="text" th:field="${request.author}"/></td>
+                <td>
+                    <input type="submit" value="Search Books"/>
+                    <input type="reset" value="Clear"/>
+                </td>
+            </form>
+        </tr>
+    </table>
+
+    <h3>Search results:</h3>
 
     <table>
         <tr>

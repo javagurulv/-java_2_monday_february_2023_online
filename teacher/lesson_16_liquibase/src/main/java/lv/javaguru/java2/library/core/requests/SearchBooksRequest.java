@@ -8,6 +8,8 @@ public class SearchBooksRequest {
 	private Ordering ordering;
 	private Paging paging;
 
+	public SearchBooksRequest() { }
+
 	public SearchBooksRequest(String title, String author) {
 		this.title = title;
 		this.author = author;
@@ -61,5 +63,21 @@ public class SearchBooksRequest {
 
 	public Paging getPaging() {
 		return this.paging;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public void setOrdering(Ordering ordering) {
+		this.ordering = ordering;
+	}
+
+	public void setPaging(Paging paging) {
+		this.paging = paging;
 	}
 }

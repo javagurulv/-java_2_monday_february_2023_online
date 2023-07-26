@@ -49,13 +49,13 @@ public class SearchBooksService {
 	private List<Book> search(SearchBooksRequest request) {
 		List<Book> books = new ArrayList<>();
 		if (request.isTitleProvided() && !request.isAuthorProvided()) {
-			books = bookRepository.findByTitle(request.getTitle());
+			books = bookRepository.findByTitleLike(request.getTitle());
 		}
 		if (!request.isTitleProvided() && request.isAuthorProvided()) {
-			books = bookRepository.findByAuthor(request.getAuthor());
+			books = bookRepository.findByAuthorLike(request.getAuthor());
 		}
 		if (request.isTitleProvided() && request.isAuthorProvided()) {
-			books = bookRepository.findByTitleAndAuthor(request.getTitle(), request.getAuthor());
+			books = bookRepository.findByTitleAndAuthorLike(request.getTitle(), request.getAuthor());
 		}
 		return books;
 	}

@@ -10,7 +10,7 @@
 
 <body>
 
-    <h3>Show all books in the list</h3>
+    <h3>Show all readers in the list</h3>
 
     <table>
         <tr>
@@ -19,11 +19,11 @@
             <td>Author:</td>
         </tr>
 
-        <td th:if="${books != null}">
-            <tr th:each="book : ${books}">
-                <td th:text="${book.id}" />
-                <td th:text="${book.title}" />
-                <td th:text="${book.author}" />
+        <td th:if="${readers != null}">
+            <tr th:each="reader : ${readers}">
+                <td th:text="${reader.id}" />
+                <td th:text="${reader.firstName}" />
+                <td th:text="${reader.lastName}" />
             </tr>
         </td>
 
