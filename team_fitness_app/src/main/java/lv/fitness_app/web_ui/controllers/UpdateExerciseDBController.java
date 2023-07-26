@@ -26,12 +26,11 @@ public class UpdateExerciseDBController {
     }
 
 
-    @PostMapping(value = "/updateExerciseDB")
-    public String updateExerciseDB(ModelMap modelMap) throws IOException, CsvException {
-        UpdateExerciseDBResponse response = updateExerciseDBService.execute(
-                new UpdateExerciseDBRequest()
-        );
-        modelMap.addAttribute("exercise", response.getUpdatingResult());
-        return "/updateExerciseDB";
+    @PostMapping("/updateExerciseDB")
+    public String processUpdateExerciseDbRequest(@ModelAttribute(value = "request") UpdateExerciseDBRequest request, ModelMap modelMap) throws IOException, CsvException {
+        UpdateExerciseDBResponse response = updateExerciseDBService.execute(request);
+        modelMap.addAttribute("result", response.getResult());
+        return "updateExerciseDB";
     }
+
 }

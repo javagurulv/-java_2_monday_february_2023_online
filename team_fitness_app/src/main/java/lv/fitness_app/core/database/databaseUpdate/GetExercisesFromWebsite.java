@@ -13,7 +13,7 @@ import java.util.List;
 @Component
 public class GetExercisesFromWebsite {
 
-    public static void main(String[] args) throws IOException {
+    public static void execute() throws IOException {
 
         String link = "https://www.jefit.com/exercises/bodypart.php?id=11&exercises=All" + "&page=";
 
@@ -90,8 +90,8 @@ public class GetExercisesFromWebsite {
 
     }
     public static void writeToFile(List<String> content) {
-        String filePath = "exercises.csv";
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+        String filePath = "team_fitness_app/files/exercises.csv";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) {
             writer.newLine();
             for (String row:content) {
                 writer.append(row);

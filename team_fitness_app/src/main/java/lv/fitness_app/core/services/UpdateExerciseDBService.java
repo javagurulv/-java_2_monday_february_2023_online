@@ -27,21 +27,12 @@ public class UpdateExerciseDBService {
     @Autowired
     private GetExercisesFromWebsite getExercisesFromWebsite;
 
-    String filePath = "team_fitness_app/files/exercises.csv";
-
-    public void getExercisesFromWebsite(List<String> list) throws IOException {
-        List<String> listWithExercises = new ArrayList<>();
-        getExercisesFromWebsite.writeToFile(listWithExercises);
-        listWithExercises.add(filePath);
-
+    public UpdateExerciseDBResponse execute(UpdateExerciseDBRequest request) throws IOException, CsvException {
+        getExercisesFromWebsite.execute();
+        List<Exercise> updatingResult = new ArrayList<>();
+        updatingResult.addAll(parser.parseToListOfObjects());
+        updater.updateExerciseDB(updatingResult);
+        String message = "Database successfully updated!";
+        return new UpdateExerciseDBResponse(message);
     }
-        public UpdateExerciseDBResponse execute (UpdateExerciseDBRequest request) throws IOException, CsvException {
-
-            List<Exercise> updatingResult = new ArrayList<>();
-            updatingResult.addAll(parser.parseToListOfObjects());
-            updater.updateExerciseDB(updatingResult);
-
-            return new UpdateExerciseDBResponse(updatingResult);
-        }
-
-    }
+}

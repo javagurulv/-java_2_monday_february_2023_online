@@ -8,14 +8,14 @@ import java.util.List;
 public class UpdateExerciseDBResponse extends CoreResponse {
 
 
-    List<Exercise> updatingResult;
+    private String result;
 
-    public UpdateExerciseDBResponse(List<Exercise> updatingResult) {
-        this.updatingResult = updatingResult;
+    public UpdateExerciseDBResponse(String result) {
+        this.result = result;
     }
 
-    public List<Exercise> getUpdatingResult() {
-        System.out.println("Success");
-        return updatingResult;
+    public String getResult() {
+        return result;
+
     }
-    }
+}
