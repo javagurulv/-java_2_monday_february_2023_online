@@ -1,9 +1,9 @@
 package lv.fitness_app.core.services;
 
 import com.opencsv.exceptions.CsvException;
-import lv.fitness_app.core.database.databaseUpdate.CsvParser;
-import lv.fitness_app.core.database.databaseUpdate.GetExercisesFromWebsite;
-import lv.fitness_app.core.database.databaseUpdate.UpdateExerciseDB;
+import lv.fitness_app.core.databaseUpdate.CsvParser;
+import lv.fitness_app.core.databaseUpdate.GetExercisesFromWebsite;
+import lv.fitness_app.core.databaseUpdate.UpdateExerciseDB;
 import lv.fitness_app.core.domain.Exercise;
 import lv.fitness_app.core.requests.UpdateExerciseDBRequest;
 import lv.fitness_app.core.responses.UpdateExerciseDBResponse;

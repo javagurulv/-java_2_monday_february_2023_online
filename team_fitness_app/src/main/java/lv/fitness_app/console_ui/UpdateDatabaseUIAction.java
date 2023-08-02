@@ -2,21 +2,20 @@ package lv.fitness_app.console_ui;
 
 import com.opencsv.exceptions.CsvException;
 import lv.fitness_app.core.domain.Exercise;
-import lv.fitness_app.core.database.databaseUpdate.CsvParser;
-import lv.fitness_app.core.database.databaseUpdate.UpdateExerciseDB;
+import lv.fitness_app.core.databaseUpdate.CsvParser;
+import lv.fitness_app.core.databaseUpdate.UpdateExerciseDB;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+//@Component
 public class UpdateDatabaseUIAction implements UIAction{
 
-    @Autowired
+ //   @Autowired
     private UpdateExerciseDB updater;
-    @Autowired
+ //   @Autowired
     private CsvParser parser;
 
     @Override

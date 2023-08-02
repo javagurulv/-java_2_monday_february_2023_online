@@ -15,11 +15,10 @@ public class ProgramMenu {
 
 	private Map<Integer, UIAction> menuNumberToUIActionMap;
 
-	private UserMenu userMenu;
+	//private UserMenu userMenu;
 
 	@Autowired
-	public ProgramMenu(List<UIAction> uiActions, UserMenu userMenu) {
-		this.userMenu = userMenu;
+	public ProgramMenu(List<UIAction> uiActions) {
 		menuNumberToUIActionMap = new HashMap<>();
 		menuNumberToUIActionMap.put(1, findUIAction(uiActions, AddUserUIAction.class));
 		menuNumberToUIActionMap.put(2, findUIAction(uiActions, LoginUserUIAction.class));
@@ -56,11 +55,11 @@ public class ProgramMenu {
 		menuNumberToUIActionMap.get(selectedMenu).execute();
 	}
 
-	public void runUserMenu() throws IOException, CsvException {
-		while (true) {
-			userMenu.printUserMenu();
-			int selectedMenu = getMenuNumberFromUser();
-			userMenu.executeSelectedMenuItem(selectedMenu);
-		}
-	}
+//	public void runUserMenu() throws IOException, CsvException {
+//		while (true) {
+//			userMenu.printUserMenu();
+//			int selectedMenu = getMenuNumberFromUser();
+//			userMenu.executeSelectedMenuItem(selectedMenu);
+//		}
+//	}
 }

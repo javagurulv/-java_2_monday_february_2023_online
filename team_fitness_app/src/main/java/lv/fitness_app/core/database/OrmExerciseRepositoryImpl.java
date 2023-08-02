@@ -12,7 +12,7 @@ import java.util.List;
 //@Component
 //@Transactional
 public class OrmExerciseRepositoryImpl implements ExerciseRepository{
-    @Autowired
+  //  @Autowired
     private SessionFactory sessionFactory;
 
 

@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-@Component
+//@Component
 public class UserMenu {
 
     private Map<Integer, UIAction> menuNumberToUIAction;
 
-    @Autowired
+  //  @Autowired
     public UserMenu(List<UIAction> uiActions) {
         menuNumberToUIAction = new HashMap<>();
 //        menuNumberToUIAction.put(1, findeUIAction(uiActions, SearchExerciseByNameUIAction.class));
